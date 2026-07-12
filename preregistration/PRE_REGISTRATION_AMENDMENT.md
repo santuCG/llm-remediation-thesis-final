@@ -1,5 +1,5 @@
 # Pre-Registration Amendment — v2.0
-## Master's Thesis: Context-Aware Dependency Remediation in SBOM-Driven CI/CD Pipelines Using Large Language Models
+## Master's Thesis: Context-Aware Dependency Remediation in SBOM-Driven CI Pipelines Using Large Language Model
 
 **Author:** Santosh Nagaraj  
 **University:** SRH University Berlin  

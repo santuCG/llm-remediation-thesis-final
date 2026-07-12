@@ -2,7 +2,7 @@
 ## SBOM-Driven LLM-Assisted Dependency Remediation — Master's Thesis
 
 **Application:** Apache Airflow v2.9.2  
-**Thesis:** Context-Aware Dependency Remediation in SBOM-Driven CI/CD Pipelines Using Large Language Models  
+**Thesis:** Context-Aware Dependency Remediation in SBOM-Driven CI Pipelines Using Large Language Model  
 **Author:** Santosh Nagaraj — SRH University Berlin  
 **Date of scan and data snapshot:** 2026-06-28  
 **Tools:** Syft v1.44.0 · Grype v0.112.0 · Python 3.x  

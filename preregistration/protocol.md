@@ -1,6 +1,6 @@
 # Experimental Protocol
 
-**Thesis:** Context-Aware Dependency Remediation in SBOM-Driven CI/CD Pipelines Using Large Language Models  
+**Thesis:** Context-Aware Dependency Remediation in SBOM-Driven CI Pipelines Using Large Language Model  
 **Author:** Santosh Nagaraj — SRH University Berlin  
 **Date:** 2026-06-28
 
