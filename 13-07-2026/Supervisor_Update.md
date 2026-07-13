@@ -64,25 +64,18 @@ The evidence for the existence of these vulnerabilities in the baseline state ca
 
 When Grype identifies a vulnerability, it recommends installing the patched version directly. For example, for JS-01 it recommends:
 `npm install vm2@3.9.18`
-This command fails with an ERESOLVE error because vm2 exists as a nested transitive dependency inside juicy-chat-bot. The npm package manager enforces the version constraint set by the parent package and rejects the direct installation.
+Because `vm2` is a direct dependency in the root project, this naive version bump fails with a Fatal ERESOLVE Conflict. The package manager rejects the command due to strict peer dependency constraints enforced across the dependency tree. 
 If we had simply applied Grype's recommendation without any additional reasoning, the build would have failed and the vulnerability would remain unaddressed. This is the baseline result — 0% success rate across all 18 scenarios using deterministic scanner recommendations alone.
 
 ### 3c. How the LLM Changes the Outcome
 
 Rather than applying the fix version blindly, the LLM receives the full context: what the scanner found, what version is recommended, what error the package manager produced, the CVE description, the CVSS score, and the EPSS exploitation probability. With this information it reasons about the dependency graph constraint and recommends a different strategy.
 
-For JS-01 (vm2, CVE-2023-32314, CVSS 9.8), the LLM recommended using npm's overrides mechanism rather than a direct install:
+For JS-01 (vm2, CVE-2023-32314, CVSS 9.8), the LLM correctly identified that a direct install would fail and recommended using npm's overrides mechanism to force resolution past the peer dependency conflict.
 
-```json
-{
-  "action_type": "OVERRIDE",
-  "recommended_version": "3.9.18",
-  "fix_target": "vm2",
-  "rationale": "The ERESOLVE conflict indicates vm2 is constrained by a parent package. An npm overrides block forces the resolution at the root level, bypassing the peer dependency conflict while applying the security patch."
-}
-```
+Following the project's constraint-aware methodology (Stage 6) for direct dependencies, I aligned the root dependency declaration with the target version and injected the recommended overrides block into `package.json`. 
 
-Applying this recommendation — injecting the overrides block into package.json and running npm install — succeeded. The dependency resolved, the SBOM was regenerated, and Grype confirmed CVE-2023-32314 (GHSA-whpj-8f3w-67p5) was no longer present.
+Applying this recommendation succeeded. The dependency resolved, the SBOM was regenerated, and Grype confirmed CVE-2023-32314 (GHSA-whpj-8f3w-67p5) was no longer present.
 
 This is the central empirical finding so far: where deterministic scanner recommendations fail with a build error, LLM-generated constraint-aware strategies can succeed.
 
