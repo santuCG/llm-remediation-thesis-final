@@ -12,6 +12,14 @@ Modern software applications depend on hundreds or thousands of open-source pack
 
 ---
 
+## The Scientific Contribution
+
+Traditional Software Composition Analysis (SCA) tools treat dependencies as isolated versions, ignoring the holistic dependency graph constraints. This leads to a persistent gap between vulnerability detection and practical remediation, often resulting in a 0% deterministic success rate when applying basic scanner recommendations to strictly pinned graphs.
+
+This Master's thesis introduces a novel, constraint-aware remediation workflow that isolates Large Language Model (LLM) reasoning as a decision-support layer. The scientific contribution of this research is demonstrating whether an LLM can bridge the gap between static vulnerability detection and deterministic topological constraint satisfaction, effectively transforming vulnerability management from a basic suggestion engine into a graph-aware remediation protocol.
+
+---
+
 ## The Core Question
 
 > Can an LLM generate dependency remediation strategies that resolve software supply chain vulnerabilities in cases where applying the scanner's recommendation directly fails?
@@ -25,7 +33,7 @@ The experiment follows the same sequence of steps for every scenario tested.
 1. Take a real application at a pinned version
 2. Generate a Software Bill of Materials (SBOM) listing every package and version the app depends on
 3. Scan the SBOM with a vulnerability scanner (Grype) to find known vulnerabilities
-4. Try to fix the vulnerability the naive way — just install the scanner's recommended version. This fails. Record the failure as the baseline.
+4. Try to fix the vulnerability the basic way — just install the scanner's recommended version. This fails. Record the failure as the baseline.
 5. Collect enrichment signals about the vulnerability (CVSS severity score, EPSS exploitation probability, KEV status)
 6. Send all of this context to Gemini 2.5 Flash and ask it to recommend a remediation strategy
 7. Apply the LLM's recommendation manually and check whether the package manager accepts it

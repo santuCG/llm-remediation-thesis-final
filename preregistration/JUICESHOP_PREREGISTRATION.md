@@ -42,14 +42,16 @@ cat package.json | grep '"version"'
 
 ---
 
-## Step 1 — Generate the SBOM
+## Step 1 — Generate the SBOM via Lockfile Freeze
 
-An SBOM (Software Bill of Materials) is a machine-readable list of every package the application depends on, with version numbers. Syft generates this from the official Docker image to ensure parity with the CI validation environment.
+An SBOM (Software Bill of Materials) is a machine-readable list of every package the application depends on, with version numbers. Initially, the methodology attempted to generate this from the official Docker image to ensure parity with the CI validation environment.
+
+However, scanning the Docker image introduced massive OS-level package pollution. To ensure experimental rigor and isolate the exact Node.js dependency graph, the methodology was frozen to use explicit package lockfiles as the definitive source of truth. Syft generates the SBOM directly from the lockfile.
 
 **The correct command:**
 
 ```bash
-syft scan registry:bkimminich/juice-shop:v15.3.0 -o spdx-json=juice-shop_sbom.json
+syft file:package-lock.json -o spdx-json=juice-shop_sbom.json
 ```
 
 This produces `juice-shop_sbom.json` — a SPDX-JSON format SBOM. The format is locked to SPDX-JSON throughout the thesis (not CycloneDX, despite the original proposal).

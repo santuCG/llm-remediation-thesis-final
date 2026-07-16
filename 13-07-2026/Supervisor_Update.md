@@ -10,7 +10,7 @@ This document summarises the current state of my thesis experiment, explains the
 
 ## 1. What I Set Out To Do
 
-The core research question asks whether an LLM can generate context-aware dependency remediation strategies that succeed where naive deterministic scanner recommendations fail. I designed 18 pre-registered scenarios, 9 from the OWASP Juice Shop application using the npm ecosystem and 9 from Apache Airflow using the PyPI ecosystem. Each scenario targets a specific known CVE in a transitive or direct dependency.
+The core research question asks whether an LLM can generate context-aware dependency remediation strategies that succeed where basic deterministic scanner recommendations fail. I designed 18 pre-registered scenarios, 9 from the OWASP Juice Shop application using the npm ecosystem and 9 from Apache Airflow using the PyPI ecosystem. Each scenario targets a specific known CVE in a transitive or direct dependency.
 
 The full list of all 18 scenarios, including CVE identifiers, package names, severity scores, and fix versions, is recorded in:
 - `experiment/final_18_scenarios.json`
@@ -64,7 +64,7 @@ The evidence for the existence of these vulnerabilities in the baseline state ca
 
 When Grype identifies a vulnerability, it recommends installing the patched version directly. For example, for JS-01 it recommends:
 `npm install vm2@3.9.18`
-Because `vm2` is a direct dependency in the root project, this naive version bump fails with a Fatal ERESOLVE Conflict. The package manager rejects the command due to strict peer dependency constraints enforced across the dependency tree. 
+Because `vm2` is a direct dependency in the root project, this basic version bump fails with a Fatal ERESOLVE Conflict. The package manager rejects the command due to strict peer dependency constraints enforced across the dependency tree. 
 If we had simply applied Grype's recommendation without any additional reasoning, the build would have failed and the vulnerability would remain unaddressed. This is the baseline result — 0% success rate across all 18 scenarios using deterministic scanner recommendations alone.
 
 ### 3c. How the LLM Changes the Outcome

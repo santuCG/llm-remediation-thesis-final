@@ -186,17 +186,17 @@ The baseline CI execution evaluated Gate 1 (Dependency Resolution). For the PyPI
 
 All nine npm scenarios exited with code 1. Modern npm (v8+) enforces strict peer dependency checks. When `npm install <package>@<version>` is run for a nested package, the package manager detects a conflict between the requested version and the constraints defined by the parent package in the root `package-lock.json`. This triggers a fatal `ERESOLVE unable to resolve dependency tree` error, immediately crashing the build.
 
-This is a true failure — the naive version bump from a static scanner is fundamentally rejected by the package manager's strict topological integrity checks. The previously reported "Graph Pollution" narrative was an artifact of a CI misconfiguration (executing in an empty directory) and has been corrected.
+This is a true failure — the basic version bump from a static scanner is fundamentally rejected by the package manager's strict topological integrity checks. The previously reported "Graph Pollution" narrative was an artifact of a CI misconfiguration (executing in an empty directory) and has been corrected.
 
 **PyPI — Constraint Collapse (9/9 baseline_success: false)**
 
 All nine PyPI scenarios exited with code 1. Apache Airflow enforces strict version constraints across its dependency tree. When pip attempts to install a newer version of a package than the constraints allow, the resolver raises `ResolutionImpossible` and fails immediately. The build never starts.
 
-This is a true failure — the naive version bump from a static scanner is not applicable in a tightly constrained environment without understanding and modifying the constraint graph.
+This is a true failure — the basic version bump from a static scanner is not applicable in a tightly constrained environment without understanding and modifying the constraint graph.
 
 **What this establishes**
 
-The baseline result of 0% safe remediation (0 out of 18 scenarios produced a safe, architecturally sound fix) establishes the control group measurement. The LLM phase will be evaluated against this baseline — can contextual reasoning produce better outcomes than naive version application?
+The baseline result of 0% safe remediation (0 out of 18 scenarios produced a safe, architecturally sound fix) establishes the control group measurement. The LLM phase will be evaluated against this baseline — can contextual reasoning produce better outcomes than basic version application?
 
 ---
 

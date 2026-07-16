@@ -62,7 +62,7 @@ This repository investigates whether structured contextual information—includi
 
 The primary research question addressed by this work is:
 
-> **Can an LLM generate context-aware dependency remediation strategies that successfully resolve selected transitive dependency vulnerabilities under controlled SBOM-driven workflows where naïve deterministic package upgrade strategies do not achieve the intended remediation objective?**
+> **Can an LLM generate context-aware dependency remediation strategies that successfully resolve selected transitive dependency vulnerabilities under controlled SBOM-driven workflows where basic deterministic package upgrade strategies do not achieve the intended remediation objective?**
 
 This repository does **not** evaluate:
 
@@ -100,15 +100,15 @@ The identical workflow is subsequently applied to all remaining scenarios evalua
 
 # Research Contribution
 
-The contribution of this work is **not** the development of a new vulnerability scanner.
+The contribution of this work is **not** the development of a new vulnerability scanner, nor does it claim that LLMs should replace deterministic Software Composition Analysis (SCA) tools.
 
-Nor does this work claim that LLMs replace deterministic Software Composition Analysis (SCA) tools.
+Instead, the core **scientific contribution** of this Master's thesis is the isolation and evaluation of Large Language Model reasoning as a decision-support layer to solve deterministic topological constraint failures. 
 
-Instead, this research evaluates whether an LLM can function as a **decision-support component** within an SBOM-driven remediation pipeline by synthesising multiple sources of structured information into a remediation recommendation.
+Traditional SCA tools treat dependencies as isolated entities. They recommend basic version bumps that frequently fail (resulting in the 0% deterministic success rate observed in the baseline of this research) because they ignore the strict constraints of the holistic dependency graph. 
 
-Specifically, the work evaluates whether contextual information unavailable to deterministic package upgrade workflows—including dependency graph observations, package manager behaviour, and external threat intelligence—can influence remediation strategy selection.
+This research demonstrates how to transform vulnerability management from a basic suggestion engine into a graph-aware remediation protocol. By synthesising multiple sources of structured intelligence—including dependency graph observations, package manager error behaviors, and external threat signals (CVSS, EPSS)—this work evaluates the efficacy of LLM-generated strategies in bridging the gap between static vulnerability detection and deterministic constraint satisfaction.
 
-Accordingly, the contribution is centred on **remediation strategy generation**, rather than vulnerability discovery.
+Accordingly, the scientific novelty is centred entirely on **context-aware remediation strategy generation**, effectively treating the LLM as a topological reasoning engine rather than a discovery tool.
 
 ---
 

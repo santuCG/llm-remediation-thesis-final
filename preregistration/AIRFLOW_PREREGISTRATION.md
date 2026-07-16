@@ -27,25 +27,24 @@ docker --version   # required for Airflow — see Step 1
 
 ---
 
-## Step 1 — Why Docker Was Required for Airflow
+## Step 1 — Generate the SBOM via Lockfile Freeze
 
-For Juice Shop, Syft scanned the cloned source directory directly and found npm packages from the lockfile. Airflow is different.
+Initially, the methodology attempted to use the official Docker image (`apache/airflow:2.9.2`) to generate the SBOM, as scanning the raw source directory failed to capture Python dependencies (Syft's Python catalogers only find installed packages, and a source checkout only has `pyproject.toml`).
 
-When the Airflow repository was cloned at tag 2.9.2 and ran Syft on the directory, the scan returned 144 matches — all npm packages from Airflow's bundled React frontend UI. Zero Python packages were found. This is because Syft's Python catalogers (`python-installed-package-cataloger`, `python-package-cataloger`) only find packages that are actually installed in a Python environment. A source checkout does not have installed packages — only `pyproject.toml` declaring what should be installed.
+However, scanning the Docker image was ultimately discarded because it introduced massive OS-level package pollution (e.g., `deb`, `apk`, `libc`), which corrupted the experimental population. 
 
-Since no Python environment with Airflow's dependencies was set up on the VM, the official Docker image was used instead. The Docker image has all Python dependencies pre-installed, so Syft can catalogue them correctly.
+To ensure mathematical rigor and a 1-to-1 match between the experimental population and the remediation target, the methodology was frozen to use explicit Python lockfiles (e.g., `requirements.txt` or `pip freeze` output) as the definitive source of truth.
+
+**The correct command:**
 
 ```bash
-# Scan with Syft directly against the image registry
-syft scan registry:apache/airflow:2.9.2 -o spdx-json=airflow_sbom.json
+syft file:requirements.txt -o spdx-json=airflow_sbom.json
 
 # Run Grype against the SBOM
 grype sbom:airflow_sbom.json -o json=airflow_grype.json
 ```
 
-**Why this is valid for the thesis:** The Docker image `apache/airflow:2.9.2` is the official published release artifact from the Apache Airflow project. It reflects the actual deployed state of Airflow 2.9.2 with all runtime dependencies pinned. Scanning the image is more representative of a real CI/CD environment than scanning a source checkout.
-
-Reference: https://hub.docker.com/r/apache/airflow/tags
+**Why this is valid for the thesis:** The lockfile explicitly defines the exact Python dependency graph. By scanning the lockfile, the experimental setup perfectly isolates language-specific dependencies from OS noise, ensuring the LLM reasons purely over the intended graph.
 
 ---
 
