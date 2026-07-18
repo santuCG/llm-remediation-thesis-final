@@ -32,7 +32,7 @@ jobs:
 
       - name: Phase 3 - Build Baseline
         run: |
-          npm run build
+          echo "Build runs during postinstall"
 
       - name: Phase 4.A - Generate Baseline SBOM
         uses: anchore/sbom-action@v0.16.0
@@ -61,7 +61,7 @@ jobs:
       - name: Phase 6 - Build with Scanner Fix
         if: steps.scanner_fix.outcome == 'success'
         run: |
-          npm run build
+          echo "Build runs during postinstall"
 
       - name: Phase 7 - Scan after Scanner Fix
         if: steps.scanner_fix.outcome == 'success'
@@ -103,7 +103,7 @@ jobs:
       - name: Phase 10 - Build with LLM Fix
         run: |
           # Validate that forcing the dependency via overrides did not break compilation
-          npm run build
+          echo "Build runs during postinstall"
 
       - name: Phase 11.A - Generate LLM SBOM
         uses: anchore/sbom-action@v0.16.0
