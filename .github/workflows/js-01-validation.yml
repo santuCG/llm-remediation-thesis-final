@@ -74,7 +74,7 @@ jobs:
           if jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype-scanner.json > /dev/null; then
             echo "As expected, Phase 5 failed to eradicate the vulnerability due to Dependency Shadowing."
             # Reset package files for the LLM phase
-            git restore package.json package-lock.json || true
+            git restore package.json
             cp ../evidence/juice_shop_package-lock.json package-lock.json
             npm ci --ignore-scripts
           else
