@@ -17,7 +17,7 @@
       "dom"
     ]
   },
-  "include": [
+  "include" : [
     "cypress/**/*.ts",
     "data/**/*.ts",
     "lib/**/*.ts",
@@ -38,10 +38,5 @@
     "vagrant",
     "data/static/codefixes/**",
     "**/*.d.ts"
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  }
+  ]
 }
