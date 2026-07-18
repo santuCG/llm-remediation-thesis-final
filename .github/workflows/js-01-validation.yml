@@ -89,7 +89,7 @@ jobs:
       # ==========================================
       - name: Phase 8 & 9 - Invoke LLM Layer & Apply Fix
         env:
-          GEMINI_API_KEY: "AIzaSyCzeA5GTK2GJhOJ6FqlZdSzzjyZmJiPrFI"
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python ../../scripts/gemini_remediation.py
           npm install
