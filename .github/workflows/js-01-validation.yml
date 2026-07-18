@@ -45,7 +45,7 @@ jobs:
         working-directory: ./
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.79.1
-          grype sbom:baseline-sbom.json -o table | grep "CVE-2023-32314"
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:baseline-sbom.json -o table | grep "CVE-2023-32314"
 
       # ==========================================
       # SCANNER / NAIVE REMEDIATION PHASES
@@ -67,7 +67,7 @@ jobs:
         if: steps.scanner_fix.outcome == 'success'
         working-directory: ./
         run: |
-          grype sbom:scanner-sbom.json -o table
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:scanner-sbom.json -o table
 
       - name: Assert Scanner Failure (Expected)
         if: steps.scanner_fix.outcome == 'failure'
@@ -115,7 +115,7 @@ jobs:
       - name: Phase 11.B - Scan LLM Remediated Code
         working-directory: ./
         run: |
-          grype sbom:llm-sbom.json -o table > scan-results.txt
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:llm-sbom.json -o table > scan-results.txt
           cat scan-results.txt
 
       - name: Phase 12 - Final Verification (Assert Eradication)
