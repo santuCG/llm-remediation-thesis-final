@@ -11,12 +11,25 @@ We designed this pipeline specifically for Scenario JS-01 (`vm2` / CVE-2023-3231
 ## 2. The 12-Phase Execution Pipeline
 
 The GitHub Actions workflow (`.github/workflows/js-01-validation.yml`) is divided into 12 execution phases spanning three distinct stages of the validation protocol. To ensure readability and reproducibility, all GitHub Actions plugins are explicitly version-pinned.
+## 2. CI/CD Orchestration (12 Phases)
+
+**Status:** SUCCESS
+
+The automated CI/CD pipeline acts as the orchestrator for the validation framework.
+
+1.  **Baseline Build & Scan:** Establish the vulnerable baseline (`vm2@3.9.17`).
+2.  **Scanner-driven Remediation (Naive Fix):** Apply `npm install vm2@3.9.19 --ignore-scripts` directly.
+3.  **Failure Assertion:** Verify that the naive fix **fails** due to Dependency Shadowing (exit 0 on install, but `CVE-2023-32314` remains in the lockfile and scanner results).
+4.  **LLM-driven Remediation (Context-Aware):** Pass the failure context (Shadowing) to the LLM layer, prompting an architecture-aware fix (e.g., `overrides` or `resolutions`).
+5.  **Final Validation:** Build and scan the LLM-remediated application. Assert that the vulnerability is definitively eradicated (Gate 4).
 
 ### Stage A: Vulnerable Baseline
 - **Phase 1 (Checkout & Setup):** Code checkout (`actions/checkout@v4.1.7`) and explicit version-pinning to Node.js 18.x (`actions/setup-node@v4.0.3`) to eliminate environmental discrepancies and prevent `EBADENGINE` compatibility failures.
 - **Phase 2 (Baseline Establish):** Copies the exact evidence `package-lock.json` and runs `npm ci --ignore-scripts` to build the vulnerable baseline deterministically without `ERESOLVE` issues.
 - **Phase 3 (Build Baseline):** Executes a compilation simulation (`echo`) to verify the baseline application is syntactically sound.
-- **Phase 4.A & 4.B (Generate & Scan SBOM):** Utilizes `cyclonedx-npm` for highly accurate lockfile resolution, generating `baseline-sbom.json`. Grype parses this JSON output natively, and the pipeline uses `jq` to mathematically assert the presence of the exact vulnerability identifier (`GHSA-whpj-8f3w-67p5` / `CVE-2023-32314`### Stage B: Naive Scanner Remediation
+- **Phase 4.A & 4.B (Generate & Scan SBOM):** Utilizes `cyclonedx-npm` for highly accurate lockfile resolution, generating `baseline-sbom.json`. Grype parses this JSON output natively, and the pipeline uses `jq` to mathematically assert the presence of the exact vulnerability identifier (`GHSA-whpj-8f3w-67p5` / `CVE-2023-32314`)
+
+### Stage B: Naive Scanner Remediation
 - **Phase 5 (Apply Scanner Fix):** Simulates a traditional SCA tool's automated pull request by attempting `npm install vm2@3.9.19 --ignore-scripts`. In the JS-01 scenario, doing a direct top-level bump succeeds (exit code 0), but causes 'dependency shadowing', where transitive nested versions are not upgraded.
 - **Phase 6 & 7 (Build & Scan):** The pipeline builds the application and scans the new SBOM.
 - **Assert Scanner Failure:** Validates that the scanner fix failed to eradicate the vulnerability. `jq` confirms `CVE-2023-32314` is still present in the Grype output. The pipeline subsequently restores `package.json` to prepare the graph for the LLM layer.
