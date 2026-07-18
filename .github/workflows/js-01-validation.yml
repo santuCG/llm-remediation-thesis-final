@@ -38,10 +38,11 @@ jobs:
         run: npx @cyclonedx/cyclonedx-npm --output-file baseline-sbom.json
 
       - name: Phase 4.B - Scan Baseline (Check for CVE-2023-32314)
-
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.79.1
-          GRYPE_DB_VALIDATE_AGE=false grype sbom:baseline-sbom.json -o table | grep "CVE-2023-32314"
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:baseline-sbom.json -o table > baseline-grype.txt || true
+          cat baseline-grype.txt
+          grep "CVE-2023-32314" baseline-grype.txt
 
       # ==========================================
       # SCANNER / NAIVE REMEDIATION PHASES
