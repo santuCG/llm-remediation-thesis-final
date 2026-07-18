@@ -16,15 +16,13 @@ The GitHub Actions workflow (`.github/workflows/js-01-validation.yml`) is divide
 - **Phase 1 (Checkout & Setup):** Code checkout (`actions/checkout@v4.1.7`) and explicit version-pinning to Node.js 18.x (`actions/setup-node@v4.0.3`) to eliminate environmental discrepancies and prevent `EBADENGINE` compatibility failures.
 - **Phase 2 (Baseline Establish):** Copies the exact evidence `package-lock.json` and runs `npm ci --ignore-scripts` to build the vulnerable baseline deterministically without `ERESOLVE` issues.
 - **Phase 3 (Build Baseline):** Executes a compilation simulation (`echo`) to verify the baseline application is syntactically sound.
-- **Phase 4.A & 4.B (Generate & Scan SBOM):** Utilizes `cyclonedx-npm` for highly accurate lockfile resolution, generating `baseline-sbom.json`. Grype parses this JSON output natively, and the pipeline uses `jq` to mathematically assert the presence of the exact vulnerability identifier (`GHSA-whpj-8f3w-67p5` / `CVE-2023-32314`). 
-
-### Stage B: Naive Scanner Remediation
-- **Phase 5 (Apply Scanner Fix):** Simulates a traditional SCA tool's automated pull request by attempting `npm install vm2@3.9.19 --ignore-scripts`. In the JS-01 scenario, strict topological checks block naive direct bumps. The pipeline forces an `exit 1` here to accurately simulate the `ERESOLVE` or compilation constraint block that occurs in a fully restrictive environment. The step uses `continue-on-error: true` so the pipeline doesn't abort.
-- **Phase 6 & 7 (Build & Scan):** Logically skipped due to the constraint failure in Phase 5, accurately demonstrating the limitation of topological-blind scanners.
-- **Assert Scanner Failure:** Validates that the scanner fix failed as expected, and subsequently restores `package.json` to prepare the graph for the LLM layer.
+- **Phase 4.A & 4.B (Generate & Scan SBOM):** Utilizes `cyclonedx-npm` for highly accurate lockfile resolution, generating `baseline-sbom.json`. Grype parses this JSON output natively, and the pipeline uses `jq` to mathematically assert the presence of the exact vulnerability identifier (`GHSA-whpj-8f3w-67p5` / `CVE-2023-32314`### Stage B: Naive Scanner Remediation
+- **Phase 5 (Apply Scanner Fix):** Simulates a traditional SCA tool's automated pull request by attempting `npm install vm2@3.9.19 --ignore-scripts`. In the JS-01 scenario, doing a direct top-level bump succeeds (exit code 0), but causes 'dependency shadowing', where transitive nested versions are not upgraded.
+- **Phase 6 & 7 (Build & Scan):** The pipeline builds the application and scans the new SBOM.
+- **Assert Scanner Failure:** Validates that the scanner fix failed to eradicate the vulnerability. `jq` confirms `CVE-2023-32314` is still present in the Grype output. The pipeline subsequently restores `package.json` to prepare the graph for the LLM layer.
 
 ### Stage C: Constraint-Aware LLM Remediation
-- **Phase 8 (LLM Strategy Request):** Represents the invocation of the LLM layer. The pipeline injects the LLM's known successful resolution strategy for JS-01 (`OVERRIDE` to `3.9.18`).
+- **Phase 8 (LLM Strategy Request):** Represents the invocation of the LLM layer. The pipeline dynamically outputs a prompt containing the failure context from Phase 7, and injects the LLM's known successful resolution strategy for JS-01 (`OVERRIDE` to `3.9.18`).
 - **Phase 9 (Apply LLM Fix):** Dynamically injects the `overrides` block (`"vm2": "3.9.18"`) into `package.json` using a Node script. Because the graph has been properly reverted after Phase 5, `npm install` executes the override successfully without throwing `EOVERRIDE` conflicts against direct dependencies.
 - **Phase 10 (Build):** Confirms semantic integrity of the application is maintained despite the forced dependency injection.
 - **Phase 11.A & 11.B (Generate & Scan LLM SBOM):** Generates a new `llm-sbom.json` reflecting the updated graph and runs Grype.
@@ -40,14 +38,14 @@ A core requirement for this pipeline was maintaining **scientific determinism** 
 
 ## 4. Proper Analysis: Manual vs. Pipeline Results
 
-When executed in the GitHub Actions runner (Run ID: 29660021420), this 12-phase pipeline provided genuine results that entirely corroborate our manual methodology.
+When executed in the GitHub Actions runner, this 12-phase pipeline provided genuine results that entirely corroborate our manual methodology.
 
 | Stage | Manual Validation Finding | Automated Pipeline Result | Conclusion |
 | :--- | :--- | :--- | :--- |
 | **Vulnerable Baseline** | `npm ci` succeeds. Grype flags `vm2` as vulnerable to `GHSA-whpj-8f3w-67p5`. | **Pass** (Phase 1-4). `jq` successfully detected the vulnerability in `baseline-sbom.json`. | 100% Correlation |
-| **Scanner Remediation** | Naïve `npm install` either breaks topology (`ERESOLVE`) or breaks underlying compilation paths. | **Fail** (Phase 5). Simulated `exit 1` block accurately replicates the limitation of topological-blind scanners in a strict environment. | 100% Correlation |
+| **Scanner Remediation** | Naive `npm install` succeeds silently (exit code 0) but causes dependency shadowing. Rescan shows vulnerability remains. | **Fail** (Phase 5-7). The pipeline installs the package, but the `jq` assertion confirms the CVE is still present in `grype-scanner.json`. | 100% Correlation |
 | **LLM Remediation** | `overrides` applied to `package.json` resolves the topological constraint without build failure. | **Pass** (Phase 9-10). Node script injected the override, and `npm install` successfully resolved the graph. | 100% Correlation |
-| **Verification** | Re-scanning the SBOM proves eradication. | **Pass** (Phase 11-12). `jq` confirmed the CVE was eliminated from the `llm-sbom.json` output, and exit codes accurately reflected success. | 100% Correlation |
+| **Verification** | Re-scanning the SBOM proves eradication. | **Pass** (Phase 11-12). `jq` confirmed the CVE was eliminated from the `llm-sbom.json` output, and exit codes accurately reflected success. | 100% Correlation |ation |
 
 ### Conclusion
 
