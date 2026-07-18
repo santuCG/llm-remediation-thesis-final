@@ -35,10 +35,10 @@ jobs:
           echo "Build runs during postinstall"
 
       - name: Phase 4.A - Generate Baseline SBOM
-        run: npx @cyclonedx/cyclonedx-npm --output-file ../../baseline-sbom.json
+        run: npx @cyclonedx/cyclonedx-npm --output-file baseline-sbom.json
 
       - name: Phase 4.B - Scan Baseline (Check for CVE-2023-32314)
-        working-directory: ./
+
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.79.1
           GRYPE_DB_VALIDATE_AGE=false grype sbom:baseline-sbom.json -o table | grep "CVE-2023-32314"
@@ -61,7 +61,7 @@ jobs:
 
       - name: Phase 7 - Scan after Scanner Fix
         if: steps.scanner_fix.outcome == 'success'
-        working-directory: ./
+
         run: |
           GRYPE_DB_VALIDATE_AGE=false grype sbom:scanner-sbom.json -o table
 
@@ -102,16 +102,16 @@ jobs:
           echo "Build runs during postinstall"
 
       - name: Phase 11.A - Generate LLM SBOM
-        run: npx @cyclonedx/cyclonedx-npm --output-file ../../llm-sbom.json
+        run: npx @cyclonedx/cyclonedx-npm --output-file llm-sbom.json
 
       - name: Phase 11.B - Scan LLM Remediated Code
-        working-directory: ./
+
         run: |
           GRYPE_DB_VALIDATE_AGE=false grype sbom:llm-sbom.json -o table > scan-results.txt
           cat scan-results.txt
 
       - name: Phase 12 - Final Verification (Assert Eradication)
-        working-directory: ./
+
         run: |
           if grep -q "CVE-2023-32314" scan-results.txt; then
             echo "FAILED: CVE-2023-32314 is still present!"
