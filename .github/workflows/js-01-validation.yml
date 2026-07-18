@@ -2,26 +2,32 @@ name: JS-01 End-to-End Orchestration (12 Phases)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
   orchestrate-js-01:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: applications/juice-shop
+
     steps:
       # ==========================================
       # BASELINE PHASES
       # ==========================================
-      - name: Phase 1 - Checkout Code & Setup Node
+      - name: Phase 1 - Checkout Code
         uses: actions/checkout@v4.1.7
       
-      - name: Setup Node.js 18.x
+      - name: Phase 1 - Setup Node.js 18.x
         uses: actions/setup-node@v4.0.3
         with:
           node-version: '18.x'
 
       - name: Phase 2 - Establish Baseline (npm ci)
         run: |
+          # Copy the deterministic baseline lockfile from evidence
+          cp ../evidence/juice_shop_package-lock.json package-lock.json
           npm ci --ignore-scripts
 
       - name: Phase 3 - Build Baseline
@@ -31,11 +37,12 @@ jobs:
       - name: Phase 4.A - Generate Baseline SBOM
         uses: anchore/sbom-action@v0.16.0
         with:
-          file: package-lock.json
+          file: applications/juice-shop/package-lock.json
           format: spdx-json
           output-file: baseline-sbom.json
 
       - name: Phase 4.B - Scan Baseline (Check for CVE-2023-32314)
+        working-directory: ./
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.79.1
           grype sbom:baseline-sbom.json -o table | grep "CVE-2023-32314"
@@ -58,8 +65,8 @@ jobs:
 
       - name: Phase 7 - Scan after Scanner Fix
         if: steps.scanner_fix.outcome == 'success'
+        working-directory: ./
         run: |
-          npx @cyclonedx/cyclonedx-npm --output-format JSON --output-file scanner-sbom.json
           grype sbom:scanner-sbom.json -o table
 
       - name: Assert Scanner Failure (Expected)
@@ -67,7 +74,8 @@ jobs:
         run: |
           echo "As expected, Phase 5 failed due to ERESOLVE topological constraint."
           # Reset package files for the LLM phase
-          git restore package.json package-lock.json
+          git restore package.json
+          cp ../evidence/juice_shop_package-lock.json package-lock.json
           npm ci --ignore-scripts
 
       # ==========================================
@@ -100,16 +108,18 @@ jobs:
       - name: Phase 11.A - Generate LLM SBOM
         uses: anchore/sbom-action@v0.16.0
         with:
-          file: package-lock.json
+          file: applications/juice-shop/package-lock.json
           format: spdx-json
           output-file: llm-sbom.json
 
       - name: Phase 11.B - Scan LLM Remediated Code
+        working-directory: ./
         run: |
           grype sbom:llm-sbom.json -o table > scan-results.txt
           cat scan-results.txt
 
       - name: Phase 12 - Final Verification (Assert Eradication)
+        working-directory: ./
         run: |
           if grep -q "CVE-2023-32314" scan-results.txt; then
             echo "FAILED: CVE-2023-32314 is still present!"
