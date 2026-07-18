@@ -31,39 +31,6 @@ jobs:
           npm ci --ignore-scripts
 
       - name: Phase 3 - Build Baseline
-name: JS-01 End-to-End Orchestration (12 Phases)
-
-on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
-
-jobs:
-  orchestrate-js-01:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: applications/juice-shop
-
-    steps:
-      # ==========================================
-      # BASELINE PHASES
-      # ==========================================
-      - name: Phase 1 - Checkout Code
-        uses: actions/checkout@v4.1.7
-      
-      - name: Phase 1 - Setup Node.js 18.x
-        uses: actions/setup-node@v4.0.3
-        with:
-          node-version: '18.x'
-
-      - name: Phase 2 - Establish Baseline (npm ci)
-        run: |
-          # Copy the deterministic baseline lockfile from evidence
-          cp ../evidence/juice_shop_package-lock.json package-lock.json
-          npm ci --ignore-scripts
-
-      - name: Phase 3 - Build Baseline
         run: |
           echo "Build runs during postinstall"
 
