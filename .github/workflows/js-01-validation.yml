@@ -8,6 +8,8 @@ on:
 jobs:
   orchestrate-js-01:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     defaults:
       run:
         working-directory: applications/juice-shop
@@ -28,7 +30,7 @@ jobs:
         run: |
           # Copy the deterministic baseline lockfile from evidence
           cp ../evidence/juice_shop_package-lock.json package-lock.json
-          npm ci --ignore-scripts
+          npm ci
 
       - name: Phase 3 - Build Baseline
         run: |
@@ -58,7 +60,7 @@ jobs:
           # Grype recommended vm2@3.9.19. We attempt to install it.
           # In the JS-01 scenario, doing a direct top-level bump succeeds (exit code 0).
           # However, it causes 'dependency shadowing' where transitive nested versions are not upgraded.
-          npm install vm2@3.9.19 --ignore-scripts
+          npm install vm2@3.9.19
 
       - name: Phase 6 - Build with Scanner Fix
         run: |
@@ -76,7 +78,7 @@ jobs:
             # Reset package files for the LLM phase
             git restore package.json
             cp ../evidence/juice_shop_package-lock.json package-lock.json
-            npm ci --ignore-scripts
+            npm ci
           else
             echo "Scanner fix eradicated the vulnerability unexpectedly."
             exit 1
@@ -85,29 +87,12 @@ jobs:
       # ==========================================
       # LLM REMEDIATION PHASES
       # ==========================================
-      - name: Phase 8 - Invoke LLM Layer (Constraint-Aware Strategy)
+      - name: Phase 8 & 9 - Invoke LLM Layer & Apply Fix
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          echo "====================== DYNAMIC PROMPT PASSED TO LLM ======================"
-          echo "System: You are an expert DevSecOps LLM."
-          echo "User: The package 'vm2' has vulnerability CVE-2023-32314."
-          echo "A naive update to vm2@3.9.19 via 'npm install vm2@3.9.19' succeeded with exit code 0 but caused dependency shadowing."
-          echo "As a result, the deep nested dependency was not upgraded, and the vulnerability is still present in the SBOM."
-          echo "Provide a package.json override or resolution strategy to fix this vulnerability."
-          echo "=========================================================================="
-          echo "LLM Strategy: OVERRIDE"
-          echo "Target: vm2@3.9.18"
-
-      - name: Phase 9 - Apply LLM Fix (Override vm2@3.9.18)
-        run: |
-          node -e "
-          const fs = require('fs');
-          let pkg = JSON.parse(fs.readFileSync('package.json'));
-          pkg.overrides = pkg.overrides || {};
-          pkg.overrides['vm2'] = '3.9.18';
-          fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
-          "
-          # The override forces the resolution graph to accept the patched version without conflict.
-          npm install --ignore-scripts
+          python ../../scripts/gemini_remediation.py
+          npm install
 
       - name: Phase 10 - Build with LLM Fix
         run: |
@@ -123,10 +108,18 @@ jobs:
 
       - name: Phase 12 - Final Verification (Assert Eradication)
         run: |
+          # The LLM fix should have successfully altered the lockfile graph, eradicating the CVE
           if jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype-llm.json > /dev/null; then
-            echo "FAILED: CVE-2023-32314 is still present!"
+            echo "FAILED: CVE-2023-32314 is still present! The LLM failed to remediate the vulnerability."
             exit 1
           else
-            echo "SUCCESS: LLM constraint-aware remediation effectively eradicated CVE-2023-32314 without breaking the build."
-            exit 0
+            echo "SUCCESS: CVE-2023-32314 has been eradicated. The LLM provided a valid resolution strategy."
           fi
+
+      - name: Phase 13 - Runtime Sanity Check
+        run: |
+          npm start &
+          SERVER_PID=$!
+          sleep 15
+          curl -f http://localhost:3000
+          kill $SERVER_PID
