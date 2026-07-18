@@ -74,7 +74,8 @@ jobs:
       - name: Assert Scanner Failure (Expected)
         run: |
           if jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype-scanner.json > /dev/null; then
-            echo "As expected, Phase 5 failed to eradicate the vulnerability due to Dependency Shadowing."
+            echo "The naive scanner update was applied and exited with code 0, but Grype rescanned the lockfile and the nested CVE is still active." > ../../pipeline_failure_context.txt
+            echo "Phase 5 failed to eradicate the vulnerability. Pipeline failure context exported."
             # Reset package files for the LLM phase
             git restore package.json
             cp ../evidence/juice_shop_package-lock.json package-lock.json

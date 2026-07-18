@@ -33,6 +33,14 @@ def main():
     cvss_score = cvss_metrics[0].get('metrics', {}).get('baseScore', 'N/A') if cvss_metrics else 'N/A'
     
     print(f"Targeting: {package_name}@{vulnerable_version} ({cve_id})")
+
+    # Read the dynamic pipeline failure context
+    pipeline_failure_context = "No specific failure context provided."
+    try:
+        with open('../../pipeline_failure_context.txt', 'r') as f:
+            pipeline_failure_context = f.read().strip()
+    except Exception as e:
+        print(f"Could not read pipeline_failure_context.txt: {e}")
     
     # Run npm ls
     print(f"Extracting dependency subgraph for {package_name}...")
@@ -42,35 +50,25 @@ def main():
         ls_output = e.output
 
     # Construct the prompt
-    system_prompt = """You are an expert DevSecOps AI agent specialized in resolving deep dependency shadowing and supply chain vulnerabilities. Your task is to analyze vulnerability reports and dependency graphs to provide a secure, non-breaking package resolution strategy.
+    system_prompt = """You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within legacy node ecosystems.
 
-Output ONLY a valid JSON object representing the necessary `overrides` or `resolutions` to be added to the `package.json` file. Do not include markdown formatting, explanations, or conversational text."""
+Your task is to analyze the vulnerability intelligence and the nested dependency subgraph. You must deduce the correct architectural strategy to enforce a secure, stable version across the entire tree without breaking compilation. You must recommend a version that actually exists on the public npm registry. Do not hallucinate."""
 
-    user_prompt = f"""Analyze the following vulnerability and provide a targeted `package.json` override strategy to eradicate the risk without breaking the build.
-
-### Vulnerability Intelligence
+    user_prompt = f"""### Vulnerability Intelligence
 * Target Package: {package_name}
 * Vulnerable Version: {vulnerable_version}
 * CVE ID: {cve_id}
 * CVSS Score: {cvss_score}
 
-### Dependency Graph Context
-The vulnerability exists within the following dependency tree. Pay close attention to the parent packages requiring this vulnerable version to avoid ERESOLVE conflicts.
+### Pipeline Execution Context
+{pipeline_failure_context}
 
+### Dependency Graph
 ```json
 {ls_output}
 ```
 
-Constraints
-Do not hallucinate versions. Determine the most stable, secure version that satisfies the tree.
-If the package is deprecated and cannot be updated, provide an override that mitigates the specific CVE while maintaining structural compatibility.
-Your output must be strict JSON containing ONLY the overrides block. For example:
-{{
-  "overrides": {{
-    "{package_name}": "X.Y.Z"
-  }}
-}}
-"""
+Based on the pipeline failure and the topological subgraph, deduce the safest semantic version of {package_name} to deploy that actually exists on the public npm registry. Then, deduce the correct package.json configuration key required to force this resolution natively without breaking the build."""
 
     print("=== DYNAMIC PROMPT FOR LLM LAYER ===")
     print("SYSTEM PROMPT:")
@@ -78,6 +76,19 @@ Your output must be strict JSON containing ONLY the overrides block. For example
     print("\nUSER PROMPT:")
     print(user_prompt)
     print("======================================")
+
+    # Response Schema for Gemini
+    response_schema = {
+        "type": "OBJECT",
+        "properties": {
+            "reasoning": { "type": "STRING", "description": "Explain why the naive fix failed and why your topological fix is correct." },
+            "confidence_score": { "type": "INTEGER", "description": "Confidence score from 0 to 100." },
+            "action_type": { "type": "STRING", "description": "The exact package.json key to use (e.g. overrides, resolutions)." },
+            "recommended_package_version": { "type": "STRING", "description": "The specific semantic version to enforce. Must exist on the npm registry." },
+            "senior_devsecops_recommendation": { "type": "STRING", "description": "A message to junior devs explaining the methodology." }
+        },
+        "required": ["reasoning", "confidence_score", "action_type", "recommended_package_version", "senior_devsecops_recommendation"]
+    }
 
     # Call Gemini API
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
@@ -88,7 +99,8 @@ Your output must be strict JSON containing ONLY the overrides block. For example
             "temperature": 0.0,
             "topP": 1.0,
             "topK": 1,
-            "responseMimeType": "application/json"
+            "responseMimeType": "application/json",
+            "responseSchema": response_schema
         }
     }
     
@@ -110,27 +122,41 @@ Your output must be strict JSON containing ONLY the overrides block. For example
     
     # Parse the LLM response JSON
     try:
-        overrides_json = json.loads(llm_text)
+        llm_json = json.loads(llm_text)
     except json.JSONDecodeError:
         print("Failed to parse LLM response as JSON.")
         sys.exit(1)
+
+    print("\n*** DevSecOps Reasoning & Recommendations ***")
+    print(f"Confidence Score: {llm_json.get('confidence_score')}/100")
+    print(f"Reasoning: {llm_json.get('reasoning')}")
+    print(f"Recommendation for Juniors: {llm_json.get('senior_devsecops_recommendation')}")
+    print("*********************************************\n")
         
     # Update package.json
-    print("Applying overrides to package.json...")
+    action_type = llm_json.get('action_type', 'overrides')
+    target_version = llm_json.get('recommended_package_version')
+
+    if not target_version:
+        print("Error: The LLM did not provide a recommended_package_version.")
+        sys.exit(1)
+        
+    # Standardize action_type in case the LLM capitalizes or formats it weirdly
+    action_type = action_type.lower().strip()
+    if action_type not in ['overrides', 'resolutions']:
+        action_type = 'overrides' # fallback to standard npm mechanism if hallucinated
+
+    print(f"Applying {action_type} for {package_name}@{target_version} to package.json...")
     with open('package.json', 'r') as f:
         pkg = json.load(f)
         
-    if 'overrides' in overrides_json:
-        pkg['overrides'] = pkg.get('overrides', {})
-        pkg['overrides'].update(overrides_json['overrides'])
-    else:
-        pkg['overrides'] = pkg.get('overrides', {})
-        pkg['overrides'].update(overrides_json)
+    pkg[action_type] = pkg.get(action_type, {})
+    pkg[action_type][package_name] = target_version
         
     with open('package.json', 'w') as f:
         json.dump(pkg, f, indent=2)
         
-    print("Successfully applied LLM overrides to package.json.")
+    print("Successfully applied LLM fix to package.json.")
 
 if __name__ == "__main__":
     main()
