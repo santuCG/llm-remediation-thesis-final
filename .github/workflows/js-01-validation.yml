@@ -21,12 +21,10 @@ jobs:
       - name: Phase 1 - Checkout Code
         uses: actions/checkout@v4.1.7
       
-      - name: Phase 1 - Setup Node.js 18.x
+      - name: Setup Node.js
         uses: actions/setup-node@v4.0.3
         with:
           node-version: '18.x'
-          cache: 'npm'
-          cache-dependency-path: applications/juice-shop/package-lock.json
 
       - name: Phase 2 - Establish Baseline (npm ci)
         run: |
