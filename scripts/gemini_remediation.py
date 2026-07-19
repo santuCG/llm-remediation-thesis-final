@@ -69,12 +69,11 @@ Your task is to analyze the vulnerability intelligence and the nested dependency
 ```
 
 ### Security Engineering Challenge
-The standard internet advice is to migrate to a modern alternative package like `isolated-vm` because `vm2` is unmaintained and severely vulnerable. However, you are operating within a strict legacy subgraph. Before enforcing topological changes, you must critically evaluate whether `isolated-vm` can be used as a drop-in replacement (e.g. via npm aliases) without breaking API compatibility or throwing `ERESOLVE` errors during compilation.
+You must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the previous pipeline failed. Furthermore, before recommending your resolution, briefly discuss whether migrating to entirely different modern alternative packages is topologically feasible here (without modifying parent source code), and use that reasoning to justify your final, safest configuration strategy.
 
 Based on the pipeline failure context, the topological subgraph, and the architectural constraint above:
-1. Explain whether migrating to `isolated-vm` natively via package.json is technically feasible without modifying the source code of the parent dependencies.
-2. If it is not feasible, explain why, and deduce the safest semantic version of {package_name} to deploy that actually exists on the public npm registry.
-3. Deduce the exact package.json configuration key required to force this topological resolution natively without breaking the build."""
+1. Deduce the safest semantic version to deploy that actually exists on the public npm registry.
+2. Deduce the exact package.json configuration key required to force this topological resolution natively without breaking the build."""
 
     print("=== DYNAMIC PROMPT FOR LLM LAYER ===")
     print("SYSTEM PROMPT:")
@@ -87,7 +86,7 @@ Based on the pipeline failure context, the topological subgraph, and the archite
     response_schema = {
         "type": "OBJECT",
         "properties": {
-            "reasoning": { "type": "STRING", "description": "Provide a comprehensive architectural analysis. Explain why the naive fix failed, evaluate the feasibility of substituting with isolated-vm, and justify your final topological constraint strategy." },
+            "reasoning": { "type": "STRING", "description": "Provide a comprehensive architectural analysis. Explain why the naive fix failed, evaluate the topological feasibility of substituting with alternative packages entirely, and justify your final constraint strategy." },
             "confidence_score": { "type": "INTEGER", "description": "Confidence score from 0 to 100." },
             "action_type": { "type": "STRING", "description": "The exact package.json key to use (e.g. overrides, resolutions)." },
             "recommended_package_version": { "type": "STRING", "description": "The specific semantic version to enforce. Must exist on the npm registry." },
