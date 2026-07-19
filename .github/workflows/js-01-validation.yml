@@ -40,13 +40,13 @@ jobs:
 
       - name: Phase 4.A - Generate Baseline SBOM (Syft)
         run: |
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v1.9.0
-          syft dir:. -o cyclonedx-json > baseline-sbom.json
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v1.44.0
+          syft dir:. -o spdx-json > baseline-sbom.json
           echo "=== SBOM GENERATED: applications/juice-shop/baseline-sbom.json ==="
 
       - name: Phase 4.B - Scan Baseline (Check for CVE-2023-32314)
         run: |
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.79.1
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.112.0
           GRYPE_DB_VALIDATE_AGE=false grype sbom:baseline-sbom.json -o json > grype.json || true
           echo "=== GRYPE SCAN COMPLETED: applications/juice-shop/grype.json ==="
           echo "--- CVE-2023-32314 MATCH OBJECT ---"
@@ -74,7 +74,7 @@ jobs:
 
       - name: Phase 7 - Scan after Scanner Fix
         run: |
-          syft dir:. -o cyclonedx-json > scanner-sbom.json
+          syft dir:. -o spdx-json > scanner-sbom.json
           echo "=== SBOM GENERATED: applications/juice-shop/scanner-sbom.json ==="
           GRYPE_DB_VALIDATE_AGE=false grype sbom:scanner-sbom.json -o json > grype-scanner.json || true
           echo "=== GRYPE SCAN COMPLETED: applications/juice-shop/grype-scanner.json ==="
@@ -112,7 +112,7 @@ jobs:
 
       - name: Phase 11.A - Generate LLM SBOM
         run: |
-          syft dir:. -o cyclonedx-json > llm-sbom.json
+          syft dir:. -o spdx-json > llm-sbom.json
           echo "=== SBOM GENERATED: applications/juice-shop/llm-sbom.json ==="
 
       - name: Phase 11.B - Scan LLM Remediated Code

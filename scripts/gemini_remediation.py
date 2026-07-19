@@ -4,6 +4,33 @@ import sys
 import urllib.request
 import subprocess
 
+def get_epss_score(cve_id):
+    try:
+        url = f"https://api.first.org/epss?cve={cve_id}"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            if data.get('data'):
+                epss = data['data'][0].get('epss', 'N/A')
+                percentile = data['data'][0].get('percentile', 'N/A')
+                return epss, percentile
+    except Exception as e:
+        print(f"Failed to fetch EPSS for {cve_id}: {e}")
+    return 'N/A', 'N/A'
+
+def get_kev_status(cve_id):
+    try:
+        url = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            for vuln in data.get('vulnerabilities', []):
+                if vuln.get('cveID') == cve_id:
+                    return "TRUE (Actively Exploited)"
+    except Exception as e:
+        print(f"Failed to fetch KEV status: {e}")
+    return "FALSE (Not in CISA KEV)"
+
 def main():
     api_key = os.environ.get('GEMINI_API_KEY')
     if not api_key:
@@ -33,6 +60,10 @@ def main():
     cvss_score = cvss_metrics[0].get('metrics', {}).get('baseScore', 'N/A') if cvss_metrics else 'N/A'
     
     print(f"Targeting: {package_name}@{vulnerable_version} ({cve_id})")
+    
+    print("Fetching EPSS and KEV threat intelligence...")
+    epss_score, epss_percentile = get_epss_score(cve_id)
+    kev_status = get_kev_status(cve_id)
 
     # Read the dynamic pipeline failure context
     pipeline_failure_context = "No specific failure context provided."
@@ -59,6 +90,8 @@ Your task is to analyze the vulnerability intelligence and the nested dependency
 * Vulnerable Version: {vulnerable_version}
 * CVE ID: {cve_id}
 * CVSS Score: {cvss_score}
+* EPSS Probability: {epss_score} (Percentile: {epss_percentile})
+* CISA KEV Status: {kev_status}
 
 ### Pipeline Execution Context
 {pipeline_failure_context}
