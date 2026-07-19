@@ -25,6 +25,8 @@ jobs:
         uses: actions/setup-node@v4.0.3
         with:
           node-version: '18.x'
+          cache: 'npm'
+          cache-dependency-path: applications/juice-shop/package-lock.json
 
       - name: Phase 2 - Establish Baseline (npm ci)
         run: |
@@ -36,13 +38,20 @@ jobs:
         run: |
           echo "Build runs during postinstall"
 
-      - name: Phase 4.A - Generate Baseline SBOM
-        run: npx @cyclonedx/cyclonedx-npm --output-file baseline-sbom.json
+      - name: Phase 4.A - Generate Baseline SBOM (Syft)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v1.9.0
+          syft dir:. -o cyclonedx-json > baseline-sbom.json
+          echo "=== SBOM GENERATED: applications/juice-shop/baseline-sbom.json ==="
 
       - name: Phase 4.B - Scan Baseline (Check for CVE-2023-32314)
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.79.1
           GRYPE_DB_VALIDATE_AGE=false grype sbom:baseline-sbom.json -o json > grype.json || true
+          echo "=== GRYPE SCAN COMPLETED: applications/juice-shop/grype.json ==="
+          echo "--- CVE-2023-32314 MATCH OBJECT ---"
+          jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype.json || true
+          echo "-----------------------------------"
           if jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype.json > /dev/null; then
             echo "Vulnerability found!"
             exit 0
@@ -57,9 +66,6 @@ jobs:
       - name: Phase 5 - Apply Scanner Fix (Direct Bump to 3.9.19)
         id: scanner_fix
         run: |
-          # Grype recommended vm2@3.9.19. We attempt to install it.
-          # In the JS-01 scenario, doing a direct top-level bump succeeds (exit code 0).
-          # However, it causes 'dependency shadowing' where transitive nested versions are not upgraded.
           npm install vm2@3.9.19
 
       - name: Phase 6 - Build with Scanner Fix
@@ -68,8 +74,13 @@ jobs:
 
       - name: Phase 7 - Scan after Scanner Fix
         run: |
-          npx @cyclonedx/cyclonedx-npm --output-file scanner-sbom.json
+          syft dir:. -o cyclonedx-json > scanner-sbom.json
+          echo "=== SBOM GENERATED: applications/juice-shop/scanner-sbom.json ==="
           GRYPE_DB_VALIDATE_AGE=false grype sbom:scanner-sbom.json -o json > grype-scanner.json || true
+          echo "=== GRYPE SCAN COMPLETED: applications/juice-shop/grype-scanner.json ==="
+          echo "--- CVE-2023-32314 MATCH OBJECT ---"
+          jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype-scanner.json || true
+          echo "-----------------------------------"
 
       - name: Assert Scanner Failure (Expected)
         run: |
@@ -97,19 +108,23 @@ jobs:
 
       - name: Phase 10 - Build with LLM Fix
         run: |
-          # Validate that forcing the dependency via overrides did not break compilation
           echo "Build runs during postinstall"
 
       - name: Phase 11.A - Generate LLM SBOM
-        run: npx @cyclonedx/cyclonedx-npm --output-file llm-sbom.json
+        run: |
+          syft dir:. -o cyclonedx-json > llm-sbom.json
+          echo "=== SBOM GENERATED: applications/juice-shop/llm-sbom.json ==="
 
       - name: Phase 11.B - Scan LLM Remediated Code
         run: |
           GRYPE_DB_VALIDATE_AGE=false grype sbom:llm-sbom.json -o json > grype-llm.json || true
+          echo "=== GRYPE SCAN COMPLETED: applications/juice-shop/grype-llm.json ==="
+          echo "--- CVE-2023-32314 MATCH OBJECT ---"
+          jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype-llm.json || echo "No CVE found! Completely eradicated."
+          echo "-----------------------------------"
 
       - name: Phase 12 - Final Verification (Assert Eradication)
         run: |
-          # The LLM fix should have successfully altered the lockfile graph, eradicating the CVE
           if jq -e '.matches[] | select(.vulnerability.id == "GHSA-whpj-8f3w-67p5" or .vulnerability.id == "CVE-2023-32314" or (.relatedVulnerabilities[]?.id == "CVE-2023-32314"))' grype-llm.json > /dev/null; then
             echo "FAILED: CVE-2023-32314 is still present! The LLM failed to remediate the vulnerability."
             exit 1

@@ -68,7 +68,13 @@ Your task is to analyze the vulnerability intelligence and the nested dependency
 {ls_output}
 ```
 
-Based on the pipeline failure and the topological subgraph, deduce the safest semantic version of {package_name} to deploy that actually exists on the public npm registry. Then, deduce the correct package.json configuration key required to force this resolution natively without breaking the build."""
+### Security Engineering Challenge
+The standard internet advice is to migrate to a modern alternative package like `isolated-vm` because `vm2` is unmaintained and severely vulnerable. However, you are operating within a strict legacy subgraph. Before enforcing topological changes, you must critically evaluate whether `isolated-vm` can be used as a drop-in replacement (e.g. via npm aliases) without breaking API compatibility or throwing `ERESOLVE` errors during compilation.
+
+Based on the pipeline failure context, the topological subgraph, and the architectural constraint above:
+1. Explain whether migrating to `isolated-vm` natively via package.json is technically feasible without modifying the source code of the parent dependencies.
+2. If it is not feasible, explain why, and deduce the safest semantic version of {package_name} to deploy that actually exists on the public npm registry.
+3. Deduce the exact package.json configuration key required to force this topological resolution natively without breaking the build."""
 
     print("=== DYNAMIC PROMPT FOR LLM LAYER ===")
     print("SYSTEM PROMPT:")
@@ -81,11 +87,11 @@ Based on the pipeline failure and the topological subgraph, deduce the safest se
     response_schema = {
         "type": "OBJECT",
         "properties": {
-            "reasoning": { "type": "STRING", "description": "Explain why the naive fix failed and why your topological fix is correct." },
+            "reasoning": { "type": "STRING", "description": "Provide a comprehensive architectural analysis. Explain why the naive fix failed, evaluate the feasibility of substituting with isolated-vm, and justify your final topological constraint strategy." },
             "confidence_score": { "type": "INTEGER", "description": "Confidence score from 0 to 100." },
             "action_type": { "type": "STRING", "description": "The exact package.json key to use (e.g. overrides, resolutions)." },
             "recommended_package_version": { "type": "STRING", "description": "The specific semantic version to enforce. Must exist on the npm registry." },
-            "senior_devsecops_recommendation": { "type": "STRING", "description": "A message to junior devs explaining the methodology." }
+            "senior_devsecops_recommendation": { "type": "STRING", "description": "A comprehensive message to junior devs explaining the methodology, the failure of naive updates, and the importance of backward compatibility." }
         },
         "required": ["reasoning", "confidence_score", "action_type", "recommended_package_version", "senior_devsecops_recommendation"]
     }
