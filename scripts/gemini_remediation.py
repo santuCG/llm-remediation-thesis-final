@@ -102,9 +102,11 @@ Your task is to analyze the vulnerability intelligence and the nested dependency
 ```
 
 ### Security Engineering Challenge
-You must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the previous pipeline failed. Furthermore, before recommending your resolution, briefly discuss whether migrating to entirely different modern alternative packages is topologically feasible here (without modifying parent source code), and use that reasoning to justify your final, safest configuration strategy.
+The vulnerable package `{package_name}` is heavily deprecated and no longer maintained. Modern security standards strongly recommend migrating to `isolated-vm` instead of continuing to use `{package_name}`. 
 
-Based on the pipeline failure context, the topological subgraph, and the architectural constraint above:
+You must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the previous naive pipeline fix failed. Furthermore, before recommending your resolution, explicitly reason about the feasibility of swapping `{package_name}` out for `isolated-vm` as a drop-in replacement right now in this automated CI/CD pipeline context without modifying parent source code. Use that reasoning to justify your final configuration strategy.
+
+Based on the pipeline failure context, the topological subgraph, and the constraints above:
 1. Deduce the safest semantic version to deploy that actually exists on the public npm registry.
 2. Deduce the exact package.json configuration key required to force this topological resolution natively without breaking the build."""
 
@@ -195,6 +197,42 @@ Based on the pipeline failure context, the topological subgraph, and the archite
         json.dump(pkg, f, indent=2)
         
     print("Successfully applied LLM fix to package.json.")
+
+    # Surgical lockfile patch to bypass NPM 10 sync bug
+    print("Applying surgical patch to package-lock.json to bypass NPM 10 sync bug...")
+    try:
+        with open('package-lock.json', 'r') as f:
+            lock_json = json.load(f)
+        
+        patched = False
+        if 'packages' in lock_json:
+            for node_path, node_data in lock_json['packages'].items():
+                if node_path.endswith(f"node_modules/{package_name}"):
+                    node_data['version'] = target_version
+                    node_data['resolved'] = f"https://registry.npmjs.org/{package_name}/-/{package_name}-{target_version}.tgz"
+                    patched = True
+                    
+        def update_legacy_deps(deps):
+            nonlocal patched
+            for dep_name, dep_data in deps.items():
+                if dep_name == package_name:
+                    dep_data['version'] = target_version
+                    patched = True
+                if 'dependencies' in dep_data:
+                    update_legacy_deps(dep_data['dependencies'])
+        
+        if 'dependencies' in lock_json:
+            update_legacy_deps(lock_json['dependencies'])
+            
+        if patched:
+            with open('package-lock.json', 'w') as f:
+                json.dump(lock_json, f, indent=2)
+            print("Surgically patched package-lock.json.")
+        else:
+            print("Target package not found in package-lock.json. No surgical patch needed.")
+            
+    except Exception as e:
+        print(f"Failed to patch package-lock.json: {e}")
 
 if __name__ == "__main__":
     main()
