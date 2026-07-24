@@ -92,7 +92,7 @@ jobs:
           echo "Testing..." > ../../test.log
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
-          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)
+          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
 
       - name: Phase 7 - Retry Orchestration (Attempt 2)
         if: failure()
@@ -111,7 +111,7 @@ jobs:
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
           if [ -f ../../metrics.json ]; then
-            python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)
+            python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
           fi
 
       - name: Evidence Collection
