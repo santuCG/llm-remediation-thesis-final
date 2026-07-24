@@ -9,6 +9,10 @@ on:
         description: 'Application Directory (e.g. applications/juice-shop)'
         required: true
         default: 'applications/juice-shop'
+      target_cve:
+        description: 'Target CVE ID or Package to remediate (Optional)'
+        required: false
+        default: ''
 
 jobs:
   orchestrate-remediation:
@@ -16,6 +20,7 @@ jobs:
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      TARGET_CVE: ${{ github.event.inputs.target_cve }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4.1.7

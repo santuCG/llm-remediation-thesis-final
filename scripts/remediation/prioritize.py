@@ -104,7 +104,17 @@ def prioritize_vulnerabilities(matches, ecosystem):
     with open('candidate-ranking.json', 'w') as f:
         json.dump(candidates, f, indent=2)
     
+    import os
+    target_cve = os.environ.get('TARGET_CVE')
     top_candidate = candidates[0]
+    
+    if target_cve:
+        for c in candidates:
+            if c['cve_id'] == target_cve or c['api_cve_id'] == target_cve or c['package_name'] == target_cve:
+                top_candidate = c
+                print(f"[PRIORITIZE] Overriding selection with TARGET_CVE: {target_cve}")
+                break
+                
     print(f"[PRIORITIZE] Selected Top Candidate: {top_candidate['package_name']} ({top_candidate['cve_id']})")
     
     return top_candidate, candidates
