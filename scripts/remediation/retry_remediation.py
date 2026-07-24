@@ -50,7 +50,11 @@ def main():
     if llm_response_valid:
         print(f"\n[ORCHESTRATOR] Refined Strategy Selected: {recommendation.get('strategy')}")
         print("\n=== Phase 5: Applying Refined Recommendation ===")
-        apply_remediation(ecosystem, app_dir, recommendation)
+        try:
+            apply_remediation(ecosystem, app_dir, recommendation)
+        except Exception as e:
+            print(f"[ORCHESTRATOR] Failed to apply remediation on retry (likely invalid JSON in manifest_patch): {e}")
+            llm_response_valid = False
     else:
         print("\n[ORCHESTRATOR] Skipping apply_remediation on retry due to invalid LLM response.")
     
