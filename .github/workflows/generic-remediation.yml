@@ -50,10 +50,10 @@ jobs:
       - name: Phase 2 - Generate SBOM & Scan
         run: |
           cd ${{ github.event.inputs.app_dir }}
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v1.44.0
-          syft dir:. -o spdx-json > ../../baseline-sbom.json
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.112.0
-          GRYPE_DB_VALIDATE_AGE=false grype sbom:../../baseline-sbom.json -o json > ../../grype.json || true
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0
+          ./bin/syft dir:. -o spdx-json > ../../baseline-sbom.json
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json || true
 
       - name: Phase 3 - Orchestrate Remediation (Attempt 1)
         run: |
@@ -87,8 +87,8 @@ jobs:
           # Mock Build/Test for demonstration - parse build.log in reality
           echo "Building..." >> ../../build.log
           echo "Testing..." > ../../test.log
-          syft dir:. -o spdx-json > ../../post-sbom.json
-          GRYPE_DB_VALIDATE_AGE=false grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
+          ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)
 
       - name: Phase 7 - Retry Orchestration (Attempt 2)
@@ -103,8 +103,8 @@ jobs:
             rm -rf node_modules
             npm install > ../../build.log 2>&1
           fi
-          syft dir:. -o spdx-json > ../../post-sbom.json
-          GRYPE_DB_VALIDATE_AGE=false grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
+          ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)
 
       - name: Evidence Collection
