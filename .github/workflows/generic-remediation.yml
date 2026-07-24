@@ -44,7 +44,8 @@ jobs:
         run: |
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
-            npm install > ../../dependency_install.log 2>&1
+            cp ../evidence/juice_shop_package-lock.json package-lock.json || true
+            npm ci > ../../dependency_install.log 2>&1
           elif [ "$ECOSYSTEM" == "python" ]; then
             pip install -r requirements.txt > ../../dependency_install.log 2>&1
           fi
