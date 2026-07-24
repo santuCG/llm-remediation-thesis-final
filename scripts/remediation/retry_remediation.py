@@ -24,6 +24,8 @@ def main():
             candidate = json.load(f)
         with open('metrics.json', 'r') as f:
             metrics = json.load(f)
+            if metrics.get('failure_stage', 'none') != 'none':
+                failure_stage = metrics['failure_stage']
     except Exception as e:
         print(f"[ERROR] Could not load candidate or metrics: {e}")
         sys.exit(1)

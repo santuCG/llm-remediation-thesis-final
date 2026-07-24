@@ -91,7 +91,7 @@ def main():
         "execution_time_seconds": int(time.time() - start_time),
         "retry_count": 0,
         "llm_iteration": 1,
-        "failure_stage": "none"
+        "failure_stage": "llm_parsing" if not llm_response_valid else "none"
     }
     
     with open('metrics.json', 'w') as f:
