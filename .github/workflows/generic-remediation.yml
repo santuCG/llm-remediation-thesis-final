@@ -56,7 +56,7 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0
           ./bin/syft dir:. -o spdx-json > ../../baseline-sbom.json
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0
-          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json || true
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
 
       - name: Phase 3 - Orchestrate Remediation (Attempt 1)
         run: |
@@ -88,10 +88,18 @@ jobs:
         id: build_test
         run: |
           cd ${{ env.APP_DIR }}
-          echo "Building..." >> ../../build.log
-          echo "Testing..." > ../../test.log
+          echo "Validating application functionality..." >> ../../build.log
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend >> ../../build.log 2>&1; fi
+            if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server >> ../../build.log 2>&1; fi
+            if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build >> ../../build.log 2>&1; fi
+            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test > ../../test.log 2>&1 || true; fi
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            if [ -f "pytest.ini" ] || [ -d "tests" ]; then pytest > ../../test.log 2>&1 || true; fi
+          fi
+          
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
-          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
 
       - name: Phase 7 - Retry Orchestration (Attempt 2)
@@ -109,7 +117,7 @@ jobs:
             npm install > ../../build.log 2>&1
           fi
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
-          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           if [ -f ../../metrics.json ]; then
             python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
           fi
@@ -120,6 +128,7 @@ jobs:
           mkdir evidence
           mv baseline-sbom.json evidence/ || true
           mv grype.json evidence/baseline-grype.json || true
+          mv candidate-ranking.json evidence/ || true
           mv selected-candidate.json evidence/ || true
           mv llm-request.json evidence/ || true
           mv llm-response.json evidence/ || true
@@ -127,8 +136,8 @@ jobs:
           mv test.log evidence/ || true
           mv rescan.json evidence/ || true
           mv metrics.json evidence/ || true
-          mv ${{ env.APP_DIR }}/package-before.json evidence/ || true
-          mv ${{ env.APP_DIR }}/package-after.json evidence/ || true
+          mv package-before.json evidence/ || true
+          mv package-after.json evidence/ || true
 
       - name: Upload Evidence Artifact
         uses: actions/upload-artifact@v4

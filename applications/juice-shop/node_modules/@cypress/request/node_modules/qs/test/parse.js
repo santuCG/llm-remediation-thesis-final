@@ -84,6 +84,15 @@ test('parse()', function (t) {
         st.end();
     });
 
+    t.test('correctly computes the remainder when depth is exceeded', function (st) {
+        st.deepEqual(
+            qs.parse('a[b][c][d][e]=f', { depth: 2 }),
+            { a: { b: { c: { '[d][e]': 'f' } } } },
+            'the remainder is "[d][e]", not the full original key'
+        );
+        st.end();
+    });
+
     t.test('uses original key when depth = 0', function (st) {
         st.deepEqual(qs.parse('a[0]=b&a[1]=c', { depth: 0 }), { 'a[0]': 'b', 'a[1]': 'c' });
         st.deepEqual(qs.parse('a[0][0]=b&a[0][1]=c&a[1]=d&e=2', { depth: 0 }), { 'a[0][0]': 'b', 'a[0][1]': 'c', 'a[1]': 'd', e: '2' });

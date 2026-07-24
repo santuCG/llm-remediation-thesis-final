@@ -27,7 +27,8 @@ def apply_remediation(ecosystem, app_dir, recommendation):
                     else:
                         pkg[key] = val
             except json.JSONDecodeError:
-                print("[WARN] manifest_patch is not valid JSON. Trying to interpret as raw string replacement if needed.")
+                print("[ERROR] manifest_patch is not valid JSON. Rejecting LLM response.")
+                raise ValueError("manifest_patch must be valid JSON.")
                 
             with open('package.json', 'w') as f:
                 json.dump(pkg, f, indent=2)

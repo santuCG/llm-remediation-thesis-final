@@ -1,0 +1,12 @@
+{
+  "cve_id": "GHSA-47x8-96vw-5wg6",
+  "package_name": "vm2",
+  "vulnerable_version": "3.9.17",
+  "severity": "critical",
+  "cvss": 10,
+  "epss": 0.0,
+  "kev": false,
+  "fixed_versions": [
+    "3.11.0"
+  ]
+}

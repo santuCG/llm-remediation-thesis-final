@@ -1,0 +1,264 @@
+﻿2026-07-24T19:22:58.0745650Z Current runner version: '2.335.1'
+2026-07-24T19:22:58.0787761Z ##[group]Runner Image Provisioner
+2026-07-24T19:22:58.0789697Z Hosted Compute Agent
+2026-07-24T19:22:58.0790770Z Version: 20260707.563
+2026-07-24T19:22:58.0791860Z Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+2026-07-24T19:22:58.0793305Z Build Date: 2026-07-07T19:33:50Z
+2026-07-24T19:22:58.0794593Z Worker ID: {d8038cfa-1319-4833-a1be-5cb734dbf81f}
+2026-07-24T19:22:58.0795966Z Azure Region: westus
+2026-07-24T19:22:58.0797008Z ##[endgroup]
+2026-07-24T19:22:58.0799913Z ##[group]Operating System
+2026-07-24T19:22:58.0801136Z Ubuntu
+2026-07-24T19:22:58.0802042Z 24.04.4
+2026-07-24T19:22:58.0803057Z LTS
+2026-07-24T19:22:58.0804006Z ##[endgroup]
+2026-07-24T19:22:58.0804954Z ##[group]Runner Image
+2026-07-24T19:22:58.0806921Z Image: ubuntu-24.04
+2026-07-24T19:22:58.0808023Z Version: 20260720.247.2
+2026-07-24T19:22:58.0810763Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+2026-07-24T19:22:58.0813596Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+2026-07-24T19:22:58.0815522Z ##[endgroup]
+2026-07-24T19:22:58.0817717Z ##[group]GITHUB_TOKEN Permissions
+2026-07-24T19:22:58.0821496Z Contents: read
+2026-07-24T19:22:58.0822557Z Metadata: read
+2026-07-24T19:22:58.0823521Z Packages: read
+2026-07-24T19:22:58.0824701Z ##[endgroup]
+2026-07-24T19:22:58.0842337Z Secret source: Actions
+2026-07-24T19:22:58.0843810Z Prepare workflow directory
+2026-07-24T19:22:58.1756346Z Prepare all required actions
+2026-07-24T19:22:58.1835736Z Getting action download info
+2026-07-24T19:22:58.5874836Z Download action repository 'actions/checkout@v4.1.7' (SHA:692973e3d937129bcbf40652eb9f2f61becf3332)
+2026-07-24T19:22:58.7958824Z Download action repository 'actions/setup-node@v4.0.3' (SHA:1e60f620b9541d16bece96c5465dc8ee9832be0b)
+2026-07-24T19:22:59.3299461Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-07-24T19:22:59.5734961Z Complete job name: orchestrate-remediation
+2026-07-24T19:22:59.6593176Z ##[group]Run actions/checkout@v4.1.7
+2026-07-24T19:22:59.6594384Z with:
+2026-07-24T19:22:59.6595042Z   repository: santuCG/llm-remediation-thesis-final
+2026-07-24T19:22:59.6604101Z   token: ***
+2026-07-24T19:22:59.6604650Z   ssh-strict: true
+2026-07-24T19:22:59.6605215Z   ssh-user: git
+2026-07-24T19:22:59.6605778Z   persist-credentials: true
+2026-07-24T19:22:59.6606448Z   clean: true
+2026-07-24T19:22:59.6607018Z   sparse-checkout-cone-mode: true
+2026-07-24T19:22:59.6607839Z   fetch-depth: 1
+2026-07-24T19:22:59.6608576Z   fetch-tags: false
+2026-07-24T19:22:59.6609150Z   show-progress: true
+2026-07-24T19:22:59.6609748Z   lfs: false
+2026-07-24T19:22:59.6610269Z   submodules: false
+2026-07-24T19:22:59.6610846Z   set-safe-directory: true
+2026-07-24T19:22:59.6611832Z env:
+2026-07-24T19:22:59.6612411Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:22:59.6613636Z   GEMINI_API_KEY: ***
+2026-07-24T19:22:59.6614196Z ##[endgroup]
+2026-07-24T19:22:59.8019208Z Syncing repository: santuCG/llm-remediation-thesis-final
+2026-07-24T19:22:59.8023402Z ##[group]Getting Git version info
+2026-07-24T19:22:59.8028449Z Working directory is '/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final'
+2026-07-24T19:22:59.8032021Z [command]/usr/bin/git version
+2026-07-24T19:22:59.8136348Z git version 2.54.0
+2026-07-24T19:22:59.8140632Z ##[endgroup]
+2026-07-24T19:22:59.8233542Z Temporarily overriding HOME='/home/runner/work/_temp/05589f67-318f-4e59-82d5-a8c732d702eb' before making global git config changes
+2026-07-24T19:22:59.8238838Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-24T19:22:59.8245601Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final
+2026-07-24T19:22:59.8353467Z Deleting the contents of '/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final'
+2026-07-24T19:22:59.8361061Z ##[group]Initializing the repository
+2026-07-24T19:22:59.8367407Z [command]/usr/bin/git init /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final
+2026-07-24T19:22:59.8468999Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-07-24T19:22:59.8491146Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-07-24T19:22:59.8500363Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-07-24T19:22:59.8506765Z hint: call:
+2026-07-24T19:22:59.8508736Z hint:
+2026-07-24T19:22:59.8529602Z hint: 	git config --global init.defaultBranch <name>
+2026-07-24T19:22:59.8544280Z hint:
+2026-07-24T19:22:59.8546476Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-07-24T19:22:59.8550114Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-07-24T19:22:59.8552484Z hint:
+2026-07-24T19:22:59.8554016Z hint: 	git branch -m <name>
+2026-07-24T19:22:59.8555587Z hint:
+2026-07-24T19:22:59.8566319Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-07-24T19:22:59.8571059Z Initialized empty Git repository in /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/.git/
+2026-07-24T19:22:59.8578996Z [command]/usr/bin/git remote add origin https://github.com/santuCG/llm-remediation-thesis-final
+2026-07-24T19:22:59.8585527Z ##[endgroup]
+2026-07-24T19:22:59.8587916Z ##[group]Disabling automatic garbage collection
+2026-07-24T19:22:59.8592163Z [command]/usr/bin/git config --local gc.auto 0
+2026-07-24T19:22:59.8638448Z ##[endgroup]
+2026-07-24T19:22:59.8639998Z ##[group]Setting up auth
+2026-07-24T19:22:59.8641604Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-24T19:22:59.8765583Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-24T19:22:59.9343531Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-24T19:22:59.9350828Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-24T19:22:59.9574378Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-07-24T19:22:59.9621249Z ##[endgroup]
+2026-07-24T19:22:59.9623226Z ##[group]Fetching the repository
+2026-07-24T19:22:59.9635469Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +20aef49e4e2bc811c13a4d8e0122efd3e7b31d5b:refs/remotes/origin/main
+2026-07-24T19:23:02.7440391Z From https://github.com/santuCG/llm-remediation-thesis-final
+2026-07-24T19:23:02.7459299Z  * [new ref]         20aef49e4e2bc811c13a4d8e0122efd3e7b31d5b -> origin/main
+2026-07-24T19:23:02.7488115Z ##[endgroup]
+2026-07-24T19:23:02.7489904Z ##[group]Determining the checkout info
+2026-07-24T19:23:02.7491128Z ##[endgroup]
+2026-07-24T19:23:02.7500224Z [command]/usr/bin/git sparse-checkout disable
+2026-07-24T19:23:02.7574946Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-07-24T19:23:02.7614740Z ##[group]Checking out the ref
+2026-07-24T19:23:02.7618496Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-07-24T19:23:03.4832638Z Switched to a new branch 'main'
+2026-07-24T19:23:03.4852582Z branch 'main' set up to track 'origin/main'.
+2026-07-24T19:23:03.4885549Z ##[endgroup]
+2026-07-24T19:23:03.5036008Z [command]/usr/bin/git log -1 --format='%H'
+2026-07-24T19:23:03.5037302Z '20aef49e4e2bc811c13a4d8e0122efd3e7b31d5b'
+2026-07-24T19:23:03.5236113Z ##[group]Run APP_DIR=""
+2026-07-24T19:23:03.5236491Z [36;1mAPP_DIR=""[0m
+2026-07-24T19:23:03.5236875Z [36;1mif [ -z "$APP_DIR" ]; then APP_DIR="applications/juice-shop"; fi[0m
+2026-07-24T19:23:03.5237614Z [36;1mecho "APP_DIR=$APP_DIR" >> $GITHUB_ENV[0m
+2026-07-24T19:23:03.5237992Z [36;1mif [ -f "$APP_DIR/package.json" ]; then[0m
+2026-07-24T19:23:03.5238789Z [36;1m  echo "ECOSYSTEM=npm" >> $GITHUB_ENV[0m
+2026-07-24T19:23:03.5239171Z [36;1melif [ -f "$APP_DIR/requirements.txt" ]; then[0m
+2026-07-24T19:23:03.5239547Z [36;1m  echo "ECOSYSTEM=python" >> $GITHUB_ENV[0m
+2026-07-24T19:23:03.5239863Z [36;1melse[0m
+2026-07-24T19:23:03.5240123Z [36;1m  echo "ECOSYSTEM=unknown" >> $GITHUB_ENV[0m
+2026-07-24T19:23:03.5240436Z [36;1mfi[0m
+2026-07-24T19:23:03.5291174Z shell: /usr/bin/bash -e {0}
+2026-07-24T19:23:03.5291526Z env:
+2026-07-24T19:23:03.5291827Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:03.5292484Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:03.5292861Z ##[endgroup]
+2026-07-24T19:23:03.5577834Z ##[group]Run actions/setup-node@v4.0.3
+2026-07-24T19:23:03.5578386Z with:
+2026-07-24T19:23:03.5578612Z   node-version: 18.x
+2026-07-24T19:23:03.5578848Z   always-auth: false
+2026-07-24T19:23:03.5579099Z   check-latest: false
+2026-07-24T19:23:03.5581510Z   token: ***
+2026-07-24T19:23:03.5581721Z env:
+2026-07-24T19:23:03.5581962Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:03.5582362Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:03.5582612Z   APP_DIR: applications/juice-shop
+2026-07-24T19:23:03.5582882Z   ECOSYSTEM: npm
+2026-07-24T19:23:03.5583091Z ##[endgroup]
+2026-07-24T19:23:03.8039954Z Attempting to download 18.x...
+2026-07-24T19:23:04.4917295Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2026-07-24T19:23:05.0905554Z Extracting ...
+2026-07-24T19:23:05.1037037Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/bfe7467a-9f01-4251-b2f6-5e5a1091ecca -f /home/runner/work/_temp/929d3cbd-7225-42fc-aa0c-0aa04ae872b6
+2026-07-24T19:23:06.2250266Z Adding to the cache ...
+2026-07-24T19:23:08.4313326Z ##[group]Environment details
+2026-07-24T19:23:08.7320078Z node: v18.20.8
+2026-07-24T19:23:08.7320944Z npm: 10.8.2
+2026-07-24T19:23:08.7321631Z yarn: 1.22.22
+2026-07-24T19:23:08.7322625Z ##[endgroup]
+2026-07-24T19:23:08.7484881Z ##[group]Run cd applications/juice-shop
+2026-07-24T19:23:08.7485284Z [36;1mcd applications/juice-shop[0m
+2026-07-24T19:23:08.7485606Z [36;1mif [ "$ECOSYSTEM" == "npm" ]; then[0m
+2026-07-24T19:23:08.7486085Z [36;1m  cp ../../evidence/juice_shop_package-lock.json package-lock.json || true[0m
+2026-07-24T19:23:08.7486591Z [36;1m  npm ci > ../../dependency_install.log 2>&1[0m
+2026-07-24T19:23:08.7486975Z [36;1melif [ "$ECOSYSTEM" == "python" ]; then[0m
+2026-07-24T19:23:08.7487434Z [36;1m  pip install -r requirements.txt > ../../dependency_install.log 2>&1[0m
+2026-07-24T19:23:08.7487857Z [36;1mfi[0m
+2026-07-24T19:23:08.7534924Z shell: /usr/bin/bash -e {0}
+2026-07-24T19:23:08.7535231Z env:
+2026-07-24T19:23:08.7535518Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:08.7536096Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:08.7536411Z   APP_DIR: applications/juice-shop
+2026-07-24T19:23:08.7536738Z   ECOSYSTEM: npm
+2026-07-24T19:23:08.7536998Z ##[endgroup]
+2026-07-24T19:23:08.7630321Z cp: cannot stat '../../evidence/juice_shop_package-lock.json': No such file or directory
+2026-07-24T19:23:09.2541854Z ##[error]Process completed with exit code 1.
+2026-07-24T19:23:09.2604866Z ##[group]Run cd applications/juice-shop
+2026-07-24T19:23:09.2605238Z [36;1mcd applications/juice-shop[0m
+2026-07-24T19:23:09.2605908Z [36;1mecho "Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration."[0m
+2026-07-24T19:23:09.2606598Z [36;1mif [ "$ECOSYSTEM" == "npm" ]; then[0m
+2026-07-24T19:23:09.2606891Z [36;1m  rm package-lock.json[0m
+2026-07-24T19:23:09.2607153Z [36;1m  rm -rf node_modules[0m
+2026-07-24T19:23:09.2607428Z [36;1m  npm install > ../../build.log 2>&1[0m
+2026-07-24T19:23:09.2607706Z [36;1mfi[0m
+2026-07-24T19:23:09.2608090Z [36;1msed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json[0m
+2026-07-24T19:23:09.2653298Z shell: /usr/bin/bash -e {0}
+2026-07-24T19:23:09.2653593Z env:
+2026-07-24T19:23:09.2653857Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:09.2654399Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:09.2654713Z   APP_DIR: applications/juice-shop
+2026-07-24T19:23:09.2655016Z   ECOSYSTEM: npm
+2026-07-24T19:23:09.2655252Z ##[endgroup]
+2026-07-24T19:23:09.2726383Z Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration.
+2026-07-24T19:23:09.2739165Z rm: cannot remove 'package-lock.json': No such file or directory
+2026-07-24T19:23:09.2742990Z ##[error]Process completed with exit code 1.
+2026-07-24T19:23:09.2773916Z ##[group]Run echo "Failure detected. Capturing logs and performing Retry Iteration."
+2026-07-24T19:23:09.2774546Z [36;1mecho "Failure detected. Capturing logs and performing Retry Iteration."[0m
+2026-07-24T19:23:09.2775189Z [36;1mpython scripts/remediation/retry_remediation.py $ECOSYSTEM applications/juice-shop build[0m
+2026-07-24T19:23:09.2775674Z [36;1m[0m
+2026-07-24T19:23:09.2775899Z [36;1mcd applications/juice-shop[0m
+2026-07-24T19:23:09.2776186Z [36;1mif [ "$ECOSYSTEM" == "npm" ]; then[0m
+2026-07-24T19:23:09.2776478Z [36;1m  rm package-lock.json[0m
+2026-07-24T19:23:09.2776748Z [36;1m  rm -rf node_modules[0m
+2026-07-24T19:23:09.2777022Z [36;1m  npm install > ../../build.log 2>&1[0m
+2026-07-24T19:23:09.2777302Z [36;1mfi[0m
+2026-07-24T19:23:09.2777564Z [36;1m./bin/syft dir:. -o spdx-json > ../../post-sbom.json[0m
+2026-07-24T19:23:09.2778454Z [36;1mGRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json || true[0m
+2026-07-24T19:23:09.2779246Z [36;1mpython ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)[0m
+2026-07-24T19:23:09.2822899Z shell: /usr/bin/bash -e {0}
+2026-07-24T19:23:09.2823203Z env:
+2026-07-24T19:23:09.2823464Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:09.2824012Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:09.2824291Z   APP_DIR: applications/juice-shop
+2026-07-24T19:23:09.2824594Z   ECOSYSTEM: npm
+2026-07-24T19:23:09.2824829Z ##[endgroup]
+2026-07-24T19:23:09.2897058Z Failure detected. Capturing logs and performing Retry Iteration.
+2026-07-24T19:23:09.3403266Z === LLM Retry Triggered (Failure Stage: build) ===
+2026-07-24T19:23:09.3404857Z [ERROR] Could not load candidate or metrics: [Errno 2] No such file or directory: 'selected-candidate.json'
+2026-07-24T19:23:09.3482339Z ##[error]Process completed with exit code 1.
+2026-07-24T19:23:09.3514515Z ##[group]Run mkdir evidence
+2026-07-24T19:23:09.3514975Z [36;1mmkdir evidence[0m
+2026-07-24T19:23:09.3515292Z [36;1mmv baseline-sbom.json evidence/ || true[0m
+2026-07-24T19:23:09.3515734Z [36;1mmv grype.json evidence/baseline-grype.json || true[0m
+2026-07-24T19:23:09.3516191Z [36;1mmv selected-candidate.json evidence/ || true[0m
+2026-07-24T19:23:09.3516607Z [36;1mmv llm-request.json evidence/ || true[0m
+2026-07-24T19:23:09.3516989Z [36;1mmv llm-response.json evidence/ || true[0m
+2026-07-24T19:23:09.3517348Z [36;1mmv build.log evidence/ || true[0m
+2026-07-24T19:23:09.3517682Z [36;1mmv test.log evidence/ || true[0m
+2026-07-24T19:23:09.3518009Z [36;1mmv rescan.json evidence/ || true[0m
+2026-07-24T19:23:09.3518814Z [36;1mmv metrics.json evidence/ || true[0m
+2026-07-24T19:23:09.3519311Z [36;1mmv applications/juice-shop/package-before.json evidence/ || true[0m
+2026-07-24T19:23:09.3519933Z [36;1mmv applications/juice-shop/package-after.json evidence/ || true[0m
+2026-07-24T19:23:09.3564477Z shell: /usr/bin/bash -e {0}
+2026-07-24T19:23:09.3564794Z env:
+2026-07-24T19:23:09.3565076Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:09.3565669Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:09.3565972Z   APP_DIR: applications/juice-shop
+2026-07-24T19:23:09.3566309Z   ECOSYSTEM: npm
+2026-07-24T19:23:09.3566736Z ##[endgroup]
+2026-07-24T19:23:09.3665351Z mv: cannot stat 'baseline-sbom.json': No such file or directory
+2026-07-24T19:23:09.3680710Z mv: cannot stat 'grype.json': No such file or directory
+2026-07-24T19:23:09.3695151Z mv: cannot stat 'selected-candidate.json': No such file or directory
+2026-07-24T19:23:09.3710291Z mv: cannot stat 'llm-request.json': No such file or directory
+2026-07-24T19:23:09.3724513Z mv: cannot stat 'llm-response.json': No such file or directory
+2026-07-24T19:23:09.3738442Z mv: cannot stat 'build.log': No such file or directory
+2026-07-24T19:23:09.3752180Z mv: cannot stat 'test.log': No such file or directory
+2026-07-24T19:23:09.3766690Z mv: cannot stat 'rescan.json': No such file or directory
+2026-07-24T19:23:09.3781207Z mv: cannot stat 'metrics.json': No such file or directory
+2026-07-24T19:23:09.3794686Z mv: cannot stat 'applications/juice-shop/package-before.json': No such file or directory
+2026-07-24T19:23:09.3809101Z mv: cannot stat 'applications/juice-shop/package-after.json': No such file or directory
+2026-07-24T19:23:09.3893132Z ##[group]Run actions/upload-artifact@v4
+2026-07-24T19:23:09.3893444Z with:
+2026-07-24T19:23:09.3893653Z   name: remediation-evidence
+2026-07-24T19:23:09.3893901Z   path: evidence/
+2026-07-24T19:23:09.3894127Z   if-no-files-found: warn
+2026-07-24T19:23:09.3894391Z   compression-level: 6
+2026-07-24T19:23:09.3894619Z   overwrite: false
+2026-07-24T19:23:09.3894842Z   include-hidden-files: false
+2026-07-24T19:23:09.3895084Z env:
+2026-07-24T19:23:09.3895314Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-24T19:23:09.3895808Z   GEMINI_API_KEY: ***
+2026-07-24T19:23:09.3896045Z   APP_DIR: applications/juice-shop
+2026-07-24T19:23:09.3896310Z   ECOSYSTEM: npm
+2026-07-24T19:23:09.3896521Z ##[endgroup]
+2026-07-24T19:23:09.6710250Z ##[warning]No files were found with the provided path: evidence/. No artifacts will be uploaded.
+2026-07-24T19:23:09.6997314Z Post job cleanup.
+2026-07-24T19:23:09.8249064Z [command]/usr/bin/git version
+2026-07-24T19:23:09.8309207Z git version 2.54.0
+2026-07-24T19:23:09.8421183Z Temporarily overriding HOME='/home/runner/work/_temp/92aabbdd-e5db-4e94-b601-8db431b6e5a4' before making global git config changes
+2026-07-24T19:23:09.8431742Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-24T19:23:09.8435536Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final
+2026-07-24T19:23:09.8539537Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-24T19:23:09.8597429Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-24T19:23:09.9039664Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-07-24T19:23:09.9089235Z http.https://github.com/.extraheader
+2026-07-24T19:23:09.9149416Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-07-24T19:23:09.9238500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-07-24T19:23:10.0103559Z Cleaning up orphan processes
+2026-07-24T19:23:10.0287480Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4.1.7, actions/setup-node@v4.0.3, actions/upload-artifact@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

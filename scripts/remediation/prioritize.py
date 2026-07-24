@@ -1,10 +1,11 @@
 import urllib.request
 import json
 import ssl
+from datetime import datetime, timezone
 
 def get_epss_score(cve_id):
     try:
-        url = f"https://api.first.org/epss?cve={cve_id}"
+        url = f"https://api.first.org/data/v1/epss?cve={cve_id}"
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         context = ssl._create_unverified_context()
         with urllib.request.urlopen(req, context=context) as response:
@@ -33,7 +34,6 @@ def get_kev_status(cve_id):
 def prioritize_vulnerabilities(matches, ecosystem):
     candidates = []
     
-    # Pre-fetch KEV once if possible, or fetch per CVE
     kev_cache = {}
     epss_cache = {}
     
@@ -67,30 +67,44 @@ def prioritize_vulnerabilities(matches, ecosystem):
         if cvss_metrics:
             cvss_score = cvss_metrics[0].get('metrics', {}).get('baseScore', 0.0)
             
-        if cve_id not in kev_cache:
-            kev_cache[cve_id] = get_kev_status(cve_id)
-        if cve_id not in epss_cache:
-            epss_cache[cve_id] = get_epss_score(cve_id)
+        # Find explicit CVE ID for API queries if the primary is GHSA
+        api_cve_id = cve_id
+        if not cve_id.startswith('CVE-'):
+            for rel in match.get('relatedVulnerabilities', []):
+                rel_id = rel.get('id', '')
+                if rel_id.startswith('CVE-'):
+                    api_cve_id = rel_id
+                    break
+            
+        if api_cve_id not in kev_cache:
+            kev_cache[api_cve_id] = get_kev_status(api_cve_id)
+        if api_cve_id not in epss_cache:
+            epss_cache[api_cve_id] = get_epss_score(api_cve_id)
             
         candidates.append({
             'cve_id': cve_id,
+            'api_cve_id': api_cve_id,
             'package_name': artifact.get('name'),
             'vulnerable_version': artifact.get('version'),
             'severity': severity,
             'cvss': cvss_score,
-            'epss': epss_cache[cve_id],
-            'kev': kev_cache[cve_id],
+            'epss': epss_cache[api_cve_id],
+            'epss_timestamp': datetime.now(timezone.utc).isoformat(),
+            'kev': kev_cache[api_cve_id],
             'fixed_versions': fix.get('versions', [])
         })
 
     if not candidates:
         print("[PRIORITIZE] No automatically remediable candidates found.")
-        return None
+        return None, candidates
 
     # Sorting Logic: KEV (True) -> EPSS (Descending) -> CVSS (Descending)
     candidates.sort(key=lambda x: (x['kev'], x['epss'], x['cvss']), reverse=True)
     
+    with open('candidate-ranking.json', 'w') as f:
+        json.dump(candidates, f, indent=2)
+    
     top_candidate = candidates[0]
     print(f"[PRIORITIZE] Selected Top Candidate: {top_candidate['package_name']} ({top_candidate['cve_id']})")
     
-    return top_candidate
+    return top_candidate, candidates

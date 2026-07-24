@@ -283,5 +283,10 @@
       "angular",
       "inject"
     ]
+  },
+  "overrides": {
+    "juicy-chat-bot": {
+      "vm2": "3.9.18"
+    }
   }
 }

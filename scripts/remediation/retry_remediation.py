@@ -39,12 +39,20 @@ def main():
     context = get_context(ecosystem, candidate['package_name'], app_dir)
     
     print("\n=== Phase 4: LLM Reasoning (Attempt 2) ===")
-    recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=True, failure_logs=failure_logs)
+    try:
+        recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=True, failure_logs=failure_logs)
+        llm_response_valid = True
+    except Exception as e:
+        print(f"[ORCHESTRATOR] LLM failed to return valid response on retry: {e}")
+        llm_response_valid = False
+        recommendation = {}
     
-    print(f"\n[ORCHESTRATOR] Refined Strategy Selected: {recommendation.get('strategy')}")
-    
-    print("\n=== Phase 5: Applying Refined Recommendation ===")
-    apply_remediation(ecosystem, app_dir, recommendation)
+    if llm_response_valid:
+        print(f"\n[ORCHESTRATOR] Refined Strategy Selected: {recommendation.get('strategy')}")
+        print("\n=== Phase 5: Applying Refined Recommendation ===")
+        apply_remediation(ecosystem, app_dir, recommendation)
+    else:
+        print("\n[ORCHESTRATOR] Skipping apply_remediation on retry due to invalid LLM response.")
     
     # Update metrics
     metrics['retry_count'] = 1
@@ -52,9 +60,13 @@ def main():
     metrics['failure_stage'] = failure_stage
     metrics['strategy'] = recommendation.get('strategy', '')
     metrics['confidence'] = recommendation.get('confidence_score', 0)
+    metrics['llm_response_valid'] = llm_response_valid
     
     with open('metrics.json', 'w') as f:
         json.dump(metrics, f, indent=2)
+        
+    if not llm_response_valid:
+        sys.exit(1)
         
     print("\n=== Orchestration Complete for Attempt 2 ===")
 

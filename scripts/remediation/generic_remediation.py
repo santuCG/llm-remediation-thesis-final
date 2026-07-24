@@ -26,7 +26,7 @@ def main():
         sys.exit(0)
         
     print("\n=== Phase 2: Prioritization ===")
-    candidate = prioritize_vulnerabilities(matches, ecosystem)
+    candidate, all_candidates = prioritize_vulnerabilities(matches, ecosystem)
     if not candidate:
         print("No automatically remediable candidates found.")
         sys.exit(0)
@@ -39,14 +39,23 @@ def main():
     context = get_context(ecosystem, candidate['package_name'], app_dir)
     
     print("\n=== Phase 4: LLM Reasoning (Attempt 1) ===")
-    recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=False)
+    try:
+        recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=False)
+        llm_response_valid = True
+    except Exception as e:
+        print(f"[ORCHESTRATOR] LLM failed to return valid response: {e}")
+        llm_response_valid = False
+        recommendation = {}
     
-    print(f"\n[ORCHESTRATOR] Strategy Selected: {recommendation.get('strategy')}")
-    print(f"[ORCHESTRATOR] Remediation Type: {recommendation.get('remediation_type')}")
-    print(f"[ORCHESTRATOR] Confidence: {recommendation.get('confidence_score')}")
-    
-    print("\n=== Phase 5: Applying Recommendation ===")
-    apply_remediation(ecosystem, app_dir, recommendation)
+    if llm_response_valid:
+        print(f"\n[ORCHESTRATOR] Strategy Selected: {recommendation.get('strategy')}")
+        print(f"[ORCHESTRATOR] Remediation Type: {recommendation.get('remediation_type')}")
+        print(f"[ORCHESTRATOR] Confidence: {recommendation.get('confidence_score')}")
+        
+        print("\n=== Phase 5: Applying Recommendation ===")
+        apply_remediation(ecosystem, app_dir, recommendation)
+    else:
+        print("\n[ORCHESTRATOR] Skipping apply_remediation due to invalid LLM response.")
     
     print("\n=== Phase 6: Orchestration Complete for Attempt 1 ===")
     print("The pipeline will now proceed with native package manager resolution and validation.")
@@ -55,16 +64,20 @@ def main():
     metrics = {
         "application": app_dir,
         "ecosystem": ecosystem,
+        "candidate_count": len(all_candidates),
         "selected_package": candidate['package_name'],
         "selected_cve": candidate['cve_id'],
+        "api_cve_id": candidate.get('api_cve_id', ''),
         "severity": candidate['severity'],
         "cvss": candidate['cvss'],
         "epss": candidate['epss'],
-        "kev": candidate['kev'],
+        "epss_timestamp": candidate.get('epss_timestamp', ''),
+        "kev_status": candidate['kev'],
         "dependency_type": "nested" if "node_modules" in candidate['package_name'] else "direct",
         "strategy": recommendation.get('strategy', ''),
         "confidence": recommendation.get('confidence_score', 0),
         "remediation_type": recommendation.get('remediation_type', ''),
+        "llm_response_valid": llm_response_valid,
         "build_success": False,
         "test_success": False,
         "dependency_verified": False,
@@ -79,6 +92,9 @@ def main():
     
     with open('metrics.json', 'w') as f:
         json.dump(metrics, f, indent=2)
+        
+    if not llm_response_valid:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

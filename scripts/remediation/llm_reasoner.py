@@ -64,6 +64,7 @@ Based on the vulnerability intelligence and context:
             "temperature": 0.0,
             "topP": 1.0,
             "topK": 1,
+            "seed": 42,
             "responseMimeType": "application/json",
             "responseSchema": response_schema
         }
