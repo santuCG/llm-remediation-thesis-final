@@ -1,65 +1,17 @@
-# Behavioral Guidelines (CLAUDE.md)
+## LLM Remediation Thesis Methodology Rules
 
-Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
+1. **Lockfile Integrity:** Only package managers should generate lockfiles. The pipeline must NEVER perform AST editing or lockfile surgery in Python. Phase 1 applies changes to the manifest and runs native resolution. Phase 2 (Fallback) deletes the lockfile/node_modules and regenerates it purely via package manager, documenting the fallback in evidence.
 
-**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+2. **Filtering Logic:** Vulnerabilities must be filtered by: Severity >= High AND Automatically Remediable (Fixed version available AND Supported ecosystem AND Package manager supports upgrade path AND No manual source code modification required AND Not Ignored).
 
-## 1. Think Before Coding
+3. **Prioritization:** Sort strictly by KEV (True) -> EPSS (Descending) -> CVSS (Descending). Select the Top 1 Remediable Candidate.
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
+4. **Unbiased Reasoning:** LLM prompts must NOT bias the model towards any specific fix (e.g., do not suggest a specific alternative package like isolated-vm). Ask the model to evaluate all technically feasible strategies (native upgrades, overrides, replacements, etc.) and recommend the safest compatible strategy.
 
-Before implementing:
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
+5. **Strict Retries:** Maximum ONE retry. Flow: LLM Recommendation #1 -> Apply -> Verify/Build/Test. If failure occurs at any stage -> Capture Logs -> LLM Recommendation #2 (Refined) -> Apply -> Verify/Build/Test. If failure again -> Fail Experiment.
 
-## 2. Simplicity First
+6. **Enriched Context:** Always collect deep context for the LLM: 
+pm ls --json, 
+pm explain, package.json, package-lock.json, grype.json, SBOM, and build logs.
 
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
-
-## 3. Surgical Changes
-
-**Touch only what you must. Clean up only your own mess.**
-
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
-
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
-
-## 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
-
----
-
-**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+7. **Enriched Metrics:** Ensure metrics.json captures Application, Ecosystem, Selected Package, CVE, Severity, CVSS, EPSS, KEV, Dependency Type, Strategy, Confidence, Remediation Type, Boolean Success Flags, lockfile_regenerated, execution_time_seconds, retry_count, llm_iteration, and failure_stage.

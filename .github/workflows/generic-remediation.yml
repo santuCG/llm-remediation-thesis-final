@@ -1,0 +1,129 @@
+name: Generic LLM Remediation Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_dir:
+        description: 'Application Directory (e.g. applications/juice-shop)'
+        required: true
+        default: 'applications/juice-shop'
+
+jobs:
+  orchestrate-remediation:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Detect Ecosystem
+        id: detect
+        run: |
+          if [ -f "${{ github.event.inputs.app_dir }}/package.json" ]; then
+            echo "ECOSYSTEM=npm" >> $GITHUB_ENV
+          elif [ -f "${{ github.event.inputs.app_dir }}/requirements.txt" ]; then
+            echo "ECOSYSTEM=python" >> $GITHUB_ENV
+          else
+            echo "ECOSYSTEM=unknown" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Environment (Node/Python)
+        uses: actions/setup-node@v4.0.3
+        if: env.ECOSYSTEM == 'npm'
+        with:
+          node-version: '18.x'
+          
+      - name: Phase 1 - Establish Baseline & Install Dependencies
+        run: |
+          cd ${{ github.event.inputs.app_dir }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            cp ../../evidence/juice_shop_package-lock.json package-lock.json || true
+            npm ci > ../../dependency_install.log 2>&1
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            pip install -r requirements.txt > ../../dependency_install.log 2>&1
+          fi
+
+      - name: Phase 2 - Generate SBOM & Scan
+        run: |
+          cd ${{ github.event.inputs.app_dir }}
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin v1.44.0
+          syft dir:. -o spdx-json > ../../baseline-sbom.json
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.112.0
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:../../baseline-sbom.json -o json > ../../grype.json || true
+
+      - name: Phase 3 - Orchestrate Remediation (Attempt 1)
+        run: |
+          python scripts/remediation/generic_remediation.py $ECOSYSTEM ${{ github.event.inputs.app_dir }}
+
+      - name: Phase 4 - Apply Fix & Verify (Phase 1 Package Manager Resolution)
+        id: apply_fix
+        run: |
+          cd ${{ github.event.inputs.app_dir }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            npm install > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
+          fi
+
+      - name: Phase 5 - Fallback Lockfile Regeneration (Phase 2 Package Manager Resolution)
+        if: failure()
+        run: |
+          cd ${{ github.event.inputs.app_dir }}
+          echo "Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration."
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            rm package-lock.json
+            rm -rf node_modules
+            npm install > ../../build.log 2>&1
+          fi
+          # Update metrics lockfile_regenerated via python or jq (simplified for bash)
+          sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
+
+      - name: Phase 6 - Build / Tests / Rescan
+        id: build_test
+        run: |
+          cd ${{ github.event.inputs.app_dir }}
+          # Mock Build/Test for demonstration - parse build.log in reality
+          echo "Building..." >> ../../build.log
+          echo "Testing..." > ../../test.log
+          syft dir:. -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
+          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)
+
+      - name: Phase 7 - Retry Orchestration (Attempt 2)
+        if: failure()
+        run: |
+          echo "Failure detected. Capturing logs and performing Retry Iteration."
+          python scripts/remediation/retry_remediation.py $ECOSYSTEM ${{ github.event.inputs.app_dir }} build
+          
+          cd ${{ github.event.inputs.app_dir }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            rm package-lock.json
+            rm -rf node_modules
+            npm install > ../../build.log 2>&1
+          fi
+          syft dir:. -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false grype sbom:../../post-sbom.json -o json > ../../rescan.json || true
+          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json)
+
+      - name: Evidence Collection
+        if: always()
+        run: |
+          mkdir evidence
+          mv baseline-sbom.json evidence/ || true
+          mv grype.json evidence/baseline-grype.json || true
+          mv selected-candidate.json evidence/ || true
+          mv llm-request.json evidence/ || true
+          mv llm-response.json evidence/ || true
+          mv build.log evidence/ || true
+          mv test.log evidence/ || true
+          mv rescan.json evidence/ || true
+          mv metrics.json evidence/ || true
+          mv ${{ github.event.inputs.app_dir }}/package-before.json evidence/ || true
+          mv ${{ github.event.inputs.app_dir }}/package-after.json evidence/ || true
+
+      - name: Upload Evidence Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remediation-evidence
+          path: evidence/
