@@ -177,6 +177,8 @@ jobs:
           mv metrics.json evidence/ || true
           mv package-before.json evidence/ || true
           mv package-after.json evidence/ || true
+          
+          python scripts/remediation/generate_manifest.py
 
       - name: Upload Evidence Artifact
         uses: actions/upload-artifact@v4

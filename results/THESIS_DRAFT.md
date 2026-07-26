@@ -12,7 +12,7 @@ The automated pipeline relies on Gemini 2.5 Flash as the reasoning engine.
 - **SBOM Generation:** `syft` and `grype` generate a precise snapshot of the vulnerable state.
 - **Context Windowing:** Irrelevant metadata is stripped from `package.json` to prevent prompt poisoning.
 - **Structured Output:** The LLM is strictly constrained to output a JSON schema (`{"operation", "package", "constraint"}`), ensuring agnostic application across npm and PyPI.
-- **Build Validation:** During validation, the pipeline installs the LLM-recommended package using `pip install --no-deps` so that the experimental intervention can be isolated from unrelated dependency graph changes imposed by a fully frozen `requirements.txt`. This allows subsequent build validation, integration tests, and vulnerability rescanning to evaluate whether the proposed remediation itself is compatible with the application. Dependency resolution remains part of the baseline environment rather than the experimental variable.
+- **Build Validation:** The objective of the experiment is to evaluate whether the LLM-selected remediation itself is compatible with the application, independent of unrelated dependency graph updates. Using `pip install --no-deps` isolates the proposed intervention while preserving the frozen dependency baseline used throughout the experiment. Integration tests and post-remediation vulnerability rescanning then determine whether the isolated intervention succeeds.
 - **Dual-Metric Validation:** To prove viability, two metrics are logged: `failure_stage` (where the pipeline broke) and `validation_stage_reached` (the highest CI/CD gate successfully passed, e.g., build vs test).
 
 ## 2.2 The Human Control Group (Baseline)

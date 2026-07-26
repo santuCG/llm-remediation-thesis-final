@@ -31,23 +31,7 @@ def main():
         print("No automatically remediable candidates found.")
         sys.exit(0)
         
-    print("\n====================================================")
-    print("Scenario Selected")
-    print("----------------------------------------------------")
-    # Infer scenario ID based on app_dir if possible
-    scenario_id = "AF-01" if "airflow" in app_dir.lower() else ("JS-01" if "juice-shop" in app_dir.lower() else "UNKNOWN")
-    print(f"Scenario ID : {scenario_id}")
-    print(f"Application : {app_dir.split('/')[-1].capitalize()}")
-    print(f"Package     : {candidate['package_name']}")
-    print(f"Current     : {candidate['vulnerable_version']}")
-    target_version = candidate['fixed_versions'][0] if candidate.get('fixed_versions') else "Unknown"
-    print(f"Target      : {target_version}")
-    print(f"CVE         : {candidate['api_cve_id']}")
-    print(f"GHSA        : {candidate['cve_id']}")
-    print(f"CVSS        : {candidate['cvss']}")
-    print(f"EPSS        : {candidate['epss']}")
-    print(f"KEV         : {'Yes' if candidate['kev'] else 'No'}")
-    print("====================================================\n")
+
     
     # Write candidate to evidence
     with open('selected-candidate.json', 'w') as f:
@@ -66,6 +50,16 @@ def main():
         recommendation = {}
     
     if llm_response_valid:
+        scenario_id = "AF-01" if "airflow" in app_dir.lower() else ("JS-01" if "juice-shop" in app_dir.lower() else "UNKNOWN")
+        print(f"\n====================================================")
+        print(f"Scenario            : {scenario_id}")
+        print(f"TARGET_CVE          : {candidate['api_cve_id']}")
+        print(f"Matched GHSA        : {candidate['cve_id']}")
+        print(f"Package             : {candidate['package_name']}")
+        print(f"Installed version   : {candidate['vulnerable_version']}")
+        print(f"Recommended version : {recommendation.get('recommended_package_version')}")
+        print(f"====================================================\n")
+
         print(f"\n[ORCHESTRATOR] Strategy Selected: {recommendation.get('strategy')}")
         print(f"[ORCHESTRATOR] Remediation Type: {recommendation.get('remediation_type')}")
         

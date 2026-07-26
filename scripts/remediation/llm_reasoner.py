@@ -80,6 +80,10 @@ Based on the vulnerability intelligence and context:
 
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
     
+    print("\n--- LLM Request Prompt ---")
+    print(user_prompt)
+    print("--------------------------\n")
+    
     # Save the request for evidence
     with open('llm-request.json', 'w') as f:
         json.dump(payload, f, indent=2)
@@ -94,6 +98,10 @@ Based on the vulnerability intelligence and context:
         sys.exit(1)
         
     llm_text = result['candidates'][0]['content']['parts'][0]['text']
+    
+    print("\n--- LLM Response Payload ---")
+    print(llm_text)
+    print("----------------------------\n")
     
     # Save response for evidence
     with open('llm-response.json', 'w') as f:
