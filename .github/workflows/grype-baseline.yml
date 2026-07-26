@@ -91,10 +91,17 @@ jobs:
         id: apply_fix
         run: |
           cd ${{ env.APP_DIR }}
+          
+          # Deterministic Manifest Application
+          python ../../scripts/baseline/update_manifest.py \
+              --ecosystem ${{ env.ECOSYSTEM }} \
+              --package "${{ env.PACKAGE_NAME }}" \
+              --version "${{ env.GRYPE_REC_VERSION }}"
+              
           if [ "$ECOSYSTEM" == "npm" ]; then
-            npm install ${{ env.PACKAGE_NAME }}@${{ env.GRYPE_REC_VERSION }} > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
+            npm install > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install --no-deps ${{ env.PACKAGE_NAME }}==${{ env.GRYPE_REC_VERSION }} > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
+            pip install --no-deps -r requirements.txt > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
           fi
           
       - name: Phase 5 - Build / Tests / Rescan
@@ -133,6 +140,7 @@ jobs:
         if: always()
         run: |
           mkdir evidence
+          mv baseline-patch.json evidence/ || true
           mv baseline-sbom.json evidence/ || true
           mv grype.json evidence/baseline-grype.json || true
           mv build.log evidence/ || true
