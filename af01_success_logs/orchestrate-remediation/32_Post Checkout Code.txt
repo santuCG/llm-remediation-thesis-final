@@ -1,0 +1,10 @@
+﻿2026-07-26T17:42:30.3198134Z Post job cleanup.
+2026-07-26T17:42:30.4284642Z [command]/usr/bin/git version
+2026-07-26T17:42:30.4368929Z git version 2.54.0
+2026-07-26T17:42:30.4430962Z Temporarily overriding HOME='/home/runner/work/_temp/690a3e81-ff67-44a0-b326-5f5c833fca6a' before making global git config changes
+2026-07-26T17:42:30.4432320Z Adding repository directory to the temporary git global config as a safe directory
+2026-07-26T17:42:30.4433724Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final
+2026-07-26T17:42:30.4505931Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-07-26T17:42:30.4555515Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-07-26T17:42:30.4989528Z fatal: No url found for submodule path 'applications/juice-shop-repo' in .gitmodules
+2026-07-26T17:42:30.5071641Z ##[warning]The process '/usr/bin/git' failed with exit code 128

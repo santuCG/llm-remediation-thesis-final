@@ -1,0 +1,25 @@
+﻿2026-07-26T17:42:21.2840975Z ##[group]Run cd applications/airflow
+2026-07-26T17:42:21.2841510Z [36;1mcd applications/airflow[0m
+2026-07-26T17:42:21.2841892Z [36;1mecho "Validating application functionality..." >> ../../build.log[0m
+2026-07-26T17:42:21.2842300Z [36;1mif [ "$ECOSYSTEM" == "npm" ]; then[0m
+2026-07-26T17:42:21.2842873Z [36;1m  if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend >> ../../build.log 2>&1; fi[0m
+2026-07-26T17:42:21.2843663Z [36;1m  if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server >> ../../build.log 2>&1; fi[0m
+2026-07-26T17:42:21.2844393Z [36;1m  if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build >> ../../build.log 2>&1; fi[0m
+2026-07-26T17:42:21.2845073Z [36;1m  if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test > ../../test.log 2>&1 || true; fi[0m
+2026-07-26T17:42:21.2845562Z [36;1melif [ "$ECOSYSTEM" == "python" ]; then[0m
+2026-07-26T17:42:21.2845990Z [36;1m  if [ -f "pytest.ini" ] || [ -d "tests" ]; then pytest > ../../test.log 2>&1 || true; fi[0m
+2026-07-26T17:42:21.2846410Z [36;1mfi[0m
+2026-07-26T17:42:21.2846591Z [36;1m[0m
+2026-07-26T17:42:21.2846840Z [36;1m./bin/syft dir:. -o spdx-json > ../../post-sbom.json[0m
+2026-07-26T17:42:21.2847365Z [36;1mGRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json[0m
+2026-07-26T17:42:21.2848113Z [36;1mpython ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json[0m
+2026-07-26T17:42:21.2892586Z shell: /usr/bin/bash -e {0}
+2026-07-26T17:42:21.2892831Z env:
+2026-07-26T17:42:21.2893049Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-26T17:42:21.2893568Z   GEMINI_API_KEY: ***
+2026-07-26T17:42:21.2893786Z   TARGET_CVE: CVE-2026-8838
+2026-07-26T17:42:21.2894022Z   APP_DIR: applications/airflow
+2026-07-26T17:42:21.2894265Z   ECOSYSTEM: python
+2026-07-26T17:42:21.2894471Z ##[endgroup]
+2026-07-26T17:42:21.4830621Z [0000]  WARN no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+2026-07-26T17:42:29.3489800Z [VALIDATOR] SUCCESS: GHSA-29h4-r29x-hchv has been eradicated.

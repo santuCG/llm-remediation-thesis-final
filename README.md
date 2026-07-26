@@ -2,7 +2,6 @@
 
 **Master's Thesis — Santosh Nagaraj**  
 **SRH University Berlin — MSc Computer Science (Cybersecurity)**  
-**Supervisor: Prof. Dr. Vladimir Stantchev**
 
 ---
 
@@ -205,7 +204,7 @@ The thesis claims only that within this controlled experiment, with these specif
 
 ## Ghost CMS — Why It Was Removed
 
-Ghost CMS was originally included as a third application. It was removed mid-experiment when the CI pipeline revealed that Ghost uses yarn as its package manager while the experiment was built around npm for Node.js applications. Mixing yarn and npm would introduce an uncontrolled variable — failures or successes could be attributed to the package manager difference rather than the LLM's reasoning. Ghost was formally disqualified and documented in a pre-registration amendment. The supervisor was informed before the experiment continued.
+Ghost CMS was originally included as a third application. It was removed mid-experiment when the CI pipeline revealed that Ghost uses yarn as its package manager while the experiment was built around npm for Node.js applications. Mixing yarn and npm would introduce an uncontrolled variable — failures or successes could be attributed to the package manager difference rather than the LLM's reasoning. Ghost was formally disqualified and documented in a pre-registration amendment. This was documented before the experiment continued.
 
 ---
 

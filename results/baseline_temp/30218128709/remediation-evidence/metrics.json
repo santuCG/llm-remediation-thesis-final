@@ -1,0 +1,10 @@
+{
+  "scenario": "JS-03",
+  "selected_cve": "CVE-2025-7783",
+  "build_success": false,
+  "test_success": false,
+  "validation_success": false,
+  "vulnerability_removed": false,
+  "failure_stage": "build",
+  "validation_stage_reached": "build"
+}

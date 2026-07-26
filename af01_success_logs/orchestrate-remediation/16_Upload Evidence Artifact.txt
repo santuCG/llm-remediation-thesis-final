@@ -1,0 +1,26 @@
+﻿2026-07-26T17:42:29.3918056Z ##[group]Run actions/upload-artifact@v4
+2026-07-26T17:42:29.3918605Z with:
+2026-07-26T17:42:29.3918804Z   name: remediation-evidence
+2026-07-26T17:42:29.3919040Z   path: evidence/
+2026-07-26T17:42:29.3919245Z   if-no-files-found: warn
+2026-07-26T17:42:29.3919470Z   compression-level: 6
+2026-07-26T17:42:29.3919679Z   overwrite: false
+2026-07-26T17:42:29.3920071Z   include-hidden-files: false
+2026-07-26T17:42:29.3920301Z env:
+2026-07-26T17:42:29.3920520Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-26T17:42:29.3921006Z   GEMINI_API_KEY: ***
+2026-07-26T17:42:29.3921230Z   TARGET_CVE: CVE-2026-8838
+2026-07-26T17:42:29.3921468Z   APP_DIR: applications/airflow
+2026-07-26T17:42:29.3921708Z   ECOSYSTEM: python
+2026-07-26T17:42:29.3921905Z ##[endgroup]
+2026-07-26T17:42:29.6538741Z With the provided path, there will be 12 files uploaded
+2026-07-26T17:42:29.6539649Z Artifact name is valid!
+2026-07-26T17:42:29.6540044Z Root directory input is valid!
+2026-07-26T17:42:29.8365556Z Beginning upload of artifact content to blob storage
+2026-07-26T17:42:30.1229675Z Uploaded bytes 1015180
+2026-07-26T17:42:30.1407587Z Finished uploading artifact content to blob storage!
+2026-07-26T17:42:30.1411411Z SHA256 digest of uploaded artifact zip is be607afa0e6637192c3a210a938b2b7ef7f7ff0b644557579565f43301408894
+2026-07-26T17:42:30.1413443Z Finalizing artifact upload
+2026-07-26T17:42:30.3011384Z Artifact remediation-evidence.zip successfully finalized. Artifact ID 8635035327
+2026-07-26T17:42:30.3012981Z Artifact remediation-evidence has been successfully uploaded! Final size is 1015180 bytes. Artifact ID is 8635035327
+2026-07-26T17:42:30.3014848Z Artifact download URL: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30212986023/artifacts/8635035327

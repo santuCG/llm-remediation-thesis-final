@@ -4,9 +4,9 @@
 
 The rigorous Manual Validation Protocol guarantees deterministic verification by executing each topological constraint exactly as a human developer would. However, modern DevSecOps environments demand automation.
 
-This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automated Orchestration Pipeline** built on GitHub Actions. It proves that our entire experimental methodology—from establishing the vulnerable baseline to attempting naive scanner fixes, invoking the LLM layer, and validating the final constraint-aware remediation—is fully translatable into an autonomous CI/CD environment.
+This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automated Orchestration Pipeline** built on GitHub Actions. It proves that the entire experimental methodology—from establishing the vulnerable baseline to attempting naive scanner fixes, invoking the LLM layer, and validating the final constraint-aware remediation—is fully translatable into an autonomous CI/CD environment.
 
-We designed this pipeline specifically for Scenario JS-01 (`vm2` / CVE-2023-32314), matching the exact parameters and outcomes observed during our manual validation.
+This pipeline was designed specifically for Scenario JS-01 (`vm2` / CVE-2023-32314), matching the exact parameters and outcomes observed during the manual validation.
 
 ## 2. The 12-Phase Execution Pipeline
 
@@ -20,7 +20,7 @@ The automated CI/CD pipeline acts as the orchestrator for the validation framewo
 1.  **Baseline Build & Scan:** Establish the vulnerable baseline (`vm2@3.9.17`).
 2.  **Scanner-driven Remediation (Naive Fix):** Apply `npm install vm2@3.9.19 --ignore-scripts` directly.
 3.  **Failure Assertion:** Verify that the naive fix **fails** due to Dependency Shadowing (exit 0 on install, but `CVE-2023-32314` remains in the lockfile and scanner results).
-4.  **LLM-driven Remediation (Context-Aware):** Pass the failure context (Shadowing) to the LLM layer, prompting an architecture-aware fix (e.g., `overrides` or `resolutions`).
+4.  **Autonomous-driven Remediation (Context-Aware):** Pass the failure context (Shadowing) to the LLM layer, prompting an architecture-aware fix (e.g., `overrides` or `resolutions`).
 5.  **Final Validation:** Build and scan the LLM-remediated application. Assert that the vulnerability is definitively eradicated (Gate 4).
 
 ### Stage A: Vulnerable Baseline
@@ -45,13 +45,13 @@ The automated CI/CD pipeline acts as the orchestrator for the validation framewo
 
 A core requirement for this pipeline was maintaining **scientific determinism** and **pipeline resiliency**:
 
-1. **Pinned Actions:** All third-party GitHub Actions are heavily version-pinned (e.g., `actions/checkout@v4.1.7`). Supply chain attacks on CI/CD pipelines often exploit floating tags. By pinning the exact semantic version, we guarantee the pipeline will execute precisely the same logic today as it will years from now.
+1. **Pinned Actions:** All third-party GitHub Actions are heavily version-pinned (e.g., `actions/checkout@v4.1.7`). Supply chain attacks on CI/CD pipelines often exploit floating tags. By pinning the exact semantic version, the pipeline is guaranteed to execute precisely the same logic today as it will years from now.
 2. **Deterministic Graph Generation:** `anchore/sbom-action` was replaced with `@cyclonedx/cyclonedx-npm`. Relying on Syft to parse node modules blindly led to inconsistencies. Using CycloneDX leverages NPM's native graph resolution, resulting in a perfectly accurate SBOM.
 3. **Resilient Assertions:** Previous `grep`-based assertions on terminal tables were highly susceptible to ANSI color codes and formatting changes. Shifting to Grype's `-o json` output and validating strictly via `jq` provides a mathematically robust, fail-proof validation layer.
 
 ## 4. Proper Analysis: Manual vs. Pipeline Results
 
-When executed in the GitHub Actions runner, this 12-phase pipeline provided genuine results that entirely corroborate our manual methodology.
+When executed in the GitHub Actions runner, this 12-phase pipeline provided genuine results that entirely corroborate the manual methodology.
 
 | Stage | Manual Validation Finding | Automated Pipeline Result | Conclusion |
 | :--- | :--- | :--- | :--- |

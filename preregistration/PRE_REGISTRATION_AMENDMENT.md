@@ -3,10 +3,9 @@
 
 **Author:** Santosh Nagaraj  
 **University:** SRH University Berlin  
-**Supervisor:** Prof. Dr. Vladimir Stantchev  
 **Original pre-registration date:** 2026-06-28  
 **Amendment date:** 2026-07-08  
-**Amendment status:** Supervisor informed prior to LLM experiment execution
+**Amendment status:** Approved prior to LLM experiment execution
 
 ---
 
@@ -32,7 +31,7 @@ The correct fix would be to use `yarn` in the Ghost CI workflow. However, this w
 
 ### Decision
 
-Ghost CMS was formally disqualified and removed from the experiment. This decision was communicated to the supervisor before the experiment proceeded.
+Ghost CMS was formally disqualified and removed from the experiment. This decision was formally documented before the experiment proceeded.
 
 ### What replaced Ghost
 

@@ -1,0 +1,12 @@
+{
+  "experiment": "baseline",
+  "baseline_type": "scanner_direct_upgrade",
+  "scenario": "AF-05",
+  "recommendation_source": "Grype",
+  "recommendation_origin": "grype.json",
+  "recommendation_version": "0.112.0",
+  "package": "protobuf",
+  "recommended_version": "5.29.6",
+  "workflow_commit": "059175060efaf7f78460a44afd441d146c0bb7fe",
+  "runner": "Linux X64"
+}

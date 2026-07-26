@@ -1,0 +1,50 @@
+﻿2026-07-26T17:41:59.1987447Z ##[group]Run python scripts/remediation/generic_remediation.py $ECOSYSTEM applications/airflow
+2026-07-26T17:41:59.1988165Z [36;1mpython scripts/remediation/generic_remediation.py $ECOSYSTEM applications/airflow[0m
+2026-07-26T17:41:59.2076403Z shell: /usr/bin/bash -e {0}
+2026-07-26T17:41:59.2076651Z env:
+2026-07-26T17:41:59.2076884Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-26T17:41:59.2077436Z   GEMINI_API_KEY: ***
+2026-07-26T17:41:59.2077666Z   TARGET_CVE: CVE-2026-8838
+2026-07-26T17:41:59.2077905Z   APP_DIR: applications/airflow
+2026-07-26T17:41:59.2078142Z   ECOSYSTEM: python
+2026-07-26T17:41:59.2078656Z ##[endgroup]
+2026-07-26T17:42:14.4080613Z === Phase 1: Discovery ===
+2026-07-26T17:42:14.4081341Z [DISCOVER] Found 663 vulnerabilities in grype.json
+2026-07-26T17:42:14.4082127Z 
+2026-07-26T17:42:14.4082380Z === Phase 2: Prioritization ===
+2026-07-26T17:42:14.4083014Z [PRIORITIZE] Filtering for automatically remediable candidates...
+2026-07-26T17:42:14.4083808Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4084708Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4087392Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4088102Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4089148Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4089888Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4090580Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4091255Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4091923Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4092576Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4093220Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4093900Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4094565Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4095205Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4122180Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4124852Z [WARN] Failed to fetch KEV status: HTTP Error 403: Forbidden
+2026-07-26T17:42:14.4125729Z [PRIORITIZE] Overriding selection with TARGET_CVE: CVE-2026-8838
+2026-07-26T17:42:14.4126608Z [PRIORITIZE] Selected Top Candidate: redshift-connector (GHSA-29h4-r29x-hchv)
+2026-07-26T17:42:14.4127176Z 
+2026-07-26T17:42:14.4127407Z === Phase 3: Context Collection ===
+2026-07-26T17:42:14.4128095Z [CONTEXT] Building context for redshift-connector in python...
+2026-07-26T17:42:14.4129069Z 
+2026-07-26T17:42:14.4129358Z === Phase 4: LLM Reasoning (Attempt 1) ===
+2026-07-26T17:42:14.4130051Z [LLM] Requesting recommendation for redshift-connector...
+2026-07-26T17:42:14.4130568Z 
+2026-07-26T17:42:14.4130875Z [ORCHESTRATOR] Strategy Selected: direct_upgrade
+2026-07-26T17:42:14.4131550Z [ORCHESTRATOR] Remediation Type: Direct Upgrade
+2026-07-26T17:42:14.4132153Z [ORCHESTRATOR] Confidence: 100
+2026-07-26T17:42:14.4132537Z 
+2026-07-26T17:42:14.4132805Z === Phase 5: Applying Recommendation ===
+2026-07-26T17:42:14.4133421Z [MANIFEST] Applying recommendation for python...
+2026-07-26T17:42:14.4134125Z [MANIFEST] Successfully applied remediation to manifest.
+2026-07-26T17:42:14.4134626Z 
+2026-07-26T17:42:14.4134946Z === Phase 6: Orchestration Complete for Attempt 1 ===
+2026-07-26T17:42:14.4135826Z The pipeline will now proceed with native package manager resolution and validation.

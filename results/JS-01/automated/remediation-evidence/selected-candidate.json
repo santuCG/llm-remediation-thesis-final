@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-whpj-8f3w-67p5",
+  "api_cve_id": "CVE-2023-32314",
+  "package_name": "vm2",
+  "vulnerable_version": "3.9.17",
+  "severity": "critical",
+  "cvss": 9.8,
+  "epss": 0.08127,
+  "epss_timestamp": "2026-07-26T16:53:36.191853+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "3.9.18"
+  ]
+}
