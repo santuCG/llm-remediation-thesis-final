@@ -131,7 +131,7 @@ Based on the pipeline failure context, the topological subgraph, and the constra
     }
 
     # Call Gemini API
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     payload = {
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
