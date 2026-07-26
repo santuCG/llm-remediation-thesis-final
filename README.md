@@ -210,13 +210,13 @@ Ghost CMS was originally included as a third application. It was removed mid-exp
 
 ## Key Documents in This Repository
 
-| Document | What It Contains |
+| Document / Folder | What It Contains |
 |----------|----------------|
+| `applications/` | The frozen source code snapshots (Juice Shop v15.3.0 and Airflow v2.9.2), plus raw pre-registration Grype/Syft scans (`applications/evidence/`). |
 | `preregistration/PRE_REGISTRATION_MASTER.md` | All 18 scenarios, selection methodology, enrichment data |
 | `preregistration/PRE_REGISTRATION_AMENDMENT.md` | Ghost disqualification, scenario changes, baseline results |
-| `experiment/final_18_scenarios.json` | The locked scenario dataset |
-| `experiment/deterministic_baseline_results.json` | Baseline failure results with CI log URLs |
-| `experiment/llm_remediation_results.json` | LLM-generated recommendations for all 18 scenarios |
+| `results/scenarios/` | The canonical JSON database. Contains `pre_registered/scenarios.json` (the locked metadata) and the individual JSON execution logs per scenario. |
+| `results/execution_evidence/` | The golden execution evidence containing raw pipeline logs, extracted LLM traces, and pre/post SBOM scans proving the automated POC succeeded. |
 | `docs/02-experimental-environment.md` | Tool versions and environment setup |
 | `docs/03-llm-configuration.md` | Prompt structure and model configuration |
 | `docs/04-experimental-methodology.md` | Full 12-stage experimental workflow |

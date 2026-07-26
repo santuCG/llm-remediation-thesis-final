@@ -5,9 +5,9 @@ import json
 import sys
 import shutil
 
-SCENARIOS_FILE = "experiment/archive/final_18_scenarios.json"
+SCENARIOS_FILE = "results/scenarios/pre_registered/scenarios.json"
 RESULTS_BASE_DIR = "results"
-GH_BIN = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "gh_cli", "bin", "gh.exe"))
+GH_BIN = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "tools", "gh_cli", "bin", "gh.exe"))
 
 def run_command(cmd_args, capture=True):
     env = os.environ.copy()

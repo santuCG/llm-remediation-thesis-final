@@ -215,8 +215,8 @@ All enrichment data (EPSS probabilities, KEV status, MITRE CVE descriptions, CVS
 
 | File | Status |
 |------|--------|
-| `experiment/final_18_scenarios.json` | Replaced with amended 18 scenarios |
-| `experiment/baseline_results.json` | New — baseline CI results for all 18 |
+| `results/scenarios/pre_registered/scenarios.json` | Replaced with amended 18 scenarios |
+| `results/execution_evidence/` | New - execution logs and baseline CI results for all 18 scenarios |
 | `preregistration/scenario_selection_log.md` | New — automated selection audit log |
 | `preregistration/PRE_REGISTRATION_AMENDMENT.md` | This document |
 | `preregistration/PRE_REGISTRATION_MASTER.md` | Original — preserved for record, superseded by this amendment |

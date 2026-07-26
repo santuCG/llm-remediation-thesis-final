@@ -43,6 +43,6 @@ The raw SBOM and Grype scan outputs are stored in `../applications/evidence/`:
 
 The final 18 scenarios are also available as a structured JSON file for use by the experiment pipeline:
 
-`../experiment/final_18_scenarios.json`
+`../results/scenarios/pre_registered/scenarios.json`
 
 This file has been cross-verified field-by-field against all four pre-registration Markdown tables. No discrepancies.

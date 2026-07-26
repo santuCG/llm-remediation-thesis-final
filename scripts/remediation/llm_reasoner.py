@@ -14,13 +14,20 @@ You must critically evaluate the topological subgraph. Provide comprehensive rea
 Evaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.
 Do not hallucinate package versions. Recommend versions that actually exist and solve the CVE."""
 
-    user_prompt = f"""### Vulnerability Intelligence
+    scenario_id = os.environ.get('SCENARIO_ID', 'UNKNOWN')
+    application = "Apache Airflow" if ecosystem == "python" else "OWASP Juice Shop"
+    
+    user_prompt = f"""Scenario ID: {scenario_id}
+Prompt Version: v1.0
+
+### Vulnerability Intelligence
 * Target Package: {candidate['package_name']}
 * Vulnerable Version: {candidate['vulnerable_version']}
 * CVE ID: {candidate['cve_id']}
 * CVSS Score: {candidate['cvss']}
 * EPSS Probability: {candidate['epss']}
 * CISA KEV Status: {candidate['kev']}
+* Intelligence Retrieved On: 2026-05-18
 * Fixed Versions: {candidate['fixed_versions']}
 
 ### Dependency Context
@@ -66,6 +73,11 @@ Based on the vulnerability intelligence and context:
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={api_key}"
     payload = {
+        "scenario_id": scenario_id,
+        "experiment_id": "2026-final",
+        "application": application,
+        "ecosystem": ecosystem,
+        "prompt_version": "v1.0",
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
         "generationConfig": {

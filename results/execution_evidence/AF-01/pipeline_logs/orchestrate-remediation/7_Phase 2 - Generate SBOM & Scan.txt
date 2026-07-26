@@ -1,0 +1,25 @@
+﻿2026-07-26T18:07:20.1895707Z ##[group]Run cd applications/airflow
+2026-07-26T18:07:20.1896316Z [36;1mcd applications/airflow[0m
+2026-07-26T18:07:20.1896873Z [36;1mcurl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0[0m
+2026-07-26T18:07:20.1897495Z [36;1m./bin/syft dir:. -o spdx-json > ../../baseline-sbom.json[0m
+2026-07-26T18:07:20.1898414Z [36;1mcurl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0[0m
+2026-07-26T18:07:20.1899132Z [36;1mGRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json[0m
+2026-07-26T18:07:20.1944271Z shell: /usr/bin/bash -e {0}
+2026-07-26T18:07:20.1944555Z env:
+2026-07-26T18:07:20.1944786Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-26T18:07:20.1945383Z   GEMINI_API_KEY: ***
+2026-07-26T18:07:20.1945599Z   TARGET_CVE: CVE-2026-8838
+2026-07-26T18:07:20.1945840Z   APP_DIR: applications/airflow
+2026-07-26T18:07:20.1946080Z   ECOSYSTEM: python
+2026-07-26T18:07:20.1946320Z ##[endgroup]
+2026-07-26T18:07:20.2436564Z [info] checking github for release tag='v1.44.0' 
+2026-07-26T18:07:20.4565656Z [info] fetching release script for tag='v1.44.0' 
+2026-07-26T18:07:20.5918769Z [info] checking github for release tag='v1.44.0' 
+2026-07-26T18:07:20.6918932Z [info] using release tag='v1.44.0' version='1.44.0' os='linux' arch='amd64' 
+2026-07-26T18:07:21.7932476Z [info] installed ./bin/syft 
+2026-07-26T18:07:22.0279344Z [0000]  WARN no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+2026-07-26T18:07:24.4019808Z [info] checking github for release tag='v0.112.0' 
+2026-07-26T18:07:24.6168854Z [info] fetching release script for tag='v0.112.0' 
+2026-07-26T18:07:24.7152604Z [info] checking github for release tag='v0.112.0' 
+2026-07-26T18:07:24.8026900Z [info] using release tag='v0.112.0' version='0.112.0' os='linux' arch='amd64' 
+2026-07-26T18:07:25.8520673Z [info] installed ./bin/grype 

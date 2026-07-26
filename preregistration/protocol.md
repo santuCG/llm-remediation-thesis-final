@@ -74,10 +74,10 @@ Two conditions are applied to each of the 18 scenarios:
 
 **Baseline (Deterministic):** The fix version recommended by Grype is applied directly to the dependency file. No LLM involved.
 
-**Experimental (Gemini 2.5 Flash):** The LLM receives a structured input payload containing: package name, vulnerable version, CVE ID, CVSS score, EPSS score, KEV status, and Grype-recommended fix version. It returns a JSON response with its recommended action and version.
+**Experimental (Autonomous LLM Reasoning Layer):** The LLM receives a structured input payload containing: package name, vulnerable version, CVE ID, CVSS score, EPSS score, KEV status, and Grype-recommended fix version. It returns a JSON response with its recommended action and version.
 
 **LLM configuration:**
-- Model: Gemini 2.5 Flash
+- Model: LLM Reasoning Engine (Temperature 0)
 - Temperature: 0
 - JSON schema enforcement: enabled
 - Web grounding / Google Search tool: NOT enabled

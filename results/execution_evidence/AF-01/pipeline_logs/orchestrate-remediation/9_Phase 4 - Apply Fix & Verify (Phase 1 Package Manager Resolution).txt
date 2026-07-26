@@ -1,0 +1,15 @@
+﻿2026-07-26T18:08:46.9726768Z ##[group]Run cd applications/airflow
+2026-07-26T18:08:46.9727115Z [36;1mcd applications/airflow[0m
+2026-07-26T18:08:46.9727385Z [36;1mif [ "$ECOSYSTEM" == "npm" ]; then[0m
+2026-07-26T18:08:46.9728216Z [36;1m  npm install > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)[0m
+2026-07-26T18:08:46.9728643Z [36;1melif [ "$ECOSYSTEM" == "python" ]; then[0m
+2026-07-26T18:08:46.9729155Z [36;1m  pip install --no-deps -r requirements.txt > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)[0m
+2026-07-26T18:08:46.9729626Z [36;1mfi[0m
+2026-07-26T18:08:46.9774739Z shell: /usr/bin/bash -e {0}
+2026-07-26T18:08:46.9775013Z env:
+2026-07-26T18:08:46.9775237Z   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+2026-07-26T18:08:46.9776008Z   GEMINI_API_KEY: ***
+2026-07-26T18:08:46.9776240Z   TARGET_CVE: CVE-2026-8838
+2026-07-26T18:08:46.9776475Z   APP_DIR: applications/airflow
+2026-07-26T18:08:46.9776710Z   ECOSYSTEM: python
+2026-07-26T18:08:46.9776901Z ##[endgroup]
