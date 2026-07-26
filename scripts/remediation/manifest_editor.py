@@ -61,8 +61,21 @@ def apply_remediation(ecosystem, app_dir, recommendation):
             else:
                 constraint_str = constraint
                 
-            with open('requirements.txt', 'a') as f:
-                f.write(f"\n{target_pkg}{constraint_str}\n")
+            with open('requirements.txt', 'r') as f:
+                lines = f.readlines()
+            
+            updated = False
+            for i, line in enumerate(lines):
+                if line.strip().startswith(target_pkg) and (line.strip() == target_pkg or line.strip()[len(target_pkg)] in ['=', '>', '<', '~']):
+                    lines[i] = f"{target_pkg}{constraint_str}\n"
+                    updated = True
+                    break
+            
+            if not updated:
+                lines.append(f"{target_pkg}{constraint_str}\n")
+                
+            with open('requirements.txt', 'w') as f:
+                f.writelines(lines)
                 
             # Save after state
             shutil.copy2('requirements.txt', os.path.join(original_dir, 'package-after.json'))
