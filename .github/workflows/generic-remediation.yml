@@ -81,7 +81,7 @@ jobs:
           if [ "$ECOSYSTEM" == "npm" ]; then
             npm install > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install -r requirements.txt > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
+            pip install --no-deps -r requirements.txt > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
           fi
 
       - name: Phase 5 - Fallback Lockfile Regeneration (Phase 2 Package Manager Resolution)
@@ -137,6 +137,12 @@ jobs:
         if: failure()
         run: |
           echo "Failure detected. Capturing logs and performing Retry Iteration."
+          if [ "$ECOSYSTEM" == "python" ]; then
+            cd ${{ env.APP_DIR }}
+            cp ../evidence/airflow_pip_freeze.txt requirements.txt
+            cd ../..
+          fi
+
           if [ -f scripts/remediation/retry_remediation.py ]; then
             python scripts/remediation/retry_remediation.py $ECOSYSTEM ${{ env.APP_DIR }} build
           fi
@@ -146,6 +152,8 @@ jobs:
             rm -f package-lock.json
             rm -rf node_modules
             npm install > ../../build.log 2>&1
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            pip install --no-deps -r requirements.txt > ../../build.log 2>&1 || true
           fi
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json

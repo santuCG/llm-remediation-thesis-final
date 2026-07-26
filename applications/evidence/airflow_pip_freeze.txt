@@ -1,4 +1,4 @@
-﻿adal==1.2.7
+adal==1.2.7
 adlfs==2024.4.1
 aiobotocore==2.13.0
 aiofiles==23.2.1
