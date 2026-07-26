@@ -37,7 +37,7 @@ def prioritize_vulnerabilities(matches, ecosystem):
     kev_cache = {}
     epss_cache = {}
     
-    print("[PRIORITIZE] Filtering for automatically remediable candidates...")
+    print("[ORCHESTRATOR] Picking from pre-registered scenario...")
     for match in matches:
         vuln = match.get('vulnerability', {})
         artifact = match.get('artifact', {})

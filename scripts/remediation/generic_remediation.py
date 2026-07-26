@@ -31,6 +31,24 @@ def main():
         print("No automatically remediable candidates found.")
         sys.exit(0)
         
+    print("\n====================================================")
+    print("Scenario Selected")
+    print("----------------------------------------------------")
+    # Infer scenario ID based on app_dir if possible
+    scenario_id = "AF-01" if "airflow" in app_dir.lower() else ("JS-01" if "juice-shop" in app_dir.lower() else "UNKNOWN")
+    print(f"Scenario ID : {scenario_id}")
+    print(f"Application : {app_dir.split('/')[-1].capitalize()}")
+    print(f"Package     : {candidate['package_name']}")
+    print(f"Current     : {candidate['vulnerable_version']}")
+    target_version = candidate['fixed_versions'][0] if candidate.get('fixed_versions') else "Unknown"
+    print(f"Target      : {target_version}")
+    print(f"CVE         : {candidate['api_cve_id']}")
+    print(f"GHSA        : {candidate['cve_id']}")
+    print(f"CVSS        : {candidate['cvss']}")
+    print(f"EPSS        : {candidate['epss']}")
+    print(f"KEV         : {'Yes' if candidate['kev'] else 'No'}")
+    print("====================================================\n")
+    
     # Write candidate to evidence
     with open('selected-candidate.json', 'w') as f:
         json.dump(candidate, f, indent=2)
@@ -50,7 +68,6 @@ def main():
     if llm_response_valid:
         print(f"\n[ORCHESTRATOR] Strategy Selected: {recommendation.get('strategy')}")
         print(f"[ORCHESTRATOR] Remediation Type: {recommendation.get('remediation_type')}")
-        print(f"[ORCHESTRATOR] Confidence: {recommendation.get('confidence_score')}")
         
         print("\n=== Phase 5: Applying Recommendation ===")
         try:
@@ -79,7 +96,6 @@ def main():
         "kev_status": candidate['kev'],
         "dependency_type": "nested" if "node_modules" in candidate['package_name'] else "direct",
         "strategy": recommendation.get('strategy', ''),
-        "confidence": recommendation.get('confidence_score', 0),
         "remediation_type": recommendation.get('remediation_type', ''),
         "llm_response_valid": llm_response_valid,
         "build_success": False,

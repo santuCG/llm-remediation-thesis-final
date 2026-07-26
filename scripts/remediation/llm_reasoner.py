@@ -47,7 +47,6 @@ Based on the vulnerability intelligence and context:
         "type": "OBJECT",
         "properties": {
             "reasoning": { "type": "STRING", "description": "Comprehensive reasoning for the strategy chosen." },
-            "confidence_score": { "type": "INTEGER", "description": "Confidence score from 0 to 100." },
             "strategy": { "type": "STRING", "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)." },
             "remediation_type": { "type": "STRING", "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review." },
             "recommended_package_version": { "type": "STRING", "description": "The specific semantic version to enforce." },
@@ -62,7 +61,7 @@ Based on the vulnerability intelligence and context:
                 "required": ["operation", "package", "constraint"]
             }
         },
-        "required": ["reasoning", "confidence_score", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
+        "required": ["reasoning", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={api_key}"

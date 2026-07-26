@@ -65,7 +65,6 @@ def main():
     metrics['llm_iteration'] = 2
     metrics['failure_stage'] = failure_stage
     metrics['strategy'] = recommendation.get('strategy', '')
-    metrics['confidence'] = recommendation.get('confidence_score', 0)
     metrics['llm_response_valid'] = llm_response_valid
     
     with open('metrics.json', 'w') as f:
