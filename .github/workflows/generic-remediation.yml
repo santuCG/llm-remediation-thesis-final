@@ -55,7 +55,7 @@ jobs:
             if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
               cp ../evidence/airflow_pip_freeze.txt requirements.txt
             fi
-            pip install -r requirements.txt > ../../dependency_install.log 2>&1
+            pip install -r requirements.txt
           fi
 
       - name: Phase 2 - Generate SBOM & Scan
