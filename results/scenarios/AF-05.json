@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "pre_registration": {
+    "registration_version": "1.0",
+    "registration_timestamp": "2026-07-26T00:00:00Z",
+    "scenario_metadata": {
+      "scenario_id": "AF-05",
+      "application": "Apache Airflow",
+      "application_version": "placeholder",
+      "ecosystem": "python",
+      "experiment_group": "LLM vs Grype Baseline",
+      "status": "Registered"
+    },
+    "selection_rationale": {
+      "cvss_threshold_met": true,
+      "patched_version_available": true,
+      "epss_considered": true,
+      "application_dependency": true
+    },
+    "vulnerability_enrichment": {
+      "retrieved_on": "2026-05-18",
+      "cve": {
+        "id": "CVE-placeholder-AF-05",
+        "description": "[To be populated from frozen MITRE source]",
+        "severity": "[To be populated]",
+        "cvss_score": null,
+        "cvss_vector": "[To be populated]",
+        "published": "2023-01-01T00:00:00Z",
+        "last_modified": "2023-01-01T00:00:00Z",
+        "source": "MITRE CVE JSON"
+      },
+      "epss": {
+        "score": null,
+        "percentile": null,
+        "snapshot_date": "2026-05-18",
+        "source": "FIRST EPSS API"
+      },
+      "kev": {
+        "listed": false,
+        "catalog_version": "2026-05-18",
+        "source": "CISA KEV"
+      }
+    },
+    "scanner_recommendation": {
+      "grype": {
+        "package": "placeholder",
+        "installed_version": "placeholder",
+        "recommended_fixed_version": "placeholder",
+        "scanner_version": "0.112.0"
+      }
+    }
+  },
+  "execution": {
+    "baseline_pipeline": {
+      "started": "",
+      "completed": "",
+      "github_run_id": "",
+      "workflow_url": "",
+      "git_commit": "",
+      "workflow_sha": "",
+      "scanner_output": {
+        "artifact": "baseline-grype.json",
+        "finding_id": "placeholder",
+        "matched_cve": "CVE-placeholder-AF-05"
+      },
+      "validation": {
+        "manifest_updated": false,
+        "dependency_installation": false,
+        "build": {
+          "executed": false,
+          "passed": null
+        },
+        "failure_stage": "",
+        "tests": {
+          "executed": false,
+          "passed": null
+        },
+        "sbom": {
+          "executed": false,
+          "generated": null
+        },
+        "grype_rescan": {
+          "executed": false,
+          "completed": null,
+          "vulnerability_removed": null
+        },
+        "overall_result": "Pending"
+      },
+      "artifacts": {}
+    },
+    "llm_pipeline": {
+      "started": "",
+      "completed": "",
+      "github_run_id": "",
+      "workflow_url": "",
+      "git_commit": "",
+      "workflow_sha": "",
+      "validation": {
+        "manifest_updated": false,
+        "dependency_installation": false,
+        "build": {
+          "executed": false,
+          "passed": null
+        },
+        "failure_stage": "",
+        "tests": {
+          "executed": false,
+          "passed": null
+        },
+        "sbom": {
+          "executed": false,
+          "generated": null
+        },
+        "grype_rescan": {
+          "executed": false,
+          "completed": null,
+          "vulnerability_removed": null
+        },
+        "overall_result": "Pending"
+      },
+      "artifacts": {}
+    }
+  },
+  "reproducibility": {
+    "toolchain": {
+      "syft": "1.44.0",
+      "grype": "0.112.0",
+      "node": "18.x",
+      "npm": "9.x",
+      "python": "3.11",
+      "github_actions_runner": "ubuntu-22.04",
+      "os": "ubuntu-latest"
+    }
+  }
+}

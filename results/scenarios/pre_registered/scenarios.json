@@ -1,0 +1,125 @@
+{
+  "dataset_version": "1.0",
+  "schema_version": "1.0",
+  "generated_on": "2026-07-26T20:56:23.865192Z",
+  "total_scenarios": 18,
+  "completed": 2,
+  "baseline_successes": 1,
+  "baseline_failures": 1,
+  "llm_successes": 1,
+  "llm_failures": 1,
+  "summary": {
+    "python": 9,
+    "npm": 9
+  },
+  "scenarios": [
+    {
+      "id": "AF-01",
+      "status": "Completed",
+      "baseline_result": "Success",
+      "llm_result": "Success"
+    },
+    {
+      "id": "AF-02",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-03",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-04",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-05",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-06",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-07",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-08",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "AF-09",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-01",
+      "status": "Completed",
+      "baseline_result": "Failure",
+      "llm_result": "Failure"
+    },
+    {
+      "id": "JS-02",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-03",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-04",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-05",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-06",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-07",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-08",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    },
+    {
+      "id": "JS-09",
+      "status": "Registered",
+      "baseline_result": "Pending",
+      "llm_result": "Pending"
+    }
+  ]
+}

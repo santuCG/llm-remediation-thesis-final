@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "pre_registration": {
+    "registration_version": "1.0",
+    "registration_timestamp": "2026-07-26T00:00:00Z",
+    "scenario_metadata": {
+      "scenario_id": "JS-01",
+      "application": "OWASP Juice Shop",
+      "application_version": "15.3.0",
+      "ecosystem": "npm",
+      "experiment_group": "LLM vs Grype Baseline",
+      "status": "Completed"
+    },
+    "selection_rationale": {
+      "cvss_threshold_met": true,
+      "patched_version_available": true,
+      "epss_considered": true,
+      "application_dependency": true
+    },
+    "vulnerability_enrichment": {
+      "retrieved_on": "2026-05-18",
+      "cve": {
+        "id": "CVE-2023-32314",
+        "description": "The `vm2` library is susceptible to a sandbox breakout vulnerability...",
+        "severity": "Critical",
+        "cvss_score": 9.8,
+        "cvss_vector": "[To be populated]",
+        "published": "2023-01-01T00:00:00Z",
+        "last_modified": "2023-01-01T00:00:00Z",
+        "source": "MITRE CVE JSON"
+      },
+      "epss": {
+        "score": 0.41,
+        "percentile": 0.97,
+        "snapshot_date": "2026-05-18",
+        "source": "FIRST EPSS API"
+      },
+      "kev": {
+        "listed": false,
+        "catalog_version": "2026-05-18",
+        "source": "CISA KEV"
+      }
+    },
+    "scanner_recommendation": {
+      "grype": {
+        "package": "vm2",
+        "installed_version": "3.9.17",
+        "recommended_fixed_version": "3.9.18",
+        "scanner_version": "0.112.0"
+      }
+    }
+  },
+  "execution": {
+    "baseline_pipeline": {
+      "started": "2026-07-26T17:00:00Z",
+      "completed": "2026-07-26T17:05:00Z",
+      "github_run_id": "30124075998",
+      "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30124075998",
+      "git_commit": "e987f6d",
+      "workflow_sha": "a1b2c3d",
+      "scanner_output": {
+        "artifact": "baseline-grype.json",
+        "finding_id": "placeholder",
+        "matched_cve": "CVE-2023-32314"
+      },
+      "validation": {
+        "manifest_updated": true,
+        "dependency_installation": true,
+        "build": {
+          "executed": true,
+          "passed": false
+        },
+        "failure_stage": "TypeScript compilation",
+        "tests": {
+          "executed": false,
+          "passed": null
+        },
+        "sbom": {
+          "executed": false,
+          "generated": null
+        },
+        "grype_rescan": {
+          "executed": false,
+          "completed": null,
+          "vulnerability_removed": null
+        },
+        "overall_result": "Failure"
+      },
+      "artifacts": {}
+    },
+    "llm_pipeline": {
+      "started": "2026-07-26T17:05:00Z",
+      "completed": "2026-07-26T17:15:00Z",
+      "github_run_id": "30124080000",
+      "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30124080000",
+      "git_commit": "e987f6d",
+      "workflow_sha": "a1b2c3d",
+      "validation": {
+        "manifest_updated": true,
+        "dependency_installation": true,
+        "build": {
+          "executed": true,
+          "passed": false
+        },
+        "failure_stage": "TypeScript compilation",
+        "tests": {
+          "executed": false,
+          "passed": null
+        },
+        "sbom": {
+          "executed": false,
+          "generated": null
+        },
+        "grype_rescan": {
+          "executed": false,
+          "completed": null,
+          "vulnerability_removed": null
+        },
+        "overall_result": "Failure"
+      },
+      "artifacts": {}
+    },
+    "post_experimental_investigation": {
+      "conducted": true,
+      "developer_assisted": true,
+      "manual_source_changes": [
+        "lib/insecurity.ts"
+      ],
+      "outcome": "Success",
+      "summary": "The updated dependency graph confirmed the presence of the recommended vm2 version (npm ls), and subsequent validation indicated that the targeted vulnerability was no longer present. Build failed autonomously due to TS 4.7.4 stricter nullability constraints. Developer successfully added safe null-check to insecurity.ts allowing the patch to succeed.",
+      "included_in_primary_dataset": false
+    }
+  },
+  "reproducibility": {
+    "toolchain": {
+      "syft": "1.44.0",
+      "grype": "0.112.0",
+      "node": "18.x",
+      "npm": "9.x",
+      "python": "3.11",
+      "github_actions_runner": "ubuntu-22.04",
+      "os": "ubuntu-latest"
+    }
+  }
+}
