@@ -33,7 +33,7 @@ jobs:
           echo "APP_DIR=$APP_DIR" >> $GITHUB_ENV
           if [ -f "$APP_DIR/package.json" ]; then
             echo "ECOSYSTEM=npm" >> $GITHUB_ENV
-          elif [ -f "$APP_DIR/requirements.txt" ]; then
+          elif [ -f "$APP_DIR/pyproject.toml" ] || [ -f "$APP_DIR/requirements.txt" ]; then
             echo "ECOSYSTEM=python" >> $GITHUB_ENV
           else
             echo "ECOSYSTEM=unknown" >> $GITHUB_ENV
@@ -52,6 +52,9 @@ jobs:
             cp ../evidence/juice_shop_package-lock.json package-lock.json || true
             npm ci > ../../dependency_install.log 2>&1
           elif [ "$ECOSYSTEM" == "python" ]; then
+            if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
+              cp ../evidence/airflow_pip_freeze.txt requirements.txt
+            fi
             pip install -r requirements.txt > ../../dependency_install.log 2>&1
           fi
 
@@ -73,6 +76,8 @@ jobs:
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             npm install > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            pip install -r requirements.txt > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
           fi
 
       - name: Phase 5 - Fallback Lockfile Regeneration (Phase 2 Package Manager Resolution)
@@ -84,6 +89,9 @@ jobs:
             rm -f package-lock.json
             rm -rf node_modules
             npm install > ../../build.log 2>&1
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            rm -f requirements.txt
+            pip install -e . > ../../build.log 2>&1
           fi
           if [ -f ../../metrics.json ]; then
             sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
