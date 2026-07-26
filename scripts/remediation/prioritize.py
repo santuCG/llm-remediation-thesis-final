@@ -107,6 +107,10 @@ def prioritize_vulnerabilities(matches, ecosystem):
     if target_cve:
         for c in candidates:
             if c['cve_id'] == target_cve or c['api_cve_id'] == target_cve or c['package_name'] == target_cve:
+                if target_cve.startswith('CVE-') and c['api_cve_id'] != target_cve:
+                    c['api_cve_id'] = target_cve
+                    c['epss'] = get_epss_score(target_cve)
+                    c['kev'] = get_kev_status(target_cve)
                 top_candidate = c
                 print(f"[PRIORITIZE] Overriding selection with TARGET_CVE: {target_cve}")
                 break
