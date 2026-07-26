@@ -51,7 +51,16 @@ Based on the vulnerability intelligence and context:
             "strategy": { "type": "STRING", "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)." },
             "remediation_type": { "type": "STRING", "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review." },
             "recommended_package_version": { "type": "STRING", "description": "The specific semantic version to enforce." },
-            "manifest_patch": { "type": "STRING", "description": "The exact JSON string for package.json (if npm) or raw string (if pip) to apply." }
+            "manifest_patch": {
+                "type": "OBJECT",
+                "description": "The structured intermediate representation of the manifest patch.",
+                "properties": {
+                    "operation": { "type": "STRING", "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')." },
+                    "package": { "type": "STRING", "description": "The target package name to modify." },
+                    "constraint": { "type": "STRING", "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')." }
+                },
+                "required": ["operation", "package", "constraint"]
+            }
         },
         "required": ["reasoning", "confidence_score", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }

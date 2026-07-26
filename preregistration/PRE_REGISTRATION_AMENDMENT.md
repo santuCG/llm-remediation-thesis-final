@@ -225,6 +225,20 @@ All enrichment data (EPSS probabilities, KEV status, MITRE CVE descriptions, CVS
 
 ---
 
+## Change 7 – Pipeline Methodology Overhaul
+
+Mid-experiment, a critical protocol update was instituted to shift from a raw string manifest patch to a structured intermediate representation. This ensures ecosystem-agnostic execution across npm and PyPI.
+
+Specifically, this amendment formally documents:
+1. The transition from a raw string `manifest_patch` to a structured intermediate representation (`{"operation", "package", "constraint"}`).
+2. The introduction of the `validation_stage_reached` metric alongside `failure_stage`.
+3. The explicit export of `candidate-ranking.json`, `llm-request.json`, and `llm-response.json` as permanent artifacts to ensure auditability.
+
+**Legacy Scenario Nullification:**
+0 of 18 scenarios have final validated data under the old schema being kept; all 18 run fresh under the new pipeline. The final dataset will use the new-pipeline output for JS-01 and JS-08 regardless of whether it matches their legacy results.
+
+---
+
 ## What Has Not Changed
 
 - The primary research question is unchanged

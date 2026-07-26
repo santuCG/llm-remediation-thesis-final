@@ -123,14 +123,14 @@ jobs:
         if: failure() && steps.build_test.conclusion == 'failure'
         run: |
           if [ -f metrics.json ]; then
-            jq '.build_success = false | .failure_stage = "build"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+            jq '.build_success = false | .failure_stage = "build" | .validation_stage_reached = "build"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
           fi
 
       - name: Update Metrics on Apply Fix Failure
         if: failure() && steps.apply_fix.conclusion == 'failure'
         run: |
           if [ -f metrics.json ]; then
-            jq '.build_success = false | .failure_stage = "apply_fix"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+            jq '.build_success = false | .failure_stage = "apply_fix" | .validation_stage_reached = "apply_fix"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
           fi
 
       - name: Phase 7 - Retry Orchestration (Attempt 2)

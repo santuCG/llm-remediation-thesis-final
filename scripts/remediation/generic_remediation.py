@@ -91,6 +91,7 @@ def main():
         "execution_time_seconds": int(time.time() - start_time),
         "retry_count": 0,
         "llm_iteration": 1,
+        "validation_stage_reached": "orchestration",
         "failure_stage": "llm_parsing" if not llm_response_valid else "none"
     }
     

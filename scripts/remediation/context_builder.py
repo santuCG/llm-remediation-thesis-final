@@ -32,7 +32,9 @@ def get_context(ecosystem, package_name, app_dir):
             # Read package.json
             if os.path.exists('package.json'):
                 with open('package.json', 'r') as f:
-                    context['package_json'] = json.load(f)
+                    pkg_json = json.load(f)
+                    pkg_json.pop('scripts', None)
+                    context['package_json'] = pkg_json
                     
         elif ecosystem == 'python':
             # pip show

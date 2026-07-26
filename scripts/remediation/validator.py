@@ -26,10 +26,18 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None):
                 metrics["rescan_success"] = True
                 metrics["dependency_verified"] = True
                 metrics["build_success"] = True # Build implicitly succeeded if we reached here
+                metrics["validation_stage_reached"] = "validator"
                 with open(metrics_path, 'w') as f:
                     json.dump(metrics, f, indent=2)
             return True
-        return False
+        else:
+            if metrics_path and os.path.exists(metrics_path):
+                with open(metrics_path, 'r') as f:
+                    metrics = json.load(f)
+                metrics["failure_stage"] = "validator"
+                with open(metrics_path, 'w') as f:
+                    json.dump(metrics, f, indent=2)
+            return False
     except Exception as e:
         print(f"[ERROR] Validator failed to read JSON: {e}")
         return False
