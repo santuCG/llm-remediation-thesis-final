@@ -56,8 +56,6 @@ jobs:
         if: env.ECOSYSTEM == 'npm'
         with:
           node-version: '18.x'
-          cache: 'npm'
-          cache-dependency-path: 'applications/juice-shop/package-lock.json'
           
       - name: Phase 1 - Establish Baseline & Install Dependencies
         run: |
