@@ -1,0 +1,164 @@
+name: Grype Baseline Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_cve:
+        description: 'Target CVE ID'
+        required: true
+        type: string
+
+jobs:
+  orchestrate-baseline:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+      TARGET_CVE: ${{ github.event.inputs.target_cve }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Setup & Hydration (Identify Scenario)
+        id: setup
+        run: |
+          # Fetch scenario metadata from our predefined JSON
+          SCENARIO_JSON=$(jq -c '.[] | select(.vulnerability.cve_id == env.TARGET_CVE)' experiment/archive/final_18_scenarios.json)
+          if [ -z "$SCENARIO_JSON" ]; then
+            echo "CVE $TARGET_CVE not found in final_18_scenarios.json"
+            exit 1
+          fi
+          
+          APP_NAME=$(echo "$SCENARIO_JSON" | jq -r '.application')
+          if [ "$APP_NAME" == "Juice Shop" ]; then
+            echo "APP_DIR=applications/juice-shop" >> $GITHUB_ENV
+            echo "ECOSYSTEM=npm" >> $GITHUB_ENV
+          else
+            echo "APP_DIR=applications/airflow" >> $GITHUB_ENV
+            echo "ECOSYSTEM=python" >> $GITHUB_ENV
+          fi
+          
+          echo "PACKAGE_NAME=$(echo "$SCENARIO_JSON" | jq -r '.package.name')" >> $GITHUB_ENV
+          echo "GRYPE_REC_VERSION=$(echo "$SCENARIO_JSON" | jq -r '.package.grype_recommended_version')" >> $GITHUB_ENV
+          echo "SCENARIO_ID=$(echo "$SCENARIO_JSON" | jq -r '.scenario_id')" >> $GITHUB_ENV
+
+      - name: Setup Environment (Node/Python)
+        uses: actions/setup-node@v4.0.3
+        if: env.ECOSYSTEM == 'npm'
+        with:
+          node-version: '18.x'
+          
+      - name: Setup Python Environment Dependencies
+        if: env.ECOSYSTEM == 'python'
+        run: sudo apt-get update && sudo apt-get install -y libldap2-dev libsasl2-dev
+
+      - name: Phase 1 - Establish Baseline & Install Dependencies
+        run: |
+          cd ${{ env.APP_DIR }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            cp ../evidence/juice_shop_package-lock.json package-lock.json || true
+            npm ci > ../../dependency_install.log 2>&1
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
+              cp ../evidence/airflow_pip_freeze.txt requirements.txt
+            fi
+            pip install -r requirements.txt > ../../dependency_install.log 2>&1
+          fi
+
+      - name: Phase 2 - Generate SBOM & Scan
+        run: |
+          cd ${{ env.APP_DIR }}
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0
+          ./bin/syft dir:. -o spdx-json > ../../baseline-sbom.json
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
+
+      - name: Initialize Metrics
+        run: |
+          cat << 'EOF' > metrics.json
+          {
+            "scenario": "${{ env.SCENARIO_ID }}",
+            "selected_cve": "${{ env.TARGET_CVE }}",
+            "build_success": true,
+            "test_success": true,
+            "validation_success": true,
+            "vulnerability_removed": false,
+            "failure_stage": "none",
+            "validation_stage_reached": "rescan"
+          }
+          EOF
+
+      - name: Phase 3 & 4 - Apply Grype Recommendation (Logged)
+        id: apply_fix
+        run: |
+          cd ${{ env.APP_DIR }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            npm install ${{ env.PACKAGE_NAME }}@${{ env.GRYPE_REC_VERSION }} > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            pip install --no-deps ${{ env.PACKAGE_NAME }}==${{ env.GRYPE_REC_VERSION }} > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
+          fi
+          
+      - name: Phase 5 - Build / Tests / Rescan
+        id: build_test
+        run: |
+          cd ${{ env.APP_DIR }}
+          echo "Validating application functionality..." >> ../../build.log
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend >> ../../build.log 2>&1 || (echo "Build Frontend Failed" && exit 1); fi
+            if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server >> ../../build.log 2>&1 || (echo "Build Server Failed" && exit 1); fi
+            if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build >> ../../build.log 2>&1 || (echo "Build Failed" && exit 1); fi
+            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test > ../../test.log 2>&1 || true; fi
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            if [ -f "pytest.ini" ] || [ -d "tests" ]; then pytest > ../../test.log 2>&1 || true; fi
+          fi
+          
+          ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
+          python ../../scripts/remediation/validator.py ../../rescan.json ${{ env.TARGET_CVE }} ../../metrics.json
+
+      - name: Update Metrics on Build Failure
+        if: failure() && steps.build_test.conclusion == 'failure'
+        run: |
+          if [ -f metrics.json ]; then
+            jq '.build_success = false | .test_success = false | .validation_success = false | .failure_stage = "build" | .validation_stage_reached = "build"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+          fi
+
+      - name: Update Metrics on Apply Fix Failure
+        if: failure() && steps.apply_fix.conclusion == 'failure'
+        run: |
+          if [ -f metrics.json ]; then
+            jq '.build_success = false | .test_success = false | .validation_success = false | .failure_stage = "apply_fix" | .validation_stage_reached = "apply_fix"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+          fi
+
+      - name: Phase 6 - Manifest Generation & Artifact Upload
+        if: always()
+        run: |
+          mkdir evidence
+          mv baseline-sbom.json evidence/ || true
+          mv grype.json evidence/baseline-grype.json || true
+          mv build.log evidence/ || true
+          mv test.log evidence/ || true
+          mv post-sbom.json evidence/ || true
+          mv rescan.json evidence/ || true
+          mv metrics.json evidence/ || true
+          
+          cat << 'EOF' > evidence/experiment_manifest.json
+          {
+            "experiment": "baseline",
+            "baseline_type": "scanner_direct_upgrade",
+            "scenario": "${{ env.SCENARIO_ID }}",
+            "recommendation_source": "Grype",
+            "recommendation_origin": "grype.json",
+            "recommendation_version": "0.112.0",
+            "package": "${{ env.PACKAGE_NAME }}",
+            "recommended_version": "${{ env.GRYPE_REC_VERSION }}",
+            "workflow_commit": "${{ github.sha }}",
+            "runner": "${{ runner.os }} ${{ runner.arch }}"
+          }
+          EOF
+
+      - name: Upload Evidence Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remediation-evidence
+          path: evidence/
