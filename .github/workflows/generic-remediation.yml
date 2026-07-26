@@ -45,6 +45,10 @@ jobs:
         with:
           node-version: '18.x'
           
+      - name: Setup Python Environment Dependencies
+        if: env.ECOSYSTEM == 'python'
+        run: sudo apt-get update && sudo apt-get install -y libldap2-dev libsasl2-dev
+
       - name: Phase 1 - Establish Baseline & Install Dependencies
         run: |
           cd ${{ env.APP_DIR }}
@@ -55,7 +59,7 @@ jobs:
             if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
               cp ../evidence/airflow_pip_freeze.txt requirements.txt
             fi
-            pip install -r requirements.txt
+            pip install -r requirements.txt > ../../dependency_install.log 2>&1
           fi
 
       - name: Phase 2 - Generate SBOM & Scan
