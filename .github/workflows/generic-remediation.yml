@@ -119,6 +119,20 @@ jobs:
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
 
+      - name: Update Metrics on Build Failure
+        if: failure() && steps.build_test.conclusion == 'failure'
+        run: |
+          if [ -f metrics.json ]; then
+            jq '.build_success = false | .failure_stage = "build"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+          fi
+
+      - name: Update Metrics on Apply Fix Failure
+        if: failure() && steps.apply_fix.conclusion == 'failure'
+        run: |
+          if [ -f metrics.json ]; then
+            jq '.build_success = false | .failure_stage = "apply_fix"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+          fi
+
       - name: Phase 7 - Retry Orchestration (Attempt 2)
         if: failure()
         run: |
