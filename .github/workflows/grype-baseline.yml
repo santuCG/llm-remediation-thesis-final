@@ -116,7 +116,7 @@ jobs:
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test 2>&1 | tee ../../test.log || true; fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -f "pytest.ini" ] || [ -d "tests" ]; then 
-              pip install pytest pytest-asyncio || true
+              pip install pytest==7.4.4 pytest-asyncio || true
               python3 -m pytest 2>&1 | tee ../../test.log || true
             fi
           fi
