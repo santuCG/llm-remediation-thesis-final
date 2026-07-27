@@ -119,17 +119,23 @@ Based on the vulnerability intelligence and context:
         
     llm_text = result['candidates'][0]['content']['parts'][0]['text']
     
-    print("\n--- LLM Response Payload ---")
-    print(llm_text)
-    print("----------------------------\n")
-    
     # Save response for evidence
     with open('llm-response.json', 'w') as f:
         f.write(llm_text)
         
     try:
         llm_json = json.loads(llm_text)
+        print("\n=================== LLM REASONING LAYER ===================")
+        print(llm_json.get("reasoning", "No reasoning block provided in output."))
+        print("============================================================\n")
+        
+        print("=================== STRUCTURED RESOLUTION ===================")
+        print(json.dumps(llm_json, indent=2))
+        print("=============================================================\n")
         return llm_json
     except json.JSONDecodeError:
+        print("\n--- Raw Response (Failed to parse JSON) ---")
+        print(llm_text)
+        print("-------------------------------------------\n")
         print("[ERROR] Failed to parse LLM response as JSON.")
         sys.exit(1)

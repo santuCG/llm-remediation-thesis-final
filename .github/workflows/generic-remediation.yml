@@ -80,8 +80,14 @@ jobs:
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             npm install 2>&1 | tee ../../build.log || (echo "NPM Install Failed" && exit 1)
+            echo "=== Phase 4 Log: Package Installation Status ==="
+            npm list --depth=0 || true
           elif [ "$ECOSYSTEM" == "python" ]; then
             pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
+            echo "=== Phase 4 Log: Package Installation Status ==="
+            pip show redshift-connector || pip show flask || true
+            echo "=== Updated requirements.txt ==="
+            grep -iE "redshift-connector|flask" requirements.txt || true
           fi
 
       - name: Phase 5 - Fallback Lockfile Regeneration (Phase 2 Package Manager Resolution)
@@ -110,13 +116,23 @@ jobs:
             if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend 2>&1 | tee -a ../../build.log; fi
             if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server 2>&1 | tee -a ../../build.log; fi
             if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../build.log; fi
-            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test 2>&1 | tee ../../test.log || true; fi
+            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then 
+              npm test 2>&1 | tee ../../test.log || true
+              echo "=== Phase 6 Log: Test Execution Summary ==="
+              tail -n 25 ../../test.log || true
+            fi
           elif [ "$ECOSYSTEM" == "python" ]; then
-            if [ -f "pytest.ini" ] || [ -d "tests" ]; then pytest 2>&1 | tee ../../test.log || true; fi
+            if [ -f "pytest.ini" ] || [ -d "tests" ]; then 
+              pytest 2>&1 | tee ../../test.log || true
+              echo "=== Phase 6 Log: Test Execution Summary ==="
+              tail -n 25 ../../test.log || true
+            fi
           fi
           
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
+          echo "=== Phase 6 Log: Post-Remediation Scan Status ==="
+          python -c "import json; data=json.load(open('../../rescan.json')); print('Remaining Vulnerabilities:', len(data.get('matches', [])))" || true
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
 
       - name: Update Metrics on Build Failure

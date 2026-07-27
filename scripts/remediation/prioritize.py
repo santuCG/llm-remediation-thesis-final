@@ -5,6 +5,16 @@ from datetime import datetime, timezone
 
 def get_epss_score(cve_id):
     try:
+        url = f"https://api.first.org/data/v1/epss?cve={cve_id}"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=5) as response:
+            res_data = json.loads(response.read().decode('utf-8'))
+            if res_data.get('status') == 'OK' and res_data.get('data'):
+                return float(res_data['data'][0].get('epss', 0.0))
+    except Exception as e:
+        print(f"[WARN] Failed to fetch live EPSS for {cve_id}: {e}")
+        
+    try:
         snapshot_path = "scripts/remediation/snapshots/epss_snapshot.json"
         with open(snapshot_path, "r") as f:
             data = json.load(f)
@@ -12,10 +22,21 @@ def get_epss_score(cve_id):
                 if item.get('cve') == cve_id:
                     return float(item.get('epss', 0.0))
     except Exception as e:
-        print(f"[WARN] Failed to fetch EPSS for {cve_id} from snapshot: {e}")
+        print(f"[WARN] Failed to fetch EPSS for {cve_id} from snapshot fallback: {e}")
     return 0.0
 
 def get_kev_status(cve_id):
+    try:
+        url = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=5) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            for vuln in data.get('vulnerabilities', []):
+                if vuln.get('cveID') == cve_id:
+                    return True
+    except Exception as e:
+        print(f"[WARN] Failed to fetch live KEV status: {e}")
+        
     try:
         snapshot_path = "scripts/remediation/snapshots/kev_snapshot.json"
         with open(snapshot_path, "r", encoding="utf-8") as f:
@@ -24,7 +45,7 @@ def get_kev_status(cve_id):
                 if vuln.get('cveID') == cve_id:
                     return True
     except Exception as e:
-        print(f"[WARN] Failed to fetch KEV status: {e}")
+        print(f"[WARN] Failed to fetch KEV status from snapshot fallback: {e}")
     return False
 
 def prioritize_vulnerabilities(matches, ecosystem):
