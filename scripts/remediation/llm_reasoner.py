@@ -99,6 +99,9 @@ Based on the vulnerability intelligence and context:
         "api_payload": api_payload
     }
 
+    models = ["gemini-3-flash-preview", "gemini-2.5-flash", "gemini-1.5-flash"]
+    result = None
+    
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
     
     print("\n--- LLM Request Prompt ---")
@@ -108,13 +111,27 @@ Based on the vulnerability intelligence and context:
     with open('llm-request.json', 'w') as f:
         json.dump(evidence_payload, f, indent=2)
 
-    req = urllib.request.Request(url, data=json.dumps(api_payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
-    try:
-        with urllib.request.urlopen(req) as response:
-            result = json.loads(response.read().decode('utf-8'))
-    except urllib.error.HTTPError as e:
-        print(f"[ERROR] LLM HTTP Error: {e.code} {e.reason}")
-        print(e.read().decode('utf-8'))
+    for model_name in models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+        req = urllib.request.Request(url, data=json.dumps(api_payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
+        print(f"[LLM] Attempting request using model: {model_name}...")
+        try:
+            with urllib.request.urlopen(req) as response:
+                result = json.loads(response.read().decode('utf-8'))
+                print(f"[LLM] Successfully retrieved response using model: {model_name}")
+                break
+        except urllib.error.HTTPError as e:
+            err_body = e.read().decode('utf-8')
+            if "quota" in err_body.lower() or "limit" in err_body.lower() or e.code == 429:
+                print(f"[WARNING] Model {model_name} hit quota/rate limits. Attempting fallback model...")
+                continue
+            else:
+                print(f"[ERROR] LLM HTTP Error on model {model_name}: {e.code} {e.reason}")
+                print(err_body)
+                sys.exit(1)
+                
+    if not result:
+        print("[ERROR] All candidate LLM models failed due to quota/rate limits.")
         sys.exit(1)
         
     llm_text = result['candidates'][0]['content']['parts'][0]['text']
