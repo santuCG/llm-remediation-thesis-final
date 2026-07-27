@@ -66,7 +66,7 @@ jobs:
         run: |
           cd ${{ env.APP_DIR }}
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0
-          ./bin/syft dir:. -o spdx-json > ../../baseline-sbom.json
+          ./bin/syft dir:. --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
 
@@ -123,13 +123,13 @@ jobs:
             fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -f "pytest.ini" ] || [ -d "tests" ]; then 
-              pytest 2>&1 | tee ../../test.log || true
+              python -m pytest 2>&1 | tee ../../test.log || true
               echo "=== Phase 6 Log: Test Execution Summary ==="
               tail -n 25 ../../test.log || true
             fi
           fi
           
-          ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
+          ./bin/syft dir:. --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           echo "=== Phase 6 Log: Post-Remediation Scan Status ==="
           python -c "import json; data=json.load(open('../../rescan.json')); print('Remaining Vulnerabilities:', len(data.get('matches', [])))" || true
@@ -171,7 +171,7 @@ jobs:
           elif [ "$ECOSYSTEM" == "python" ]; then
             pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || true
           fi
-          ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
+          ./bin/syft dir:. --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           if [ -f ../../metrics.json ]; then
             python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
