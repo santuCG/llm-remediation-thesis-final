@@ -1,1 +1,1 @@
-/home/runner/work/_temp/337e9e94-14e7-4031-a535-6851a3c9a6f1.sh: line 14: pytest: command not found
+/usr/bin/python: No module named pytest

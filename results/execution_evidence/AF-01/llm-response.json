@@ -1,10 +1,10 @@
 {
-  "reasoning": "The vulnerability GHSA-29h4-r29x-hchv in redshift-connector version 2.1.1 is a critical security flaw with a CVSS score of 9.8. The package is explicitly listed as a direct dependency in the requirements.txt file. The primary consumer of this package in the environment is apache-airflow-providers-amazon (v8.24.0), which specifies a version constraint of 'redshift-connector>=2.0.910'. Upgrading redshift-connector to version 2.1.14 directly satisfies the upstream constraint while remediating the vulnerability. This approach is the safest and most stable as it involves a minor version bump within the same major release line, minimizing the risk of breaking changes while ensuring the security patch is applied.",
+  "reasoning": "The vulnerability GHSA-29h4-r29x-hchv (CVSS 9.8) in redshift-connector 2.1.1 represents a critical security risk, likely involving improper input validation or authentication bypass. The dependency graph shows that redshift-connector is a direct dependency in the requirements.txt and is also required by apache-airflow-providers-amazon (8.24.0). Version 2.1.14 is the official fix released by AWS. Upgrading to 2.1.14 is the safest and most effective strategy as it maintains backward compatibility with the existing 2.1.x branch while resolving the critical vulnerability. Apache Airflow's Amazon provider 8.24.0 supports a broad range of redshift-connector versions (typically >= 2.0.900), so this upgrade will not introduce breaking changes to the orchestration layer.",
   "strategy": "direct_upgrade",
   "remediation_type": "Direct Upgrade",
   "recommended_package_version": "2.1.14",
   "manifest_patch": {
-    "operation": "bump",
+    "operation": "replace",
     "package": "redshift-connector",
     "constraint": "2.1.14"
   }
