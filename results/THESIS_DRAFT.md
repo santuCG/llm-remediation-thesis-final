@@ -1,5 +1,5 @@
 # Abstract
-*To be written after results are finalized.*
+[This section is pending completion pending final quantitative results.]
 
 # Chapter 1: Introduction
 Modern software supply chains rely heavily on open-source dependencies. When a vulnerability (CVE) is discovered deep within a dependency tree, traditional deterministic tools (like `npm audit`) often fail to resolve it, leading to "update fatigue." This thesis explores whether Large Language Models (LLMs) can safely and accurately navigate complex dependency graphs and remediate vulnerabilities without breaking the application build.
@@ -19,7 +19,6 @@ The automated pipeline relies on Gemini 2.5 Flash as the reasoning engine.
 To establish a verifiable baseline, 18 real-world CVE scenarios were executed manually by a human engineer without any AI assistance, starting from the exact same vulnerable commit SHA.
 
 # Chapter 3: Results
-*This section will automatically populate once the 18 concurrent GitHub Actions workflows complete.*
+[This section is pending completion pending final quantitative results.]
 
-# Chapter 4: Discussion
-*This section will deep dive into specific failure stages (e.g. why did the LLM fail to fix transitive vulnerabilities) based on the final dataset.*
+[This section will provide an in-depth analysis of specific failure stages based on the finalized dataset.]

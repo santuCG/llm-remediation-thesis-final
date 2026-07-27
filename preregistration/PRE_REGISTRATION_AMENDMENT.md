@@ -219,7 +219,7 @@ All enrichment data (EPSS probabilities, KEV status, MITRE CVE descriptions, CVS
 | `results/execution_evidence/` | New - execution logs and baseline CI results for all 18 scenarios |
 | `preregistration/scenario_selection_log.md` | New — automated selection audit log |
 | `preregistration/PRE_REGISTRATION_AMENDMENT.md` | This document |
-| `preregistration/PRE_REGISTRATION_MASTER.md` | Original — preserved for record, superseded by this amendment |
+| `preregistration/MASTER_METHODOLOGY_RECORD.md` | Original — preserved for record, superseded by this amendment |
 | `preregistration/GHOST_PREREGISTRATION.md` | Archived — Ghost CMS disqualified |
 
 ---

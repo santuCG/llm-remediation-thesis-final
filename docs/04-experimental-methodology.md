@@ -199,9 +199,9 @@ Rather than treating this behaviour as an LLM failure, the package manager const
 
 ---
 
-### Constraint-Aware Injection
+### Constraint-Aware Injection (npm Ecosystem)
 
-A revised remediation procedure was introduced.
+A revised remediation procedure was introduced for the npm ecosystem.
 
 When a package recommended by the LLM already exists as a direct dependency:
 
@@ -211,7 +211,7 @@ When a package recommended by the LLM already exists as a direct dependency:
 
 Packages that exist only as transitive dependencies are injected exclusively through the `overrides` block.
 
-This procedure satisfies the documented dependency resolution behaviour of npm while preserving the intended remediation strategy.
+This procedure satisfies the documented dependency resolution behaviour of npm while preserving the intended remediation strategy. For the Python ecosystem, standard `pip` resolution or direct manifest constraints are applied instead.
 
 ---
 

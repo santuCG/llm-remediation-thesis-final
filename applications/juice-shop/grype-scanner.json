@@ -1,1 +1,0 @@
-{"matches": [{"vulnerability": {"id": "CVE-2023-32314", "cvss": [{"metrics": {"baseScore": 9.8}}]}, "artifact": {"name": "vm2", "version": "3.9.17"}}]}

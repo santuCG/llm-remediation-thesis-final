@@ -1,362 +1,290 @@
-adal==1.2.7
-adlfs==2024.4.1
-aiobotocore==2.13.0
-aiofiles==23.2.1
-aiohttp==3.9.5
-aioitertools==0.11.0
-aiosignal==1.3.1
-alembic==1.13.1
-amqp==5.2.0
-annotated-types==0.7.0
-anyio==4.4.0
-apache-airflow==2.9.2
-apache-airflow-providers-amazon==8.24.0
-apache-airflow-providers-celery==3.7.2
-apache-airflow-providers-cncf-kubernetes==8.3.1
-apache-airflow-providers-common-io==1.3.2
-apache-airflow-providers-common-sql==1.14.0
-apache-airflow-providers-docker==3.12.0
-apache-airflow-providers-elasticsearch==5.4.1
-apache-airflow-providers-fab==1.1.1
-apache-airflow-providers-ftp==3.9.1
-apache-airflow-providers-google==10.19.0
-apache-airflow-providers-grpc==3.5.1
-apache-airflow-providers-hashicorp==3.7.1
-apache-airflow-providers-http==4.11.1
-apache-airflow-providers-imap==3.6.1
-apache-airflow-providers-microsoft-azure==10.1.1
-apache-airflow-providers-mysql==5.6.1
-apache-airflow-providers-odbc==4.6.1
-apache-airflow-providers-openlineage==1.8.0
-apache-airflow-providers-postgres==5.11.1
-apache-airflow-providers-redis==3.7.1
-apache-airflow-providers-sendgrid==3.5.1
-apache-airflow-providers-sftp==4.10.1
-apache-airflow-providers-slack==8.7.1
-apache-airflow-providers-smtp==1.7.1
-apache-airflow-providers-snowflake==5.5.1
-apache-airflow-providers-sqlite==3.8.1
-apache-airflow-providers-ssh==3.11.1
-apispec==6.6.1
-argcomplete==3.3.0
-asgiref==3.8.1
-asn1crypto==1.5.1
-asyncssh==2.14.2
-attrs==23.2.0
-Authlib==1.3.1
-azure-batch==14.2.0
-azure-common==1.1.28
-azure-core==1.30.1
-azure-cosmos==4.7.0
-azure-datalake-store==0.0.53
-azure-identity==1.16.0
-azure-keyvault-secrets==4.8.0
-azure-kusto-data==4.4.1
-azure-mgmt-containerinstance==10.1.0
-azure-mgmt-containerregistry==10.3.0
-azure-mgmt-core==1.4.0
-azure-mgmt-cosmosdb==9.5.0
-azure-mgmt-datafactory==7.1.0
-azure-mgmt-datalake-nspkg==3.0.1
-azure-mgmt-datalake-store==0.5.0
-azure-mgmt-nspkg==3.0.2
-azure-mgmt-resource==23.1.1
-azure-mgmt-storage==21.1.0
-azure-nspkg==3.0.2
-azure-servicebus==7.12.2
-azure-storage-blob==12.20.0
-azure-storage-file-datalake==12.15.0
-azure-storage-file-share==12.16.0
-azure-synapse-artifacts==0.19.0
-azure-synapse-spark==0.7.0
-Babel==2.15.0
-backoff==2.2.1
-bcrypt==4.1.3
-beautifulsoup4==4.12.3
-billiard==4.2.0
-blinker==1.8.2
-boto3==1.34.106
-botocore==1.34.106
-cachelib==0.9.0
-cachetools==5.3.3
-cattrs==23.2.3
-celery==5.4.0
-certifi==2024.6.2
-cffi==1.16.0
-chardet==5.2.0
-charset-normalizer==3.3.2
-click==8.1.7
-click-didyoumean==0.3.1
-click-plugins==1.1.1
-click-repl==0.3.0
-clickclick==20.10.2
-colorama==0.4.6
-colorlog==4.8.0
-ConfigUpdater==3.2
-connexion==2.14.2
-cron-descriptor==1.4.3
-croniter==2.0.5
-cryptography==41.0.7
-db-dtypes==1.2.0
-decorator==5.1.1
-Deprecated==1.2.14
-dill==0.3.8
-distlib==0.3.8
-dnspython==2.6.1
-docker==7.1.0
-docstring_parser==0.16
-docutils==0.16
-elastic-transport==8.13.1
-elasticsearch==8.13.2
-email_validator==2.1.1
-eventlet==0.36.1
-filelock==3.14.0
-Flask==2.2.5
-Flask-AppBuilder==4.4.1
-Flask-Babel==2.0.0
-Flask-Caching==2.3.0
-Flask-JWT-Extended==4.6.0
-Flask-Limiter==3.7.0
-Flask-Login==0.6.3
-Flask-Session==0.5.0
-Flask-SQLAlchemy==2.5.1
-Flask-WTF==1.2.1
-flower==2.0.1
-frozenlist==1.4.1
-fsspec==2023.12.2
-gcloud-aio-auth==4.2.3
-gcloud-aio-bigquery==7.1.0
-gcloud-aio-storage==9.2.0
-gcsfs==2023.12.2.post1
-gevent==24.2.1
-google-ads==24.0.0
-google-analytics-admin==0.22.7
-google-api-core==2.19.0
-google-api-python-client==2.132.0
-google-auth==2.29.0
-google-auth-httplib2==0.2.0
-google-auth-oauthlib==1.2.0
-google-cloud-aiplatform==1.53.0
-google-cloud-appengine-logging==1.4.3
-google-cloud-audit-log==0.2.5
-google-cloud-automl==2.13.3
-google-cloud-batch==0.17.21
-google-cloud-bigquery==3.20.1
-google-cloud-bigquery-datatransfer==3.15.3
-google-cloud-bigtable==2.23.1
-google-cloud-build==3.24.0
-google-cloud-compute==1.19.0
-google-cloud-container==2.46.0
-google-cloud-core==2.4.1
-google-cloud-datacatalog==3.19.0
-google-cloud-dataflow-client==0.8.10
-google-cloud-dataform==0.5.9
-google-cloud-dataplex==2.0.0
-google-cloud-dataproc==5.9.3
-google-cloud-dataproc-metastore==1.15.3
-google-cloud-dlp==3.18.0
-google-cloud-kms==2.23.0
-google-cloud-language==2.13.3
-google-cloud-logging==3.10.0
-google-cloud-memcache==1.9.3
-google-cloud-monitoring==2.21.0
-google-cloud-orchestration-airflow==1.12.1
-google-cloud-os-login==2.14.3
-google-cloud-pubsub==2.21.2
-google-cloud-redis==2.15.3
-google-cloud-resource-manager==1.12.3
-google-cloud-run==0.10.5
-google-cloud-secret-manager==2.20.0
-google-cloud-spanner==3.47.0
-google-cloud-speech==2.26.0
-google-cloud-storage==2.16.0
-google-cloud-storage-transfer==1.11.3
-google-cloud-tasks==2.16.3
-google-cloud-texttospeech==2.16.3
-google-cloud-translate==3.15.3
-google-cloud-videointelligence==2.13.3
-google-cloud-vision==3.7.2
-google-cloud-workflows==1.14.3
-google-crc32c==1.5.0
-google-re2==1.1.20240601
-google-resumable-media==2.7.0
-googleapis-common-protos==1.63.1
-graphviz==0.20.3
-greenlet==3.0.3
-grpc-google-iam-v1==0.13.0
-grpc-interceptor==0.15.4
-grpcio==1.64.1
-grpcio-gcp==0.2.2
-grpcio-status==1.62.2
-gunicorn==22.0.0
-h11==0.14.0
-h2==4.1.0
-hpack==4.0.0
-httpcore==0.16.3
-httplib2==0.22.0
-httpx==0.23.3
-humanize==4.9.0
-hvac==2.2.0
-hyperframe==6.0.1
-idna==3.7
-ijson==3.2.3
-importlib-metadata==6.11.0
-importlib_resources==6.4.0
-inflection==0.5.1
-isodate==0.6.1
-itsdangerous==2.2.0
-Jinja2==3.1.4
-jmespath==0.10.0
-json-merge-patch==0.2
-jsonpath-ng==1.6.1
-jsonschema==4.22.0
-jsonschema-specifications==2023.12.1
-kombu==5.3.7
-kubernetes==29.0.0
-kubernetes_asyncio==29.0.0
-lazy-object-proxy==1.10.0
-ldap3==2.9.1
-limits==3.12.0
-linkify-it-py==2.0.3
-lockfile==0.12.2
-looker-sdk==24.8.0
-lxml==5.2.2
-Mako==1.3.5
-markdown-it-py==3.0.0
-MarkupSafe==2.1.5
-marshmallow==3.21.3
-marshmallow-oneofschema==3.1.1
-marshmallow-sqlalchemy==0.28.2
-mdit-py-plugins==0.4.1
-mdurl==0.1.2
-methodtools==0.4.7
-microsoft-kiota-abstractions==1.3.3
-microsoft-kiota-authentication-azure==1.0.0
-microsoft-kiota-http==1.3.1
-more-itertools==10.2.0
-msal==1.28.0
-msal-extensions==1.1.0
-msgraph-core==1.0.0
-msrest==0.7.1
-msrestazure==0.6.4.post1
-multidict==6.0.5
-mysql-connector-python==8.4.0
-mysqlclient==2.2.4
-numpy==1.26.4
-oauthlib==3.2.2
-openlineage-integration-common==1.16.0
-openlineage-python==1.16.0
-openlineage_sql==1.16.0
-opentelemetry-api==1.25.0
-opentelemetry-exporter-otlp==1.25.0
-opentelemetry-exporter-otlp-proto-common==1.25.0
-opentelemetry-exporter-otlp-proto-grpc==1.25.0
-opentelemetry-exporter-otlp-proto-http==1.25.0
-opentelemetry-proto==1.25.0
-opentelemetry-sdk==1.25.0
-opentelemetry-semantic-conventions==0.46b0
-ordered-set==4.1.0
-packaging==24.0
-pandas==2.1.4
-pandas-gbq==0.23.0
-paramiko==3.4.0
-pathspec==0.12.1
-pendulum==3.0.0
-platformdirs==4.2.2
-pluggy==1.5.0
-ply==3.11
-portalocker==2.8.2
-prison==0.2.1
-prometheus_client==0.20.0
-prompt_toolkit==3.0.46
-proto-plus==1.23.0
-protobuf==4.25.3
-psutil==5.9.8
-psycopg2-binary==2.9.9
-pyarrow==16.1.0
-pyasn1==0.5.1
-pyasn1-modules==0.3.0
-PyAthena==3.8.3
-pycparser==2.22
-pydantic==2.7.3
-pydantic_core==2.18.4
-pydata-google-auth==1.8.2
-Pygments==2.18.0
-PyJWT==2.8.0
-PyNaCl==1.5.0
-pyodbc==5.1.0
-pyOpenSSL==24.1.0
-pyparsing==3.1.2
-python-daemon==3.0.1
-python-dateutil==2.9.0.post0
-python-dotenv==1.0.1
-python-http-client==3.3.7
-python-ldap==3.4.4
-python-nvd3==0.16.0
-python-slugify==8.0.4
-pytz==2024.1
-PyYAML==6.0.1
-redis==5.0.4
-redshift-connector==2.1.14
-referencing==0.31.1
-requests==2.31.0
-requests-oauthlib==1.3.1
-requests-toolbelt==1.0.0
-rfc3339-validator==0.1.4
-rfc3986==1.5.0
-rich==13.7.1
-rich-argparse==1.5.0
-rpds-py==0.18.1
-rsa==4.9
-s3transfer==0.10.1
-scramp==1.4.5
-sendgrid==6.11.0
-setproctitle==1.3.3
-setuptools==66.1.1
-shapely==2.0.4
-six==1.16.0
-slack_sdk==3.27.2
-sniffio==1.3.1
-snowflake-connector-python==3.10.1
-snowflake-sqlalchemy==1.5.3
-sortedcontainers==2.4.0
-soupsieve==2.5
-SQLAlchemy==1.4.52
-sqlalchemy-bigquery==1.11.0
-SQLAlchemy-JSONField==1.0.2
-sqlalchemy-redshift==0.8.14
-sqlalchemy-spanner==1.7.0
-SQLAlchemy-Utils==0.41.2
-sqlparse==0.5.0
-sshtunnel==0.4.0
-starkbank-ecdsa==2.2.0
-statsd==4.0.1
-std-uritemplate==0.0.57
-tabulate==0.9.0
-tenacity==8.3.0
-termcolor==2.4.0
-text-unidecode==1.3
-time-machine==2.14.1
-tomlkit==0.12.5
-tornado==6.4
-typing_extensions==4.12.1
-tzdata==2024.1
-uc-micro-py==1.0.3
-unicodecsv==0.14.1
-universal_pathlib==0.2.2
-uritemplate==4.1.1
-urllib3==2.2.1
-uv==0.2.2
-vine==5.1.0
-virtualenv==20.26.2
-watchtower==3.2.0
-wcwidth==0.2.13
-websocket-client==1.8.0
-Werkzeug==2.2.3
-wirerope==0.4.7
-wrapt==1.16.0
-WTForms==3.1.2
-yarl==1.9.4
-zipp==3.19.2
-zope.event==5.0
-zope.interface==6.4.post2
+{
+  "name": "juice-shop",
+  "version": "15.3.0",
+  "private": true,
+  "description": "Probably the most modern and sophisticated insecure web application",
+  "keywords": [
+    "web security",
+    "web application security",
+    "webappsec",
+    "owasp",
+    "pentest",
+    "pentesting",
+    "security",
+    "vulnerable",
+    "vulnerability",
+    "broken",
+    "bodgeit",
+    "ctf",
+    "capture the flag",
+    "awareness"
+  ],
+  "homepage": "https://owasp-juice.shop",
+  "bugs": {
+    "url": "https://github.com/juice-shop/juice-shop/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juice-shop/juice-shop.git"
+  },
+  "license": "MIT",
+  "author": "Bj\u00f6rn Kimminich <bjoern.kimminich@owasp.org> (https://kimminich.de)",
+  "contributors": [
+    "Bj\u00f6rn Kimminich",
+    "Jannik Hollenbach",
+    "Aashish683",
+    "greenkeeper[bot]",
+    "MarcRler",
+    "agrawalarpit14",
+    "Scar26",
+    "ShubhamPalriwala",
+    "CaptainFreak",
+    "JuiceShopBot",
+    "Supratik Das",
+    "the-pro",
+    "Ziyang Li",
+    "Timo Pagel",
+    "aaryan10",
+    "..."
+  ],
+  "scripts": {
+    "build:frontend": "cd frontend && node ./node_modules/@angular/cli/bin/ng build --aot --configuration production --output-hashing=none --vendor-chunk=true --source-map=false",
+    "build:server": "tsc",
+    "cypress:open": "cypress open",
+    "frisby": "nyc --report-dir=./build/reports/coverage/api-tests jest --silent --runInBand --forceExit",
+    "postinstall": "cd frontend && npm install --legacy-peer-deps && cd .. && npm run build:frontend && (npm run --silent build:server || cd .)",
+    "lint": "eslint *.ts data lib models routes test/**/*.ts views && cd frontend && ng lint && npx stylelint \"**/*.scss\" && cd ..",
+    "lint:config": "schema validate -s config.schema.yml",
+    "lint:fix": "eslint *.ts data lib models routes test/**/*.ts views rsn --fix && cd frontend && ng lint --fix && npx stylelint \"**/*.scss\" --fix && cd ..",
+    "package": "grunt package",
+    "package:ci": "npm prune --production && npm dedupe && cd frontend && npm prune --legacy-peer-deps --production && cd .. && npm run --silent sbom && grunt package",
+    "serve": "concurrently --kill-others \"ts-node app.ts\" \"cd frontend && ng serve\"",
+    "serve:dev": "concurrently --kill-others \"ts-node-dev app.ts\" \"cd frontend && ng serve\"",
+    "start": "node build/app",
+    "test": "cd frontend && ng test --watch=false --source-map=true && cd .. && npm run test:server",
+    "test:chromium": "cd frontend && ng test --watch=false --source-map=false --browsers=ChromiumHeadless && cd .. && npm run test:server",
+    "test:server": "nyc --report-dir=./build/reports/coverage/server-tests mocha -r ts-node/register -r source-map-support/register --recursive test/server/**/*.ts",
+    "test:api": "npm run frisby",
+    "rsn": "ts-node rsn/rsn.ts",
+    "rsn:verbose": "ts-node rsn/rsn-verbose.ts",
+    "rsn:update": "ts-node rsn/rsn-update.ts",
+    "vagrant": "cd vagrant && vagrant up",
+    "sbom": "npm run sbom:json && npm run sbom:xml",
+    "sbom:json": "cyclonedx-npm --omit=dev --output-format=JSON --output-file=bom.json",
+    "sbom:xml": " cyclonedx-npm --omit=dev --output-format=XML  --output-file=bom.xml"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    },
+    "globalSetup": "./test/apiTestsSetup.ts",
+    "globalTeardown": "./test/apiTestsTeardown.ts",
+    "modulePathIgnorePatterns": [
+      "/build"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/apiTestsSetupJest.ts"
+    ],
+    "testMatch": [
+      "<rootDir>/test/api/*Spec.[jt]s"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/frontend/node_modules/"
+    ],
+    "testURL": "http://localhost"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "include": [
+      "lib/*.ts",
+      "models/*.ts",
+      "routes/*.ts",
+      "server.ts"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "check-dependencies": "^1.1.0",
+    "check-internet-connected": "^2.0.6",
+    "clarinet": "^0.12.5",
+    "colors": "1.4.0",
+    "compression": "^1.7.4",
+    "concurrently": "^5.3.0",
+    "config": "^3.3.7",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dottie": "^2.0.2",
+    "download": "^8.0.0",
+    "errorhandler": "^1.5.1",
+    "ethers": "^6.7.0",
+    "exif": "^0.6.0",
+    "express": "^4.17.1",
+    "express-ipfilter": "^1.2.0",
+    "express-jwt": "0.1.3",
+    "express-rate-limit": "^5.3.0",
+    "express-robots-txt": "^0.4.1",
+    "express-security.txt": "^2.0.0",
+    "feature-policy": "^0.5.0",
+    "file-stream-rotator": "^0.5.7",
+    "file-type": "^16.1.0",
+    "filesniffer": "^1.0.3",
+    "finale-rest": "^1.1.1",
+    "fs-extra": "^9.0.1",
+    "fuzzball": "^1.3.0",
+    "glob": "^7.1.6",
+    "graceful-fs": "^4.2.6",
+    "grunt": "^1.2.1",
+    "grunt-contrib-compress": "^1.6.0",
+    "grunt-replace-json": "^0.1.0",
+    "hashids": "^2.2.1",
+    "hbs": "^4.0.4",
+    "helmet": "^4.0.0",
+    "html-entities": "^1.3.1",
+    "i18n": "^0.11.1",
+    "js-yaml": "^3.14.0",
+    "jsonwebtoken": "0.4.0",
+    "jssha": "^3.1.1",
+    "juicy-chat-bot": "~0.8.0",
+    "libxmljs2": "^0.32.0",
+    "marsdb": "^0.6.11",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "node-pre-gyp": "^0.15.0",
+    "notevil": "^1.3.3",
+    "on-finished": "^2.3.0",
+    "otplib": "^12.0.1",
+    "pdfkit": "^0.11.0",
+    "portscanner": "^2.2.0",
+    "prom-client": "^14.1.0",
+    "pug": "^3.0.0",
+    "replace": "^1.2.0",
+    "request": "^2.88.2",
+    "sanitize-filename": "^1.6.3",
+    "sanitize-html": "1.4.2",
+    "semver": "^7.3.2",
+    "sequelize": "^6.15.1",
+    "serve-index": "^1.9.1",
+    "socket.io": "^3.1.0",
+    "sqlite3": "^5.0.8",
+    "svg-captcha": "^1.4.0",
+    "swagger-ui-express": "^5.0.0",
+    "ts-node-dev": "^1.1.6",
+    "unzipper": "0.9.15",
+    "web3": "^4.0.3",
+    "winston": "^3.3.3",
+    "yaml-schema-validator": "^1.2.2",
+    "z85": "^0.0.2"
+  },
+  "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "^1.12.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.14",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/clarinet": "^0.12.1",
+    "@types/compression": "^1.7.0",
+    "@types/config": "^3.3.1",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.9",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/cypress": "^1.1.3",
+    "@types/download": "^6.2.4",
+    "@types/errorhandler": "^1.5.0",
+    "@types/exif": "^0.6.3",
+    "@types/express": "^4.17.11",
+    "@types/express-jwt": "^6.0.0",
+    "@types/frisby": "^2.0.10",
+    "@types/fs-extra": "^9.0.6",
+    "@types/glob": "^7.1.6",
+    "@types/graceful-fs": "^4.1.5",
+    "@types/i18n": "^0.12.0",
+    "@types/jasmine": "~3.9.1",
+    "@types/jest": "^26.0.20",
+    "@types/js-yaml": "^3.12.6",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/jws": "^3.2.5",
+    "@types/mocha": "^8.1.1",
+    "@types/morgan": "^1.9.2",
+    "@types/multer": "^1.4.5",
+    "@types/node": "^17.0.36",
+    "@types/on-finished": "^2.3.1",
+    "@types/pdfkit": "^0.10.6",
+    "@types/portscanner": "^2.1.0",
+    "@types/pug": "^2.0.4",
+    "@types/request": "^2.48.5",
+    "@types/sanitize-html": "^1.27.0",
+    "@types/semver": "^7.3.4",
+    "@types/sequelize": "^4.28.11",
+    "@types/serve-index": "^1.7.30",
+    "@types/sinon": "^10.0.4",
+    "@types/sinon-chai": "^3.2.5",
+    "@types/socket.io": "^2.1.13",
+    "@types/socket.io-client": "^1.4.35",
+    "@types/swagger-ui-express": "^4.1.2",
+    "@types/unzipper": "^0.10.3",
+    "@types/validator": "^13.1.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "cross-spawn": "^7.0.3",
+    "cypress": "^11.2.0",
+    "eslint": "^8.49.0",
+    "eslint-config-standard-with-typescript": "^39.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "frisby": "https://github.com/bkimminich/frisby.git",
+    "grunt-cli": "^1.3.2",
+    "http-server": "^0.12.3",
+    "jasmine": "^3.9.0",
+    "jasmine-core": "~3.9.0",
+    "jasmine-reporters": "^2.5.0",
+    "jest": "^26.6.3",
+    "mocha": "^8.1.1",
+    "node-fetch": "^2.6.13",
+    "nyc": "^15.1.0",
+    "shelljs": "^0.8.4",
+    "sinon": "^11.1.2",
+    "sinon-chai": "^3.7.0",
+    "socket.io-client": "^3.1.0",
+    "source-map-support": "^0.5.19",
+    "ts-jest": "^26.5.0",
+    "ts-node": "^10.8.0",
+    "typescript": "4.7.4"
+  },
+  "engines": {
+    "node": "16 - 20"
+  },
+  "os": [
+    "win32",
+    "linux",
+    "darwin",
+    "freebsd",
+    "openbsd"
+  ],
+  "cpu": [
+    "x64",
+    "x32",
+    "arm64",
+    "arm"
+  ],
+  "heroku-run-build-script": true,
+  "standard": {
+    "global": [
+      "angular",
+      "inject"
+    ]
+  },
+  "overrides": {
+    "vm2": "3.9.18"
+  }
+}

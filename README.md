@@ -213,11 +213,12 @@ Ghost CMS was originally included as a third application. It was removed mid-exp
 | Document / Folder | What It Contains |
 |----------|----------------|
 | `applications/` | The frozen source code snapshots (Juice Shop v15.3.0 and Airflow v2.9.2), plus raw pre-registration Grype/Syft scans (`applications/evidence/`). |
-| `preregistration/PRE_REGISTRATION_MASTER.md` | All 18 scenarios, selection methodology, enrichment data |
-| `preregistration/PRE_REGISTRATION_AMENDMENT.md` | Ghost disqualification, scenario changes, baseline results |
-| `results/scenarios/` | The canonical JSON database. Contains `pre_registered/scenarios.json` (the locked metadata) and the individual JSON execution logs per scenario. |
+| `archive/` | Legacy results, temporary files, and historical debug scripts. |
+| `docs/` | Comprehensive methodology documentation (`02-experimental-environment.md`, `03-llm-configuration.md`, `04-experimental-methodology.md`, `05-results-and-discussion.md`). |
+| `preregistration/MASTER_METHODOLOGY_RECORD.md` | All 18 scenarios, selection methodology, enrichment data. |
+| `preregistration/PRE_REGISTRATION_AMENDMENT.md` | Ghost disqualification, scenario changes, baseline results. |
+| `progress-reports/` | Status updates and draft records created during the thesis execution (e.g. `27-07-2026/Thesis_Update.md`). |
+| `results/scenarios/` | The canonical JSON database. Contains `pre_registered/scenarios.json` and `final_18_scenarios.json`. |
 | `results/execution_evidence/` | The golden execution evidence containing raw pipeline logs, extracted LLM traces, and pre/post SBOM scans proving the automated POC succeeded. |
-| `docs/02-experimental-environment.md` | Tool versions and environment setup |
-| `docs/03-llm-configuration.md` | Prompt structure and model configuration |
-| `docs/04-experimental-methodology.md` | Full 12-stage experimental workflow |
-| `docs/05-results-and-discussion.md` | Results and interpretation |
+| `scripts/` | Python and bash scripts driving the core automation pipeline and experiment methodology. |
+| `tools/` | Core analysis engines and evaluation utilities. |

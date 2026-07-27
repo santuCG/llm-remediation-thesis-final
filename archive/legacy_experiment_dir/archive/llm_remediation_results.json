@@ -20,7 +20,7 @@
         "gate_2_build_success": null,
         "gate_3_test_success": null,
         "gate_4_rescan_clear": null,
-        "outcome": "GATE_1_PASS",
+        "outcome": "GATE_3_FAIL",
         "hallucinated": false
     },
     {

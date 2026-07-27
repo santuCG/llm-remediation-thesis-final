@@ -64,7 +64,7 @@ Enrichment signals collected for each selected scenario:
 - **EPSS** (Exploit Prediction Scoring System) — exploit prediction probability from FIRST API (https://api.first.org/data/v1/epss)
 - **KEV** — CISA Known Exploited Vulnerabilities status (https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
 
-**Target:** 9 scenarios per application, 18 total. Full selection rationale in `PRE_REGISTRATION_MASTER.md`.
+**Target:** 9 scenarios per application, 18 total. Full selection rationale in `MASTER_METHODOLOGY_RECORD.md`.
 
 ---
 

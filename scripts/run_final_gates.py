@@ -4,9 +4,9 @@ import subprocess
 import shutil
 
 # Paths
-RESULTS_FILE = "experiment/llm_remediation_results.json"
-SCENARIOS_FILE = "experiment/final_18_scenarios.json"
-EVIDENCE_DIR = "experiment/evidence_logs"
+RESULTS_FILE = "archive/legacy_experiment_dir/archive/llm_remediation_results.json"
+SCENARIOS_FILE = "results/scenarios/final_18_scenarios.json"
+EVIDENCE_DIR = "results/execution_evidence"
 JUICE_SHOP_DIR = "applications/juice-shop"
 AIRFLOW_REQ_FILE = "applications/evidence/airflow_pip_freeze.txt"
 SYFT_BIN = "syft" if os.name != "nt" else os.path.abspath("tools/syft/syft.exe")
@@ -83,6 +83,7 @@ def main():
     }
     
     for scenario in qualifying_scenarios:
+        if scenario['scenario_id'] != 'JS-01': continue
         s_id = scenario["scenario_id"]
         eco = "npm" if s_id.startswith("JS") else "pypi"
         proposal = scenario.get("llm_remediation_proposal", {})

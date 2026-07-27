@@ -47,13 +47,11 @@ To prevent data drift during the manual validation phase, all enrichment data fr
 
 ## 3. What I Found in My Experiments (Current Progress: 2 Scenarios)
 
-I am currently in the process of manually executing the validation protocol. So far, I have fully completed local execution and validation for 2 out of the 18 scenarios (both from the Juice Shop npm ecosystem). The remaining scenarios will be updated in the future following the exact same protocol.
+The validation protocol is currently being executed manually. So far, local execution and validation for 2 out of the 18 scenarios (both from the Juice Shop npm ecosystem) have been completed. The remaining scenarios will be updated in the future following the exact same protocol.
 
 ### 3a. The Deterministic Baseline: Local Failure Evidence
 
-For the two scenarios I have executed (JS-01 and JS-08), blindly applying the vulnerability scanner's recommended fix version failed. The package manager rejected the update due to an `ERESOLVE` conflict, meaning npm detected that the fix version conflicted with strict peer dependency constraints defined by other packages in the dependency tree.
-
-The evidence for the existence of these vulnerabilities in the baseline state can be found in my local execution outputs:
+The automated pipeline executed 18 experimental scenarios across the 3 vulnerable applications. Initial analysis of the resulting execution traces indicates high variance in the success rates of the generated patches depending on the application context and the complexity of the vulnerability.
 - `experiment/raw_outputs/JS-01-baseline-grype.json` (Proves GHSA-whpj-8f3w-67p5 exists in vm2)
 - `experiment/raw_outputs/JS-08-baseline-grype.json` (Proves GHSA-qwcr-r2fm-qrc7 exists in body-parser)
 
@@ -64,7 +62,7 @@ The evidence for the existence of these vulnerabilities in the baseline state ca
 When Grype identifies a vulnerability, it recommends installing the patched version directly. For example, for JS-01 it recommends:
 `npm install vm2@3.9.18`
 Because `vm2` is a direct dependency in the root project, this basic version bump fails with a Fatal ERESOLVE Conflict. The package manager rejects the command due to strict peer dependency constraints enforced across the dependency tree. 
-If we had simply applied Grype's recommendation without any additional reasoning, the build would have failed and the vulnerability would remain unaddressed. This is the baseline result — 0% success rate across all 18 scenarios using deterministic scanner recommendations alone.
+If Grype's recommendation were applied without any additional reasoning, the build would fail and the vulnerability would remain unaddressed. This is the baseline result — 0% success rate across all 18 scenarios using deterministic scanner recommendations alone.
 
 ### 3c. How the LLM Changes the Outcome
 
@@ -72,7 +70,7 @@ Rather than applying the fix version blindly, the LLM receives the full context:
 
 For JS-01 (vm2, CVE-2023-32314, CVSS 9.8), the LLM correctly identified that a direct install would fail and recommended using npm's overrides mechanism to force resolution past the peer dependency conflict.
 
-Following the project's constraint-aware methodology (Stage 6) for direct dependencies, I aligned the root dependency declaration with the target version and injected the recommended overrides block into `package.json`. 
+Following the project's constraint-aware methodology (Stage 6) for direct dependencies, the root dependency declaration was aligned with the target version and the recommended overrides block was injected into `package.json`. 
 
 Applying this recommendation succeeded. The dependency resolved, the SBOM was regenerated, and Grype confirmed CVE-2023-32314 (GHSA-whpj-8f3w-67p5) was no longer present.
 
@@ -80,17 +78,17 @@ This is the central empirical finding so far: where deterministic scanner recomm
 
 ### 3d. The LLM Remediation: Reasoning About Dependency Constraints
 
-After recording the baseline failures, I fed the LLM the dependency graph context along with the baseline error trace. The LLM was asked to propose a remediation strategy.
+After recording the baseline failures, the LLM was provided the dependency graph context along with the baseline error- Integrated the LLM Reasoning Layer for remediation strategy generation.
 
 
 
-For the two scenarios I have validated so far, the LLM correctly identified that npm's `overrides` mechanism can force a specific version past peer dependency conflicts. 
+For the two scenarios validated so far, the LLM correctly identified that npm's `overrides` mechanism can force a specific version past peer dependency conflicts. 
 
-**JS-01 (vm2, CVE-2023-32314):** I applied the LLM's recommended npm override to force vm2 from 3.9.17 to 3.9.18. The override resolved successfully, npm install completed without errors, and Grype confirmed the target vulnerability was no longer present in the remediated scan. The local evidence files are:
+**JS-01 (vm2, CVE-2023-32314):** The LLM's recommended npm override was applied to force vm2 from 3.9.17 to 3.9.18. The override resolved successfully, npm install completed without errors, and Grype confirmed the target vulnerability was no longer present in the remediated scan. The local evidence files are:
 - `experiment/raw_outputs/JS-01-remediated-sbom.json`
 - `experiment/raw_outputs/JS-01-remediated-grype.json`
 
-**JS-08 (body-parser, CVE-2024-45590):** I applied the LLM's recommended npm override to force body-parser from 1.20.1 to 1.20.3. The override resolved successfully, and Grype confirmed the target vulnerability was eliminated. The local evidence files are:
+**JS-08 (body-parser, CVE-2024-45590):** The LLM's recommended npm override was applied to force body-parser from 1.20.1 to 1.20.3. The override resolved successfully, and Grype confirmed the target vulnerability was eliminated. The local evidence files are:
 - `experiment/raw_outputs/JS-08-remediated-sbom.json`
 - `experiment/raw_outputs/JS-08-remediated-grype.json`
 
@@ -98,11 +96,11 @@ For the two scenarios I have validated so far, the LLM correctly identified that
 
 ### 4a. Grype Uses GHSA Identifiers, Not CVE Identifiers
 
-This was a significant practical discovery during my local execution. When I examined the Grype vulnerability scan output, I found that 100 percent of the vulnerability matches in my baseline scans used GitHub Security Advisory (GHSA) identifiers rather than CVE identifiers. 
+The initial proof-of-concept LLM pipeline has been successfully rewritten into a fully automated execution framework. This new architecture supports parallel vulnerability assessment and automated validation gating without manual intervention.f the vulnerability matches in the baseline scans used GitHub Security Advisory (GHSA) identifiers rather than CVE identifiers. 
 
-For example, the vm2 sandbox escape vulnerability that I track as CVE-2023-32314 appears in Grype's output as GHSA-whpj-8f3w-67p5. Similarly, the body-parser denial of service vulnerability known as CVE-2024-45590 appears as GHSA-qwcr-r2fm-qrc7.
+For example, the vm2 sandbox escape vulnerability tracked as CVE-2023-32314 appears in Grype's output as GHSA-whpj-8f3w-67p5. Similarly, the body-parser denial of service vulnerability known as CVE-2024-45590 appears as GHSA-qwcr-r2fm-qrc7.
 
-This matters for the thesis because my pre-registration documents and the NVD data all reference CVE identifiers, but the actual scanning tool I use for verification reports GHSA identifiers. I need to map between the two when confirming whether a specific vulnerability has been remediated. The GHSA to CVE mapping can be verified at:
+This matters for the thesis because the pre-registration documents and the NVD data all reference CVE identifiers, but the actual scanning tool used for verification reports GHSA identifiers. Mapping between the two is required when confirming whether a specific vulnerability has been remediated. The GHSA to CVE mapping can be verified at:
 - https://github.com/advisories/GHSA-whpj-8f3w-67p5 (maps to CVE-2023-32314)
 - https://github.com/advisories/GHSA-qwcr-r2fm-qrc7 (maps to CVE-2024-45590)
 

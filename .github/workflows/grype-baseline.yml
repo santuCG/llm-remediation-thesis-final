@@ -22,7 +22,7 @@ jobs:
         id: setup
         run: |
           # Fetch scenario metadata from our predefined JSON
-          SCENARIO_JSON=$(jq -c '.[] | select(.vulnerability.cve_id == env.TARGET_CVE)' experiment/archive/final_18_scenarios.json)
+          SCENARIO_JSON=$(jq -c '.[] | select(.vulnerability.cve_id == env.TARGET_CVE)' results/scenarios/final_18_scenarios.json)
           if [ -z "$SCENARIO_JSON" ]; then
             echo "CVE $TARGET_CVE not found in final_18_scenarios.json"
             exit 1

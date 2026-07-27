@@ -63,7 +63,7 @@ for app, path, req_type in apps:
         if not vid.startswith('CVE-'):
             continue
             
-        # REAL CVEs only (no 2025/2026 unless actually real, but let's filter them out to be safe)
+        # Filter out 2025/2026 CVEs to ensure historical baseline accuracy
         if vid.startswith('CVE-2025') or vid.startswith('CVE-2026'):
             continue
             
