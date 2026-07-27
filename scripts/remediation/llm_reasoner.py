@@ -71,7 +71,7 @@ Based on the vulnerability intelligence and context:
         "required": ["reasoning", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
     payload = {
         "scenario_id": scenario_id,
         "experiment_id": "2026-final",
