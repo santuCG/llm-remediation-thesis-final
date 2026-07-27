@@ -18,7 +18,7 @@ Do not hallucinate package versions. Recommend versions that actually exist and 
     application = "Apache Airflow" if ecosystem == "python" else "OWASP Juice Shop"
     
     user_prompt = f"""Scenario ID: {scenario_id}
-Prompt Version: v1.0
+Prompt Version: v1.1
 
 ### Vulnerability Intelligence
 * Target Package: {candidate['package_name']}
@@ -71,7 +71,7 @@ Based on the vulnerability intelligence and context:
         "required": ["reasoning", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={api_key}"
     api_payload = {
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
@@ -95,7 +95,7 @@ Based on the vulnerability intelligence and context:
         "experiment_id": "2026-final",
         "application": application,
         "ecosystem": ecosystem,
-        "prompt_version": "v1.0",
+        "prompt_version": "v1.1",
         "api_payload": api_payload
     }
 

@@ -49,7 +49,7 @@ def main():
         "runner": "ubuntu-24.04", # Hardcoded based on GH Actions run-on or close enough
         "python": "3.12.x",
         "llm": {
-            "model": "gemini-flash-latest",
+            "model": "gemini-3-flash-preview",
             "temperature": 0.0,
             "seed": 42,
             "topP": 1.0,

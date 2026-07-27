@@ -56,12 +56,12 @@ jobs:
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             cp ../evidence/juice_shop_package-lock.json package-lock.json || true
-            npm ci > ../../dependency_install.log 2>&1
+            npm ci 2>&1 | tee ../../dependency_install.log
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
               cp ../evidence/airflow_pip_freeze.txt requirements.txt
             fi
-            pip install -r requirements.txt > ../../dependency_install.log 2>&1
+            pip install -r requirements.txt 2>&1 | tee ../../dependency_install.log
           fi
 
       - name: Phase 2 - Generate SBOM & Scan
@@ -99,23 +99,23 @@ jobs:
               --version "${{ env.GRYPE_REC_VERSION }}"
               
           if [ "$ECOSYSTEM" == "npm" ]; then
-            npm install > ../../build.log 2>&1 || (echo "NPM Install Failed" && exit 1)
+            npm install 2>&1 | tee ../../build.log || (echo "NPM Install Failed" && exit 1)
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install --no-deps -r requirements.txt > ../../build.log 2>&1 || (echo "PIP Install Failed" && exit 1)
+            pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
           fi
           
       - name: Phase 5 - Build / Tests / Rescan
         id: build_test
         run: |
           cd ${{ env.APP_DIR }}
-          echo "Validating application functionality..." >> ../../build.log
+          echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
           if [ "$ECOSYSTEM" == "npm" ]; then
-            if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend >> ../../build.log 2>&1 || (echo "Build Frontend Failed" && exit 1); fi
-            if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server >> ../../build.log 2>&1 || (echo "Build Server Failed" && exit 1); fi
-            if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build >> ../../build.log 2>&1 || (echo "Build Failed" && exit 1); fi
-            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test > ../../test.log 2>&1 || true; fi
+            if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend 2>&1 | tee -a ../../build.log || (echo "Build Frontend Failed" && exit 1); fi
+            if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server 2>&1 | tee -a ../../build.log || (echo "Build Server Failed" && exit 1); fi
+            if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../build.log || (echo "Build Failed" && exit 1); fi
+            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test 2>&1 | tee ../../test.log || true; fi
           elif [ "$ECOSYSTEM" == "python" ]; then
-            if [ -f "pytest.ini" ] || [ -d "tests" ]; then pytest > ../../test.log 2>&1 || true; fi
+            if [ -f "pytest.ini" ] || [ -d "tests" ]; then pytest 2>&1 | tee ../../test.log || true; fi
           fi
           
           ./bin/syft dir:. -o spdx-json > ../../post-sbom.json
