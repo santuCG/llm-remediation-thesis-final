@@ -71,7 +71,7 @@ Based on the vulnerability intelligence and context:
         "required": ["reasoning", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     api_payload = {
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
