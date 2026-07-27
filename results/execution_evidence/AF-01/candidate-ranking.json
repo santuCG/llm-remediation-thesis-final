@@ -7,7 +7,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.03397,
-    "epss_timestamp": "2026-07-27T21:30:28.666804+00:00",
+    "epss_timestamp": "2026-07-27T21:45:05.824032+00:00",
     "kev": false,
     "fixed_versions": [
       "3.0.3"
@@ -21,7 +21,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.02667,
-    "epss_timestamp": "2026-07-27T21:30:28.784311+00:00",
+    "epss_timestamp": "2026-07-27T21:45:06.235983+00:00",
     "kev": false,
     "fixed_versions": [
       "2.6.3"
@@ -35,7 +35,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01979,
-    "epss_timestamp": "2026-07-27T21:30:29.055579+00:00",
+    "epss_timestamp": "2026-07-27T21:45:06.769891+00:00",
     "kev": false,
     "fixed_versions": [
       "2.11.1"
@@ -49,7 +49,7 @@
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.01939,
-    "epss_timestamp": "2026-07-27T21:30:28.897871+00:00",
+    "epss_timestamp": "2026-07-27T21:45:06.325215+00:00",
     "kev": false,
     "fixed_versions": [
       "70.0.0"
@@ -63,7 +63,7 @@
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.01726,
-    "epss_timestamp": "2026-07-27T21:30:29.174808+00:00",
+    "epss_timestamp": "2026-07-27T21:45:06.995454+00:00",
     "kev": false,
     "fixed_versions": [
       "2.9.3"
@@ -77,7 +77,7 @@
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.01688,
-    "epss_timestamp": "2026-07-27T21:30:29.260227+00:00",
+    "epss_timestamp": "2026-07-27T21:45:07.103339+00:00",
     "kev": false,
     "fixed_versions": [
       "2.10.1"
@@ -91,7 +91,7 @@
     "severity": "high",
     "cvss": 8.4,
     "epss": 0.0157,
-    "epss_timestamp": "2026-07-27T21:30:29.358051+00:00",
+    "epss_timestamp": "2026-07-27T21:45:07.221141+00:00",
     "kev": false,
     "fixed_versions": [
       "20.26.6"
@@ -105,7 +105,7 @@
     "severity": "high",
     "cvss": 7.7,
     "epss": 0.01454,
-    "epss_timestamp": "2026-07-27T21:30:29.457924+00:00",
+    "epss_timestamp": "2026-07-27T21:45:07.312123+00:00",
     "kev": false,
     "fixed_versions": [
       "78.1.1"
@@ -119,7 +119,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01118,
-    "epss_timestamp": "2026-07-27T21:30:29.632357+00:00",
+    "epss_timestamp": "2026-07-27T21:45:07.500394+00:00",
     "kev": false,
     "fixed_versions": [
       "42.0.0"
@@ -133,7 +133,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01051,
-    "epss_timestamp": "2026-07-27T21:30:29.849324+00:00",
+    "epss_timestamp": "2026-07-27T21:45:08.101271+00:00",
     "kev": false,
     "fixed_versions": [
       "6.4.2"
@@ -147,7 +147,7 @@
     "severity": "high",
     "cvss": 8.4,
     "epss": 0.01043,
-    "epss_timestamp": "2026-07-27T21:30:29.759225+00:00",
+    "epss_timestamp": "2026-07-27T21:45:07.715207+00:00",
     "kev": false,
     "fixed_versions": [
       "2.11.1"
@@ -161,7 +161,7 @@
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.00833,
-    "epss_timestamp": "2026-07-27T21:30:30.090922+00:00",
+    "epss_timestamp": "2026-07-27T21:45:08.612201+00:00",
     "kev": false,
     "fixed_versions": [
       "1.24.1"
@@ -175,7 +175,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00831,
-    "epss_timestamp": "2026-07-27T21:30:30.203309+00:00",
+    "epss_timestamp": "2026-07-27T21:45:08.701883+00:00",
     "kev": false,
     "fixed_versions": [
       "42.0.4"
@@ -189,7 +189,7 @@
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00808,
-    "epss_timestamp": "2026-07-27T21:30:29.952197+00:00",
+    "epss_timestamp": "2026-07-27T21:45:08.206233+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.14"
@@ -203,7 +203,7 @@
     "severity": "high",
     "cvss": 7,
     "epss": 0.00807,
-    "epss_timestamp": "2026-07-27T21:30:30.449559+00:00",
+    "epss_timestamp": "2026-07-27T21:45:09.498028+00:00",
     "kev": false,
     "fixed_versions": [
       "23.0.1"
@@ -217,7 +217,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00803,
-    "epss_timestamp": "2026-07-27T21:30:30.299168+00:00",
+    "epss_timestamp": "2026-07-27T21:45:09.124925+00:00",
     "kev": false,
     "fixed_versions": [
       "0.6.3"
@@ -231,7 +231,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00776,
-    "epss_timestamp": "2026-07-27T21:30:30.586714+00:00",
+    "epss_timestamp": "2026-07-27T21:45:09.696012+00:00",
     "kev": false,
     "fixed_versions": [
       "1.38.0"
@@ -245,7 +245,7 @@
     "severity": "high",
     "cvss": 7.2,
     "epss": 0.00704,
-    "epss_timestamp": "2026-07-27T21:30:31.483517+00:00",
+    "epss_timestamp": "2026-07-27T21:45:12.205816+00:00",
     "kev": false,
     "fixed_versions": [
       "26.0.0"
@@ -259,7 +259,7 @@
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.00695,
-    "epss_timestamp": "2026-07-27T21:30:30.878986+00:00",
+    "epss_timestamp": "2026-07-27T21:45:10.221124+00:00",
     "kev": false,
     "fixed_versions": [
       "6.0.0"
@@ -273,7 +273,7 @@
     "severity": "high",
     "cvss": 7.3,
     "epss": 0.00676,
-    "epss_timestamp": "2026-07-27T21:30:31.705080+00:00",
+    "epss_timestamp": "2026-07-27T21:45:12.809598+00:00",
     "kev": false,
     "fixed_versions": [
       "3.2.2"
@@ -287,7 +287,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00672,
-    "epss_timestamp": "2026-07-27T21:30:31.576279+00:00",
+    "epss_timestamp": "2026-07-27T21:45:12.657434+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5"
@@ -301,7 +301,7 @@
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00662,
-    "epss_timestamp": "2026-07-27T21:30:31.361781+00:00",
+    "epss_timestamp": "2026-07-27T21:45:11.997131+00:00",
     "kev": false,
     "fixed_versions": [
       "5.29.6"
@@ -315,7 +315,7 @@
     "severity": "high",
     "cvss": 7.2,
     "epss": 0.00649,
-    "epss_timestamp": "2026-07-27T21:30:32.052398+00:00",
+    "epss_timestamp": "2026-07-27T21:45:13.547105+00:00",
     "kev": false,
     "fixed_versions": [
       "3.2.2"
@@ -329,7 +329,7 @@
     "severity": "high",
     "cvss": 8.9,
     "epss": 0.00647,
-    "epss_timestamp": "2026-07-27T21:30:31.061894+00:00",
+    "epss_timestamp": "2026-07-27T21:45:10.761513+00:00",
     "kev": false,
     "fixed_versions": [
       "2.6.0"
@@ -343,7 +343,7 @@
     "severity": "high",
     "cvss": 8.9,
     "epss": 0.00647,
-    "epss_timestamp": "2026-07-27T21:30:31.152171+00:00",
+    "epss_timestamp": "2026-07-27T21:45:11.136283+00:00",
     "kev": false,
     "fixed_versions": [
       "2.6.0"
@@ -357,7 +357,7 @@
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.00626,
-    "epss_timestamp": "2026-07-27T21:30:30.667485+00:00",
+    "epss_timestamp": "2026-07-27T21:45:10.066857+00:00",
     "kev": false,
     "fixed_versions": [
       "5.8.1"
@@ -371,7 +371,7 @@
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00609,
-    "epss_timestamp": "2026-07-27T21:30:31.895087+00:00",
+    "epss_timestamp": "2026-07-27T21:45:13.336409+00:00",
     "kev": false,
     "fixed_versions": [
       "1.3.12"
@@ -385,7 +385,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00596,
-    "epss_timestamp": "2026-07-27T21:30:32.404901+00:00",
+    "epss_timestamp": "2026-07-27T21:45:14.103588+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.5"
@@ -399,7 +399,7 @@
     "severity": "high",
     "cvss": 8.1,
     "epss": 0.0059,
-    "epss_timestamp": "2026-07-27T21:30:32.180241+00:00",
+    "epss_timestamp": "2026-07-27T21:45:13.648984+00:00",
     "kev": false,
     "fixed_versions": [
       "22.0.0"
@@ -413,7 +413,7 @@
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.00581,
-    "epss_timestamp": "2026-07-27T21:30:31.240770+00:00",
+    "epss_timestamp": "2026-07-27T21:45:11.541149+00:00",
     "kev": false,
     "fixed_versions": [
       "0.16.0"
@@ -427,7 +427,7 @@
     "severity": "high",
     "cvss": 8.1,
     "epss": 0.00579,
-    "epss_timestamp": "2026-07-27T21:30:32.329036+00:00",
+    "epss_timestamp": "2026-07-27T21:45:13.743879+00:00",
     "kev": false,
     "fixed_versions": [
       "3.2.0"
@@ -441,7 +441,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00572,
-    "epss_timestamp": "2026-07-27T21:30:32.492221+00:00",
+    "epss_timestamp": "2026-07-27T21:45:14.258090+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.6"
@@ -455,7 +455,7 @@
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00571,
-    "epss_timestamp": "2026-07-27T21:30:30.960553+00:00",
+    "epss_timestamp": "2026-07-27T21:45:10.625227+00:00",
     "kev": false,
     "fixed_versions": [
       "6.4.0"
@@ -469,7 +469,7 @@
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.00548,
-    "epss_timestamp": "2026-07-27T21:30:31.811200+00:00",
+    "epss_timestamp": "2026-07-27T21:45:13.190453+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.9"
@@ -483,7 +483,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00513,
-    "epss_timestamp": "2026-07-27T21:30:32.665820+00:00",
+    "epss_timestamp": "2026-07-27T21:45:14.536701+00:00",
     "kev": false,
     "fixed_versions": [
       "9.1.0"
@@ -497,7 +497,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00511,
-    "epss_timestamp": "2026-07-27T21:30:32.850337+00:00",
+    "epss_timestamp": "2026-07-27T21:45:14.640033+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.3"
@@ -511,7 +511,7 @@
     "severity": "high",
     "cvss": 7,
     "epss": 0.00505,
-    "epss_timestamp": "2026-07-27T21:30:33.071931+00:00",
+    "epss_timestamp": "2026-07-27T21:45:14.897209+00:00",
     "kev": false,
     "fixed_versions": [
       "1.9.9"
@@ -525,7 +525,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00497,
-    "epss_timestamp": "2026-07-27T21:30:32.953217+00:00",
+    "epss_timestamp": "2026-07-27T21:45:14.776574+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.3"
@@ -539,7 +539,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00487,
-    "epss_timestamp": "2026-07-27T21:30:33.183267+00:00",
+    "epss_timestamp": "2026-07-27T21:45:15.149039+00:00",
     "kev": false,
     "fixed_versions": [
       "3.13.3"
@@ -553,7 +553,7 @@
     "severity": "high",
     "cvss": 7.7,
     "epss": 0.00438,
-    "epss_timestamp": "2026-07-27T21:30:33.287628+00:00",
+    "epss_timestamp": "2026-07-27T21:45:15.290856+00:00",
     "kev": false,
     "fixed_versions": [
       "1.133.0"
@@ -567,7 +567,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00426,
-    "epss_timestamp": "2026-07-27T21:30:33.422253+00:00",
+    "epss_timestamp": "2026-07-27T21:45:15.440851+00:00",
     "kev": false,
     "fixed_versions": [
       "2.8.4"
@@ -581,7 +581,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00426,
-    "epss_timestamp": "2026-07-27T21:30:33.526040+00:00",
+    "epss_timestamp": "2026-07-27T21:45:15.595137+00:00",
     "kev": false,
     "fixed_versions": [
       "2.8.4"
@@ -595,7 +595,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.0041,
-    "epss_timestamp": "2026-07-27T21:30:33.626099+00:00",
+    "epss_timestamp": "2026-07-27T21:45:15.824725+00:00",
     "kev": false,
     "fixed_versions": [
       "0.32.0"
@@ -609,7 +609,7 @@
     "severity": "high",
     "cvss": 7.4,
     "epss": 0.00395,
-    "epss_timestamp": "2026-07-27T21:30:33.796447+00:00",
+    "epss_timestamp": "2026-07-27T21:45:16.046172+00:00",
     "kev": false,
     "fixed_versions": [
       "2.13.0"
@@ -623,7 +623,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00375,
-    "epss_timestamp": "2026-07-27T21:30:33.914486+00:00",
+    "epss_timestamp": "2026-07-27T21:45:16.463586+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.5"
@@ -637,7 +637,7 @@
     "severity": "high",
     "cvss": 7.7,
     "epss": 0.00365,
-    "epss_timestamp": "2026-07-27T21:30:34.054341+00:00",
+    "epss_timestamp": "2026-07-27T21:45:16.682433+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.6"
@@ -651,7 +651,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00361,
-    "epss_timestamp": "2026-07-27T21:30:34.134413+00:00",
+    "epss_timestamp": "2026-07-27T21:45:16.781036+00:00",
     "kev": false,
     "fixed_versions": [
       "1.3.11"
@@ -665,7 +665,7 @@
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00341,
-    "epss_timestamp": "2026-07-27T21:30:34.237395+00:00",
+    "epss_timestamp": "2026-07-27T21:45:17.170568+00:00",
     "kev": false,
     "fixed_versions": [
       "46.0.5"
@@ -679,7 +679,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00335,
-    "epss_timestamp": "2026-07-27T21:30:34.432279+00:00",
+    "epss_timestamp": "2026-07-27T21:45:17.307988+00:00",
     "kev": false,
     "fixed_versions": [
       "0.6.4"
@@ -693,7 +693,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00335,
-    "epss_timestamp": "2026-07-27T21:30:34.525797+00:00",
+    "epss_timestamp": "2026-07-27T21:45:17.531906+00:00",
     "kev": false,
     "fixed_versions": [
       "0.6.4"
@@ -707,7 +707,7 @@
     "severity": "high",
     "cvss": 5.3,
     "epss": 0.00331,
-    "epss_timestamp": "2026-07-27T21:30:34.770605+00:00",
+    "epss_timestamp": "2026-07-27T21:45:18.337660+00:00",
     "kev": false,
     "fixed_versions": [
       "2.7.0"
@@ -721,7 +721,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00324,
-    "epss_timestamp": "2026-07-27T21:30:34.642503+00:00",
+    "epss_timestamp": "2026-07-27T21:45:17.950970+00:00",
     "kev": false,
     "fixed_versions": [
       "6.1.0"
@@ -735,7 +735,7 @@
     "severity": "high",
     "cvss": 7,
     "epss": 0.003,
-    "epss_timestamp": "2026-07-27T21:30:34.870376+00:00",
+    "epss_timestamp": "2026-07-27T21:45:18.429351+00:00",
     "kev": false,
     "fixed_versions": [
       "3.13.1"
@@ -749,7 +749,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00269,
-    "epss_timestamp": "2026-07-27T21:30:34.978873+00:00",
+    "epss_timestamp": "2026-07-27T21:45:18.549278+00:00",
     "kev": false,
     "fixed_versions": [
       "2.12.0"
@@ -763,7 +763,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00261,
-    "epss_timestamp": "2026-07-27T21:30:35.213119+00:00",
+    "epss_timestamp": "2026-07-27T21:45:19.111435+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.7"
@@ -777,7 +777,7 @@
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00251,
-    "epss_timestamp": "2026-07-27T21:30:35.073782+00:00",
+    "epss_timestamp": "2026-07-27T21:45:18.913681+00:00",
     "kev": false,
     "fixed_versions": [
       "4.25.8"
@@ -791,7 +791,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00244,
-    "epss_timestamp": "2026-07-27T21:30:35.341046+00:00",
+    "epss_timestamp": "2026-07-27T21:45:19.267901+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.4"
@@ -805,7 +805,7 @@
     "severity": "high",
     "cvss": 7.2,
     "epss": 0.00237,
-    "epss_timestamp": "2026-07-27T21:30:35.546106+00:00",
+    "epss_timestamp": "2026-07-27T21:45:19.765770+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.5"
@@ -819,7 +819,7 @@
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00226,
-    "epss_timestamp": "2026-07-27T21:30:35.425802+00:00",
+    "epss_timestamp": "2026-07-27T21:45:19.492376+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.9"
@@ -833,7 +833,7 @@
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00156,
-    "epss_timestamp": "2026-07-27T21:30:35.675999+00:00",
+    "epss_timestamp": "2026-07-27T21:45:20.189564+00:00",
     "kev": false,
     "fixed_versions": [
       "10.17.0"
@@ -847,7 +847,7 @@
     "severity": "high",
     "cvss": 8.3,
     "epss": 0.00142,
-    "epss_timestamp": "2026-07-27T21:30:35.840209+00:00",
+    "epss_timestamp": "2026-07-27T21:45:20.413349+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.9"
@@ -861,7 +861,7 @@
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.0,
-    "epss_timestamp": "2026-07-27T21:30:35.953320+00:00",
+    "epss_timestamp": "2026-07-27T21:45:20.594236+00:00",
     "kev": false,
     "fixed_versions": [
       "48.0.1"

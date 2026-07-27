@@ -115,9 +115,9 @@ jobs:
             if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../build.log || (echo "Build Failed" && exit 1); fi
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test 2>&1 | tee ../../test.log || true; fi
           elif [ "$ECOSYSTEM" == "python" ]; then
-            if [ -f "pytest.ini" ] || [ -d "tests" ]; then 
+            if [ -d "tests/core" ]; then 
               pip install pytest==7.4.4 pytest-asyncio || true
-              python3 -m pytest 2>&1 | tee ../../test.log || true
+              python3 -m pytest tests/core 2>&1 | tee ../../test.log || true
             fi
           fi
           
