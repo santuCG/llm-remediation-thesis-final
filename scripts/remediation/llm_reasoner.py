@@ -81,9 +81,13 @@ Based on the vulnerability intelligence and context:
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
         "generationConfig": {
+            # Zero temperature ensures the model generates the most deterministic and consistent output possible, preventing random variations.
             "temperature": 0.0,
+            # Full probability mass considered, but combined with temperature=0.0, this restricts generation to the highest-probability token.
             "topP": 1.0,
+            # Only the single top token is considered at each step, further enforcing determinism for structured schema compliance.
             "topK": 1,
+            # Static seed parameter to ensure reproducibility of results across runs.
             "seed": 42,
             "responseMimeType": "application/json",
             "responseSchema": response_schema
