@@ -1,1 +1,5 @@
-/usr/bin/python: No module named pytest
+ERROR: usage: python -m pytest [options] [file_or_dir] [file_or_dir] [...]
+python -m pytest: error: unrecognized arguments: --asyncio-mode=strict
+  inifile: /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/airflow/pyproject.toml
+  rootdir: /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/airflow
+

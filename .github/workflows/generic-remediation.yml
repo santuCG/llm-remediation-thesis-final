@@ -123,7 +123,7 @@ jobs:
             fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -f "pytest.ini" ] || [ -d "tests" ]; then 
-              pip install pytest || true
+              pip install pytest pytest-asyncio || true
               python3 -m pytest 2>&1 | tee ../../test.log || true
               echo "=== Phase 6 Log: Test Execution Summary ==="
               tail -n 25 ../../test.log || true

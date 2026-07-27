@@ -1,7 +1,7 @@
 {
   "scenario": "AF-01",
-  "repository_commit": "01358742e889656d683b860324d70dba7321b549",
-  "workflow_commit": "01358742e889656d683b860324d70dba7321b549",
+  "repository_commit": "dfc34f3b0c8e6a6a3bc304d8440dffd969354d13",
+  "workflow_commit": "dfc34f3b0c8e6a6a3bc304d8440dffd969354d13",
   "pipeline_version": "v2.0",
   "runner": "ubuntu-24.04",
   "python": "3.12.x",
@@ -30,16 +30,16 @@
   },
   "artifact_hashes": {
     "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-    "rescan.json": "b68ece711e65976665804d93e3b203ab2dbf19f301b976ca26c70d83bc0473d8",
-    "baseline-grype.json": "9367a990192f653972288dfb033216194b6655beac46494486dd5e014e84603e",
-    "candidate-ranking.json": "098ca7f5ffa3aeaf5aca42520f2ee90205a3bc634e4e5e2f4cc6587e7d84341a",
-    "build.log": "5c2a4cf26c09adabfd94af5c5c6449f1f2642fe1dd7f4a2cba397701ec57def6",
-    "selected-candidate.json": "1aa0fd9930875fcbf33eab874591ea94976fa41b17badeaa21db0bb15e24872f",
-    "metrics.json": "714b5b95ae440421239e637bb891cd59b5f032cf39c42fe9f3e0c8f07615bf6f",
-    "test.log": "91d02d7cbbf1e5910c909dbc567dfa491e4124096a8aad6c721fbc2a6329c386",
-    "baseline-sbom.json": "85a97e289e73944324c850ca078e0873e07022458fb403e1dd13349edbd65aca",
+    "rescan.json": "cd44c911da1035feafb51a0a675df60bf4f2698717c7994ae483e2a20edc73a5",
+    "baseline-grype.json": "b864ec05c3fbc1f0b3dc76141979402d975905b2d7e565795c8ec7562a2c46f4",
+    "candidate-ranking.json": "d4f049d715493616ac452ea3aca1c37f9b29c3f0002d3c6f7171dd0037c68ee1",
+    "build.log": "03f2de7b5411d26d708d35234e7f258c218ce91cdc77b7b6be0fe4ec5b9537a1",
+    "selected-candidate.json": "d7e7b0b18c617ecb1cfc38b593f26c43fdfa71a662540506a7172e3e7eee63b1",
+    "metrics.json": "08678ddc424f178edaeecad9bebbf6dbc1a1b6bc2500053efc287ac13efff9c9",
+    "test.log": "1fb44b7b68e29d868d767b54416170b6ec38458e89b9616233f76a3952ef547b",
+    "baseline-sbom.json": "d6b2fdde18149e0c8df2659a6485731941375e5cf403044f6f63009950459ce9",
     "package-after.json": "dfa019fc3507b32db6c6a043b0b48e6dd0011346bc5e87fb1eabfa6bdd848dc3",
-    "llm-response.json": "11ceedc7d160087db81ac610c05209e8a78ea0f9996a7b396853b88214ab7828",
+    "llm-response.json": "fc35a48e2b82063c2e201c4512f4e789b18087198a6886110f0ddf2a8f003652",
     "llm-request.json": "b03366752824ac780928fb2c51acfe0b6433229e4528528d7a7b72be01dab73b"
   }
 }
