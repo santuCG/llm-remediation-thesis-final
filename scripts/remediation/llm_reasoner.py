@@ -99,7 +99,7 @@ Based on the vulnerability intelligence and context:
         "api_payload": api_payload
     }
 
-    models = ["gemini-3-flash-preview", "gemini-2.5-flash", "gemini-1.5-flash"]
+    models = ["gemini-3-flash-preview", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
     result = None
     
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
