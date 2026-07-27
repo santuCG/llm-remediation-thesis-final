@@ -72,12 +72,7 @@ Based on the vulnerability intelligence and context:
     }
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
-    payload = {
-        "scenario_id": scenario_id,
-        "experiment_id": "2026-final",
-        "application": application,
-        "ecosystem": ecosystem,
-        "prompt_version": "v1.0",
+    api_payload = {
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
         "generationConfig": {
@@ -94,17 +89,26 @@ Based on the vulnerability intelligence and context:
         }
     }
 
+    # Save the request for evidence, enriched with additional metadata for thesis audit trails
+    evidence_payload = {
+        "scenario_id": scenario_id,
+        "experiment_id": "2026-final",
+        "application": application,
+        "ecosystem": ecosystem,
+        "prompt_version": "v1.0",
+        "api_payload": api_payload
+    }
+
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
     
     print("\n--- LLM Request Prompt ---")
     print(user_prompt)
     print("--------------------------\n")
     
-    # Save the request for evidence
     with open('llm-request.json', 'w') as f:
-        json.dump(payload, f, indent=2)
+        json.dump(evidence_payload, f, indent=2)
 
-    req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
+    req = urllib.request.Request(url, data=json.dumps(api_payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
     try:
         with urllib.request.urlopen(req) as response:
             result = json.loads(response.read().decode('utf-8'))
