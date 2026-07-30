@@ -67,9 +67,12 @@ jobs:
       - name: Phase 2 - Generate SBOM & Scan
         run: |
           cd ${{ env.APP_DIR }}
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0
+          mkdir -p ./bin
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
+          tar -xzf syft.tar.gz -C ./bin syft
           ./bin/syft dir:. --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
+          tar -xzf grype.tar.gz -C ./bin grype
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
 
       - name: Initialize Metrics

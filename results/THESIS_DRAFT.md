@@ -36,6 +36,9 @@ To prevent prompt poisoning and optimize token usage, the context builder extrac
 ### 2.2 Autonomous LLM Reasoning Layer
 The pipeline utilizes Google's `gemini-2.5-flash` model. The model is constrained via a structured JSON Schema output to ensure compatibility across programming language ecosystems.
 
+### 2.3 Runtime Integrity Verification Caveats
+The execution pipeline determines "build success" and "test success" based on whether the application successfully compiles and passes its fundamental unit testing suite (`npm test` or `pytest`). It is crucial to caveat that this strictly defines "integrity" as compile-time compatibility and basic module loading. For a remediation to be deemed genuinely "production-ready," the pipeline would require comprehensive End-to-End (E2E) testing suites (e.g., Cypress, Playwright) and deep integration testing to ensure that forcibly overriding a transitive package does not silently alter downstream business logic. Thus, "success" in this methodology is an indicator of structural stability, not absolute functional parity.
+
 ---
 
 ## Chapter 3: Empirical Experimental Results
@@ -50,6 +53,30 @@ The experiment evaluates 18 pre-registered scenarios (9 for Node.js/Juice Shop, 
 *   **Vulnerability Details:** SQL injection in AWS `redshift-connector` version 2.1.1 with a CVSS score of 9.8 and EPSS score of 0.00808.
 *   **Remediation Logic:** The LLM identified that `redshift-connector` was pinned at version 2.1.1 and recommended a Direct Upgrade to `2.1.14` (the minimum version resolving the security vulnerability that maintained compatibility with the parent `apache-airflow-providers-amazon` constraint).
 *   **Outcome:** The build was 100% successful. The post-remediation scan confirmed that `CVE-2026-8838` (GHSA-29h4-r29x-hchv) was successfully eradicated from the SBOM without introducing regressions to other core packages.
+
+### 3.3 Comparative Baseline Results (In Progress)
+To evaluate the efficacy of the LLM Reasoning Layer, the pipeline is evaluated against a deterministic SCA remediation baseline (Grype vulnerability patches applied via strict semver bumps). This table will be populated as the 18 pre-registered scenarios execute.
+
+| Scenario ID | Package (CVE) | Deterministic Baseline Success | LLM Reasoning Success |
+| :--- | :--- | :--- | :--- |
+| JS-01 | vm2 (CVE-2023-32314) | Pending | Pending |
+| JS-02 | handlebars (CVE-2026-33937) | Pending | Pending |
+| JS-03 | form-data (CVE-2025-7783) | Pending | Pending |
+| JS-04 | crypto-js (CVE-2023-46233) | Pending | Pending |
+| JS-05 | jsonwebtoken (CVE-2015-9235) | Pending | Pending |
+| JS-06 | flatted (CVE-2026-33228) | Pending | Pending |
+| JS-07 | ws (CVE-2024-37890) | Pending | Pending |
+| JS-08 | body-parser (CVE-2024-45590) | Pending | Pending |
+| JS-09 | multer (CVE-2026-3520) | Pending | Pending |
+| AF-01 | redshift-connector (CVE-2026-8838) | Pending | Pending |
+| AF-02 | h11 (CVE-2025-43859) | Pending | Pending |
+| AF-03 | cryptography (CVE-2023-50782) | Pending | Pending |
+| AF-04 | mako (CVE-2026-44307) | Pending | Pending |
+| AF-05 | protobuf (CVE-2026-0994) | Pending | Pending |
+| AF-06 | jinja2 (CVE-2024-56326) | Pending | Pending |
+| AF-07 | mysql-connector-python (CVE-2024-21272) | Pending | Pending |
+| AF-08 | google-cloud-aiplatform (CVE-2026-2473) | Pending | Pending |
+| AF-09 | werkzeug (CVE-2024-34069) | Pending | Pending |
 
 ---
 

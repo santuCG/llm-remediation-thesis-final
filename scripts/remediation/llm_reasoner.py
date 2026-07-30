@@ -71,7 +71,7 @@ Based on the vulnerability intelligence and context:
         "required": ["reasoning", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+
     api_payload = {
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
@@ -112,8 +112,8 @@ Based on the vulnerability intelligence and context:
         json.dump(evidence_payload, f, indent=2)
  
     for model_name in models:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
-        req = urllib.request.Request(url, data=json.dumps(api_payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
+        req = urllib.request.Request(url, data=json.dumps(api_payload).encode('utf-8'), headers={'Content-Type': 'application/json', 'x-goog-api-key': api_key})
         print(f"[LLM] Attempting request using model: {model_name}...")
         try:
             with urllib.request.urlopen(req) as response:
