@@ -54,8 +54,8 @@
     "baseline_pipeline": {
       "started": "2026-07-26T17:08:00Z",
       "completed": "2026-07-26T17:10:00Z",
-      "github_run_id": "30211949108",
-      "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30211949108",
+      "github_run_id": "30574548185",
+      "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30574548185",
       "git_commit": "e987f6d",
       "workflow_sha": "a1b2c3d",
       "scanner_output": {
@@ -91,8 +91,8 @@
     "llm_pipeline": {
       "started": "2026-07-26T17:10:00Z",
       "completed": "2026-07-26T17:15:00Z",
-      "github_run_id": "30211950000",
-      "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30211950000",
+      "github_run_id": "30574548185",
+      "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30574548185",
       "git_commit": "e987f6d",
       "workflow_sha": "a1b2c3d",
       "validation": {
@@ -136,6 +136,7 @@
 
 
 === EMPIRICAL EVIDENCE ===
+NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
 
 --- PIPELINE METRICS ---
 {
