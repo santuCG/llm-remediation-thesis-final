@@ -1,137 +1,48 @@
 {
-  "schema_version": "1.0",
-  "pre_registration": {
-    "registration_version": "1.0",
-    "registration_timestamp": "2026-07-26T00:00:00Z",
-    "scenario_metadata": {
-      "scenario_id": "AF-09",
-      "application": "Apache Airflow",
-      "application_version": "2.2.3",
-      "ecosystem": "python",
-      "experiment_group": "LLM vs Grype Baseline",
-      "status": "Completed"
+  "scenario": "AF-09",
+  "repository_commit": "16a551ed6c7569848711da6f431cae58d4d008fe",
+  "workflow_commit": "16a551ed6c7569848711da6f431cae58d4d008fe",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "llm": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-07-30",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
     },
-    "selection_rationale": {
-      "cvss_threshold_met": true,
-      "patched_version_available": true,
-      "epss_considered": true,
-      "application_dependency": true
-    },
-    "vulnerability_enrichment": {
-      "retrieved_on": "2026-05-18",
-      "cve": {
-        "id": "CVE-2024-34069",
-        "description": null,
-        "severity": "High",
-        "cvss_score": 7.5,
-        "cvss_vector": null,
-        "published": "2023-01-01T00:00:00Z",
-        "last_modified": "2023-01-01T00:00:00Z",
-        "source": "MITRE CVE JSON"
-      },
-      "epss": {
-        "score": 0.03397,
-        "percentile": null,
-        "snapshot_date": "2026-05-18",
-        "source": "FIRST EPSS API"
-      },
-      "kev": {
-        "listed": false,
-        "catalog_version": "2026-05-18",
-        "source": "CISA KEV"
-      }
-    },
-    "scanner_recommendation": {
-      "grype": {
-        "package": "werkzeug",
-        "installed_version": "2.2.3",
-        "recommended_fixed_version": "3.0.3",
-        "scanner_version": "0.112.0"
-      }
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-07-30",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
     }
   },
-  "execution": {
-    "baseline_pipeline": {
-      "started": "",
-      "completed": "",
-      "github_run_id": "",
-      "workflow_url": "",
-      "git_commit": "",
-      "workflow_sha": "",
-      "scanner_output": {
-        "artifact": "baseline-grype.json",
-        "finding_id": "placeholder",
-        "matched_cve": "CVE-placeholder-AF-09"
-      },
-      "validation": {
-        "manifest_updated": false,
-        "dependency_installation": false,
-        "build": {
-          "executed": false,
-          "passed": null
-        },
-        "failure_stage": "",
-        "tests": {
-          "executed": false,
-          "passed": null
-        },
-        "sbom": {
-          "executed": false,
-          "generated": null
-        },
-        "grype_rescan": {
-          "executed": false,
-          "completed": null,
-          "vulnerability_removed": null
-        },
-        "overall_result": "Pending"
-      },
-      "artifacts": {}
-    },
-    "llm_pipeline": {
-      "started": "",
-      "completed": "",
-      "github_run_id": "",
-      "workflow_url": "",
-      "git_commit": "",
-      "workflow_sha": "",
-      "validation": {
-        "manifest_updated": false,
-        "dependency_installation": false,
-        "build": {
-          "executed": false,
-          "passed": null
-        },
-        "failure_stage": "",
-        "tests": {
-          "executed": false,
-          "passed": null
-        },
-        "sbom": {
-          "executed": false,
-          "generated": null
-        },
-        "grype_rescan": {
-          "executed": false,
-          "completed": null,
-          "vulnerability_removed": null
-        },
-        "overall_result": "Pending"
-      },
-      "artifacts": {}
-    }
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
   },
-  "reproducibility": {
-    "toolchain": {
-      "syft": "1.44.0",
-      "grype": "0.112.0",
-      "node": "18.x",
-      "npm": "9.x",
-      "python": "3.11",
-      "github_actions_runner": "ubuntu-22.04",
-      "os": "ubuntu-latest"
-    }
-  }
+  "artifact_hashes": {
+    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+    "rescan.json": "8f11cf5940c6cb9c21a09660b5187f18734b997f6d8b68d13edd28e875ff9acf",
+    "baseline-grype.json": "e9008836f18813e158be554c0c60b022a8966ae98451e48db302f1eeee1de664",
+    "candidate-ranking.json": "e3a24fd06836801a349a12d191ea3a94dc8834c0dbcfa88744b6cb4521a8de9e",
+    "build.log": "ea28e1c1a4a3eb0ccdae71f5352aa9034274e0a241d39833db91a387d1f3894c",
+    "selected-candidate.json": "f5580dcf2c89fed58cca29751d95f865fb3d903bf11d6920477a37605ce573fa",
+    "metrics.json": "297859b967c8010b45bda9236cf036602c1411e5bd4170a0bd01d5ad7a4431cd",
+    "test.log": "b7bee83d9ce2f0b491b92169e018f45289f169077d9ab16c4220c60e4e97e2be",
+    "baseline-sbom.json": "f22dfca69c49730c55f15e06a79b8246af6301293c5ba552b5ddf087ad0096f0",
+    "package-after.json": "cd9207e7705c6ce36df12ef595d30c9f46934d18910f8584883d0acb02fbced2",
+    "llm-response.json": "bcf1a9595d04db8696d8e5f618bf527f7006fd04230b2fd1b945ea5140bab376",
+    "llm-request.json": "8a0108859c43f2316810481b6f872f01d2d1467ccf556bbb22b5b0cdeb6f54a9"
+  },
+  "pipeline_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30585687941"
 }
 
 --- PIPELINE METRICS ---

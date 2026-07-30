@@ -76,7 +76,7 @@ To evaluate the efficacy of the LLM Reasoning Layer, the pipeline is evaluated a
 | AF-06 | jinja2 (CVE-2024-56326) | Pending | Pending |
 | AF-07 | mysql-connector-python (CVE-2024-21272) | Pending | Pending |
 | AF-08 | google-cloud-aiplatform (CVE-2026-2473) | Pending | Pending |
-| AF-09 | werkzeug (CVE-2024-34069) | Pending | Pending |
+| AF-09 | werkzeug (CVE-2024-34069) | Pending | Success |
 
 ---
 
