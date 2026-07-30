@@ -1,0 +1,13 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting redshift-connector==2.1.14
+  Downloading redshift_connector-2.1.14-py3-none-any.whl.metadata (70 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.0/70.0 kB 2.2 MB/s eta 0:00:00
+Downloading redshift_connector-2.1.14-py3-none-any.whl (157 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 157.1/157.1 kB 6.1 MB/s eta 0:00:00
+Installing collected packages: redshift-connector
+  Attempting uninstall: redshift-connector
+    Found existing installation: redshift-connector 2.1.1
+    Uninstalling redshift-connector-2.1.1:
+      Successfully uninstalled redshift-connector-2.1.1
+Successfully installed redshift-connector-2.1.14
+Validating application functionality...

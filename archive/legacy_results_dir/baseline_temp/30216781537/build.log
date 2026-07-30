@@ -1,0 +1,12 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting mysql-connector-python==9.1.0
+  Downloading mysql_connector_python-9.1.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (6.0 kB)
+Downloading mysql_connector_python-9.1.0-cp312-cp312-manylinux_2_28_x86_64.whl (34.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.4/34.4 MB 34.1 MB/s eta 0:00:00
+Installing collected packages: mysql-connector-python
+  Attempting uninstall: mysql-connector-python
+    Found existing installation: mysql-connector-python 8.4.0
+    Uninstalling mysql-connector-python-8.4.0:
+      Successfully uninstalled mysql-connector-python-8.4.0
+Successfully installed mysql-connector-python-9.1.0
+Validating application functionality...

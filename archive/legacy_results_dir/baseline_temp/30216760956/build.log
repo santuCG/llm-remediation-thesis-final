@@ -1,0 +1,11 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting h11==0.16.0
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Installing collected packages: h11
+  Attempting uninstall: h11
+    Found existing installation: h11 0.14.0
+    Uninstalling h11-0.14.0:
+      Successfully uninstalled h11-0.14.0
+Successfully installed h11-0.16.0
+Validating application functionality...

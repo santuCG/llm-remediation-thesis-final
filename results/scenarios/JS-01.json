@@ -182,7 +182,7 @@
 ### Vulnerability Intelligence
 * Target Package: vm2
 * Vulnerable Version: 3.9.17
-* CVE ID: GHSA-whpj-8f3w-67p5
+* CVE ID: GHSA-whpj-8f3w-67p5 (CVE-2023-32314)
 * CVSS Score: 9.8
 * EPSS Probability: 0.08127
 * CISA KEV Status: False

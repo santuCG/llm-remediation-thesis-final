@@ -174,7 +174,7 @@ Prompt Version: v1.1
 ### Vulnerability Intelligence
 * Target Package: redshift-connector
 * Vulnerable Version: 2.1.1
-* CVE ID: GHSA-29h4-r29x-hchv
+* CVE ID: GHSA-29h4-r29x-hchv (CVE-2026-8838)
 * CVSS Score: 9.8
 * EPSS Probability: 0.00808
 * CISA KEV Status: False

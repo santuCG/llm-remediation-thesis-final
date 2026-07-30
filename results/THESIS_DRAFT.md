@@ -34,7 +34,7 @@ graph TD
 To prevent prompt poisoning and optimize token usage, the context builder extracts only the topological subgraph relevant to the vulnerable package. For the npm ecosystem, the `package.json` is trimmed to include only the target dependency declaration. For the PyPI ecosystem, `pip show` outputs are parsed to extract immediate required-by relationships, filtering the active `requirements.txt` and `pip freeze` manifests.
 
 ### 2.2 Autonomous LLM Reasoning Layer
-The pipeline utilizes Google's `gemini-3.5-flash` model, falling back to `gemini-3.6-flash` and `gemini-2.5-flash` in the event of rate limits or transient errors. The model is constrained via a structured JSON Schema output to ensure compatibility across programming language ecosystems.
+The pipeline utilizes Google's `gemini-2.5-flash` model. The model is constrained via a structured JSON Schema output to ensure compatibility across programming language ecosystems.
 
 ---
 
