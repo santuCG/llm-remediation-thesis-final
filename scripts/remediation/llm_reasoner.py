@@ -99,7 +99,7 @@ Based on the vulnerability intelligence and context:
         "api_payload": api_payload
     }
 
-    models = ["gemini-3-flash-preview", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
+    models = ["gemini-3.5-flash-preview", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
     result = None
     
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
@@ -110,7 +110,7 @@ Based on the vulnerability intelligence and context:
     
     with open('llm-request.json', 'w') as f:
         json.dump(evidence_payload, f, indent=2)
-
+ 
     for model_name in models:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
         req = urllib.request.Request(url, data=json.dumps(api_payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
@@ -122,16 +122,14 @@ Based on the vulnerability intelligence and context:
                 break
         except urllib.error.HTTPError as e:
             err_body = e.read().decode('utf-8')
-            if "quota" in err_body.lower() or "limit" in err_body.lower() or e.code == 429:
-                print(f"[WARNING] Model {model_name} hit quota/rate limits. Attempting fallback model...")
-                continue
-            else:
-                print(f"[ERROR] LLM HTTP Error on model {model_name}: {e.code} {e.reason}")
-                print(err_body)
-                sys.exit(1)
+            print(f"[WARNING] Model {model_name} failed with HTTP Error {e.code} {e.reason}: {err_body}. Attempting fallback model...")
+            continue
+        except Exception as e:
+            print(f"[WARNING] Model {model_name} failed with error: {e}. Attempting fallback model...")
+            continue
                 
     if not result:
-        print("[ERROR] All candidate LLM models failed due to quota/rate limits.")
+        print("[ERROR] All candidate LLM models failed to return a response.")
         sys.exit(1)
         
     llm_text = result['candidates'][0]['content']['parts'][0]['text']
