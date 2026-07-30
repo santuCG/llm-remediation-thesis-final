@@ -12,35 +12,46 @@
 === EMPIRICAL EVIDENCE ===
 NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
 
+--- EXPERIMENT MANIFEST ---
+{
+    "scenario": "JS-01", // The unique identifier for this vulnerability scenario
+    "workflow_commit": "30215612850", // The GitHub Actions run ID that executed this pipeline
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30215612850", // Direct link to the successful GitHub Actions workflow run
+    "pipeline_version": "v2.0", // The version of the remediation pipeline engine
+    "llm": { // LLM configuration settings
+        "model": "gemini-2.5-flash" // The exact LLM model used for reasoning
+    }
+}
+
 --- PIPELINE METRICS ---
 {
-  "application": "applications/juice-shop",
-  "ecosystem": "npm",
-  "candidate_count": 111,
-  "selected_package": "vm2",
-  "selected_cve": "GHSA-whpj-8f3w-67p5",
-  "api_cve_id": "CVE-2023-32314",
-  "severity": "critical",
-  "cvss": 9.8,
-  "epss": 0.08127,
-  "epss_timestamp": "2026-07-26T16:53:36.191853+00:00",
-  "kev_status": false,
-  "dependency_type": "direct",
-  "strategy": "direct_upgrade",
+  "application": "applications/juice-shop", // The target application being evaluated
+  "ecosystem": "npm", // Package manager ecosystem (e.g., npm, python)
+  "candidate_count": 111, // Total number of vulnerabilities initially scanned
+  "selected_package": "vm2", // The specific vulnerable dependency chosen for remediation
+  "selected_cve": "GHSA-whpj-8f3w-67p5", // The GitHub Security Advisory ID
+  "api_cve_id": "CVE-2023-32314", // The standard MITRE CVE ID
+  "severity": "critical", // CVSS severity rating
+  "cvss": 9.8, // Common Vulnerability Scoring System score
+  "epss": 0.08127, // Exploit Prediction Scoring System probability
+  "epss_timestamp": "2026-07-26T16:53:36.191853+00:00", // Time the EPSS score was fetched
+  "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
+  "dependency_type": "direct", // Whether the dependency is direct or transitive
+  "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
   "confidence": 95,
-  "remediation_type": "Transitive Override",
-  "llm_response_valid": true,
-  "build_success": true,
-  "test_success": false,
-  "dependency_verified": true,
-  "rescan_success": true,
-  "runtime_success": false,
-  "lockfile_regenerated": false,
-  "execution_time_seconds": 28,
-  "retry_count": 1,
-  "llm_iteration": 2,
-  "validation_stage_reached": "validator",
-  "failure_stage": "build"
+  "remediation_type": "Transitive Override", // The human-readable strategy category
+  "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
+  "build_success": true, // Whether the application successfully built after remediation
+  "test_success": false, // Whether the application's test suite passed
+  "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
+  "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
+  "runtime_success": false, // Runtime tests status
+  "lockfile_regenerated": false, // Whether a lockfile was regenerated
+  "execution_time_seconds": 28, // Total pipeline execution time in seconds
+  "retry_count": 1, // Number of LLM retries needed
+  "llm_iteration": 2, // The specific iteration of the LLM prompting
+  "validation_stage_reached": "validator", // The furthest pipeline stage reached
+  "failure_stage": "build" // The stage where the pipeline failed, if any
 }
 
 --- LLM PROMPT ---
