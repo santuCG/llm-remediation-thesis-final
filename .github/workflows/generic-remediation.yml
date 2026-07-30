@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       app_dir:
-        description: 'Application Directory (e.g. applications/juice-shop)'
+        description: 'Application Directory (e.g. applications/airflow)'
         required: true
-        default: 'applications/juice-shop'
+        default: 'applications/airflow'
       target_cve:
         description: 'Target CVE ID or Package to remediate (Optional)'
         required: false
@@ -25,11 +25,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4.1.7
 
-      - name: Detect Ecosystem
+      - name: Identify Target Ecosystem
         id: detect
         run: |
           APP_DIR="${{ github.event.inputs.app_dir }}"
-          if [ -z "$APP_DIR" ]; then APP_DIR="applications/juice-shop"; fi
+          if [ -z "$APP_DIR" ]; then APP_DIR="applications/airflow"; fi
           echo "APP_DIR=$APP_DIR" >> $GITHUB_ENV
           if [ -f "$APP_DIR/package.json" ]; then
             echo "ECOSYSTEM=npm" >> $GITHUB_ENV
@@ -39,17 +39,17 @@ jobs:
             echo "ECOSYSTEM=unknown" >> $GITHUB_ENV
           fi
 
-      - name: Setup Environment (Node/Python)
+      - name: Initialize Environment
         uses: actions/setup-node@v4.0.3
         if: env.ECOSYSTEM == 'npm'
         with:
           node-version: '18.x'
           
-      - name: Setup Python Environment Dependencies
+      - name: Install OS Dependencies
         if: env.ECOSYSTEM == 'python'
         run: sudo apt-get update && sudo apt-get install -y libldap2-dev libsasl2-dev
 
-      - name: Phase 1 - Establish Baseline & Install Dependencies
+      - name: Install Baseline Dependencies
         run: |
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
@@ -62,7 +62,7 @@ jobs:
             pip install -r requirements.txt 2>&1 | tee ../../dependency_install.log
           fi
 
-      - name: Phase 2 - Generate SBOM & Scan
+      - name: Generate SBOM & Run Grype
         run: |
           cd ${{ env.APP_DIR }}
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b ./bin v1.44.0
@@ -70,11 +70,11 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ./bin v0.112.0
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
 
-      - name: Phase 3 - Orchestrate Remediation (Attempt 1)
+      - name: Determine Remediation Strategy
         run: |
           python scripts/remediation/generic_remediation.py $ECOSYSTEM ${{ env.APP_DIR }}
 
-      - name: Phase 4 - Apply Fix & Verify (Phase 1 Package Manager Resolution)
+      - name: Apply Fix & Verify
         id: apply_fix
         run: |
           cd ${{ env.APP_DIR }}
@@ -90,7 +90,7 @@ jobs:
             grep -iE "redshift-connector|flask" requirements.txt || true
           fi
 
-      - name: Phase 5 - Fallback Lockfile Regeneration (Phase 2 Package Manager Resolution)
+      - name: Fallback Lockfile Regeneration
         if: failure()
         run: |
           cd ${{ env.APP_DIR }}
@@ -107,7 +107,7 @@ jobs:
             sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
           fi
 
-      - name: Phase 6 - Build / Tests / Rescan
+      - name: Validate Remediation & Rescan
         id: build_test
         run: |
           cd ${{ env.APP_DIR }}
@@ -118,21 +118,21 @@ jobs:
             if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../build.log; fi
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then 
               npm test 2>&1 | tee ../../test.log || true
-              echo "=== Phase 6 Log: Test Execution Summary ==="
+              echo "=== Test Execution Summary ==="
               tail -n 25 ../../test.log || true
             fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -d "tests/core" ]; then 
               pip install pytest==7.4.4 pytest-asyncio || true
               python3 -m pytest tests/core 2>&1 | tee ../../test.log || true
-              echo "=== Phase 6 Log: Test Execution Summary ==="
+              echo "=== Test Execution Summary ==="
               tail -n 25 ../../test.log || true
             fi
           fi
           
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
-          echo "=== Phase 6 Log: Post-Remediation Scan Status ==="
+          echo "=== Post-Remediation Scan Status ==="
           python -c "import json; data=json.load(open('../../rescan.json')); print('Remaining Vulnerabilities:', len(data.get('matches', [])))" || true
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
 
@@ -150,7 +150,7 @@ jobs:
             jq '.build_success = false | .failure_stage = "apply_fix" | .validation_stage_reached = "apply_fix"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
           fi
 
-      - name: Phase 7 - Retry Orchestration (Attempt 2)
+      - name: Retry Remediation Strategy
         if: failure()
         run: |
           echo "Failure detected. Capturing logs and performing Retry Iteration."
@@ -178,7 +178,7 @@ jobs:
             python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
           fi
 
-      - name: Evidence Collection
+      - name: Gather Evidence
         if: always()
         run: |
           mkdir evidence
@@ -197,7 +197,7 @@ jobs:
           
           python scripts/remediation/generate_manifest.py
 
-      - name: Upload Evidence Artifact
+      - name: Upload Remediation Evidence
         uses: actions/upload-artifact@v4
         if: always()
         with:

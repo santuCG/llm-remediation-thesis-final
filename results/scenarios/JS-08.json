@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "JS-08",
       "application": "OWASP Juice Shop",
-      "application_version": "placeholder",
+      "application_version": "1.20.1",
       "ecosystem": "npm",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-JS-08",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2024-45590",
+        "description": "body-parser is Node.js body parsing middleware. body-parser <1.20.3 is vulnerable to denial of service when url encoding is enabled. A malicious actor using a specially crafted payload could flood the server with a large number of requests, resulting in denial of service. This issue is patched in 1.20.3.",
+        "severity": "High",
+        "cvss_score": 8.7,
+        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.00824,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "body-parser",
+        "installed_version": "1.20.1",
+        "recommended_fixed_version": "1.20.3",
         "scanner_version": "0.112.0"
       }
     }

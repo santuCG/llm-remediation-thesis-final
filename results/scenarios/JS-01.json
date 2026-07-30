@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "JS-01",
       "application": "OWASP Juice Shop",
-      "application_version": "15.3.0",
+      "application_version": "3.9.17",
       "ecosystem": "npm",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Completed"
@@ -21,16 +21,16 @@
       "retrieved_on": "2026-05-18",
       "cve": {
         "id": "CVE-2023-32314",
-        "description": "The `vm2` library is susceptible to a sandbox breakout vulnerability...",
+        "description": "vm2 is a sandbox that can run untrusted code with Node's built-in modules. A sandbox escape vulnerability exists in vm2 for versions up to and including 3.9.17. It abuses an unexpected creation of a host object based on the specification of `Proxy`. As a result a threat actor can bypass the sandbox protections to gain remote code execution rights on the host running the sandbox. This vulnerability was patched in the release of version `3.9.18` of `vm2`. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
         "severity": "Critical",
         "cvss_score": 9.8,
-        "cvss_vector": "[To be populated]",
+        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": 0.41,
+        "score": 0.05642,
         "percentile": 0.97,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"

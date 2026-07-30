@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "JS-09",
       "application": "OWASP Juice Shop",
-      "application_version": "placeholder",
+      "application_version": "1.4.5-lts.1",
       "ecosystem": "npm",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-JS-09",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2026-3520",
+        "description": "Multer is a node.js middleware for handling `multipart/form-data`. A vulnerability in Multer prior to version 2.1.1 allows an attacker to trigger a Denial of Service (DoS) by sending malformed requests, potentially causing stack overflow. Users should upgrade to version 2.1.1 to receive a patch. No known workarounds are available.",
+        "severity": "High",
+        "cvss_score": 8.7,
+        "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.00713,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "multer",
+        "installed_version": "1.4.5-lts.1",
+        "recommended_fixed_version": "2.1.1",
         "scanner_version": "0.112.0"
       }
     }

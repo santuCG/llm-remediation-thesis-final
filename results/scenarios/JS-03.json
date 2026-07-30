@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "JS-03",
       "application": "OWASP Juice Shop",
-      "application_version": "placeholder",
+      "application_version": "2.3.3",
       "ecosystem": "npm",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-JS-03",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2025-7783",
+        "description": "Use of Insufficiently Random Values vulnerability in form-data allows HTTP Parameter Pollution (HPP). This vulnerability is associated with program files lib/form_data.Js.\n\nThis issue affects form-data: < 2.5.4, 3.0.0 - 3.0.3, 4.0.0 - 4.0.3.",
+        "severity": "Critical",
+        "cvss_score": 9.4,
+        "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.01735,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "form-data",
+        "installed_version": "2.3.3",
+        "recommended_fixed_version": "2.5.4",
         "scanner_version": "0.112.0"
       }
     }

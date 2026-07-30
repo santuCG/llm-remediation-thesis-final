@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "AF-02",
       "application": "Apache Airflow",
-      "application_version": "placeholder",
+      "application_version": "0.14.0",
       "ecosystem": "python",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-AF-02",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2025-43859",
+        "description": "h11 is a Python implementation of HTTP/1.1. Prior to version 0.16.0, a leniency in h11's parsing of line terminators in chunked-coding message bodies can lead to request smuggling vulnerabilities under certain conditions. This issue has been patched in version 0.16.0. Since exploitation requires the combination of buggy h11 with a buggy (reverse) proxy, fixing either component is sufficient to mitigate this issue.",
+        "severity": "Critical",
+        "cvss_score": 9.1,
+        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.00527,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "h11",
+        "installed_version": "0.14.0",
+        "recommended_fixed_version": "0.16.0",
         "scanner_version": "0.112.0"
       }
     }

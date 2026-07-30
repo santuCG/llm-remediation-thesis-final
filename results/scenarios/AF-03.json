@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "AF-03",
       "application": "Apache Airflow",
-      "application_version": "placeholder",
+      "application_version": "41.0.7",
       "ecosystem": "python",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-AF-03",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2023-50782",
+        "description": "A flaw was found in the python-cryptography package. This issue may allow a remote attacker to decrypt captured messages in TLS servers that use RSA key exchanges, which may lead to exposure of confidential or sensitive data.",
+        "severity": "High",
+        "cvss_score": 8.7,
+        "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.01118,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "cryptography",
+        "installed_version": "41.0.7",
+        "recommended_fixed_version": "42.0.0",
         "scanner_version": "0.112.0"
       }
     }

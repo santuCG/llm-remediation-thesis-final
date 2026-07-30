@@ -29,12 +29,23 @@ def get_context(ecosystem, package_name, app_dir):
             except Exception as e:
                 context['npm_explain'] = str(e)
                 
-            # Read package.json
+            # Read package.json (filtered snippet only)
             if os.path.exists('package.json'):
                 with open('package.json', 'r') as f:
                     pkg_json = json.load(f)
-                    pkg_json.pop('scripts', None)
-                    context['package_json'] = pkg_json
+                    filtered_pkg = {}
+                    for key in ['name', 'version']:
+                        if key in pkg_json:
+                            filtered_pkg[key] = pkg_json[key]
+                    for dep_type in ['dependencies', 'devDependencies', 'peerDependencies', 'resolutions', 'overrides']:
+                        if dep_type in pkg_json:
+                            filtered_pkg[dep_type] = {
+                                k: v for k, v in pkg_json[dep_type].items() if k.lower() == package_name.lower()
+                            }
+                            # Clean empty keys
+                            if not filtered_pkg[dep_type]:
+                                filtered_pkg.pop(dep_type)
+                    context['package_json'] = filtered_pkg
                     
         elif ecosystem == 'python':
             pip_show_content = ""

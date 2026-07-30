@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "JS-05",
       "application": "OWASP Juice Shop",
-      "application_version": "placeholder",
+      "application_version": "0.1.0",
       "ecosystem": "npm",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-JS-05",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2015-9235",
+        "description": "In jsonwebtoken node module before 4.2.2 it is possible for an attacker to bypass verification when a token digitally signed with an asymmetric key (RS/ES family) of algorithms but instead the attacker send a token digitally signed with a symmetric algorithm (HS* family).",
+        "severity": "Critical",
+        "cvss_score": 9.0,
+        "cvss_vector": null,
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.08655,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "jsonwebtoken",
+        "installed_version": "0.1.0",
+        "recommended_fixed_version": "4.2.2",
         "scanner_version": "0.112.0"
       }
     }

@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "AF-04",
       "application": "Apache Airflow",
-      "application_version": "placeholder",
+      "application_version": "1.3.5",
       "ecosystem": "python",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-AF-04",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2026-44307",
+        "description": "Mako is a template library written in Python. Prior to 1.3.12, on Windows, a URI using backslash traversal (e.g. \\..\\..\\ secret.txt) bypasses the directory traversal check in Template.__init__ and the posixpath-based normalization in TemplateLookup.get_template(), allowing reads of files outside the configured template directory. This vulnerability is fixed in 1.3.12.",
+        "severity": "High",
+        "cvss_score": 8.7,
+        "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.00609,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "mako",
+        "installed_version": "1.3.5",
+        "recommended_fixed_version": "1.3.12",
         "scanner_version": "0.112.0"
       }
     }

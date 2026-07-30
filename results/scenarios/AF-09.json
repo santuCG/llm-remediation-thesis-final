@@ -6,7 +6,7 @@
     "scenario_metadata": {
       "scenario_id": "AF-09",
       "application": "Apache Airflow",
-      "application_version": "placeholder",
+      "application_version": "2.2.3",
       "ecosystem": "python",
       "experiment_group": "LLM vs Grype Baseline",
       "status": "Registered"
@@ -20,17 +20,17 @@
     "vulnerability_enrichment": {
       "retrieved_on": "2026-05-18",
       "cve": {
-        "id": "CVE-placeholder-AF-09",
-        "description": "[To be populated from frozen MITRE source]",
-        "severity": "[To be populated]",
-        "cvss_score": null,
-        "cvss_vector": "[To be populated]",
+        "id": "CVE-2024-34069",
+        "description": null,
+        "severity": "High",
+        "cvss_score": 7.5,
+        "cvss_vector": null,
         "published": "2023-01-01T00:00:00Z",
         "last_modified": "2023-01-01T00:00:00Z",
         "source": "MITRE CVE JSON"
       },
       "epss": {
-        "score": null,
+        "score": 0.03397,
         "percentile": null,
         "snapshot_date": "2026-05-18",
         "source": "FIRST EPSS API"
@@ -43,9 +43,9 @@
     },
     "scanner_recommendation": {
       "grype": {
-        "package": "placeholder",
-        "installed_version": "placeholder",
-        "recommended_fixed_version": "placeholder",
+        "package": "werkzeug",
+        "installed_version": "2.2.3",
+        "recommended_fixed_version": "3.0.3",
         "scanner_version": "0.112.0"
       }
     }
