@@ -36,6 +36,19 @@ Prompt Version: v1.1
 ```
 """
 
+    if ecosystem == "npm":
+        user_prompt += f"""
+### Baseline Scanner Build Failure
+A deterministic vulnerability scanner previously attempted to fix this by blindly updating the dependency to 3.9.18, but it caused the following compiler/build failure in the legacy application:
+```
+Build at: 2026-07-26T17:01:11.964Z - Hash: eec0da7fb4f70cee - Time: 57005ms
+lib/insecurity.ts(58,51): error TS2531: Object is possibly 'null'.
+...
+error TS1005: '?' expected (from transitive @types updates)
+```
+If the version bump caused this compiler mismatch, you must recommend an alternative strategy or a different version that avoids this build breakage.
+"""
+
     if is_retry:
         user_prompt += f"""
 ### Previous Attempt Failure Logs
