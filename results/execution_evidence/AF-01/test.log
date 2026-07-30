@@ -3,21 +3,19 @@ platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.5.0 -- /usr/bin/python3
 cachedir: .pytest_cache
 rootdir: /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/airflow
 configfile: pyproject.toml
-testpaths: tests
 plugins: anyio-4.4.0, asyncio-0.23.8, time-machine-2.14.1
 asyncio: mode=Mode.STRICT
-collecting ... /home/runner/.local/lib/python3.12/site-packages/flask_appbuilder/models/sqla/__init__.py:105 MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
-/usr/lib/python3/dist-packages/passlib/utils/__init__.py:854 DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
-/home/runner/.local/lib/python3.12/site-packages/marshmallow_sqlalchemy/convert.py:17 DeprecationWarning: The '__version__' attribute is deprecated and will be removed in in a future version. Use feature detection or 'importlib.metadata.version("marshmallow")' instead.
-/home/runner/.local/lib/python3.12/site-packages/connexion/decorators/validation.py:16 DeprecationWarning: Accessing jsonschema.draft4_format_checker is deprecated and will be removed in a future release. Instead, use the FORMAT_CHECKER attribute on the corresponding Validator.
-/home/runner/.local/lib/python3.12/site-packages/connexion/decorators/validation.py:16 DeprecationWarning: Accessing jsonschema.draft4_format_checker is deprecated and will be removed in a future release. Instead, use the FORMAT_CHECKER attribute on the corresponding Validator.
-/home/runner/.local/lib/python3.12/site-packages/connexion/json_schema.py:16 DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
-/home/runner/.local/lib/python3.12/site-packages/connexion/json_schema.py:16 DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
-/home/runner/.local/lib/python3.12/site-packages/connexion/json_schema.py:17 DeprecationWarning: jsonschema.exceptions.RefResolutionError is deprecated as of version 4.18.0. If you wish to catch potential reference resolution errors, directly catch referencing.exceptions.Unresolvable.
-collected 0 items / 1 error
+collecting ... collected 289 items / 1 error
 
 ==================================== ERRORS ====================================
-________________________ ERROR collecting test session _________________________
+__________________ ERROR collecting tests/core/test_sentry.py __________________
+ImportError while importing test module '/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/airflow/tests/core/test_sentry.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/runner/.local/lib/python3.12/site-packages/_pytest/python.py:617: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+/home/runner/.local/lib/python3.12/site-packages/_pytest/pathlib.py:567: in import_path
+    importlib.import_module(module_name)
 /usr/lib/python3.12/importlib/__init__.py:90: in import_module
     return _bootstrap._gcd_import(name[level:], package, level)
 <frozen importlib._bootstrap>:1387: in _gcd_import
@@ -30,10 +28,10 @@ ________________________ ERROR collecting test session _________________________
     ???
 /home/runner/.local/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:186: in exec_module
     exec(co, module.__dict__)
-tests/providers/opensearch/conftest.py:22: in <module>
-    from opensearchpy import OpenSearch
-E   ModuleNotFoundError: No module named 'opensearchpy'
+tests/core/test_sentry.py:26: in <module>
+    from sentry_sdk import configure_scope
+E   ModuleNotFoundError: No module named 'sentry_sdk'
 =========================== short test summary info ============================
-ERROR  - ModuleNotFoundError: No module named 'opensearchpy'
+ERROR tests/core/test_sentry.py
 !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-=============================== 1 error in 2.94s ===============================
+=============================== 1 error in 2.07s ===============================
