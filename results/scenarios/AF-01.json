@@ -133,3 +133,76 @@
     }
   }
 }
+
+
+=== EMPIRICAL EVIDENCE ===
+
+--- PIPELINE METRICS ---
+{
+  "application": "applications/airflow",
+  "ecosystem": "python",
+  "candidate_count": 62,
+  "selected_package": "redshift-connector",
+  "selected_cve": "GHSA-29h4-r29x-hchv",
+  "api_cve_id": "CVE-2026-8838",
+  "severity": "critical",
+  "cvss": 9.8,
+  "epss": 0.00808,
+  "epss_timestamp": "2026-07-30T19:26:16.554072+00:00",
+  "kev_status": false,
+  "dependency_type": "direct",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "llm_response_valid": true,
+  "build_success": true,
+  "test_success": false,
+  "dependency_verified": true,
+  "rescan_success": true,
+  "runtime_success": false,
+  "lockfile_regenerated": false,
+  "execution_time_seconds": 44,
+  "retry_count": 0,
+  "llm_iteration": 1,
+  "validation_stage_reached": "validator",
+  "failure_stage": "none"
+}
+
+--- LLM PROMPT ---
+Scenario ID: AF-01
+Prompt Version: v1.1
+
+### Vulnerability Intelligence
+* Target Package: redshift-connector
+* Vulnerable Version: 2.1.1
+* CVE ID: GHSA-29h4-r29x-hchv
+* CVSS Score: 9.8
+* EPSS Probability: 0.00808
+* CISA KEV Status: False
+* Intelligence Retrieved On: 2026-05-18
+* Fixed Versions: ['2.1.14']
+
+### Dependency Context
+```json
+{
+  "pip_show": "Name: redshift-connector\nVersion: 2.1.1\nSummary: Redshift interface library\nHome-page: https://github.com/aws/amazon-redshift-python-driver\nAuthor: Amazon Web Services\nAuthor-email: redshift-drivers@amazon.com\nLicense: Apache License 2.0\nLocation: /home/runner/.local/lib/python3.12/site-packages\nRequires: beautifulsoup4, boto3, botocore, lxml, packaging, pytz, requests, scramp, setuptools\nRequired-by: apache-airflow-providers-amazon\n",
+  "pip_freeze": "apache-airflow-providers-amazon==8.24.0\nbeautifulsoup4==4.12.3\nboto3==1.34.106\nbotocore==1.34.106\nlxml==5.2.2\npackaging==24.0\npytz==2024.1\nredshift-connector==2.1.1\nrequests==2.31.0\nscramp==1.4.5\nsetuptools==66.1.1",
+  "requirements_txt": "aiobotocore==2.13.0\napache-airflow-providers-amazon==8.24.0\nbeautifulsoup4==4.12.3\nboto3==1.34.106\nbotocore==1.34.106\nlxml==5.2.2\npackaging==24.0\npytz==2024.1\nredshift-connector==2.1.1\nrequests==2.31.0\nrequests-oauthlib==1.3.1\nrequests-toolbelt==1.0.0\nscramp==1.4.5\nsetuptools==66.1.1"
+}
+```
+
+Based on the vulnerability intelligence and context:
+1. Recommend the safest strategy.
+2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
+
+--- LLM OUTPUT ---
+{
+  "reasoning": "The package redshift-connector at version 2.1.1 contains a critical vulnerability (GHSA-29h4-r29x-hchv, CVSS 9.8). The dependency is explicitly specified in requirements.txt. Performing a direct upgrade of redshift-connector from 2.1.1 to 2.1.14 satisfies downstream dependencies like apache-airflow-providers-amazon while completely remediating the vulnerability. Alternative strategies like package replacement or manual review are unnecessary as a official patch exists in version 2.1.14.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "2.1.14",
+  "manifest_patch": {
+    "operation": "bump",
+    "package": "redshift-connector",
+    "constraint": "2.1.14"
+  }
+}
