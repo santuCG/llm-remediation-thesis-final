@@ -100,15 +100,4 @@ def get_context(ecosystem, package_name, app_dir):
     finally:
         os.chdir(original_dir)
         
-    # Check for baseline build failure log in the repo root
-    baseline_log_path = os.path.join(original_dir, 'baseline_build.log')
-    if os.path.exists(baseline_log_path):
-        try:
-            with open(baseline_log_path, 'r') as f:
-                log_lines = f.readlines()
-                # Grab the last 50 lines which usually contain the fatal compiler/build error
-                context['baseline_build_error'] = "".join(log_lines[-50:])
-        except Exception as e:
-            print(f"[CONTEXT] Failed to read baseline_build.log: {e}")
-            
     return context

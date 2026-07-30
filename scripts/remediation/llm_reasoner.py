@@ -36,15 +36,6 @@ Prompt Version: v1.1
 ```
 """
 
-    if 'baseline_build_error' in context:
-        user_prompt += f"""
-### Baseline Scanner Build Failure
-A deterministic vulnerability scanner (e.g. Grype) previously attempted a strict version bump for this package, but it caused the following compiler/build failure. Please analyze this failure carefully. If the version bump caused a compiler mismatch (e.g. due to newer transitive types), you must recommend a different safe version or an alternative strategy that avoids this build breakage while still mitigating the CVE.
-```
-{context['baseline_build_error']}
-```
-"""
-
     if is_retry:
         user_prompt += f"""
 ### Previous Attempt Failure Logs
