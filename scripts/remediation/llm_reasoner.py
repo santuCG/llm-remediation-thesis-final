@@ -71,7 +71,7 @@ Based on the vulnerability intelligence and context:
         "required": ["reasoning", "strategy", "remediation_type", "recommended_package_version", "manifest_patch"]
     }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
     api_payload = {
         "contents": [{"role": "user", "parts": [{"text": user_prompt}]}],
         "systemInstruction": {"parts": [{"text": system_prompt}]},
@@ -99,7 +99,7 @@ Based on the vulnerability intelligence and context:
         "api_payload": api_payload
     }
 
-    models = ["gemini-3.5-flash-preview", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
+    models = ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash"]
     result = None
     
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
