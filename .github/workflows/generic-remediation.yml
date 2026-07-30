@@ -1,8 +1,6 @@
 name: Generic LLM Remediation Pipeline
 
 on:
-  push:
-    branches: [ "main", "master" ]
   workflow_dispatch:
     inputs:
       app_dir:
