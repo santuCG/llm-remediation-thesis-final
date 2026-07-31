@@ -2,9 +2,9 @@
 
 ## 1. Objective and Rationale
 
-The rigorous Manual Validation Protocol guarantees deterministic verification by executing each topological constraint exactly as a human developer would. However, modern DevSecOps environments demand automation.
+The rigorous Manual Validation Protocol ensures deterministic verification by executing each topological constraint exactly as a human developer would. However, modern DevSecOps environments demand automation.
 
-This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automated Orchestration Pipeline** built on GitHub Actions. It proves that the entire experimental methodology—from establishing the vulnerable baseline to attempting naive scanner fixes, invoking the LLM layer, and validating the final constraint-aware remediation—is fully translatable into an autonomous CI/CD environment.
+This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automated Orchestration Pipeline** built on GitHub Actions. It proves that the entire experimental methodology—from establishing the vulnerable baseline to attempting naive scanner fixes, invoking the LLM layer, and validating the final constraint-aware remediation—is translatable into an autonomous CI/CD environment.
 
 This pipeline was designed specifically for Scenario JS-01 (`vm2` / CVE-2023-32314), matching the exact parameters and outcomes observed during the manual validation.
 
@@ -45,9 +45,9 @@ The automated CI/CD pipeline acts as the orchestrator for the validation framewo
 
 A core requirement for this pipeline was maintaining **scientific determinism** and **pipeline resiliency**:
 
-1. **Pinned Actions:** All third-party GitHub Actions are heavily version-pinned (e.g., `actions/checkout@v4.1.7`). Supply chain attacks on CI/CD pipelines often exploit floating tags. By pinning the exact semantic version, the pipeline is guaranteed to execute precisely the same logic today as it will years from now.
-2. **Deterministic Graph Generation:** `anchore/sbom-action` was replaced with `@cyclonedx/cyclonedx-npm`. Relying on Syft to parse node modules blindly led to inconsistencies. Using CycloneDX leverages NPM's native graph resolution, resulting in a perfectly accurate SBOM.
-3. **Resilient Assertions:** Previous `grep`-based assertions on terminal tables were highly susceptible to ANSI color codes and formatting changes. Shifting to Grype's `-o json` output and validating strictly via `jq` provides a mathematically robust, fail-proof validation layer.
+1. **Pinned Actions:** All third-party GitHub Actions are heavily version-pinned (e.g., `actions/checkout@v4.1.7`). Supply chain attacks on CI/CD pipelines often exploit floating tags. By pinning the exact semantic version, the pipeline is configured to execute precisely the same logic today as it will years from now.
+2. **Deterministic Graph Generation:** `anchore/sbom-action` was replaced with `@cyclonedx/cyclonedx-npm`. Relying on Syft to parse node modules blindly led to inconsistencies. Using CycloneDX leverages NPM's native graph resolution, resulting in a highly accurate SBOM.
+3. **Resilient Assertions:** Previous `grep`-based assertions on terminal tables were highly susceptible to ANSI color codes and formatting changes. Shifting to Grype's `-o json` output and validating strictly via `jq` provides a highly robust, deterministic validation layer.
 
 ## 4. Proper Analysis: Manual vs. Pipeline Results
 

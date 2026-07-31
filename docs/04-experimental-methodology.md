@@ -50,7 +50,7 @@ git checkout package.json package-lock.json
 npm ci --ignore-scripts
 ```
 
-This guarantees that every experimental scenario begins from an identical dependency graph.
+This ensures that every experimental scenario begins from an identical dependency graph.
 
 The resulting lockfile serves as the reference point for all subsequent comparisons.
 

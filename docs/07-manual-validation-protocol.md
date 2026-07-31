@@ -12,12 +12,12 @@ Initially, the `syft dir:.` command was used to scan the raw source directory of
 
 ### Stage 2: The Docker Image Strategy (Discarded)
 To capture a built environment, the methodology pivoted to scanning the official production Docker images (e.g., `apache/airflow:2.9.2`).
-- **The Failure:** While this captured the application dependencies, it introduced massive OS-level package pollution (`deb`, `apk`, `libc`, `apt`). This polluted the experimental population, mixing the application's native dependency graph with the container's infrastructure graph, making it impossible to isolate language-specific remediation capabilities.
+- **The Failure:** While this captured the application dependencies, it introduced massive OS-level package pollution (`deb`, `apk`, `libc`, `apt`). This polluted the experimental population, mixing the application's native dependency graph with the container's infrastructure graph, making it exceptionally difficult to isolate language-specific remediation capabilities.
 
 ### Stage 3: The Lockfile Freeze Strategy (Finalised)
 The final, mathematically rigorous methodology abandons directory and image scanning in favour of exact dependency lockfiles.
 - **The Solution:** For Node.js (OWASP Juice Shop), the SBOM is generated exclusively using `syft file:package-lock.json`. For Python (Apache Airflow), the equivalent frozen state (`requirements.txt` or `pip freeze` output) is used.
-- **The Scientific Benefit:** This method isolated the exact application dependency tree, completely eliminating OS noise. It guarantees a 1-to-1 match between the experimental population (the vulnerabilities in the lockfile) and the remediation target. The lockfile is the definitive source of truth.
+- **The Scientific Benefit:** This method isolated the exact application dependency tree, effectively removing OS noise. It establishes a 1-to-1 match between the experimental population (the vulnerabilities in the lockfile) and the remediation target. The lockfile is the definitive source of truth.
 
 ## 2. Manual Validation Procedure
 

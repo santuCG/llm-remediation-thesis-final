@@ -77,6 +77,12 @@ These observations were verified through comparison of the regenerated Grype rep
 
 ---
 
+### Observation 6 — Objective Validation and LLM-Generated Metadata
+
+An important observation during manual inspection of the execution artifacts was that successful vulnerability remediation and semantically consistent descriptive metadata are distinct properties. In a small number of scenarios, auxiliary metadata fields associated with the generated remediation exhibited internal inconsistencies, despite the resulting dependency modifications successfully satisfying all deterministic validation gates. Since experimental success was defined by objective verification (dependency installation, build validation, vulnerability rescanning, and pipeline validation) rather than the semantic correctness of descriptive metadata, these inconsistencies did not affect the experimental outcomes. This distinction illustrates why the experimental methodology evaluated remediation success using deterministic pipeline outcomes rather than relying on the semantic correctness of explanatory metadata. Accordingly, LLM-generated outputs should be treated as candidate engineering solutions that require deterministic verification rather than authoritative results accepted without validation.
+
+---
+
 ## Quantitative Results
 
 The controlled comparison between the baseline and remediated SBOMs produced the following measurements.
