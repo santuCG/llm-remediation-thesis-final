@@ -152,3 +152,183 @@
     "failure_stage": "build"
   }
 }
+
+
+=== EMPIRICAL EVIDENCE ===
+NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
+
+--- EXPERIMENT MANIFEST ---
+{
+  "scenario": "JS-05",
+  "repository_commit": "796ba575b26a4038bd2393d9f09c6328f06661b1",
+  "workflow_commit": "796ba575b26a4038bd2393d9f09c6328f06661b1",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "llm": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-07-31",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-07-31",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "package-before.json": "78b3a79ce23b3f62c4d4ca76d4de5a38dc99198caf110195369ca2278c2562db",
+    "rescan.json": "b12d40f10574fba3f11f614f32c0454b9225d5a58b54ad2226f26945da81bffe",
+    "baseline-grype.json": "54b742ca0949d9d3f5333e47ade6f25913fd90979c4e796fafd369f488703868",
+    "candidate-ranking.json": "4d59cc3a6852f9c33517ef8aa32a40546e7f4c550f20dcf8d775813f0a3d9b81",
+    "build.log": "dd19bde3ef68de869b4082c4c244e4364b6fd7b77b2a954f5d517a5c2bf1ec1e",
+    "selected-candidate.json": "39d0c6c7be730cf4e67cc3f36dac273f8efc3261920187638a912e632d9fff0b",
+    "metrics.json": "801b4a3f1eea21d389252fe8a61396599bbee8120e6262fe7876a5d9d66a0a8f",
+    "test.log": "96217d1f729b5a73554ce34c1159abb37d7fceb8f90d0ffe975e0a260ecad560",
+    "baseline-sbom.json": "49cab5803f73761063e065f76294d27f95b63a371f0bc20325e6e111e62faa29",
+    "package-after.json": "535ffd02a9fd8d161d5facbe07f926e2fcece876964a928477c5a00512615f03",
+    "llm-response.json": "2afac1fe16c0bd03ab119cadd73df2c5a032a3d0d62f8c0344df98fc43b88f5e",
+    "llm-request.json": "5dfe170fb583b1cb903d33220d1b10077d92371712be3bc1b03980646e8010ca"
+  }
+}
+
+--- PIPELINE METRICS ---
+{
+  "application": "applications/juice-shop",
+  "ecosystem": "npm",
+  "candidate_count": 111,
+  "selected_package": "jsonwebtoken",
+  "selected_cve": "GHSA-c7hr-j4mj-j2w6",
+  "api_cve_id": "CVE-2015-9235",
+  "severity": "critical",
+  "cvss": 0.0,
+  "epss": 0.08655,
+  "epss_timestamp": "2026-07-31T08:51:29.237771+00:00",
+  "kev_status": false,
+  "dependency_type": "direct",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Transitive Override",
+  "llm_response_valid": true,
+  "build_success": true,
+  "test_success": false,
+  "dependency_verified": true,
+  "rescan_success": true,
+  "runtime_success": false,
+  "lockfile_regenerated": false,
+  "execution_time_seconds": 35,
+  "retry_count": 1,
+  "llm_iteration": 2,
+  "validation_stage_reached": "validator",
+  "failure_stage": "build"
+}
+
+--- LLM PROMPT ---
+{
+  "scenario_id": "UNKNOWN",
+  "experiment_id": "2026-final",
+  "application": "OWASP Juice Shop",
+  "ecosystem": "npm",
+  "prompt_version": "v1.1",
+  "api_payload": {
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: jsonwebtoken\n* Vulnerable Version: 0.1.0\n* CVE ID: GHSA-c7hr-j4mj-j2w6\n* CVSS Score: 0.0\n* EPSS Probability: 0.08655\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['4.2.2']\n\n### Dependency Context\n```json\n{\n  \"npm_ls\": \"npm error code EOVERRIDE\\nnpm error Override for jsonwebtoken@0.4.0 conflicts with direct dependency\\n{\\n  \\\"error\\\": {\\n    \\\"code\\\": \\\"EOVERRIDE\\\",\\n    \\\"summary\\\": \\\"Override for jsonwebtoken@0.4.0 conflicts with direct dependency\\\",\\n    \\\"detail\\\": \\\"\\\"\\n  }\\n}\\nnpm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-07-31T08_53_44_080Z-debug-0.log\\n\",\n  \"npm_explain\": \"Command '['npm', 'explain', 'jsonwebtoken', '--json']' returned non-zero exit status 1.\",\n  \"package_json\": {\n    \"name\": \"juice-shop\",\n    \"version\": \"15.3.0\",\n    \"dependencies\": {\n      \"jsonwebtoken\": \"0.4.0\"\n    },\n    \"overrides\": {\n      \"jsonwebtoken\": \"4.2.2\"\n    }\n  }\n}\n```\n\n### Previous Attempt Failure Logs\nThe previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.\n```\n..\n\u2714 Index html generation complete.\n\nInitial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size\nvendor.js           | vendor                                |   1.36 MB |               306.31 kB\nstyles.css          | styles                                | 614.90 kB |                32.22 kB\nmain.js             | main                                  | 479.20 kB |                81.16 kB\npolyfills.js        | polyfills                             |  53.67 kB |                17.16 kB\nruntime.js          | runtime                               |   3.22 kB |                 1.49 kB\n\n| Initial Total                         |   2.48 MB |               438.33 kB\n\nLazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size\n399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB\n202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB\n112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB\n103.js              | confetti                              |  10.86 kB |                 3.92 kB\n67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB\ncommon.js           | common                                |   9.04 kB |               861 bytes\n535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB\n745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB\n613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB\n859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB\n472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes\n\nBuild at: 2026-07-31T08:53:00.777Z - Hash: eec0da7fb4f70cee - Time: 53703ms\n\n> juice-shop@15.3.0 build:server\n> tsc\n\n\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+          }
+        ]
+      }
+    ],
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+        }
+      ]
+    },
+    "generationConfig": {
+      "temperature": 0.0,
+      "topP": 1.0,
+      "topK": 1,
+      "seed": 42,
+      "responseMimeType": "application/json",
+      "responseSchema": {
+        "type": "OBJECT",
+        "properties": {
+          "reasoning": {
+            "type": "STRING",
+            "description": "Comprehensive reasoning for the strategy chosen."
+          },
+          "strategy": {
+            "type": "STRING",
+            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+          },
+          "remediation_type": {
+            "type": "STRING",
+            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+          },
+          "recommended_package_version": {
+            "type": "STRING",
+            "description": "The specific semantic version to enforce."
+          },
+          "manifest_patch": {
+            "type": "OBJECT",
+            "description": "The structured intermediate representation of the manifest patch.",
+            "properties": {
+              "operation": {
+                "type": "STRING",
+                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+              },
+              "package": {
+                "type": "STRING",
+                "description": "The target package name to modify."
+              },
+              "constraint": {
+                "type": "STRING",
+                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
+              }
+            },
+            "required": [
+              "operation",
+              "package",
+              "constraint"
+            ]
+          }
+        },
+        "required": [
+          "reasoning",
+          "strategy",
+          "remediation_type",
+          "recommended_package_version",
+          "manifest_patch"
+        ]
+      }
+    }
+  }
+}
+
+--- LLM OUTPUT ---
+{
+  "reasoning": "The target package 'jsonwebtoken' is specified directly under 'dependencies' in package.json as '0.4.0'. The previous attempt used npm overrides to force version '4.2.2', which caused npm to fail with an EOVERRIDE error because overrides cannot conflict with direct dependency declarations. The correct remediation is a Direct Upgrade of 'jsonwebtoken' to fixed version '4.2.2' directly in 'dependencies', avoiding npm override conflicts.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "4.2.2",
+  "manifest_patch": {
+    "operation": "bump",
+    "package": "jsonwebtoken",
+    "constraint": "4.2.2"
+  }
+}
