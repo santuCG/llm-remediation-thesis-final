@@ -124,7 +124,7 @@ jobs:
             fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -d "tests/core" ]; then 
-              pip install pytest==7.4.4 pytest-asyncio || true
+              pip install pytest==7.4.4 pytest-asyncio sentry-sdk || true
               python3 -m pytest tests/core 2>&1 | tee ../../test.log || true
               echo "=== Test Execution Summary ==="
               tail -n 25 ../../test.log || true
