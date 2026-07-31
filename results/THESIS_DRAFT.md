@@ -84,7 +84,7 @@ To evaluate the efficacy of the LLM Reasoning Layer, the pipeline is evaluated a
 | JS-03 | form-data (CVE-2025-7783) | Failed | Failed |
 | JS-04 | crypto-js (CVE-2023-46233) | Failed | Failed |
 | JS-05 | jsonwebtoken (CVE-2015-9235) | Failed | Failed |
-| JS-06 | flatted (CVE-2026-33228) | Pending | Pending |
+| JS-06 | flatted (CVE-2026-33228) | Failed | Failed |
 | JS-07 | ws (CVE-2024-37890) | Pending | Pending |
 | JS-08 | body-parser (CVE-2024-45590) | Pending | Pending |
 | JS-09 | multer (CVE-2026-3520) | Pending | Pending |
@@ -93,7 +93,7 @@ To evaluate the efficacy of the LLM Reasoning Layer, the pipeline is evaluated a
 | AF-03 | cryptography (CVE-2023-50782) | Failed | Failed |
 | AF-04 | mako (CVE-2026-44307) | Failed | Failed |
 | AF-05 | protobuf (CVE-2026-0994) | Failed | Failed |
-| AF-06 | jinja2 (CVE-2024-56326) | Pending | Pending |
+| AF-06 | jinja2 (CVE-2024-56326) | Failed | Failed |
 | AF-07 | mysql-connector-python (CVE-2024-21272) | Pending | Pending |
 | AF-08 | google-cloud-aiplatform (CVE-2026-2473) | Pending | Pending |
 | AF-09 | werkzeug (CVE-2024-34069) | Pending | Success |
