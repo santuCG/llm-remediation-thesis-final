@@ -1,7 +1,7 @@
 {
   "scenario": "JS-04",
   "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-  "workflow_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
+  "workflow_commit": "30616410559",
   "pipeline_version": "v2.0",
   "runner": "ubuntu-24.04",
   "python": "3.12.x",
@@ -41,5 +41,6 @@
     "package-after.json": "9c0fde2aa0e7019de2934a8308345875ca5d22e89e32b3fe5fd678e7005aaed4",
     "llm-response.json": "3f89382208bfef2df9467948d2db2621bc242605d6b75609897d9e053e64ab90",
     "llm-request.json": "696c4fda2fd305919c42b2b0a1a779ed87687241967bae697d7d61305dc833f7"
-  }
+  },
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30616410559"
 }

@@ -161,7 +161,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 {
   "scenario": "JS-03",
   "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-  "workflow_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
+  "workflow_commit": "30593629026",
   "pipeline_version": "v2.0",
   "runner": "ubuntu-24.04",
   "python": "3.12.x",
@@ -201,7 +201,8 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
     "package-after.json": "95a8cc1e0677550e7406b497fd37e475ee36466c41f046e1c9072dc621078869",
     "llm-response.json": "de180fc2ea8ca1298b816d1394ca38923a3261136c3cd8fd4bc1e9af1786d881",
     "llm-request.json": "c331af486e93a1512b79eebe28e328366cce50e118d550085ddddeda44fd65d2"
-  }
+  },
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30593629026"
 }
 
 --- PIPELINE METRICS ---

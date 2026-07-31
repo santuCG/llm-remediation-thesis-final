@@ -1,7 +1,7 @@
 {
   "scenario": "AF-02",
   "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-  "workflow_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
+  "workflow_commit": "30592634834",
   "pipeline_version": "v2.0",
   "runner": "ubuntu-24.04",
   "python": "3.12.x",
@@ -41,5 +41,6 @@
     "package-after.json": "8161df3ee4e80dd0ebff143c73c24075267b8b5b6fff4343d7c506e60667ec60",
     "llm-response.json": "9f7a64fff055f574e8abb17ae538ed4f6cbcae1f2b9bdef3e3214bb951865efa",
     "llm-request.json": "91adba8c7ccda0312ab474ca5d833d0a99c54608c4d5c998c6ab1587ade02cd1"
-  }
+  },
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
 }
