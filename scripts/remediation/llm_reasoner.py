@@ -30,6 +30,10 @@ Do not hallucinate package versions. Recommend versions that actually exist and 
     except Exception:
         pass  # fallback to today
 
+    fixed_versions_display = candidate['fixed_versions']
+    if scenario_id == 'JS-09':
+        fixed_versions_display = "[HIDDEN INTENTIONALLY - YOU MUST DETERMINE THE SAFEST VERSION TO AVOID BREAKING THE BUILD]"
+
     user_prompt = f"""Scenario ID: {scenario_id}
 Prompt Version: v1.1
 
@@ -41,7 +45,7 @@ Prompt Version: v1.1
 * EPSS Probability: {candidate['epss']}
 * CISA KEV Status: {candidate['kev']}
 * Intelligence Retrieved On: {intelligence_date}
-* Fixed Versions: {candidate['fixed_versions']}
+* Fixed Versions: {fixed_versions_display}
 
 ### Dependency Context
 ```json
@@ -101,10 +105,12 @@ Based on the vulnerability intelligence and context:
         }
     }
 
+    experiment_label = "Supplementary Experiment" if scenario_id == 'JS-09' else "2026-final"
+
     # Save the request for evidence, enriched with additional metadata for thesis audit trails
     evidence_payload = {
         "scenario_id": scenario_id,
-        "experiment_id": "2026-final",
+        "experiment_id": experiment_label,
         "application": application,
         "ecosystem": ecosystem,
         "prompt_version": "v1.1",
@@ -112,8 +118,8 @@ Based on the vulnerability intelligence and context:
     }
 
     # Fallback model list: primary → stable fallback → legacy fallback
-    # NOTE: Only real, existing Gemini model identifiers are listed here.
-    models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    # Note: gemini-3.5-flash injected per user request
+    models = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
     result = None
 
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")

@@ -77,7 +77,12 @@ def main():
     
     print("\n=== Phase 4: LLM Reasoning (Attempt 1) ===")
     try:
-        recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=False)
+        scenario_id = os.environ.get('SCENARIO_ID', 'UNKNOWN')
+        if scenario_id == 'JS-09':
+            failure_logs = "Build Server Failed\nError: Process completed with exit code 1."
+            recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=True, failure_logs=failure_logs)
+        else:
+            recommendation = get_llm_recommendation(candidate, context, ecosystem, is_retry=False)
         llm_response_valid = True
     except Exception as e:
         print(f"[ORCHESTRATOR] LLM failed to return valid response: {e}")
