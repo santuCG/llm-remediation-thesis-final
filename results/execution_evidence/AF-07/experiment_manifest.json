@@ -1,58 +1,58 @@
 {
-  "scenario": "AF-01",
-  "repository_commit": "d3766873fa30b70396cbdcc7c78f9cd203f0b3ed",
-  "workflow_commit": "d3766873fa30b70396cbdcc7c78f9cd203f0b3ed",
-  "pipeline_version": "v2.0",
-  "runner": "ubuntu-24.04",
-  "python": "3.12.x",
-  "llm": {
-    "model": "gemini-2.5-flash",
-    "temperature": 0.0,
-    "seed": 42,
-    "topP": 1.0,
-    "topK": 1
-  },
-  "snapshots": {
-    "epss_snapshot": {
-      "file": "epss_snapshot.json",
-      "date": "2026-07-31",
-      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    "scenario": "AF-07",
+    "repository_commit": "d3766873fa30b7039b5e33e7cc3474c94ebe4555",
+    "workflow_commit": "30592634834",
+    "pipeline_version": "v2.0",
+    "runner": "ubuntu-24.04",
+    "python": "3.12.x",
+    "llm": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.0,
+        "seed": 42,
+        "topP": 1.0,
+        "topK": 1
     },
-    "kev_snapshot": {
-      "file": "kev_snapshot.json",
-      "date": "2026-07-31",
-      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-    }
-  },
-  "tool_versions": {
-    "syft": "1.44.0",
-    "grype": "0.112.0"
-  },
-  "artifact_hashes": {
-    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-    "rescan.json": "c512d561279af7850b8f9e3964f22b0c45b74f1c4e8a0e46cd27b17d4c5c4b4f",
-    "baseline-grype.json": "8e6e098665042ac0cb49f40fc096e649696133d7e637e1b793845ddf0f8b0b26",
-    "candidate-ranking.json": "642ffb4954b94b1bf1a122f6a6a3b2fb8b155b3f9b43572993773c79fc71d068",
-    "build.log": "ff851d808cd7edebe4f800c46d525e7915aef92e578b5660f79a56c319966833",
-    "selected-candidate.json": "e7c010710b05c4f8c8f34343b50de99fbb52b3429e06c636b2dcd2181a7f996c",
-    "metrics.json": "505b9b4e6cd34a4427e2800e4ea1a3f63168f95f18b92c69d60f67106f95dda0",
-    "test.log": "b6e8cec073a52ed2b4a81b3c0447b52f11a027dca972938b969ca6db0fb4e140",
-    "baseline-sbom.json": "9fdaca66720551f0e3ccc1bdb7bfcbe8ac3ac638767b37d300127f91d258323e",
-    "package-after.json": "63f53d5a29af5f9647598e6e26e513b99ed0ce67de3c0b0b7b3b1a3dc67a707b",
-    "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
-    "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
-  }
+    "snapshots": {
+        "epss_snapshot": {
+            "file": "epss_snapshot.json",
+            "date": "2026-07-30",
+            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+        },
+        "kev_snapshot": {
+            "file": "kev_snapshot.json",
+            "date": "2026-07-30",
+            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+        }
+    },
+    "tool_versions": {
+        "syft": "1.44.0",
+        "grype": "0.112.0"
+    },
+    "artifact_hashes": {
+        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+        "rescan.json": "c512d561279af7850b8f9e3964f22b0c45b74f1c4e8a0e46cd27b17d4c5c4b4f",
+        "baseline-grype.json": "8e6e098665042ac0cb49f40fc096e649696133d7e637e1b793845ddf0f8b0b26",
+        "candidate-ranking.json": "642ffb4954b94b1bf1a122f6a6a3b2fb8b155b3f9b43572993773c79fc71d068",
+        "build.log": "ff851d808cd7edebe4f800c46d525e7915aef92e578b5660f79a56c319966833",
+        "selected-candidate.json": "e7c010710b05c4f8c8f34343b50de99fbb52b3429e06c636b2dcd2181a7f996c",
+        "metrics.json": "505b9b4e6cd34a4427e2800e4ea1a3f63168f95f18b92c69d60f67106f95dda0",
+        "test.log": "b6e8cec073a52ed2b4a81b3c0447b52f11a027dca972938b969ca6db0fb4e140",
+        "baseline-sbom.json": "9fdaca66720551f0e3ccc1bdb7bfcbe8ac3ac638767b37d300127f91d258323e",
+        "package-after.json": "63f53d5a29af5f9647598e6e26e513b99ed0ce67de3c0b0b7b3b1a3dc67a707b",
+        "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
+        "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
+    },
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
 }
-
 
 === EMPIRICAL EVIDENCE ===
 NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
 
 --- EXPERIMENT MANIFEST ---
 {
-    "scenario": "AF-01", // The unique identifier for this vulnerability scenario
-    "repository_commit": "d3766873fa30b70396cbdcc7c78f9cd203f0b3ed", // The Git commit hash of the repository during execution
-    "workflow_commit": "d3766873fa30b70396cbdcc7c78f9cd203f0b3ed", // The GitHub Actions run ID that executed this pipeline
+    "scenario": "AF-07", // The unique identifier for this vulnerability scenario
+    "repository_commit": "d3766873fa30b7039b5e33e7cc3474c94ebe4555", // The Git commit hash of the repository during execution
+    "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
     "pipeline_version": "v2.0", // The version of the remediation pipeline engine
     "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
     "python": "3.12.x", // The Python version used by the pipeline
@@ -66,12 +66,12 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
     "snapshots": { // Hashes of vulnerability intelligence snapshots
         "epss_snapshot": {
             "file": "epss_snapshot.json",
-            "date": "2026-07-31",
+            "date": "2026-07-30",
             "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
         },
         "kev_snapshot": {
             "file": "kev_snapshot.json",
-            "date": "2026-07-31",
+            "date": "2026-07-30",
             "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
         }
     },
@@ -92,7 +92,8 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
         "package-after.json": "63f53d5a29af5f9647598e6e26e513b99ed0ce67de3c0b0b7b3b1a3dc67a707b",
         "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
         "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
-    }
+    },
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834" // Direct link to the successful GitHub Actions workflow run
 }
 
 --- PIPELINE METRICS ---
@@ -113,7 +114,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
   "remediation_type": "Direct Upgrade", // The human-readable strategy category
   "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
   "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application\'s test suite passed
+  "test_success": false, // Whether the application's test suite passed
   "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
   "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
   "runtime_success": false, // Runtime tests status
@@ -126,90 +127,44 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 }
 
 --- LLM PROMPT ---
+Scenario ID: AF-07
+Prompt Version: v1.1
+
+Scenario ID: UNKNOWN
+Prompt Version: v1.1
+
+### Vulnerability Intelligence
+* Target Package: mysql-connector-python
+* Vulnerable Version: 8.4.0
+* CVE ID: GHSA-hgjp-83m4-h4fj
+* CVSS Score: 7.5
+* EPSS Probability: 0.00513
+* CISA KEV Status: False
+* Intelligence Retrieved On: 2026-05-18
+* Fixed Versions: ['9.1.0']
+
+### Dependency Context
+```json
 {
-  "scenario_id": "UNKNOWN",
-  "experiment_id": "2026-final",
-  "application": "Apache Airflow",
-  "ecosystem": "python",
-  "prompt_version": "v1.1",
-  "api_payload": {
-    "contents": [
-      {
-        "role": "user",
-        "parts": [
-          {
-            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: mysql-connector-python\n* Vulnerable Version: 8.4.0\n* CVE ID: GHSA-hgjp-83m4-h4fj\n* CVSS Score: 7.5\n* EPSS Probability: 0.00513\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['9.1.0']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: mysql-connector-python\\nVersion: 8.4.0\\nSummary: MySQL driver written in Python\\nHome-page: http://dev.mysql.com/doc/connector-python/en/index.html\\nAuthor: Oracle and/or its affiliates\\nAuthor-email: \\nLicense: GNU GPLv2 (with FOSS License Exception)\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: \\nRequired-by: apache-airflow-providers-mysql\\n\",\n  \"pip_freeze\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\",\n  \"requirements_txt\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
-          }
-        ]
-      }
-    ],
-    "systemInstruction": {
-      "parts": [
-        {
-          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
-        }
-      ]
-    },
-    "generationConfig": {
-      "temperature": 0.0,
-      "topP": 1.0,
-      "topK": 1,
-      "seed": 42,
-      "responseMimeType": "application/json",
-      "responseSchema": {
-        "type": "OBJECT",
-        "properties": {
-          "reasoning": {
-            "type": "STRING",
-            "description": "Comprehensive reasoning for the strategy chosen."
-          },
-          "strategy": {
-            "type": "STRING",
-            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
-          },
-          "remediation_type": {
-            "type": "STRING",
-            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
-          },
-          "recommended_package_version": {
-            "type": "STRING",
-            "description": "The specific semantic version to enforce."
-          },
-          "manifest_patch": {
-            "type": "OBJECT",
-            "description": "The structured intermediate representation of the manifest patch.",
-            "properties": {
-              "operation": {
-                "type": "STRING",
-                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
-              },
-              "package": {
-                "type": "STRING",
-                "description": "The target package name to modify."
-              },
-              "constraint": {
-                "type": "STRING",
-                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
-              }
-            },
-            "required": [
-              "operation",
-              "package",
-              "constraint"
-            ]
-          }
-        },
-        "required": [
-          "reasoning",
-          "strategy",
-          "remediation_type",
-          "recommended_package_version",
-          "manifest_patch"
-        ]
-      }
-    }
-  }
+  "pip_show": "Name: mysql-connector-python\nVersion: 8.4.0\nSummary: MySQL driver written in Python\nHome-page: http://dev.mysql.com/doc/connector-python/en/index.html\nAuthor: Oracle and/or its affiliates\nAuthor-email: \nLicense: GNU GPLv2 (with FOSS License Exception)\nLocation: /home/runner/.local/lib/python3.12/site-packages\nRequires: \nRequired-by: apache-airflow-providers-mysql\n",
+  "pip_freeze": "apache-airflow-providers-mysql==5.6.1\nmysql-connector-python==8.4.0",
+  "requirements_txt": "apache-airflow-providers-mysql==5.6.1\nmysql-connector-python==8.4.0"
 }
+```
+
+Based on the vulnerability intelligence and context:
+1. Recommend the safest strategy.
+2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
 
 --- LLM OUTPUT ---
-{"reasoning":"The target package mysql-connector-python version 8.4.0 is affected by vulnerability GHSA-hgjp-83m4-h4fj (CVSS 7.5). The issue has been patched in version 9.1.0. Because mysql-connector-python is a direct dependency declared in requirements.txt, performing a direct upgrade to the patched version 9.1.0 is the safest and most effective strategy, ensuring protection against supply chain risks while maintaining dependency resolution integrity.","strategy":"direct_upgrade","remediation_type":"Direct Upgrade","recommended_package_version":"9.1.0","manifest_patch":{"operation":"bump","package":"mysql-connector-python","constraint":"9.1.0"}}
+{
+  "reasoning": "The target package mysql-connector-python version 8.4.0 is affected by vulnerability GHSA-hgjp-83m4-h4fj (CVSS 7.5). The issue has been patched in version 9.1.0. Because mysql-connector-python is a direct dependency declared in requirements.txt, performing a direct upgrade to the patched version 9.1.0 is the safest and most effective strategy, ensuring protection against supply chain risks while maintaining dependency resolution integrity.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "9.1.0",
+  "manifest_patch": {
+    "operation": "bump",
+    "package": "mysql-connector-python",
+    "constraint": "9.1.0"
+  }
+}

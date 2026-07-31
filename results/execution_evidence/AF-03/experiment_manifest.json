@@ -1,50 +1,49 @@
 {
-  "scenario": "AF-03",
-  "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-  "workflow_commit": "30593627903",
-  "pipeline_version": "v2.0",
-  "runner": "ubuntu-24.04",
-  "python": "3.12.x",
-  "llm": {
-    "model": "gemini-2.5-flash",
-    "temperature": 0.0,
-    "seed": 42,
-    "topP": 1.0,
-    "topK": 1
-  },
-  "snapshots": {
-    "epss_snapshot": {
-      "file": "epss_snapshot.json",
-      "date": "2026-07-31",
-      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    "scenario": "AF-03",
+    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
+    "workflow_commit": "30592634834",
+    "pipeline_version": "v2.0",
+    "runner": "ubuntu-24.04",
+    "python": "3.12.x",
+    "llm": {
+        "model": "gemini-2.5-flash",
+        "temperature": 0.0,
+        "seed": 42,
+        "topP": 1.0,
+        "topK": 1
     },
-    "kev_snapshot": {
-      "file": "kev_snapshot.json",
-      "date": "2026-07-31",
-      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-    }
-  },
-  "tool_versions": {
-    "syft": "1.44.0",
-    "grype": "0.112.0"
-  },
-  "artifact_hashes": {
-    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-    "rescan.json": "41fab40639d06f49c2223d75b948b3cb3112d0e5ed891a7680b21fc4db16ca9d",
-    "baseline-grype.json": "583a081b65adc434dbf950157dc0df12613a5bbbc22045bb79855afca8c25a27",
-    "candidate-ranking.json": "a9572ca41b96025d427db4687964373be9055768ea283467db93d5df05a662d0",
-    "build.log": "3d0d9a0af63754aacb92fcfbdcb55e93599511ffe435d25ae35f62bf7eb071ae",
-    "selected-candidate.json": "c2140f1b848b8825389bf9cb17731921489d550a7ea4606522341e9ad92d0a30",
-    "metrics.json": "a61bd72ab5e2f0b07db7c433f0c75c1d9e573bda4baa21c55f7a1243f16144ba",
-    "test.log": "d939266221ff9b743b82934570659cb0175e4a2c100e31e51a98b02df430c3f5",
-    "baseline-sbom.json": "4e3747b784ab93d797139ff6c7834b17b1a1b8354ef9168c07b08b66c8241660",
-    "package-after.json": "06fdc2f4b9e97c5c0c2f7668c275704198ad4fbc46072c9ca61e545b8cb91fd0",
-    "llm-response.json": "89cca07c013f32d6b4eceb779e4f2e4ce25cc52664a4ee3dc6d7e47bd86a4e75",
-    "llm-request.json": "c913d8ffb603611ec244507368ccb70e90d6b085a494b1630b87d75e0abbc364"
-  },
-  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30593627903"
+    "snapshots": {
+        "epss_snapshot": {
+            "file": "epss_snapshot.json",
+            "date": "2026-07-30",
+            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+        },
+        "kev_snapshot": {
+            "file": "kev_snapshot.json",
+            "date": "2026-07-30",
+            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+        }
+    },
+    "tool_versions": {
+        "syft": "1.44.0",
+        "grype": "0.112.0"
+    },
+    "artifact_hashes": {
+        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+        "rescan.json": "41fab40639d06f49c2223d75b948b3cb3112d0e5ed891a7680b21fc4db16ca9d",
+        "baseline-grype.json": "583a081b65adc434dbf950157dc0df12613a5bbbc22045bb79855afca8c25a27",
+        "candidate-ranking.json": "a9572ca41b96025d427db4687964373be9055768ea283467db93d5df05a662d0",
+        "build.log": "3d0d9a0af63754aacb92fcfbdcb55e93599511ffe435d25ae35f62bf7eb071ae",
+        "selected-candidate.json": "c2140f1b848b8825389bf9cb17731921489d550a7ea4606522341e9ad92d0a30",
+        "metrics.json": "a61bd72ab5e2f0b07db7c433f0c75c1d9e573bda4baa21c55f7a1243f16144ba",
+        "test.log": "d939266221ff9b743b82934570659cb0175e4a2c100e31e51a98b02df430c3f5",
+        "baseline-sbom.json": "4e3747b784ab93d797139ff6c7834b17b1a1b8354ef9168c07b08b66c8241660",
+        "package-after.json": "06fdc2f4b9e97c5c0c2f7668c275704198ad4fbc46072c9ca61e545b8cb91fd0",
+        "llm-response.json": "89cca07c013f32d6b4eceb779e4f2e4ce25cc52664a4ee3dc6d7e47bd86a4e75",
+        "llm-request.json": "c913d8ffb603611ec244507368ccb70e90d6b085a494b1630b87d75e0abbc364"
+    },
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
 }
-
 
 === EMPIRICAL EVIDENCE ===
 NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
@@ -53,7 +52,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 {
     "scenario": "AF-03", // The unique identifier for this vulnerability scenario
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30593627903", // The GitHub Actions run ID that executed this pipeline
+    "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
     "pipeline_version": "v2.0", // The version of the remediation pipeline engine
     "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
     "python": "3.12.x", // The Python version used by the pipeline
@@ -67,12 +66,12 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
     "snapshots": { // Hashes of vulnerability intelligence snapshots
         "epss_snapshot": {
             "file": "epss_snapshot.json",
-            "date": "2026-07-31",
+            "date": "2026-07-30",
             "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
         },
         "kev_snapshot": {
             "file": "kev_snapshot.json",
-            "date": "2026-07-31",
+            "date": "2026-07-30",
             "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
         }
     },
@@ -94,7 +93,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
         "llm-response.json": "89cca07c013f32d6b4eceb779e4f2e4ce25cc52664a4ee3dc6d7e47bd86a4e75",
         "llm-request.json": "c913d8ffb603611ec244507368ccb70e90d6b085a494b1630b87d75e0abbc364"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30593627903"
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834" // Direct link to the successful GitHub Actions workflow run
 }
 
 --- PIPELINE METRICS ---
@@ -115,7 +114,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
   "remediation_type": "Direct Upgrade", // The human-readable strategy category
   "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
   "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application\'s test suite passed
+  "test_success": false, // Whether the application's test suite passed
   "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
   "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
   "runtime_success": false, // Runtime tests status
@@ -128,90 +127,44 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 }
 
 --- LLM PROMPT ---
+Scenario ID: AF-03
+Prompt Version: v1.1
+
+Scenario ID: UNKNOWN
+Prompt Version: v1.1
+
+### Vulnerability Intelligence
+* Target Package: cryptography
+* Vulnerable Version: 41.0.7
+* CVE ID: GHSA-3ww4-gg4f-jr7f
+* CVSS Score: 7.5
+* EPSS Probability: 0.01118
+* CISA KEV Status: False
+* Intelligence Retrieved On: 2026-05-18
+* Fixed Versions: ['42.0.0']
+
+### Dependency Context
+```json
 {
-  "scenario_id": "UNKNOWN",
-  "experiment_id": "2026-final",
-  "application": "Apache Airflow",
-  "ecosystem": "python",
-  "prompt_version": "v1.1",
-  "api_payload": {
-    "contents": [
-      {
-        "role": "user",
-        "parts": [
-          {
-            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: cryptography\n* Vulnerable Version: 41.0.7\n* CVE ID: GHSA-3ww4-gg4f-jr7f\n* CVSS Score: 7.5\n* EPSS Probability: 0.01118\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['42.0.0']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: cryptography\\nVersion: 41.0.7\\nSummary: cryptography is a package which provides cryptographic recipes and primitives to Python developers.\\nHome-page: \\nAuthor: \\nAuthor-email: The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>\\nLicense: Apache-2.0 OR BSD-3-Clause\\nLocation: /usr/lib/python3/dist-packages\\nRequires: \\nRequired-by: adal, apache-airflow, apache-airflow-providers-cncf-kubernetes, asyncssh, Authlib, azure-identity, azure-storage-blob, azure-storage-file-share, gcloud-aio-auth, msal, paramiko, pyOpenSSL, service-identity, snowflake-connector-python\\n\",\n  \"pip_freeze\": \"adal==1.2.7\\napache-airflow==2.9.2\\napache-airflow-providers-cncf-kubernetes==8.3.1\\nasyncssh==2.14.2\\nAuthlib==1.3.1\\nazure-identity==1.16.0\\nazure-storage-blob==12.20.0\\nazure-storage-file-share==12.16.0\\ncryptography==41.0.7\\ngcloud-aio-auth==4.2.3\\nmsal==1.28.0\\nparamiko==3.4.0\\npyOpenSSL==24.1.0\\nservice-identity==24.1.0\\nsnowflake-connector-python==3.10.1\",\n  \"requirements_txt\": \"adal==1.2.7\\napache-airflow==2.9.2\\napache-airflow-providers-amazon==8.24.0\\napache-airflow-providers-celery==3.7.2\\napache-airflow-providers-cncf-kubernetes==8.3.1\\napache-airflow-providers-common-io==1.3.2\\napache-airflow-providers-common-sql==1.14.0\\napache-airflow-providers-docker==3.12.0\\napache-airflow-providers-elasticsearch==5.4.1\\napache-airflow-providers-fab==1.1.1\\napache-airflow-providers-ftp==3.9.1\\napache-airflow-providers-google==10.19.0\\napache-airflow-providers-grpc==3.5.1\\napache-airflow-providers-hashicorp==3.7.1\\napache-airflow-providers-http==4.11.1\\napache-airflow-providers-imap==3.6.1\\napache-airflow-providers-microsoft-azure==10.1.1\\napache-airflow-providers-mysql==5.6.1\\napache-airflow-providers-odbc==4.6.1\\napache-airflow-providers-openlineage==1.8.0\\napache-airflow-providers-postgres==5.11.1\\napache-airflow-providers-redis==3.7.1\\napache-airflow-providers-sendgrid==3.5.1\\napache-airflow-providers-sftp==4.10.1\\napache-airflow-providers-slack==8.7.1\\napache-airflow-providers-smtp==1.7.1\\napache-airflow-providers-snowflake==5.5.1\\napache-airflow-providers-sqlite==3.8.1\\napache-airflow-providers-ssh==3.11.1\\nasyncssh==2.14.2\\nAuthlib==1.3.1\\nazure-identity==1.16.0\\nazure-storage-blob==12.20.0\\nazure-storage-file-share==12.16.0\\ncryptography==41.0.7\\ngcloud-aio-auth==4.2.3\\ngoogle-auth-oauthlib==1.2.0\\nmsal==1.28.0\\nmsal-extensions==1.1.0\\noauthlib==3.2.2\\nparamiko==3.4.0\\npyOpenSSL==24.1.0\\nrequests-oauthlib==1.3.1\\nsnowflake-connector-python==3.10.1\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
-          }
-        ]
-      }
-    ],
-    "systemInstruction": {
-      "parts": [
-        {
-          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
-        }
-      ]
-    },
-    "generationConfig": {
-      "temperature": 0.0,
-      "topP": 1.0,
-      "topK": 1,
-      "seed": 42,
-      "responseMimeType": "application/json",
-      "responseSchema": {
-        "type": "OBJECT",
-        "properties": {
-          "reasoning": {
-            "type": "STRING",
-            "description": "Comprehensive reasoning for the strategy chosen."
-          },
-          "strategy": {
-            "type": "STRING",
-            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
-          },
-          "remediation_type": {
-            "type": "STRING",
-            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
-          },
-          "recommended_package_version": {
-            "type": "STRING",
-            "description": "The specific semantic version to enforce."
-          },
-          "manifest_patch": {
-            "type": "OBJECT",
-            "description": "The structured intermediate representation of the manifest patch.",
-            "properties": {
-              "operation": {
-                "type": "STRING",
-                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
-              },
-              "package": {
-                "type": "STRING",
-                "description": "The target package name to modify."
-              },
-              "constraint": {
-                "type": "STRING",
-                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
-              }
-            },
-            "required": [
-              "operation",
-              "package",
-              "constraint"
-            ]
-          }
-        },
-        "required": [
-          "reasoning",
-          "strategy",
-          "remediation_type",
-          "recommended_package_version",
-          "manifest_patch"
-        ]
-      }
-    }
-  }
+  "pip_show": "Name: cryptography\nVersion: 41.0.7\nSummary: cryptography is a package which provides cryptographic recipes and primitives to Python developers.\nHome-page: \nAuthor: \nAuthor-email: The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>\nLicense: Apache-2.0 OR BSD-3-Clause\nLocation: /usr/lib/python3/dist-packages\nRequires: \nRequired-by: adal, apache-airflow, apache-airflow-providers-cncf-kubernetes, asyncssh, Authlib, azure-identity, azure-storage-blob, azure-storage-file-share, gcloud-aio-auth, msal, paramiko, pyOpenSSL, service-identity, snowflake-connector-python\n",
+  "pip_freeze": "adal==1.2.7\napache-airflow==2.9.2\napache-airflow-providers-cncf-kubernetes==8.3.1\nasyncssh==2.14.2\nAuthlib==1.3.1\nazure-identity==1.16.0\nazure-storage-blob==12.20.0\nazure-storage-file-share==12.16.0\ncryptography==41.0.7\ngcloud-aio-auth==4.2.3\nmsal==1.28.0\nparamiko==3.4.0\npyOpenSSL==24.1.0\nservice-identity==24.1.0\nsnowflake-connector-python==3.10.1",
+  "requirements_txt": "adal==1.2.7\napache-airflow==2.9.2\napache-airflow-providers-amazon==8.24.0\napache-airflow-providers-celery==3.7.2\napache-airflow-providers-cncf-kubernetes==8.3.1\napache-airflow-providers-common-io==1.3.2\napache-airflow-providers-common-sql==1.14.0\napache-airflow-providers-docker==3.12.0\napache-airflow-providers-elasticsearch==5.4.1\napache-airflow-providers-fab==1.1.1\napache-airflow-providers-ftp==3.9.1\napache-airflow-providers-google==10.19.0\napache-airflow-providers-grpc==3.5.1\napache-airflow-providers-hashicorp==3.7.1\napache-airflow-providers-http==4.11.1\napache-airflow-providers-imap==3.6.1\napache-airflow-providers-microsoft-azure==10.1.1\napache-airflow-providers-mysql==5.6.1\napache-airflow-providers-odbc==4.6.1\napache-airflow-providers-openlineage==1.8.0\napache-airflow-providers-postgres==5.11.1\napache-airflow-providers-redis==3.7.1\napache-airflow-providers-sendgrid==3.5.1\napache-airflow-providers-sftp==4.10.1\napache-airflow-providers-slack==8.7.1\napache-airflow-providers-smtp==1.7.1\napache-airflow-providers-snowflake==5.5.1\napache-airflow-providers-sqlite==3.8.1\napache-airflow-providers-ssh==3.11.1\nasyncssh==2.14.2\nAuthlib==1.3.1\nazure-identity==1.16.0\nazure-storage-blob==12.20.0\nazure-storage-file-share==12.16.0\ncryptography==41.0.7\ngcloud-aio-auth==4.2.3\ngoogle-auth-oauthlib==1.2.0\nmsal==1.28.0\nmsal-extensions==1.1.0\noauthlib==3.2.2\nparamiko==3.4.0\npyOpenSSL==24.1.0\nrequests-oauthlib==1.3.1\nsnowflake-connector-python==3.10.1"
 }
+```
+
+Based on the vulnerability intelligence and context:
+1. Recommend the safest strategy.
+2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
 
 --- LLM OUTPUT ---
-{"reasoning":"The package cryptography is directly declared in requirements.txt as cryptography==41.0.7 and is affected by GHSA-3ww4-gg4f-jr7f. Upgrading cryptography directly to 42.0.0 resolves the vulnerability. Downstream dependencies in the manifest, such as pyOpenSSL 24.1.0, paramiko 3.4.0, and azure-identity 1.16.0, support cryptography 42.0.0. A direct upgrade is the standard and safest remediation strategy for direct requirements.txt entries.","strategy":"direct_upgrade","remediation_type":"Direct Upgrade","recommended_package_version":"42.0.0","manifest_patch":{"operation":"bump","package":"cryptography","constraint":">=42.0.0"}}
+{
+  "reasoning": "The package cryptography is directly declared in requirements.txt as cryptography==41.0.7 and is affected by GHSA-3ww4-gg4f-jr7f. Upgrading cryptography directly to 42.0.0 resolves the vulnerability. Downstream dependencies in the manifest, such as pyOpenSSL 24.1.0, paramiko 3.4.0, and azure-identity 1.16.0, support cryptography 42.0.0. A direct upgrade is the standard and safest remediation strategy for direct requirements.txt entries.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "42.0.0",
+  "manifest_patch": {
+    "operation": "bump",
+    "package": "cryptography",
+    "constraint": ">=42.0.0"
+  }
+}
