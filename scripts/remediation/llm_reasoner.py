@@ -118,8 +118,8 @@ Based on the vulnerability intelligence and context:
     }
 
     # Fallback model list: primary → stable fallback → legacy fallback
-    # Note: gemini-3.5-flash injected per user request
-    models = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    # Note: gemini-3.6-flash injected per user request
+    models = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
     result = None
 
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
