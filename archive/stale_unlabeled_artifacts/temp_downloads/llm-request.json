@@ -1,0 +1,84 @@
+{
+  "scenario_id": "UNKNOWN",
+  "experiment_id": "2026-final",
+  "application": "Apache Airflow",
+  "ecosystem": "python",
+  "prompt_version": "v1.1",
+  "api_payload": {
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: redshift-connector\n* Vulnerable Version: 2.1.1\n* CVE ID: GHSA-29h4-r29x-hchv\n* CVSS Score: 9.8\n* EPSS Probability: 0.00808\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['2.1.14']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: redshift-connector\\nVersion: 2.1.1\\nSummary: Redshift interface library\\nHome-page: https://github.com/aws/amazon-redshift-python-driver\\nAuthor: Amazon Web Services\\nAuthor-email: redshift-drivers@amazon.com\\nLicense: Apache License 2.0\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: beautifulsoup4, boto3, botocore, lxml, packaging, pytz, requests, scramp, setuptools\\nRequired-by: apache-airflow-providers-amazon\\n\",\n  \"pip_freeze\": \"apache-airflow-providers-amazon==8.24.0\\nbeautifulsoup4==4.12.3\\nboto3==1.34.106\\nbotocore==1.34.106\\nlxml==5.2.2\\npackaging==24.0\\npytz==2024.1\\nredshift-connector==2.1.1\\nrequests==2.31.0\\nscramp==1.4.5\\nsetuptools==66.1.1\",\n  \"requirements_txt\": \"aiobotocore==2.13.0\\napache-airflow-providers-amazon==8.24.0\\nbeautifulsoup4==4.12.3\\nboto3==1.34.106\\nbotocore==1.34.106\\nlxml==5.2.2\\npackaging==24.0\\npytz==2024.1\\nredshift-connector==2.1.1\\nrequests==2.31.0\\nrequests-oauthlib==1.3.1\\nrequests-toolbelt==1.0.0\\nscramp==1.4.5\\nsetuptools==66.1.1\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+          }
+        ]
+      }
+    ],
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+        }
+      ]
+    },
+    "generationConfig": {
+      "temperature": 0.0,
+      "topP": 1.0,
+      "topK": 1,
+      "seed": 42,
+      "responseMimeType": "application/json",
+      "responseSchema": {
+        "type": "OBJECT",
+        "properties": {
+          "reasoning": {
+            "type": "STRING",
+            "description": "Comprehensive reasoning for the strategy chosen."
+          },
+          "strategy": {
+            "type": "STRING",
+            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+          },
+          "remediation_type": {
+            "type": "STRING",
+            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+          },
+          "recommended_package_version": {
+            "type": "STRING",
+            "description": "The specific semantic version to enforce."
+          },
+          "manifest_patch": {
+            "type": "OBJECT",
+            "description": "The structured intermediate representation of the manifest patch.",
+            "properties": {
+              "operation": {
+                "type": "STRING",
+                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+              },
+              "package": {
+                "type": "STRING",
+                "description": "The target package name to modify."
+              },
+              "constraint": {
+                "type": "STRING",
+                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
+              }
+            },
+            "required": [
+              "operation",
+              "package",
+              "constraint"
+            ]
+          }
+        },
+        "required": [
+          "reasoning",
+          "strategy",
+          "remediation_type",
+          "recommended_package_version",
+          "manifest_patch"
+        ]
+      }
+    }
+  }
+}

@@ -9,6 +9,41 @@ from context_builder import get_context
 from llm_reasoner import get_llm_recommendation
 from manifest_editor import apply_remediation
 
+
+def _get_dependency_type(ecosystem, app_dir, package_name):
+    """
+    Determine whether a package is a 'direct' or 'transitive' dependency by
+    inspecting the application's top-level manifest.
+    - Python: requirements.txt  (line-by-line, case-insensitive, normalise hyphens/underscores)
+    - npm:    package.json      (dependencies + devDependencies keys)
+    Returns 'direct' if found in the manifest, 'transitive' otherwise.
+    """
+    try:
+        if ecosystem == 'python':
+            req_path = os.path.join(app_dir, 'requirements.txt')
+            if os.path.exists(req_path):
+                norm = package_name.lower().replace('-', '_')
+                with open(req_path, 'r') as f:
+                    for line in f:
+                        line_norm = line.strip().lower().replace('-', '_')
+                        if line_norm.startswith(norm + '=') or line_norm.startswith(norm + '>') \
+                                or line_norm.startswith(norm + '<') or line_norm == norm:
+                            return 'direct'
+        elif ecosystem == 'npm':
+            pkg_path = os.path.join(app_dir, 'package.json')
+            if os.path.exists(pkg_path):
+                with open(pkg_path, 'r') as f:
+                    pkg = json.load(f)
+                all_deps = {}
+                all_deps.update(pkg.get('dependencies', {}))
+                all_deps.update(pkg.get('devDependencies', {}))
+                if package_name in all_deps:
+                    return 'direct'
+    except Exception as e:
+        print(f"[WARN] Could not determine dependency type for {package_name}: {e}")
+    return 'transitive'
+
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: python generic_remediation.py <ecosystem> <app_dir>")
@@ -50,7 +85,7 @@ def main():
         recommendation = {}
     
     if llm_response_valid:
-        scenario_id = "AF-01" if "airflow" in app_dir.lower() else ("JS-01" if "juice-shop" in app_dir.lower() else "UNKNOWN")
+        scenario_id = os.environ.get('SCENARIO_ID', 'UNKNOWN')
         print(f"\n====================================================")
         print(f"Scenario            : {scenario_id}")
         print(f"TARGET_CVE          : {candidate['api_cve_id']}")
@@ -88,7 +123,10 @@ def main():
         "epss": candidate['epss'],
         "epss_timestamp": candidate.get('epss_timestamp', ''),
         "kev_status": candidate['kev'],
-        "dependency_type": "nested" if "node_modules" in candidate['package_name'] else "direct",
+        # Determine dependency type: check whether the package appears as a direct
+        # dependency in the manifest file (requirements.txt or package.json).
+        # A package listed in the top-level manifest is 'direct'; otherwise 'transitive'.
+        "dependency_type": _get_dependency_type(ecosystem, app_dir, candidate['package_name']),
         "strategy": recommendation.get('strategy', ''),
         "remediation_type": recommendation.get('remediation_type', ''),
         "llm_response_valid": llm_response_valid,

@@ -319,7 +319,7 @@ tests/core/test_templates.py::test_filters[ts_nodash_with_tz-20120724T030452+000
 =================================== FAILURES ===================================
 _ TestCustomStatsName.test_does_not_send_stats_using_dogstatsd_when_the_name_is_not_valid _
 
-args = (<tests.core.test_stats.TestCustomStatsName object at 0x7f40c362b770>,)
+args = (<tests.core.test_stats.TestCustomStatsName object at 0x7f1f91a2b6e0>,)
 kwds = {}
 
     @wraps(func)
@@ -368,7 +368,7 @@ E       ModuleNotFoundError: No module named 'datadog'
 /usr/lib/python3.12/importlib/__init__.py:90: ModuleNotFoundError
 _ TestCustomStatsName.test_does_send_stats_using_dogstatsd_when_the_name_is_valid _
 
-args = (<tests.core.test_stats.TestCustomStatsName object at 0x7f40c362bda0>,)
+args = (<tests.core.test_stats.TestCustomStatsName object at 0x7f1f91a2bd10>,)
 kwds = {}
 
     @wraps(func)
@@ -436,4 +436,4 @@ SKIPPED [1] tests/core/test_stats.py:434: could not import 'datadog': No module 
 SKIPPED [1] tests/core/test_stats.py:449: could not import 'datadog': No module named 'datadog'
 FAILED tests/core/test_stats.py::TestCustomStatsName::test_does_not_send_stats_using_dogstatsd_when_the_name_is_not_valid - ModuleNotFoundError: No module named 'datadog'
 FAILED tests/core/test_stats.py::TestCustomStatsName::test_does_send_stats_using_dogstatsd_when_the_name_is_valid - ModuleNotFoundError: No module named 'datadog'
-========== 2 failed, 264 passed, 28 skipped, 41923 warnings in 25.33s ==========
+========== 2 failed, 264 passed, 28 skipped, 41923 warnings in 26.82s ==========

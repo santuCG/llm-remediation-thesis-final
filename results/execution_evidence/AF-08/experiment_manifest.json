@@ -1,5 +1,5 @@
 {
-  "scenario": "AF-01",
+  "scenario": "AF-08",
   "repository_commit": "15177533346e3240f5b419c9b7cf9568603b0664",
   "workflow_commit": "15177533346e3240f5b419c9b7cf9568603b0664",
   "pipeline_version": "v2.0",
@@ -30,186 +30,16 @@
   },
   "artifact_hashes": {
     "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-    "rescan.json": "8b8ac4e0eb2a58807a7b465938093c2e70debfdcf41150790cebdfb7e72f4424",
-    "baseline-grype.json": "a358d1caeaa25e4bc93b3e3643360f2f6a81c7744c3036a8968ec309541a7d55",
-    "candidate-ranking.json": "e5942a3bc461c665bc9de059bf78f120db7e057dd1f290cadcd15e77cab568bf",
-    "build.log": "0c4312589442e9f9c627bf9eb879a6f307daa33efcf9b4df364f7d262e324242",
-    "selected-candidate.json": "df4cc60a258e6aebc1e19bf40d3c90467367ccc54314c49bb5a92369c4600fb7",
-    "metrics.json": "ab3f4e9da65aa23b1c22949fe5161f141886d91ac40f5e92b443b9f62e950764",
-    "test.log": "b2034cbd4df4f9a078ecb0ffd70a90ca248c385f662f3354e61d2590a4d66ff3",
-    "baseline-sbom.json": "221780716b6d5b9d0e2de9b17176cdf7aff93f78abf0d909a0e715866c50baae",
+    "rescan.json": "3821a32579fd621d18240ead8626d50b977a19b0890dff8d4a155980b328a67a",
+    "baseline-grype.json": "13880004cbf7f933ebecf6817e7ed0ffe6249ba70b604906696912cc6f78b1ac",
+    "candidate-ranking.json": "8802afa0aec0b5837767df4821c1d2a197cd3f70faa4fb63b1c8645c5df3eebc",
+    "build.log": "47292485a447c07d59197323ee2597773a7edb3c3ce95b1b194d3f0ebe09d0be",
+    "selected-candidate.json": "0595b105bcf4a18328859e3176140e2648eda9068e991bb0d022488bf844edc3",
+    "metrics.json": "8494c443170577b24f16f987460ef988454aa4fbfefc78aeef7f1c53eaa938fa",
+    "test.log": "803848eaea854de963f59ec700ccfd89860e875a166eb9ac323ed2fd69879db6",
+    "baseline-sbom.json": "0c4729328e68080acb51002b6ff3da3cbf67fee9e864e48a3cfe1dae4df9a7cb",
     "package-after.json": "8f4d3d930100a6eb39e416c12db33f12184ca77b46bdb48949a9c95f26738a5a",
-    "llm-response.json": "eba9d1466222d95d95133b2fb9f5cb4a4af51b730ae18f7067bd033adf6438d0",
+    "llm-response.json": "725a7204d951b4a36a2693befb9cde968bc7290a0e2df23027f18446596b8280",
     "llm-request.json": "a46e8d8681ea0182bafd2ce7cd00b8165e168e6d06c097b700adfdfcfa1ad2a2"
   }
 }
-
-
-=== EMPIRICAL EVIDENCE ===
-NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
-
---- EXPERIMENT MANIFEST ---
-{
-    "scenario": "AF-01", // The unique identifier for this vulnerability scenario
-    "repository_commit": "15177533346e3240f5b419c9b7cf9568603b0664", // The Git commit hash of the repository during execution
-    "workflow_commit": "15177533346e3240f5b419c9b7cf9568603b0664", // The GitHub Actions run ID that executed this pipeline
-    "pipeline_version": "v2.0", // The version of the remediation pipeline engine
-    "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
-    "python": "3.12.x", // The Python version used by the pipeline
-    "llm": { // LLM configuration settings
-        "model": "gemini-2.5-flash", // The exact LLM model used for reasoning
-        "temperature": 0.0, // Temperature setting (0.0 for deterministic output)
-        "seed": 42, // Seed for reproducibility
-        "topP": 1.0, // Top-P sampling setting
-        "topK": 1 // Top-K sampling setting
-    },
-    "snapshots": { // Hashes of vulnerability intelligence snapshots
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-31",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-31",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": { // Versions of security scanners used
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "8b8ac4e0eb2a58807a7b465938093c2e70debfdcf41150790cebdfb7e72f4424",
-        "baseline-grype.json": "a358d1caeaa25e4bc93b3e3643360f2f6a81c7744c3036a8968ec309541a7d55",
-        "candidate-ranking.json": "e5942a3bc461c665bc9de059bf78f120db7e057dd1f290cadcd15e77cab568bf",
-        "build.log": "0c4312589442e9f9c627bf9eb879a6f307daa33efcf9b4df364f7d262e324242",
-        "selected-candidate.json": "df4cc60a258e6aebc1e19bf40d3c90467367ccc54314c49bb5a92369c4600fb7",
-        "metrics.json": "ab3f4e9da65aa23b1c22949fe5161f141886d91ac40f5e92b443b9f62e950764",
-        "test.log": "b2034cbd4df4f9a078ecb0ffd70a90ca248c385f662f3354e61d2590a4d66ff3",
-        "baseline-sbom.json": "221780716b6d5b9d0e2de9b17176cdf7aff93f78abf0d909a0e715866c50baae",
-        "package-after.json": "8f4d3d930100a6eb39e416c12db33f12184ca77b46bdb48949a9c95f26738a5a",
-        "llm-response.json": "eba9d1466222d95d95133b2fb9f5cb4a4af51b730ae18f7067bd033adf6438d0",
-        "llm-request.json": "a46e8d8681ea0182bafd2ce7cd00b8165e168e6d06c097b700adfdfcfa1ad2a2"
-    }
-}
-
---- PIPELINE METRICS ---
-{
-  "application": "applications/airflow", // The target application being evaluated
-  "ecosystem": "python", // Package manager ecosystem (e.g., npm, python)
-  "candidate_count": 62, // Total number of vulnerabilities initially scanned
-  "selected_package": "google-cloud-aiplatform", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-wh2j-26j7-9728", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2026-2473", // The standard MITRE CVE ID
-  "severity": "high", // CVSS severity rating
-  "cvss": 7.7, // Common Vulnerability Scoring System score
-  "epss": 0.00438, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T09:37:48.866594+00:00", // Time the EPSS score was fetched
-  "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
-  "dependency_type": "direct", // Whether the dependency is direct or transitive
-  "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
-  "remediation_type": "Direct Upgrade", // The human-readable strategy category
-  "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
-  "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application\'s test suite passed
-  "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
-  "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
-  "runtime_success": false, // Runtime tests status
-  "lockfile_regenerated": false, // Whether a lockfile was regenerated
-  "execution_time_seconds": 20, // Total pipeline execution time in seconds
-  "retry_count": 0, // Number of LLM retries needed
-  "llm_iteration": 1, // The specific iteration of the LLM prompting
-  "validation_stage_reached": "validator", // The furthest pipeline stage reached
-  "failure_stage": "none" // The stage where the pipeline failed, if any
-}
-
---- LLM PROMPT ---
-{
-  "scenario_id": "UNKNOWN",
-  "experiment_id": "2026-final",
-  "application": "Apache Airflow",
-  "ecosystem": "python",
-  "prompt_version": "v1.1",
-  "api_payload": {
-    "contents": [
-      {
-        "role": "user",
-        "parts": [
-          {
-            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: google-cloud-aiplatform\n* Vulnerable Version: 1.53.0\n* CVE ID: GHSA-wh2j-26j7-9728\n* CVSS Score: 7.7\n* EPSS Probability: 0.00438\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['1.133.0']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: google-cloud-aiplatform\\nVersion: 1.53.0\\nSummary: Vertex AI API client library\\nHome-page: https://github.com/googleapis/python-aiplatform\\nAuthor: Google LLC\\nAuthor-email: googleapis-packages@google.com\\nLicense: Apache 2.0\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: docstring-parser, google-api-core, google-auth, google-cloud-bigquery, google-cloud-resource-manager, google-cloud-storage, packaging, proto-plus, protobuf, pydantic, shapely\\nRequired-by: apache-airflow-providers-google\\n\",\n  \"pip_freeze\": \"apache-airflow-providers-google==10.19.0\\ngoogle-api-core==2.19.0\\ngoogle-auth==2.29.0\\ngoogle-cloud-aiplatform==1.53.0\\ngoogle-cloud-bigquery==3.20.1\\ngoogle-cloud-resource-manager==1.12.3\\ngoogle-cloud-storage==2.16.0\\npackaging==24.0\\nproto-plus==1.23.0\\nprotobuf==4.25.3\\npydantic==2.7.3\\nshapely==2.0.4\",\n  \"requirements_txt\": \"apache-airflow-providers-google==10.19.0\\ngoogle-api-core==2.19.0\\ngoogle-auth==2.29.0\\ngoogle-auth-httplib2==0.2.0\\ngoogle-auth-oauthlib==1.2.0\\ngoogle-cloud-aiplatform==1.53.0\\ngoogle-cloud-bigquery==3.20.1\\ngoogle-cloud-bigquery-datatransfer==3.15.3\\ngoogle-cloud-resource-manager==1.12.3\\ngoogle-cloud-storage==2.16.0\\ngoogle-cloud-storage-transfer==1.11.3\\npackaging==24.0\\nproto-plus==1.23.0\\nprotobuf==4.25.3\\npydantic==2.7.3\\npydantic_core==2.18.4\\npydata-google-auth==1.8.2\\nshapely==2.0.4\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
-          }
-        ]
-      }
-    ],
-    "systemInstruction": {
-      "parts": [
-        {
-          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
-        }
-      ]
-    },
-    "generationConfig": {
-      "temperature": 0.0,
-      "topP": 1.0,
-      "topK": 1,
-      "seed": 42,
-      "responseMimeType": "application/json",
-      "responseSchema": {
-        "type": "OBJECT",
-        "properties": {
-          "reasoning": {
-            "type": "STRING",
-            "description": "Comprehensive reasoning for the strategy chosen."
-          },
-          "strategy": {
-            "type": "STRING",
-            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
-          },
-          "remediation_type": {
-            "type": "STRING",
-            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
-          },
-          "recommended_package_version": {
-            "type": "STRING",
-            "description": "The specific semantic version to enforce."
-          },
-          "manifest_patch": {
-            "type": "OBJECT",
-            "description": "The structured intermediate representation of the manifest patch.",
-            "properties": {
-              "operation": {
-                "type": "STRING",
-                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
-              },
-              "package": {
-                "type": "STRING",
-                "description": "The target package name to modify."
-              },
-              "constraint": {
-                "type": "STRING",
-                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
-              }
-            },
-            "required": [
-              "operation",
-              "package",
-              "constraint"
-            ]
-          }
-        },
-        "required": [
-          "reasoning",
-          "strategy",
-          "remediation_type",
-          "recommended_package_version",
-          "manifest_patch"
-        ]
-      }
-    }
-  }
-}
-
---- LLM OUTPUT ---
-{"reasoning":"The package google-cloud-aiplatform version 1.53.0 is vulnerable to GHSA-wh2j-26j7-9728 with a CVSS score of 7.7. Because google-cloud-aiplatform is explicitly declared in requirements.txt, performing a direct upgrade to fixed version 1.133.0 is the safest and most straightforward remediation. Alternative strategies like transitive overrides or replacement are unnecessary since google-cloud-aiplatform is a top-level dependency in requirements.txt and can be directly upgraded without breaking compatibility constraints.","strategy":"direct_upgrade","remediation_type":"Direct Upgrade","recommended_package_version":"1.133.0","manifest_patch":{"operation":"bump","package":"google-cloud-aiplatform","constraint":"==1.133.0"}}

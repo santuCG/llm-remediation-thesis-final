@@ -139,7 +139,7 @@ Requirement already satisfied: google-auth-httplib2==0.2.0 in /home/runner/.loca
 Requirement already satisfied: google-auth-oauthlib==1.2.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 138)) (1.2.0)
 Collecting google-cloud-aiplatform==1.133.0 (from -r requirements.txt (line 139))
   Downloading google_cloud_aiplatform-1.133.0-py2.py3-none-any.whl.metadata (46 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.1/46.1 kB 1.8 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.1/46.1 kB 4.0 MB/s eta 0:00:00
 Requirement already satisfied: google-cloud-appengine-logging==1.4.3 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 140)) (1.4.3)
 Requirement already satisfied: google-cloud-audit-log==0.2.5 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 141)) (0.2.5)
 Requirement already satisfied: google-cloud-automl==2.13.3 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 142)) (2.13.3)
@@ -364,7 +364,7 @@ Requirement already satisfied: zipp==3.19.2 in /home/runner/.local/lib/python3.1
 Requirement already satisfied: zope.event==5.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 361)) (5.0)
 Requirement already satisfied: zope.interface==6.4.post2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 362)) (6.4.post2)
 Downloading google_cloud_aiplatform-1.133.0-py2.py3-none-any.whl (8.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.2/8.2 MB 36.3 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.2/8.2 MB 120.5 MB/s eta 0:00:00
 Installing collected packages: google-cloud-aiplatform
   Attempting uninstall: google-cloud-aiplatform
     Found existing installation: google-cloud-aiplatform 1.53.0

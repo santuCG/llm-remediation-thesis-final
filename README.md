@@ -102,15 +102,19 @@ The LLM does not browse the internet. It reasons only over the information provi
 
 ## What the LLM Returns
 
-The LLM returns a structured JSON object:
+The LLM returns a structured JSON object enforced by Gemini's `responseSchema` constraint:
 
 ```json
 {
-  "action_type": "OVERRIDE | CONSTRAINT_RELAXATION | DIRECT_BUMP | PACKAGE_REPLACEMENT | DEFER",
-  "recommended_version": "exact version string",
-  "fix_target": "package name to modify",
-  "rationale": "why this strategy was chosen",
-  "prioritisation_reasoning": "how CVSS and EPSS influenced the decision"
+  "reasoning": "Comprehensive explanation of why this strategy was chosen over alternatives",
+  "strategy": "direct_upgrade | transitive_override | dependency_resolution | replacement | manual_review",
+  "remediation_type": "Direct Upgrade | Transitive Override | Dependency Resolution | Replacement | Manual Review",
+  "recommended_package_version": "exact semantic version string",
+  "manifest_patch": {
+    "operation": "bump | replace | add_override",
+    "package": "package name to modify",
+    "constraint": "version constraint to enforce (e.g. ==2.1.14 or >=42.0.0)"
+  }
 }
 ```
 
@@ -124,13 +128,14 @@ The LLM output goes through four gates before it counts as a successful remediat
 
 | Gate | What Is Checked | Pass Condition |
 |------|----------------|----------------|
-| Gate 0 | Does the recommended version actually exist in npm or PyPI? | HTTP 200 from registry API |
-| Gate 1 | Does the package manager accept the fix? | Exit code 0 from npm or pip |
-| Gate 2 | Does the application build? | No build errors |
-| Gate 3 | Does the dependency graph confirm the fix? | npm ls or pip check shows correct version |
-| Gate 4 | Is the CVE gone? | Grype no longer reports the CVE in the rescanned SBOM |
+| Gate 1 | Does the package manager accept the fix? | Exit code 0 from `npm install` or `pip install` |
+| Gate 2 | Does the application build? | No build errors logged to `build.log` |
+| Gate 3 | Does the dependency graph confirm the fix? | `pip check` shows correct version; `npm list` resolves without conflict |
+| Gate 4 | Is the CVE gone? | Grype no longer reports the targeted CVE in the rescanned SBOM (`rescan.json`) |
 
 A scenario is only counted as successfully remediated if it passes all gates.
+
+**Note on test_success:** A fifth step runs the application's unit tests (`npm test` / `pytest`). This is recorded separately as `test_success` in `metrics.json`. In all 17 executed scenarios, `test_success=false` due to runner environment limitations (missing global Angular CLI `ng` for npm; missing `sentry_sdk` import for Python). These are toolchain environment failures unrelated to the remediation outcome. All 17 scenarios achieved `rescan_success=true`, confirming CVE eradication.
 
 ---
 

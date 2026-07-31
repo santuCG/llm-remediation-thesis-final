@@ -9,7 +9,7 @@
       "application_version": "1.4.5-lts.1",
       "ecosystem": "npm",
       "experiment_group": "LLM vs Grype Baseline",
-      "status": "Registered"
+      "status": "Pre-Registered — Evidence Pending"
     },
     "selection_rationale": {
       "cvss_threshold_met": true,
