@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-2w6w-674q-4c4q",
+  "api_cve_id": "CVE-2026-33937",
+  "package_name": "handlebars",
+  "vulnerable_version": "4.7.7",
+  "severity": "critical",
+  "cvss": 9.8,
+  "epss": 0.0178,
+  "epss_timestamp": "2026-07-31T00:14:52.392073+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "4.7.9"
+  ]
+}

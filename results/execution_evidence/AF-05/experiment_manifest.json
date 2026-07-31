@@ -1,0 +1,45 @@
+{
+  "scenario": "AF-01",
+  "repository_commit": "796ba575b26a4038bd2393d9f09c6328f06661b1",
+  "workflow_commit": "796ba575b26a4038bd2393d9f09c6328f06661b1",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "llm": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-07-31",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-07-31",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+    "rescan.json": "6e93faa2765919d346ef685f8af1508f52bbb804050b503b23f1f18079af2495",
+    "baseline-grype.json": "56dff38785a40377f7aa872c4fbd0f86d78137948be014ec14f45059a135cc01",
+    "candidate-ranking.json": "73b935ed69ebfb787a91d8c3e336b515d56fcf2ef1a5ce505276ecc530d3b648",
+    "build.log": "6194d1b34b7e98151a20466014061b825d8dc55b944f78932819574eb578c381",
+    "selected-candidate.json": "8e3bebe1c12caafd9461c5d81231919abea63dbed5023fab87903f5b25d69218",
+    "metrics.json": "c715dc1510b4dc90699511ad43457abc8a1f0e0dec0293699ea0b4917c664691",
+    "test.log": "1e0082c6940dd7450087a5abc8c76e5c6e451df3057400c7e2a5a3d523dd3df8",
+    "baseline-sbom.json": "8ad4b4a9342d81fa3020810b072b76b7f67ac8f29624d45ec71a190e32565bc0",
+    "package-after.json": "8a6bb1c40c836fe68aeb1a30e06c71d946cedbbc15b98b9d4a34f46a2dced81f",
+    "llm-response.json": "faabbb70f71a7085d48905ec3d8596edb81dd20c1b479fd35f56505e48d645a2",
+    "llm-request.json": "9160e049972b1e6cb47c3d9a008e8df97ff9bc66caa334f58ac830285f9997ef"
+  }
+}

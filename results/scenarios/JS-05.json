@@ -89,36 +89,27 @@
       "artifacts": {}
     },
     "llm_pipeline": {
-      "started": "",
-      "completed": "",
-      "github_run_id": "",
-      "workflow_url": "",
-      "git_commit": "",
-      "workflow_sha": "",
+      "completed": "true",
+      "github_run_id": "30617435445",
       "validation": {
-        "manifest_updated": false,
-        "dependency_installation": false,
+        "manifest_updated": true,
+        "dependency_installation": true,
         "build": {
-          "executed": false,
-          "passed": null
+          "executed": true,
+          "passed": true
         },
-        "failure_stage": "",
+        "failure_stage": "build",
         "tests": {
-          "executed": false,
-          "passed": null
-        },
-        "sbom": {
-          "executed": false,
-          "generated": null
+          "executed": true,
+          "passed": false
         },
         "grype_rescan": {
-          "executed": false,
-          "completed": null,
-          "vulnerability_removed": null
+          "executed": true,
+          "completed": true,
+          "vulnerability_removed": false
         },
-        "overall_result": "Pending"
-      },
-      "artifacts": {}
+        "overall_result": "Failed"
+      }
     }
   },
   "reproducibility": {
@@ -131,5 +122,33 @@
       "github_actions_runner": "ubuntu-22.04",
       "os": "ubuntu-latest"
     }
+  },
+  "metrics": {
+    "application": "applications/juice-shop",
+    "ecosystem": "npm",
+    "candidate_count": 111,
+    "selected_package": "jsonwebtoken",
+    "selected_cve": "GHSA-c7hr-j4mj-j2w6",
+    "api_cve_id": "CVE-2015-9235",
+    "severity": "critical",
+    "cvss": 0.0,
+    "epss": 0.08655,
+    "epss_timestamp": "2026-07-31T08:51:29.237771+00:00",
+    "kev_status": false,
+    "dependency_type": "direct",
+    "strategy": "direct_upgrade",
+    "remediation_type": "Transitive Override",
+    "llm_response_valid": true,
+    "build_success": true,
+    "test_success": false,
+    "dependency_verified": true,
+    "rescan_success": true,
+    "runtime_success": false,
+    "lockfile_regenerated": false,
+    "execution_time_seconds": 35,
+    "retry_count": 1,
+    "llm_iteration": 2,
+    "validation_stage_reached": "validator",
+    "failure_stage": "build"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-vqfr-h8mv-ghfj",
+  "api_cve_id": "CVE-2025-43859",
+  "package_name": "h11",
+  "vulnerable_version": "0.14.0",
+  "severity": "critical",
+  "cvss": 9.1,
+  "epss": 0.00581,
+  "epss_timestamp": "2026-07-31T00:11:38.752865+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "0.16.0"
+  ]
+}

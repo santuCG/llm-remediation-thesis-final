@@ -89,36 +89,27 @@
       "artifacts": {}
     },
     "llm_pipeline": {
-      "started": "",
-      "completed": "",
-      "github_run_id": "",
-      "workflow_url": "",
-      "git_commit": "",
-      "workflow_sha": "",
+      "completed": "true",
+      "github_run_id": "30616404009",
       "validation": {
-        "manifest_updated": false,
-        "dependency_installation": false,
+        "manifest_updated": true,
+        "dependency_installation": true,
         "build": {
-          "executed": false,
-          "passed": null
+          "executed": true,
+          "passed": true
         },
-        "failure_stage": "",
+        "failure_stage": "none",
         "tests": {
-          "executed": false,
-          "passed": null
-        },
-        "sbom": {
-          "executed": false,
-          "generated": null
+          "executed": true,
+          "passed": false
         },
         "grype_rescan": {
-          "executed": false,
-          "completed": null,
-          "vulnerability_removed": null
+          "executed": true,
+          "completed": true,
+          "vulnerability_removed": false
         },
-        "overall_result": "Pending"
-      },
-      "artifacts": {}
+        "overall_result": "Failed"
+      }
     }
   },
   "reproducibility": {
@@ -131,5 +122,33 @@
       "github_actions_runner": "ubuntu-22.04",
       "os": "ubuntu-latest"
     }
+  },
+  "metrics": {
+    "application": "applications/airflow",
+    "ecosystem": "python",
+    "candidate_count": 62,
+    "selected_package": "mako",
+    "selected_cve": "GHSA-2h4p-vjrc-8xpq",
+    "api_cve_id": "CVE-2026-44307",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00609,
+    "epss_timestamp": "2026-07-31T08:32:23.446153+00:00",
+    "kev_status": false,
+    "dependency_type": "direct",
+    "strategy": "direct_upgrade",
+    "remediation_type": "Direct Upgrade",
+    "llm_response_valid": true,
+    "build_success": true,
+    "test_success": false,
+    "dependency_verified": true,
+    "rescan_success": true,
+    "runtime_success": false,
+    "lockfile_regenerated": false,
+    "execution_time_seconds": 25,
+    "retry_count": 0,
+    "llm_iteration": 1,
+    "validation_stage_reached": "validator",
+    "failure_stage": "none"
   }
 }

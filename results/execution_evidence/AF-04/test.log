@@ -1,0 +1,37 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.5.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/airflow
+configfile: pyproject.toml
+plugins: anyio-4.4.0, asyncio-0.23.8, time-machine-2.14.1
+asyncio: mode=Mode.STRICT
+collecting ... collected 289 items / 1 error
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting tests/core/test_sentry.py __________________
+ImportError while importing test module '/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/airflow/tests/core/test_sentry.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/runner/.local/lib/python3.12/site-packages/_pytest/python.py:617: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+/home/runner/.local/lib/python3.12/site-packages/_pytest/pathlib.py:567: in import_path
+    importlib.import_module(module_name)
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+/home/runner/.local/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:186: in exec_module
+    exec(co, module.__dict__)
+tests/core/test_sentry.py:26: in <module>
+    from sentry_sdk import configure_scope
+E   ModuleNotFoundError: No module named 'sentry_sdk'
+=========================== short test summary info ============================
+ERROR tests/core/test_sentry.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 3.31s ===============================

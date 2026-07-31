@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-2h4p-vjrc-8xpq",
+  "api_cve_id": "CVE-2026-44307",
+  "package_name": "mako",
+  "vulnerable_version": "1.3.5",
+  "severity": "high",
+  "cvss": 8.7,
+  "epss": 0.00609,
+  "epss_timestamp": "2026-07-31T08:32:23.446153+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "1.3.12"
+  ]
+}

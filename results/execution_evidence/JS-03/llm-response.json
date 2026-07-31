@@ -1,0 +1,11 @@
+{
+  "reasoning": "The vulnerable package form-data@2.3.3 is introduced via legacy request dependencies (request and @cypress/request). A previous global override forced form-data to 2.5.4 across all packages, which broke dependencies requiring form-data v3/v4 (frisby, jsdom, @types/node-fetch). This global constraint triggered npm resolution issues that installed incompatible @types packages and failed TypeScript compilation. To remediate this safely without breaking build types, a scoped transitive override targeting request > form-data must be applied to force form-data 2.5.4 specifically where vulnerable 2.x versions are used.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "2.5.4",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "request > form-data",
+    "constraint": "2.5.4"
+  }
+}

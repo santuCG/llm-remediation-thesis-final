@@ -1,0 +1,3 @@
+npm error code EINVALIDTAGNAME
+npm error Invalid tag name "request > form-data" of package "request > form-data": Tags may not have any characters that encodeURIComponent encodes.
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-07-31T00_42_24_825Z-debug-0.log

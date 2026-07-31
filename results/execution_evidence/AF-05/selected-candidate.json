@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-7gcm-g887-7qv7",
+  "api_cve_id": "CVE-2026-0994",
+  "package_name": "protobuf",
+  "vulnerable_version": "4.25.3",
+  "severity": "high",
+  "cvss": 8.2,
+  "epss": 0.00662,
+  "epss_timestamp": "2026-07-31T08:49:20.704161+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "5.29.6"
+  ]
+}

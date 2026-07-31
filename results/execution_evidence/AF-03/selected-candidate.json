@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-3ww4-gg4f-jr7f",
+  "api_cve_id": "CVE-2023-50782",
+  "package_name": "cryptography",
+  "vulnerable_version": "41.0.7",
+  "severity": "high",
+  "cvss": 7.5,
+  "epss": 0.01118,
+  "epss_timestamp": "2026-07-31T00:32:06.710771+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "42.0.0"
+  ]
+}
