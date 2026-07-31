@@ -83,6 +83,7 @@ jobs:
       - name: Apply Fix & Verify
         id: apply_fix
         run: |
+          set -o pipefail
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             npm install 2>&1 | tee ../../build.log || (echo "NPM Install Failed" && exit 1)

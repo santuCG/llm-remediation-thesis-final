@@ -3,7 +3,7 @@ import json
 import os
 import zipfile
 
-token = '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'
+token = os.environ["GITHUB_TOKEN"]
 req = urllib.request.Request('https://api.github.com/repos/santuCG/llm-remediation-thesis-final/actions/runs/30212986023/artifacts')
 req.add_header('Authorization', f'token {token}')
 req.add_header('Accept', 'application/vnd.github.v3+json')

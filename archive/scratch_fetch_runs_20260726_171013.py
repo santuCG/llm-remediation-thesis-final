@@ -1,5 +1,5 @@
-import urllib.request, json
-TOKEN='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'
+import urllib.request, json, os
+TOKEN = os.environ["GITHUB_TOKEN"]
 req = urllib.request.Request('https://api.github.com/repos/santuCG/llm-remediation-thesis-final/actions/workflows/generic-remediation.yml/runs?per_page=3')
 req.add_header('Authorization', f'Bearer {TOKEN}')
 try:

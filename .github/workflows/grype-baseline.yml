@@ -93,6 +93,7 @@ jobs:
       - name: Phase 3 & 4 - Apply Grype Recommendation (Logged)
         id: apply_fix
         run: |
+          set -o pipefail
           cd ${{ env.APP_DIR }}
           
           # Deterministic Manifest Application
@@ -110,6 +111,7 @@ jobs:
       - name: Phase 5 - Build / Tests / Rescan
         id: build_test
         run: |
+          set -o pipefail
           cd ${{ env.APP_DIR }}
           echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
           if [ "$ECOSYSTEM" == "npm" ]; then

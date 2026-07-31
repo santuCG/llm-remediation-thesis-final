@@ -6,7 +6,7 @@ import tempfile
 import sys
 
 def main():
-    scenarios_path = 'experiment/final_18_scenarios.json'
+    scenarios_path = 'results/scenarios/final_18_scenarios.json'
     if not os.path.exists(scenarios_path):
         print(f"Error: {scenarios_path} not found.")
         sys.exit(1)
@@ -60,7 +60,7 @@ def main():
             
             print(f"{scenario_id} ({package}): {'PASSED' if success else 'FAILED'}")
             
-    with open('experiment/deterministic_baseline_results.json', 'w', encoding='utf-8') as f:
+    with open('results/deterministic_baseline_results.json', 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2)
 
     # Generate Markdown Report
@@ -92,11 +92,11 @@ def main():
     md += "## Academic Justification\n"
     md += "The observed high failure rates are primarily driven by resolver conflicts (e.g., `ERESOLVE` errors in npm, strict bound violations in PyPI) and a lack of topological awareness. Static vulnerability scanners output one-dimensional version recommendations, completely ignoring the complex constraint graphs defined by peer dependencies and framework bounds. The deterministic failure of these naive upgrades mathematically justifies the necessity of Context-Aware LLM intervention to orchestrate safe, graph-compatible remediations.\n"
     
-    with open('documentation/deterministic_baseline_report.md', 'w', encoding='utf-8') as f:
+    with open('docs/deterministic_baseline_report.md', 'w', encoding='utf-8') as f:
         f.write(md)
 
     print("-" * 50)
-    print("Execution complete. Results saved to experiment/deterministic_baseline_results.json and documentation/deterministic_baseline_report.md")
+    print("Execution complete. Results saved to results/deterministic_baseline_results.json and docs/deterministic_baseline_report.md")
 
 if __name__ == "__main__":
     main()

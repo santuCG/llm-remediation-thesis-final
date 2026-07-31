@@ -1,6 +1,6 @@
-import urllib.request, json, zipfile, io
+import urllib.request, json, zipfile, io, os
 
-TOKEN='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'
+TOKEN = os.environ["GITHUB_TOKEN"]
 run_ids = [30133490467, 30133472098, 30133471466]
 
 for run_id in run_ids:

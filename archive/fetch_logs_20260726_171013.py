@@ -1,5 +1,5 @@
-import urllib.request, json
-TOKEN="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"
+import urllib.request, json, os
+TOKEN = os.environ["GITHUB_TOKEN"]
 
 class NoAuthRedirectHandler(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):

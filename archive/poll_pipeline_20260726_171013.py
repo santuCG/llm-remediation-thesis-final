@@ -4,7 +4,7 @@ import json
 import os
 import sys
 
-TOKEN = "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"
+TOKEN = os.environ["GITHUB_TOKEN"]
 REPO = "santuCG/llm-remediation-thesis-final"
 
 class NoAuthRedirectHandler(urllib.request.HTTPRedirectHandler):

@@ -1,3 +1,6 @@
+> **STATUS: STALE — SUPERSEDED, DO NOT CITE AS CURRENT RESULTS.**
+> This draft predates several scenarios' final execution data. In particular, the Chapter 3 results table below lists AF-06 and JS-06 by their pre-registered identities (`jinja2`/CVE-2024-56326 and `flatted`/CVE-2026-33228), while the scenario evidence actually executed under those IDs in `results/execution_evidence/` differs (see the pre-registration amendment notes). Most "Failed" outcomes recorded for LLM Reasoning Success below also do not match the current `build_success`/`rescan_success` values in the corresponding `metrics.json` files. Do not use this table as a source of current results without cross-checking `results/execution_evidence/` directly.
+
 # Context-Aware Dependency Remediation in SBOM-Driven CI Pipelines Using Autonomous LLM Reasoning
 
 ## Abstract

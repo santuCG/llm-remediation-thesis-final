@@ -2,6 +2,22 @@ import json
 import os
 import shutil
 
+def _apply_override(overrides, target_pkg, constraint):
+    """Write an npm overrides entry, nesting scoped/transitive paths
+    (e.g. "request > form-data") into the proper nested object instead of
+    a single flat key with a literal ">" in it — npm rejects the latter
+    with EINVALIDTAGNAME. A plain package name is written as before."""
+    if target_pkg and '>' in target_pkg:
+        parts = [p.strip() for p in target_pkg.split('>') if p.strip()]
+        node = overrides
+        for part in parts[:-1]:
+            if not isinstance(node.get(part), dict):
+                node[part] = {}
+            node = node[part]
+        node[parts[-1]] = constraint
+    else:
+        overrides[target_pkg] = constraint
+
 def apply_remediation(ecosystem, app_dir, recommendation):
     print(f"[MANIFEST] Applying recommendation for {ecosystem}...")
     
@@ -26,7 +42,7 @@ def apply_remediation(ecosystem, app_dir, recommendation):
             
             if op == 'add_override' or op == 'transitive_override':
                 pkg['overrides'] = pkg.get('overrides', {})
-                pkg['overrides'][target_pkg] = constraint
+                _apply_override(pkg['overrides'], target_pkg, constraint)
             elif op in ['replace', 'bump', 'direct_upgrade']:
                 # Update in dependencies or devDependencies if it exists
                 if 'dependencies' in pkg and target_pkg in pkg['dependencies']:
@@ -39,7 +55,7 @@ def apply_remediation(ecosystem, app_dir, recommendation):
             else:
                 print(f"[WARNING] Unknown operation {op}, attempting fallback override.")
                 pkg['overrides'] = pkg.get('overrides', {})
-                pkg['overrides'][target_pkg] = constraint
+                _apply_override(pkg['overrides'], target_pkg, constraint)
                 
             with open('package.json', 'w') as f:
                 json.dump(pkg, f, indent=2)

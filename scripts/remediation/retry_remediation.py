@@ -63,7 +63,14 @@ def main():
     # Update metrics
     metrics['retry_count'] = 1
     metrics['llm_iteration'] = 2
-    metrics['failure_stage'] = failure_stage
+    # Reset failure_stage once the retry itself completes successfully:
+    # leaving the prior attempt's failure_stage in place here was masking
+    # whether the *retry* actually succeeded, since downstream build/apply
+    # steps ("Update Metrics on Build Failure" / "Update Metrics on Apply
+    # Fix Failure") already independently re-set failure_stage if the
+    # rebuild that follows this script fails again. Only keep the original
+    # failure_stage if the retry itself never produced a usable response.
+    metrics['failure_stage'] = failure_stage if not llm_response_valid else 'none'
     metrics['strategy'] = recommendation.get('strategy', '')
     metrics['llm_response_valid'] = llm_response_valid
     

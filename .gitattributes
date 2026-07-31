@@ -1,0 +1,11 @@
+# Pin execution-evidence artifacts to LF line endings on checkout.
+#
+# Without this file, a checkout with Git's own Windows-recommended default
+# (core.autocrlf=true) rewrites LF blobs to CRLF in the working tree. The
+# SHA256 values recorded in each scenario's experiment_manifest.json were
+# computed against the LF-committed content, so a CRLF working-tree copy
+# fails that hash check on any such checkout — not because the content
+# changed, but because the line endings did. This does not retroactively
+# fix already-generated manifests; it prevents the same failure for future
+# runs and for anyone re-verifying existing evidence going forward.
+results/execution_evidence/** text eol=lf

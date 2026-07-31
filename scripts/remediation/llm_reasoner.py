@@ -137,6 +137,17 @@ Based on the vulnerability intelligence and context:
             with urllib.request.urlopen(req) as response:
                 result = json.loads(response.read().decode('utf-8'))
                 print(f"[LLM] Successfully retrieved response using model: {model_name}")
+                # Persist the model that actually responded so generate_manifest.py's
+                # experiment_manifest.json reflects reality rather than only the
+                # primary configured model. GITHUB_ENV is the standard mechanism for
+                # passing a value from one workflow step to a later one -- os.environ
+                # alone does not survive the step boundary. No-op outside CI (GITHUB_ENV
+                # unset), and safe to write on a retry: the later write wins, which is
+                # correct since that's the model that produced the final outcome.
+                github_env = os.environ.get('GITHUB_ENV')
+                if github_env:
+                    with open(github_env, 'a') as env_f:
+                        env_f.write(f"LLM_MODEL_USED={model_name}\n")
                 # Save the FULL API response for complete audit trail (includes usageMetadata, modelVersion, etc.)
                 with open('llm-response-full.json', 'w') as f:
                     json.dump(result, f, indent=2)

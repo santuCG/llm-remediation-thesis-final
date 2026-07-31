@@ -91,7 +91,13 @@ def main():
         "python": "3.12.x",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "llm": {
-            "model": "gemini-2.5-flash",
+            # Read the model actually used from LLM_MODEL_USED if the calling
+            # process set it (e.g. after a fallback-model retry); otherwise
+            # fall back to the configured primary model. This field must
+            # reflect what actually responded, not just what was requested
+            # first, since llm_reasoner.py can fall back to a different
+            # model in its retry list.
+            "model": os.environ.get("LLM_MODEL_USED", "gemini-2.5-flash"),
             "temperature": 0.0,
             "seed": 42,
             "topP": 1.0,
