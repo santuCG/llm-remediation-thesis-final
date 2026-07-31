@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-qwcr-r2fm-qrc7",
+  "api_cve_id": "CVE-2024-45590",
+  "package_name": "body-parser",
+  "vulnerable_version": "1.20.1",
+  "severity": "high",
+  "cvss": 7.5,
+  "epss": 0.00824,
+  "epss_timestamp": "2026-07-31T09:40:59.782572+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "1.20.3"
+  ]
+}

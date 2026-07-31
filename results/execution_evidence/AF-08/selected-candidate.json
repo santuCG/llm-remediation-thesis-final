@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-wh2j-26j7-9728",
+  "api_cve_id": "CVE-2026-2473",
+  "package_name": "google-cloud-aiplatform",
+  "vulnerable_version": "1.53.0",
+  "severity": "high",
+  "cvss": 7.7,
+  "epss": 0.00438,
+  "epss_timestamp": "2026-07-31T09:37:48.866594+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "1.133.0"
+  ]
+}

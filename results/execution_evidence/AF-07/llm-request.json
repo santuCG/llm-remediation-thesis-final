@@ -1,0 +1,84 @@
+{
+  "scenario_id": "UNKNOWN",
+  "experiment_id": "2026-final",
+  "application": "Apache Airflow",
+  "ecosystem": "python",
+  "prompt_version": "v1.1",
+  "api_payload": {
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: mysql-connector-python\n* Vulnerable Version: 8.4.0\n* CVE ID: GHSA-hgjp-83m4-h4fj\n* CVSS Score: 7.5\n* EPSS Probability: 0.00513\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['9.1.0']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: mysql-connector-python\\nVersion: 8.4.0\\nSummary: MySQL driver written in Python\\nHome-page: http://dev.mysql.com/doc/connector-python/en/index.html\\nAuthor: Oracle and/or its affiliates\\nAuthor-email: \\nLicense: GNU GPLv2 (with FOSS License Exception)\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: \\nRequired-by: apache-airflow-providers-mysql\\n\",\n  \"pip_freeze\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\",\n  \"requirements_txt\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+          }
+        ]
+      }
+    ],
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+        }
+      ]
+    },
+    "generationConfig": {
+      "temperature": 0.0,
+      "topP": 1.0,
+      "topK": 1,
+      "seed": 42,
+      "responseMimeType": "application/json",
+      "responseSchema": {
+        "type": "OBJECT",
+        "properties": {
+          "reasoning": {
+            "type": "STRING",
+            "description": "Comprehensive reasoning for the strategy chosen."
+          },
+          "strategy": {
+            "type": "STRING",
+            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+          },
+          "remediation_type": {
+            "type": "STRING",
+            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+          },
+          "recommended_package_version": {
+            "type": "STRING",
+            "description": "The specific semantic version to enforce."
+          },
+          "manifest_patch": {
+            "type": "OBJECT",
+            "description": "The structured intermediate representation of the manifest patch.",
+            "properties": {
+              "operation": {
+                "type": "STRING",
+                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+              },
+              "package": {
+                "type": "STRING",
+                "description": "The target package name to modify."
+              },
+              "constraint": {
+                "type": "STRING",
+                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
+              }
+            },
+            "required": [
+              "operation",
+              "package",
+              "constraint"
+            ]
+          }
+        },
+        "required": [
+          "reasoning",
+          "strategy",
+          "remediation_type",
+          "recommended_package_version",
+          "manifest_patch"
+        ]
+      }
+    }
+  }
+}

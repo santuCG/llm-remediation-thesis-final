@@ -1,0 +1,14 @@
+{
+  "cve_id": "GHSA-hgjp-83m4-h4fj",
+  "api_cve_id": "CVE-2024-21272",
+  "package_name": "mysql-connector-python",
+  "vulnerable_version": "8.4.0",
+  "severity": "high",
+  "cvss": 7.5,
+  "epss": 0.00513,
+  "epss_timestamp": "2026-07-31T09:19:36.803196+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "9.1.0"
+  ]
+}
