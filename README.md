@@ -66,6 +66,8 @@ All 18 scenarios returned the same baseline result: the scanner's recommended ve
 - **npm failures:** `ERESOLVE` — peer dependency conflict, package manager rejects the installation
 - **PyPI failures:** `ResolutionImpossible` — strict version bounds in the constraints file prevent the upgrade
 
+**Correction note (added during repository remediation, 2026-08-01):** this specific failure mechanism (the package manager itself rejecting the install) describes results from an external repository not present in this one and not independently re-verified here. This repository's own `grype-baseline.yml` workflow, sampled directly via GitHub's API, shows a different failure point in every run checked — the install step succeeds; a later build/test/rescan step fails instead. See `preregistration/PRE_REGISTRATION_AMENDMENT.md`'s correction note for the full detail.
+
 ---
 
 ## The Tools Used
@@ -194,6 +196,8 @@ Every single scenario failed when the scanner's recommended version was applied 
 | PyPI (Airflow) | ResolutionImpossible constraint collapse | 9/9 |
 
 This 0% baseline success rate is the control group. Any improvement from the LLM approach is measured against this.
+
+**Correction note (added during repository remediation, 2026-08-01):** see the correction note above under "The 18 Scenarios" — the specific `ERESOLVE`/`ResolutionImpossible` failure type shown in this table is not confirmed by this repository's own sampled baseline-workflow runs, which show failures occurring later (build/test/rescan), not at the install step.
 
 ---
 
