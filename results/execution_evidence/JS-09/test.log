@@ -1,0 +1,5 @@
+
+> juice-shop@15.3.0 test
+> cd frontend && ng test --watch=false --source-map=true && cd .. && npm run test:server
+
+sh: 1: ng: not found

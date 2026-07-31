@@ -1,0 +1,48 @@
+{
+  "schema_version": "2.0",
+  "scenario": "JS-09",
+  "repository_commit": "b9cb78f9f535eaef4a76d820a0541702dec4a5dc",
+  "workflow_run_id": "30652156106",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30652156106",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-07-31T17:58:42.252245+00:00",
+  "llm": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-07-31",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-07-31",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "f2ffc62e601aa4b2d427c533a89b2d45e848f7d571b2596840f9098ce629082a",
+    "baseline-sbom.json": "45e0bc433d939e3c391659fbab63a7ab077696fbdff45c4ae81ff88daca5bc8d",
+    "build.log": "da97276393d814b213b43f9ef0478dcb571bef1975df4230c3fe4629a6bfb8ee",
+    "candidate-ranking.json": "406534e96200c0e5ad6ef997db943f7ed349d92492c255c8c9854f5fae23f021",
+    "llm-request.json": "540bc2bee77bee7e24ef6341e7fe06bbeda5d58c87117a834525749391b60cb5",
+    "llm-response.json": "ea2de3f3d345d8efa8ee856a0bea09dc0fbbbbc421a24b61b83bc1b7f74b1d7d",
+    "metrics.json": "7639b77921052d7b1f2cce0033022f63636b4cb63b27b649213c2326221ae033",
+    "package-after.json": "8ad8448018398489bb127197ded5792d48c280d09db7abcffbbd2fd86c49dc05",
+    "package-before.json": "ca4c46cbf4122bc106ce851411c6c19e5f2bb6c7ade4d1d10561c9cfd79f2d17",
+    "rescan.json": "6eafc14189f92f58b31fc5ef00e500e8ad3a2a7d6c68061e70c6a3542f039d91",
+    "selected-candidate.json": "ef0739eea25e4c7cc2712db07595b1926e8d267c14127ea95910ad5fa97d255d",
+    "test.log": "96217d1f729b5a73554ce34c1159abb37d7fceb8f90d0ffe975e0a260ecad560"
+  }
+}
