@@ -1,0 +1,82 @@
+name: Baseline Python Template
+
+on:
+  workflow_call:
+    inputs:
+      profile:
+        description: 'Path to the reproducibility profile YAML'
+        required: true
+        type: string
+
+jobs:
+  baseline:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Parse Profile
+        id: profile
+        run: |
+          pip install pyyaml
+          python -c "
+          import yaml, os
+          with open('${{ inputs.profile }}', 'r') as f:
+              profile = yaml.safe_load(f)
+          env_file = os.environ['GITHUB_ENV']
+          with open(env_file, 'a') as ef:
+              ef.write(f\"SCENARIO_ID={profile['scenario_id']}\n\")
+              ef.write(f\"APP_DIR={profile['application']}\n\")
+              ef.write(f\"PYTHON_VERSION={profile['tool_versions'].get('python', '3.11.x')}\n\")
+              ef.write(f\"SYFT_VERSION={profile['tool_versions']['syft']}\n\")
+              ef.write(f\"GRYPE_VERSION={profile['tool_versions']['grype']}\n\")
+          "
+
+      - name: Initialize Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install OS Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libldap2-dev libsasl2-dev
+
+      - name: Install Baseline Dependencies
+        run: |
+          cd ${{ env.APP_DIR }}
+          if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
+            cp ../evidence/airflow_pip_freeze.txt requirements.txt
+          fi
+          pip install -r requirements.txt 2>&1 | tee ../../dependency_install.log
+
+      - name: Generate SBOM & Run Grype
+        run: |
+          cd ${{ env.APP_DIR }}
+          mkdir -p ./bin
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/${{ env.SYFT_VERSION }}/syft_${{ env.SYFT_VERSION | replace('v', '') }}_linux_amd64.tar.gz || \
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
+          tar -xzf syft.tar.gz -C ./bin syft
+          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/${{ env.GRYPE_VERSION }}/grype_${{ env.GRYPE_VERSION | replace('v', '') }}_linux_amd64.tar.gz || \
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
+          tar -xzf grype.tar.gz -C ./bin grype
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../baseline-grype.json
+
+      - name: Build Provenance Bundle
+        if: always()
+        run: |
+          mkdir provenance
+          cp ${{ inputs.profile }} provenance/profile.yaml || true
+          cp .github/workflows/templates/${{ github.job }}.yml provenance/workflow.yml || true
+          env > provenance/environment.txt
+          echo '{"python": "${{ env.PYTHON_VERSION }}", "syft": "${{ env.SYFT_VERSION }}", "grype": "${{ env.GRYPE_VERSION }}"}' > provenance/tool_versions.json
+
+      - name: Upload Baseline Evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: baseline-evidence
+          path: |
+            baseline-sbom.json
+            baseline-grype.json
+            dependency_install.log
+            provenance/
