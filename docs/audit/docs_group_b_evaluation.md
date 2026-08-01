@@ -17,6 +17,12 @@ Every item below was investigated directly (API calls, code reads, log inspectio
 - **Classification:** Engineering Enhancement (provenance correction, not methodology change).
 - **Recommendation:** **Implement before freeze**, with disclosure of the shared-URL caveat for the 8 affected scenarios (i.e., the corrected hash is "a verified real commit associated with this evidence's origin," not "cryptographically proven to be the exact commit that generated this specific file").
 
+### RESOLVED
+
+Implemented and pushed. `AF-05`, `AF-06`, `AF-07`, `AF-08`, `JS-05`, `JS-06`, `JS-07`, `JS-08` → `241b549e07430f9520d1a116360ae194d1ba84f6` (real `head_sha` of run `30592634834`, shared across these 8 — see the caveat above, still applicable). `AF-09` → `16a551ed6c7569848711da6f431cae58d4d008fe` (real `head_sha` of its own uniquely-referenced run `30585687941`). Both values re-verified via `git cat-file -e` immediately before writing.
+
+Each of the 9 `experiment_manifest.json` files had exactly 2 occurrences of its fabricated hash (the primary JSON body and the human-readable `EMPIRICAL EVIDENCE` trailer copy) — both replaced identically. Diff confirmed scoped to exactly those 2 lines per file, 18 lines total across 9 files; no other field, no `metrics.json`, no scan result touched.
+
 ---
 
 ## 2. Retry build validation fix

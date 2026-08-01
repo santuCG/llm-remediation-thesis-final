@@ -1,6 +1,6 @@
 {
     "scenario": "AF-08",
-    "repository_commit": "15177533346e32406b8e9ef3de55fd47fdcce0b2",
+    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
     "workflow_commit": "30592634834",
     "pipeline_version": "v2.0",
     "runner": "ubuntu-24.04",
@@ -51,7 +51,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 --- EXPERIMENT MANIFEST ---
 {
     "scenario": "AF-08", // The unique identifier for this vulnerability scenario
-    "repository_commit": "15177533346e32406b8e9ef3de55fd47fdcce0b2", // The Git commit hash of the repository during execution
+    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
     "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
     "pipeline_version": "v2.0", // The version of the remediation pipeline engine
     "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
