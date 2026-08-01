@@ -17,8 +17,8 @@ llm:
   top_k: 1
 tool_versions:
   node: 20.x
-  syft: v1.11.0
-  grype: v0.80.0
+  syft: v1.44.0
+  grype: v0.112.0
 target_package: body-parser
 target_cve: CVE-2024-45590
 dependency_type: direct
