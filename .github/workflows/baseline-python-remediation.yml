@@ -62,6 +62,14 @@ jobs:
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
           tar -xzf grype.tar.gz -C ./bin grype
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../baseline-grype.json
+      - name: Validate Baseline Functionality
+        run: |
+          cd ${{ env.APP_DIR }}
+          echo "Validating application functionality..." 2>&1 | tee -a ../../baseline-build.log
+          if [ -d "tests/core" ]; then
+            pip install pytest==7.4.4 pytest-asyncio sentry-sdk || true
+            python3 -m pytest tests/core 2>&1 | tee ../../baseline-test.log || true
+          fi
 
       - name: Build Provenance Bundle
         if: always()
@@ -81,4 +89,6 @@ jobs:
             baseline-sbom.json
             baseline-grype.json
             dependency_install.log
+            baseline-build.log
+            baseline-test.log
             provenance/
