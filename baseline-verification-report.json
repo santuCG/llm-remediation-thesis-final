@@ -1,0 +1,101 @@
+{
+  "AF-01": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-02": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-03": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-04": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-05": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-06": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-07": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-08": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "AF-09": {
+    "Verified": "NO",
+    "Details": [
+      "Unexpected 1 vulnerabilities in V2 (e.g. ['GHSA-m4p7-r5rc-7g4j in pyasn1@0.5.1'])"
+    ]
+  },
+  "JS-01": {
+    "Verified": "NO",
+    "Details": [
+      "Missing 193 vulnerabilities from V1 (e.g. ['CVE-2026-32289 in stdlib@go1.20', 'GHSA-23hp-3jrh-7fpw in tar@4.4.19', 'GHSA-w5hq-g745-h8pq in uuid@3.4.0'])",
+      "Unexpected 27 vulnerabilities in V2 (e.g. ['GHSA-fjxv-7rqg-78g4 in form-data@2.5.1', 'GHSA-mh29-5h37-fv8m in js-yaml@4.0.0', 'GHSA-3xgq-45jj-v275 in cross-spawn@7.0.3'])"
+    ]
+  },
+  "JS-02": {
+    "Verified": "YES",
+    "Details": []
+  },
+  "JS-03": {
+    "Verified": "YES",
+    "Details": []
+  },
+  "JS-04": {
+    "Verified": "YES",
+    "Details": []
+  },
+  "JS-05": {
+    "Verified": "YES",
+    "Details": []
+  },
+  "JS-06": {
+    "Verified": "YES",
+    "Details": []
+  },
+  "JS-07": {
+    "Verified": "YES",
+    "Details": []
+  },
+  "JS-08": {
+    "Verified": "NO",
+    "Details": [
+      "Missing 193 vulnerabilities from V1 (e.g. ['CVE-2026-32289 in stdlib@go1.20', 'GHSA-23hp-3jrh-7fpw in tar@4.4.19', 'GHSA-w5hq-g745-h8pq in uuid@3.4.0'])",
+      "Unexpected 27 vulnerabilities in V2 (e.g. ['GHSA-fjxv-7rqg-78g4 in form-data@2.5.1', 'GHSA-mh29-5h37-fv8m in js-yaml@4.0.0', 'GHSA-3xgq-45jj-v275 in cross-spawn@7.0.3'])"
+    ]
+  },
+  "JS-09": {
+    "Verified": "NO",
+    "Details": [
+      "Missing 193 vulnerabilities from V1 (e.g. ['CVE-2026-32289 in stdlib@go1.20', 'GHSA-23hp-3jrh-7fpw in tar@4.4.19', 'GHSA-w5hq-g745-h8pq in uuid@3.4.0'])",
+      "Unexpected 27 vulnerabilities in V2 (e.g. ['GHSA-fjxv-7rqg-78g4 in form-data@2.5.1', 'GHSA-mh29-5h37-fv8m in js-yaml@4.0.0', 'GHSA-3xgq-45jj-v275 in cross-spawn@7.0.3'])"
+    ]
+  }
+}

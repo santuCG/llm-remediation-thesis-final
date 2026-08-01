@@ -1,0 +1,29 @@
+scenario_id: JS-08
+application: applications/juice-shop
+ecosystem: npm
+repository:
+  url: https://github.com/santuCG/llm-remediation-thesis-final
+  commit: HEAD
+pipeline:
+  version: '2.0'
+  template: npm-remediation.yml
+  profile_version: '1.0'
+llm:
+  provider: Gemini
+  model: gemini-1.5-pro
+  prompt_version: v1.1
+  temperature: 0
+  top_p: 1
+  top_k: 1
+tool_versions:
+  node: 20.x
+  syft: v1.11.0
+  grype: v0.80.0
+target_package: body-parser
+target_cve: CVE-2024-45590
+dependency_type: direct
+expected:
+  strategy: transitive_override
+  retry: 1
+  build: true
+  rescan: true

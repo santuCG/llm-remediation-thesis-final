@@ -5,5 +5,5 @@ jobs:
   run-scenario:
     uses: ./.github/workflows/python-remediation.yml
     with:
-      profile: profiles/AF-08.yaml
+      scenario: AF-08
     secrets: inherit

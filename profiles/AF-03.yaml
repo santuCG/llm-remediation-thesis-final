@@ -27,3 +27,11 @@ expected:
   retry: 0
   build: true
   rescan: true
+baseline:
+  restore_lockfile: true
+  lockfile: evidence/airflow_pip_freeze.txt
+validation:
+  build: []
+  test:
+  - if [ -d "tests/core" ]; then pip install pytest==7.4.4 pytest-asyncio sentry-sdk
+    || true && python3 -m pytest tests/core; fi

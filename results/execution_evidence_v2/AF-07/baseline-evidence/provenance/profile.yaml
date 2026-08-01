@@ -1,0 +1,29 @@
+scenario_id: AF-07
+application: applications/airflow
+ecosystem: python
+repository:
+  url: https://github.com/santuCG/llm-remediation-thesis-final
+  commit: HEAD
+pipeline:
+  version: '2.0'
+  template: python-remediation.yml
+  profile_version: '1.0'
+llm:
+  provider: Gemini
+  model: gemini-1.5-pro
+  prompt_version: v1.1
+  temperature: 0
+  top_p: 1
+  top_k: 1
+tool_versions:
+  python: 3.11.x
+  syft: v1.44.0
+  grype: v0.112.0
+target_package: mysql-connector-python
+target_cve: CVE-2024-21272
+dependency_type: direct
+expected:
+  strategy: direct_upgrade
+  retry: 0
+  build: true
+  rescan: true

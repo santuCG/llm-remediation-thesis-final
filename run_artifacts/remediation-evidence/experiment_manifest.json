@@ -1,0 +1,46 @@
+{
+  "schema_version": "2.0",
+  "scenario": "JS-08",
+  "repository_commit": "72a1a848abef9cbb2c02d57260d4da304da3fc92",
+  "workflow_run_id": "30702832101",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30702832101",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-01T14:05:12.075039+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-01",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-01",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "ed1843708ade2fc3846d2b31c8817ebe8dbe44a25c9c7324f1a0d371856613bf",
+    "baseline-sbom.json": "0230e127f4f06df5a165b49bdffec5a1e51da7890e9781f08af291515dfce889",
+    "build.log": "6ccb9deae4bb4fc42f3c873ffa0e6581d07d3713d98551c8b97088f0f62bf175",
+    "candidate-ranking.json": "c533ea250d99d432f5a8296854182feb67f8da2675a7b9a584b82372caa409bb",
+    "llm-request.json": "c7e813fc7f62c3e586adc743e0a39ef912840282e6b4ac3fd405f1d129dabb22",
+    "llm-response.json": "0a80e97e36aaff943a5fce3d4efcef235f42ea49432b19dbb52e8a77f0c01737",
+    "metrics.json": "c33daf2bfe2b9067ae8c1624f90e4f636356988ad51090eabf7ab3f54f7494ac",
+    "package-after.json": "b810d6e6e89c2f13412d1b71b174ec4e8e357205cb7dc71c6c28aa4d88ce3e22",
+    "package-before.json": "896b949983c177cc1aff96e9c90d53ebb219025817b3f6ce25913cc5511ceab5",
+    "selected-candidate.json": "a63880b58b7376055781d8ac57e5204b4a3a97919511a3155cde4ae729de9185"
+  }
+}

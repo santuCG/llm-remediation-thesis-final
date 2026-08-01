@@ -5,5 +5,5 @@ jobs:
   run-scenario:
     uses: ./.github/workflows/npm-remediation.yml
     with:
-      profile: profiles/JS-04.yaml
+      scenario: JS-04
     secrets: inherit

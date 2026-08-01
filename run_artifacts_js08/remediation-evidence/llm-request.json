@@ -1,0 +1,84 @@
+{
+  "scenario_id": "JS-08",
+  "experiment_id": "2026-final",
+  "application": "OWASP Juice Shop",
+  "ecosystem": "npm",
+  "prompt_version": "v1.1",
+  "api_payload": {
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Scenario ID: JS-08\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: body-parser\n* Vulnerable Version: 1.20.1\n* CVE ID: GHSA-qwcr-r2fm-qrc7\n* CVSS Score: 7.5\n* EPSS Probability: 0.00824\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-08-01\n* Fixed Versions: ['1.20.3']\n\n### Dependency Context\n```json\n{\n  \"npm_ls\": {\n    \"version\": \"15.3.0\",\n    \"name\": \"juice-shop\"\n  },\n  \"npm_explain\": \"Command '['npm', 'explain', 'body-parser', '--json']' returned non-zero exit status 1.\",\n  \"package_json\": {\n    \"name\": \"juice-shop\",\n    \"version\": \"15.3.0\",\n    \"dependencies\": {\n      \"body-parser\": \"^1.20.2\"\n    }\n  }\n}\n```\n\n### Previous Attempt Failure Logs\nThe previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.\n```\n\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+          }
+        ]
+      }
+    ],
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+        }
+      ]
+    },
+    "generationConfig": {
+      "temperature": 0.0,
+      "topP": 1.0,
+      "topK": 1,
+      "seed": 42,
+      "responseMimeType": "application/json",
+      "responseSchema": {
+        "type": "OBJECT",
+        "properties": {
+          "reasoning": {
+            "type": "STRING",
+            "description": "Comprehensive reasoning for the strategy chosen."
+          },
+          "strategy": {
+            "type": "STRING",
+            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+          },
+          "remediation_type": {
+            "type": "STRING",
+            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+          },
+          "recommended_package_version": {
+            "type": "STRING",
+            "description": "The specific semantic version to enforce."
+          },
+          "manifest_patch": {
+            "type": "OBJECT",
+            "description": "The structured intermediate representation of the manifest patch.",
+            "properties": {
+              "operation": {
+                "type": "STRING",
+                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+              },
+              "package": {
+                "type": "STRING",
+                "description": "The target package name to modify."
+              },
+              "constraint": {
+                "type": "STRING",
+                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
+              }
+            },
+            "required": [
+              "operation",
+              "package",
+              "constraint"
+            ]
+          }
+        },
+        "required": [
+          "reasoning",
+          "strategy",
+          "remediation_type",
+          "recommended_package_version",
+          "manifest_patch"
+        ]
+      }
+    }
+  }
+}

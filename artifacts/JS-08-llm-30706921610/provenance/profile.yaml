@@ -1,0 +1,25 @@
+scenario_id: JS-08
+application: applications/juice-shop
+target_cve: CVE-2022-24999
+ecosystem: npm
+
+baseline:
+  restore_lockfile: true
+  lockfile: evidence/juice_shop_package-lock.json
+
+validation:
+  build:
+    - "npm run build:frontend"
+    - "npm run build:server"
+    - "npm run build"
+  test:
+    - "npm test"
+
+expected:
+  candidate: qs
+  strategy: direct_upgrade
+
+tool_versions:
+  node: 18.x
+  syft: v1.44.0
+  grype: v0.112.0

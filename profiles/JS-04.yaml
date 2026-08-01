@@ -27,3 +27,13 @@ expected:
   retry: 1
   build: true
   rescan: true
+baseline:
+  restore_lockfile: true
+  lockfile: evidence/juice_shop_package-lock.json
+validation:
+  build:
+  - npm run build:frontend
+  - npm run build:server
+  - npm run build
+  test:
+  - npm test

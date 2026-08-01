@@ -1,0 +1,47 @@
+{
+  "schema_version": "2.0",
+  "scenario": "JS-08",
+  "repository_commit": "812c101058274716133e7a69a525a24181a83d5a",
+  "workflow_run_id": "30703205974",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30703205974",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-01T14:18:22.011180+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-01",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-01",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "5a1049eec5a1fba6d695a31b1a680c9dd77090ec1d23ffa9df490aeae119dfd3",
+    "baseline-sbom.json": "5c3c7e1b0d3349af71bbec2709648e6524a35cd2b1a743d6a2aa53913750a640",
+    "build.log": "dd5d4d38416823df987826e50733eaec7c6fb87bb8d579256efc23010098b42f",
+    "candidate-ranking.json": "578842ff6a57d8f5ef66c7687b4fff3b51664629eca3d178868d7c52adb682f0",
+    "llm-request.json": "8920c023cd7203d6fe65f7e0cf61e6ef1a360c810a4be2b4b07a7bfd350d6523",
+    "llm-response.json": "ae3e1b1e54e88abf641be4791b2f9a1e7d6246a4c939305fc5aa81d55f3cbcd5",
+    "metrics.json": "084dc6aff727d5fc002f298b0c978305402bd0359c057998444a96d7accea0d8",
+    "package-after.json": "fdc2b40896e86c66d593e4fffcb043769b9586be1d202851827c1d050cc240df",
+    "package-before.json": "896b949983c177cc1aff96e9c90d53ebb219025817b3f6ce25913cc5511ceab5",
+    "rescan.json": "09141931bd4f3c435fe7fe929678dbe4ad266b82c0aa9530055c7ffadfe73986",
+    "selected-candidate.json": "b1fc8908811c59a408090386f3e85b24757e3abe602ce25550fd753422c5f931"
+  }
+}

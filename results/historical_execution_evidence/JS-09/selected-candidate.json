@@ -1,0 +1,15 @@
+{
+  "cve_id": "GHSA-5528-5vmv-3xc2",
+  "scanner_cve_id": "GHSA-5528-5vmv-3xc2",
+  "api_cve_id": "CVE-2026-3520",
+  "package_name": "multer",
+  "vulnerable_version": "1.4.5-lts.1",
+  "severity": "high",
+  "cvss": 8.7,
+  "epss": 0.00713,
+  "epss_timestamp": "2026-07-31T17:48:57.249966+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "2.1.1"
+  ]
+}

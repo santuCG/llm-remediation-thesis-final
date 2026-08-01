@@ -1,0 +1,1 @@
+{"regeneration_date": "2026-08-01T09:56:00Z", "reason": "Pipeline defect in fallback logic. Attempt 2 failed to reset repository state, polluting package-before.json.", "pipeline_commit": "f67663a1", "previous_commit": "15177533346e3240f5b419c9b7cf9568603b0664", "superseded_evidence": "Attempt 1 baseline + polluted Attempt 2 metadata"}

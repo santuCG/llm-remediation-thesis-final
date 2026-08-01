@@ -1,0 +1,13 @@
+{
+  "scenario_id": "JS-08",
+  "timestamp": "2026-08-01T16:00:46.962402",
+  "repository": {},
+  "pipeline": {},
+  "llm": {},
+  "tool_versions": {
+    "node": "18.x",
+    "syft": "v1.44.0",
+    "grype": "v0.112.0"
+  },
+  "validation_status": "FAIL"
+}

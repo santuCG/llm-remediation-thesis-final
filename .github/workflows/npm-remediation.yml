@@ -90,6 +90,7 @@ jobs:
 
       - name: Validate Remediation & Rescan
         id: build_test
+        if: always()
         run: |
           cd ${{ env.APP_DIR }}
           echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
@@ -125,6 +126,7 @@ jobs:
           python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
 
       - name: Golden Validation
+        if: always()
         run: |
           python scripts/remediation/golden_validation.py profiles/${{ inputs.scenario }}.yaml metrics.json || true
 

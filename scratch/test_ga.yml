@@ -1,0 +1,16 @@
+
+name: Test GA
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 (Fails)
+        id: s1
+        run: exit 1
+      - name: Step 2 (Runs on failure)
+        if: failure()
+        run: exit 0
+      - name: Step 3 (No if)
+        run: echo "Did I run?"
+

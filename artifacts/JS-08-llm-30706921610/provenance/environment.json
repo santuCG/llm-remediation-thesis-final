@@ -1,0 +1,14 @@
+{
+  "RUNNER_OS": "Linux",
+  "RUNNER_ARCH": "X64",
+  "GITHUB_WORKFLOW": "LLM JS-08",
+  "GITHUB_RUN_ID": "30706921610",
+  "GITHUB_SHA": "50515b4eb20a76e79cc6384eda62ce524faa8a92",
+  "SCENARIO_ID": "JS-08",
+  "APP_DIR": "applications/juice-shop",
+  "TARGET_CVE": "CVE-2022-24999",
+  "NODE_VERSION": "18.x",
+  "PYTHON_VERSION": "3.11.x",
+  "SYFT_VERSION": "v1.44.0",
+  "GRYPE_VERSION": "v0.112.0"
+}

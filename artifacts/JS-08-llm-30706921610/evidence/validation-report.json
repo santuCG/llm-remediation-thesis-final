@@ -1,0 +1,25 @@
+{
+  "overall_status": "FAIL",
+  "checks": {
+    "strategy": {
+      "expected": "direct_upgrade",
+      "actual": "none",
+      "match": false
+    },
+    "retry": {
+      "expected": null,
+      "actual": 0,
+      "match": false
+    },
+    "build": {
+      "expected": false,
+      "actual": null,
+      "match": false
+    },
+    "rescan": {
+      "expected": false,
+      "actual": null,
+      "match": false
+    }
+  }
+}

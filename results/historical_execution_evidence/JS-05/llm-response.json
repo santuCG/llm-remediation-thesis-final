@@ -1,0 +1,11 @@
+{
+  "reasoning": "The target package 'jsonwebtoken' is specified directly under 'dependencies' in package.json as '0.4.0'. The previous attempt used npm overrides to force version '4.2.2', which caused npm to fail with an EOVERRIDE error because overrides cannot conflict with direct dependency declarations. The correct remediation is a Direct Upgrade of 'jsonwebtoken' to fixed version '4.2.2' directly in 'dependencies', avoiding npm override conflicts.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "4.2.2",
+  "manifest_patch": {
+    "operation": "bump",
+    "package": "jsonwebtoken",
+    "constraint": "4.2.2"
+  }
+}

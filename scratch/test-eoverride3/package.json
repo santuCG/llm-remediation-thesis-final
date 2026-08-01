@@ -1,0 +1,19 @@
+{
+  "name": "test-eoverride3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^1.20.2"
+  },
+  "overrides": {
+    "body-parser": "^1.20.3"
+  }
+}

@@ -1,0 +1,3 @@
+npm error code EOVERRIDE
+npm error Override for body-parser@^1.20.2 conflicts with direct dependency
+npm error A complete log of this run can be found in: C:\Users\HP\AppData\Local\npm-cache\_logs\2026-08-01T12_40_30_638Z-debug-0.log
