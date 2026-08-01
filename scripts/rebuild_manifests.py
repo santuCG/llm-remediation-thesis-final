@@ -268,7 +268,22 @@ def load_json(path):
     if not os.path.exists(path):
         return None
     with open(path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        content = f.read()
+    bc = 0; ins = False; esc = False; je = 0
+    for i, ch in enumerate(content):
+        if esc: esc = False; continue
+        if ch == '\\' and ins: esc = True; continue
+        if ch == '"' and not esc: ins = not ins
+        if not ins:
+            if ch == '{': bc += 1
+            elif ch == '}':
+                bc -= 1
+                if bc == 0: je = i+1; break
+    if je == 0: je = len(content)
+    try:
+        return json.loads(content[:je])
+    except:
+        return None
 
 
 def extract_prompt_text(llm_request):
@@ -449,7 +464,24 @@ def process_scenario(sid):
         print(f"  [SKIP] No metrics.json for {sid}")
         return
 
-    prov = SCENARIO_PROVENANCE.get(sid)
+    manifest = load_json(os.path.join(evidence_path, 'experiment_manifest.json'))
+    if manifest:
+        prov = {
+            "repository_commit": manifest.get("repository_commit", ""),
+            "workflow_commit": manifest.get("workflow_run_id", ""),
+            "workflow_url": manifest.get("workflow_url", ""),
+            "pipeline_version": manifest.get("pipeline_version", "v2.0"),
+            "runner": manifest.get("runner", "ubuntu-24.04"),
+            "python": manifest.get("python", "3.12.x"),
+            "llm_model": manifest.get("llm", {}).get("model", "gemini-2.5-flash"),
+            "syft": manifest.get("tool_versions", {}).get("syft", "1.44.0"),
+            "grype": manifest.get("tool_versions", {}).get("grype", "0.112.0"),
+            "epss_date": manifest.get("snapshots", {}).get("epss_snapshot", {}).get("date", "2026-07-30"),
+            "kev_date": manifest.get("snapshots", {}).get("kev_snapshot", {}).get("date", "2026-07-30"),
+        }
+    else:
+        prov = SCENARIO_PROVENANCE.get(sid)
+
     if not prov:
         print(f"  [SKIP] No provenance data for {sid}")
         return
@@ -523,7 +555,7 @@ ALL_SCENARIOS = [
     "AF-01", "AF-02", "AF-03", "AF-04", "AF-05",
     "AF-06", "AF-07", "AF-08", "AF-09",
     "JS-01", "JS-02", "JS-03", "JS-04", "JS-05",
-    "JS-06", "JS-07", "JS-08"
+    "JS-06", "JS-07", "JS-08", "JS-09"
 ]
 
 if __name__ == "__main__":

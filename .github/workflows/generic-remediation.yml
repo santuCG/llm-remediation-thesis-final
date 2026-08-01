@@ -179,11 +179,13 @@ jobs:
         if: failure()
         run: |
           echo "Failure detected. Capturing logs and performing Retry Iteration."
-          if [ "$ECOSYSTEM" == "python" ]; then
             cd ${{ env.APP_DIR }}
-            cp ../evidence/airflow_pip_freeze.txt requirements.txt
+            if [ "$ECOSYSTEM" == "python" ]; then
+              cp ../evidence/airflow_pip_freeze.txt requirements.txt
+            elif [ "$ECOSYSTEM" == "npm" ]; then
+              git checkout package.json package-lock.json
+            fi
             cd ../..
-          fi
 
           if [ -f scripts/remediation/retry_remediation.py ]; then
             python scripts/remediation/retry_remediation.py $ECOSYSTEM ${{ env.APP_DIR }} build
