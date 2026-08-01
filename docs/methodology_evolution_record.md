@@ -1,5 +1,7 @@
 # Methodology Evolution Record: From Manual ERESOLVE Analysis to Deterministic Pipeline
 
+> **Historical Note:** This document describes an earlier methodology and is preserved for historical completeness. The final methodology is described in [docs/04-experimental-methodology.md](04-experimental-methodology.md).
+
 ## 1. Initial Prototype Observations
 During the pilot phase of the experiment, an initial manual execution of the LLM integration was conducted. The dynamic context payload successfully generated a dependency resolution (e.g., updating \m2\ to \3.9.18\), successfully mitigating the target vulnerability (GHSA-whpj-8f3w-67p5). 
 

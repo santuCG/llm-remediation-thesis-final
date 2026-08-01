@@ -1,5 +1,7 @@
 # 07 — Manual Validation Protocol & Methodological Evolution
 
+> **Historical Note:** This document describes an earlier methodology and is preserved for historical completeness. The final methodology is described in [docs/04-experimental-methodology.md](04-experimental-methodology.md).
+
 This document formalizes the rigorous manual validation procedures employed during the thesis experiment, ensuring reproducible and mathematically airtight results. Furthermore, it explicitly documents the methodological evolution of Software Bill of Materials (SBOM) generation, culminating in the lockfile-freeze strategy.
 
 ## 1. The Three-Stage SBOM Generation Evolution

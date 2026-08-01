@@ -10,14 +10,14 @@ Unlike container image scanning workflows, the definitive experimental evaluatio
 
 | Component | Version |
 | :--- | :--- |
-| **Host Operating System** | Windows 11 (AMD64) |
-| **Node.js** | 24.18.0 |
-| **npm** | 11.16.0 |
+| **Host Operating System** | Ubuntu 24.04 (GitHub Actions Runner) |
+| **Node.js** | 18.x |
+| **npm** | 9.x |
 | **Git** | 2.47.1 |
-| **Python** | 3.14.4 |
+| **Python** | 3.12.x |
 | **Syft** | 1.44.0 |
 | **Grype** | 0.112.0 |
-| **Target Application** | OWASP Juice Shop 15.3.0 |
+| **Target Application** | OWASP Juice Shop 15.3.0 & Apache Airflow 2.9.2 |
 
 The software versions above were recorded immediately before the experiments commenced and remained unchanged throughout all validation stages.
 

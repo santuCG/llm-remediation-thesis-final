@@ -1,237 +1,47 @@
-# What This Research Is About
+# Empirical Evaluation of LLM-Assisted Dependency Remediation in SBOM-Driven CI/CD Pipelines
 
 **Master's Thesis — Santosh Nagaraj**  
 **SRH University Berlin — MSc Computer Science (Cybersecurity)**  
 
----
+This repository serves as the empirical evidence archive and experimental framework for the Master's thesis investigating context-aware dependency remediation.
 
-## The Problem in One Paragraph
-
-Modern software applications depend on hundreds or thousands of open-source packages. When a security vulnerability is found in one of those packages, a vulnerability scanner tells you which package is affected and what version fixes it. The problem is that simply installing the recommended fix version often does not work — the package manager rejects it because of conflicting version requirements elsewhere in the dependency tree. Developers are left with a scanner telling them what to fix but no practical way to apply the fix automatically. This research asks whether a Large Language Model can bridge that gap by reasoning about the constraints and suggesting a fix strategy that actually works.
+> **Navigation Hub:** To prevent synchronisation drift, this README does not duplicate methodology, results, or scientific discussion. It serves strictly as a directory to the canonical, mathematically verified documentation and raw execution evidence contained within the repository.
 
 ---
 
-## The Scientific Contribution
+## 1. What is this repository?
+This repository contains the complete, reproducible experimental pipeline and the recorded execution artifacts used to evaluate Large Language Model (LLM) reasoning within Software Bill of Materials (SBOM) driven CI/CD workflows. It includes the automation scripts, the vulnerability intelligence pipelines, and the empirical evidence proving execution integrity.
 
-Traditional Software Composition Analysis (SCA) tools treat dependencies as isolated versions, ignoring the holistic dependency graph constraints. This leads to a persistent gap between vulnerability detection and practical remediation, often resulting in a 0% deterministic success rate when applying basic scanner recommendations to strictly pinned graphs.
+## 2. What was researched?
+This research evaluated whether an LLM—supplied with structured vulnerability intelligence, threat signals (CVSS, EPSS, KEV), and dependency graph constraints—can generate dependency remediation strategies that resolve software supply chain vulnerabilities where applying a deterministic vulnerability scanner's direct upgrade recommendation fails.
 
-This Master's thesis introduces a novel, constraint-aware remediation workflow that isolates Large Language Model (LLM) reasoning as a decision-support layer. The scientific contribution of this research is demonstrating whether an LLM can bridge the gap between static vulnerability detection and deterministic topological constraint satisfaction, effectively transforming vulnerability management from a basic suggestion engine into a graph-aware remediation protocol.
+## 3. Where is the final methodology?
+The canonical methodology, describing the strict 12-stage experimental pipeline and constraint-aware remediation workflow, is located in:
+*   [docs/04-experimental-methodology.md](docs/04-experimental-methodology.md)
 
----
+*(For an overview of the platform and toolchains, see [docs/02-experimental-environment.md](docs/02-experimental-environment.md).)*
 
-## The Core Question
+## 4. Where are the results?
+The aggregated results, statistical findings, and scientific discussion are located in:
+*   [docs/05-results-and-discussion.md](docs/05-results-and-discussion.md)
 
-> Can an LLM generate dependency remediation strategies that resolve software supply chain vulnerabilities in cases where applying the scanner's recommendation directly fails?
+## 5. Where is the execution evidence?
+The raw, tier-1 empirical evidence—including `build.log`, `test.log`, generated SBOMs, and the exact input/output of the LLM for every scenario—is located in:
+*   [results/execution_evidence/](results/execution_evidence/)
 
----
+This directory is the ultimate source of truth for the repository.
 
-## How the Experiment Works
+## 6. Where is the pre-registration?
+The pre-registration documents locking the 18 specific vulnerability scenarios before the experiments commenced are located in:
+*   [preregistration/MASTER_METHODOLOGY_RECORD.md](preregistration/MASTER_METHODOLOGY_RECORD.md)
+*   [preregistration/PRE_REGISTRATION_AMENDMENT.md](preregistration/PRE_REGISTRATION_AMENDMENT.md)
 
-The experiment follows the same sequence of steps for every scenario tested.
+## 7. Where are the historical/evolution docs?
+Early-stage methodologies, proof-of-concept workflows, and manual testing protocols are preserved for historical completeness in:
+*   [docs/07-manual-validation-protocol.md](docs/07-manual-validation-protocol.md)
+*   [docs/08-cicd-pipeline-poc.md](docs/08-cicd-pipeline-poc.md)
+*   [docs/methodology_evolution_record.md](docs/methodology_evolution_record.md)
 
-1. Take a real application at a pinned version
-2. Generate a Software Bill of Materials (SBOM) listing every package and version the app depends on
-3. Scan the SBOM with a vulnerability scanner (Grype) to find known vulnerabilities
-4. Try to fix the vulnerability the basic way — just install the scanner's recommended version. This fails. Record the failure as the baseline.
-5. Collect enrichment signals about the vulnerability (CVSS severity score, EPSS exploitation probability, KEV status)
-6. Send all of this context to Gemini 2.5 Flash and ask it to recommend a remediation strategy
-7. Apply the LLM's recommendation manually and check whether the package manager accepts it
-8. If it works, regenerate the SBOM and rescan with Grype to confirm the vulnerability is gone
-9. Compare before and after
-
----
-
-## The Two Applications Being Tested
-
-| Application | Language | Package Manager | Why Selected |
-|-------------|----------|-----------------|--------------|
-| OWASP Juice Shop v15.3.0 | JavaScript | npm | Deliberately vulnerable, widely used in security research, large dependency graph |
-| Apache Airflow v2.9.2 | Python | pip | Real-world production platform, tightly constrained dependency tree, different ecosystem |
-
----
-
-## The 18 Scenarios
-
-18 specific vulnerability scenarios were pre-registered before any experiment ran. 9 come from Juice Shop and 9 from Airflow. Each scenario is one CVE in one package.
-
-Pre-registration means the scenarios were locked and documented before the LLM was ever called. This prevents cherry-picking results after the fact.
-
-| Application | Scenarios | Ecosystem |
-|-------------|-----------|-----------|
-| Juice Shop | JS-01 to JS-09 | npm |
-| Airflow | AF-01 to AF-09 | PyPI |
-
-All 18 scenarios returned the same baseline result: the scanner's recommended version could not be applied directly.
-
-- **npm failures:** `ERESOLVE` — peer dependency conflict, package manager rejects the installation
-- **PyPI failures:** `ResolutionImpossible` — strict version bounds in the constraints file prevent the upgrade
-
-**Correction note (added during repository remediation, 2026-08-01):** this specific failure mechanism (the package manager itself rejecting the install) describes results from an external repository not present in this one and not independently re-verified here. This repository's own `grype-baseline.yml` workflow, sampled directly via GitHub's API, shows a different failure point in every run checked — the install step succeeds; a later build/test/rescan step fails instead. See `preregistration/PRE_REGISTRATION_AMENDMENT.md`'s correction note for the full detail.
-
----
-
-## The Tools Used
-
-| Tool | Version | What It Does |
-|------|---------|--------------|
-| Syft | 1.44.0 | Generates the SBOM from the application |
-| Grype | 0.112.0 | Scans the SBOM for known vulnerabilities |
-| Gemini 2.5 Flash | — | Generates the remediation recommendation |
-| FIRST EPSS API | v1 | Provides exploitation probability score |
-| CISA KEV feed | — | Lists vulnerabilities actively exploited in the wild |
-| NVD API | — | Provides CVSS severity scores |
-
-Trivy was excluded — it had a confirmed supply chain compromise in March 2026.
-
----
-
-## What the LLM Receives
-
-For each scenario the LLM receives a structured prompt containing:
-
-- The vulnerable package name and version
-- The CVE identifier and description
-- The CVSS severity score
-- The EPSS exploitation probability score
-- The KEV status (whether it is actively exploited)
-- What the scanner recommended
-- What error the package manager produced when that recommendation was applied
-- The dependency path (whether the package is direct or transitive)
-
-The LLM does not browse the internet. It reasons only over the information provided in the prompt.
-
----
-
-## What the LLM Returns
-
-The LLM returns a structured JSON object enforced by Gemini's `responseSchema` constraint:
-
-```json
-{
-  "reasoning": "Comprehensive explanation of why this strategy was chosen over alternatives",
-  "strategy": "direct_upgrade | transitive_override | dependency_resolution | replacement | manual_review",
-  "remediation_type": "Direct Upgrade | Transitive Override | Dependency Resolution | Replacement | Manual Review",
-  "recommended_package_version": "exact semantic version string",
-  "manifest_patch": {
-    "operation": "bump | replace | add_override",
-    "package": "package name to modify",
-    "constraint": "version constraint to enforce (e.g. ==2.1.14 or >=42.0.0)"
-  }
-}
-```
-
-This output is treated as a hypothesis, not a result. It only becomes a result after deterministic validation.
-
----
-
-## How Validation Works
-
-The LLM output goes through four gates before it counts as a successful remediation.
-
-| Gate | What Is Checked | Pass Condition |
-|------|----------------|----------------|
-| Gate 1 | Does the package manager accept the fix? | Exit code 0 from `npm install` or `pip install` |
-| Gate 2 | Does the application build? | No build errors logged to `build.log` |
-| Gate 3 | Does the dependency graph confirm the fix? | `pip check` shows correct version; `npm list` resolves without conflict |
-| Gate 4 | Is the CVE gone? | Grype no longer reports the targeted CVE in the rescanned SBOM (`rescan.json`) |
-
-A scenario is only counted as successfully remediated if it passes all gates.
-
-**Note on the retry mechanism:** if a scenario's first LLM attempt does not pass Gate 2 or Gate 3, the pipeline automatically re-prompts the LLM once, supplying the failure log from the first attempt and asking for a refined strategy (`scripts/remediation/retry_remediation.py`). This is a real, implemented part of the pipeline, not only a recorded field: of the 18 scenarios, 7 of the 9 Juice Shop scenarios required this second attempt before reaching their recorded result. Each scenario's `metrics.json` records `retry_count` and `llm_iteration` for exactly this reason. A recorded "success" therefore reflects up to two LLM attempts for a given scenario, not necessarily a single pass — this should be kept in mind when comparing results against a single-shot design.
-
-**Note on JS-09:** unlike the other 17 scenarios, JS-09's prompt did not include the scanner's recommended fixed-version list — that field was deliberately withheld from the prompt and replaced with an instruction asking the LLM to determine the safe version itself. `JS-09/llm-request.json`'s own `experiment_id` field records this run as `"Supplementary Experiment"`, distinct from the `"2026-final"` label recorded for the other 17 scenarios. `JS-09/experiment_manifest.json` records the LLM model as `gemini-2.5-flash`, consistent with every other scenario; a raw execution log obtained for this run during a subsequent audit indicates the model actually used for both attempts differed from that recorded value. `JS-09/metrics.json` also records `build_success=false` alongside `rescan_success=true`. Given these deviations, JS-09 should not be treated as directly comparable to the other 17 scenarios without accounting for them.
-
-**Note on test_success:** A fifth step runs the application's unit tests (`npm test` / `pytest`). This is recorded separately as `test_success` in `metrics.json`. In all 18 executed scenarios, `test_success=false` due to runner environment limitations (missing global Angular CLI `ng` for npm; missing `sentry_sdk` import for Python). These are toolchain environment failures unrelated to the remediation outcome. All 18 scenarios' `metrics.json` show `rescan_success=true`; see the note on JS-09 above regarding one scenario where `build_success=false` alongside `rescan_success=true`.
-
----
-
-## What Makes This Different From Just Running the Scanner
-
-The scanner tells you what is wrong and suggests a fix version. It does not understand your dependency graph. It does not know that your version of Airflow pins a constraint that makes the fix version impossible to install. It does not know that vm2 has been abandoned and the real answer is to replace it. It just outputs a version string.
-
-The LLM receives all of that context — the error the package manager produced, the CVSS and EPSS scores, the dependency path — and reasons about what strategy is likely to work given those constraints.
-
-The research question is whether that reasoning produces better outcomes than the scanner's one-dimensional recommendation.
-
----
-
-## The Three Enrichment Signals
-
-Three signals are provided to the LLM beyond what the scanner gives.
-
-**CVSS** — A score from 0 to 10 measuring how severe the vulnerability is in theory. A CVSS of 9.8 is critical.
-
-**EPSS** — A probability score estimating how likely the vulnerability is to be exploited in the next 30 days. A vulnerability can have CVSS 9.8 but EPSS at the 20th percentile, meaning it is severe in theory but rarely exploited in practice.
-
-**KEV** — The CISA Known Exploited Vulnerabilities catalogue. If a CVE is on this list, it is actively being exploited in real attacks right now.
-
-The research sub-question is whether the LLM weighs these signals differently from a CVSS-only approach, and whether that changes its remediation strategy.
-
-**Known limitation:** All 18 scenarios in this experiment have KEV=FALSE. The CISA catalogue does not contain any of the selected CVEs. This means the KEV signal cannot be tested empirically in this dataset. The thesis acknowledges this as a limitation.
-
----
-
-## What Has Already Been Done
-
-| Phase | Status |
-|-------|--------|
-| Application selection and pinning | Complete |
-| SBOM generation (lockfile-based) | Complete |
-| Grype vulnerability scanning | Complete |
-| Pre-registration of 18 scenarios | Complete |
-| Baseline experiment (deterministic) | Complete — 18/18 failures |
-| LLM remediation generation | Complete for pilot scenarios |
-| Manual validation of LLM recommendations | In progress |
-| Full 18-scenario analysis | In progress |
-
----
-
-## What the Baseline Found
-
-Every single scenario failed when the scanner's recommended version was applied directly.
-
-| Ecosystem | Failure Type | Failure Rate |
-|-----------|-------------|--------------|
-| npm (Juice Shop) | ERESOLVE peer dependency conflict | 9/9 |
-| PyPI (Airflow) | ResolutionImpossible constraint collapse | 9/9 |
-
-This 0% baseline success rate is the control group. Any improvement from the LLM approach is measured against this.
-
-**Correction note (added during repository remediation, 2026-08-01):** see the correction note above under "The 18 Scenarios" — the specific `ERESOLVE`/`ResolutionImpossible` failure type shown in this table is not confirmed by this repository's own sampled baseline-workflow runs, which show failures occurring later (build/test/rescan), not at the install step.
-
----
-
-## What the Thesis Is Not Claiming
-
-This research does not claim that:
-
-- LLMs should replace vulnerability scanners
-- LLMs can discover new vulnerabilities
-- The approach works for all applications or all ecosystems
-- 18 scenarios is enough to generalise broadly
-- The results will hold as LLM models change over time
-
-The thesis claims only that within this controlled experiment, with these specific applications and scenarios, contextual LLM reasoning was evaluated as a decision-support layer on top of deterministic scanning.
-
----
-
-## Ghost CMS — Why It Was Removed
-
-Ghost CMS was originally included as a third application. It was removed mid-experiment when the CI pipeline revealed that Ghost uses yarn as its package manager while the experiment was built around npm for Node.js applications. Mixing yarn and npm would introduce an uncontrolled variable — failures or successes could be attributed to the package manager difference rather than the LLM's reasoning. Ghost was formally disqualified and documented in a pre-registration amendment. This was documented before the experiment continued.
-
----
-
-## Key Documents in This Repository
-
-| Document / Folder | What It Contains |
-|----------|----------------|
-| `applications/` | The frozen source code snapshots (Juice Shop v15.3.0 and Airflow v2.9.2), plus raw pre-registration Grype/Syft scans (`applications/evidence/`). |
-| `archive/` | Legacy results, temporary files, and historical debug scripts. |
-| `docs/` | Comprehensive methodology documentation (`02-experimental-environment.md`, `03-llm-configuration.md`, `04-experimental-methodology.md`, `05-results-and-discussion.md`). |
-| `preregistration/MASTER_METHODOLOGY_RECORD.md` | All 18 scenarios, selection methodology, enrichment data. |
-| `preregistration/PRE_REGISTRATION_AMENDMENT.md` | Ghost disqualification, scenario changes, baseline results. |
-| `progress-reports/` | Status updates and draft records created during the thesis execution (e.g. `27-07-2026/Thesis_Update.md`). |
-| `results/scenarios/` | The canonical JSON database. Contains `pre_registered/scenarios.json` and `final_18_scenarios.json`, plus one consolidated per-scenario record for each of the 18 scenarios (`AF-01.json` … `JS-09.json`). Each of these combines that scenario's pre-registration metadata, execution timestamps and workflow run IDs, and reproducibility/toolchain details in one file, together with the same "EMPIRICAL EVIDENCE" block (pipeline metrics, LLM prompt, and LLM output) also present in that scenario's `results/execution_evidence/<ID>/experiment_manifest.json`. These are supporting evidence for the dissertation, not the raw pipeline artifacts themselves — for those, see `results/execution_evidence/`. |
-| `results/execution_evidence/` | The golden execution evidence containing raw pipeline logs, extracted LLM traces, and pre/post SBOM scans proving the automated POC succeeded. |
-| `scripts/` | Python and bash scripts driving the core automation pipeline and experiment methodology. |
-| `tools/` | Core analysis engines and evaluation utilities. |
+## 8. Where are the zero-trust audit reports?
+The final, independent, zero-trust cryptographic and methodological verification reports conducted prior to academic submission are located in:
+*   [audit_reports/](audit_reports/)

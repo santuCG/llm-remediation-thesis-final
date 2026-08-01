@@ -25,14 +25,9 @@ The experimental methodology is designed to be reproducible and is executed usin
 - Dependency graph verification
 - Post-remediation vulnerability comparison
 
-Two representative experimental scenarios from **OWASP Juice Shop** are included within this repository as reference implementations:
+Execution evidence for all 18 representative experimental scenarios spanning **OWASP Juice Shop** and **Apache Airflow** is included within this repository. 
 
-- **JS-01** – `CVE-2023-32314` (`vm2`)
-- **JS-08** – `CVE-2024-45590` (`body-parser`)
-
-These scenarios demonstrate the complete methodology applied throughout the research.
-
-The identical workflow is subsequently applied to the remaining experimental scenarios (18 total representative scenarios spanning **OWASP Juice Shop** and **Apache Airflow**) described in the accompanying Master's thesis.
+Rather than relying on a single reference implementation, every scenario is rigorously documented with its own distinct execution artifacts (SBOMs, manifest patches, build logs, and Grype rescans) to demonstrate the consistent application of the methodology across diverse topological constraints.
 
 ---
 
@@ -78,7 +73,7 @@ Instead, the focus is restricted to evaluating remediation recommendations gener
 
 # Scope of the Repository
 
-This repository documents the **experimental framework** used throughout the thesis rather than presenting every individual experimental result.
+This repository documents the complete **experimental framework** and the rigorous empirical evidence generated throughout the thesis.
 
 The repository includes:
 
@@ -92,9 +87,7 @@ The repository includes:
 - Post-remediation SBOM comparison.
 - Quantitative evaluation procedures.
 
-The repository intentionally demonstrates the methodology using two representative scenarios.
-
-The identical workflow is subsequently applied to all remaining scenarios evaluated within the accompanying thesis.
+The repository intentionally provides verifiable execution evidence for all 18 scenarios evaluated within the accompanying thesis.
 
 ---
 

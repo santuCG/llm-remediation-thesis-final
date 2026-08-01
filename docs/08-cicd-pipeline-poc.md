@@ -1,4 +1,6 @@
-# 08 – Automated Remediation Pipeline (CI/CD Proof of Concept)
+# 08 — CI/CD Pipeline & Orchestration Proof-of-Concept
+
+> **Historical Note:** This document describes an earlier methodology and is preserved for historical completeness. The final methodology is described in [docs/04-experimental-methodology.md](04-experimental-methodology.md).
 
 ## 1. Objective and Rationale
 
