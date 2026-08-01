@@ -179,7 +179,7 @@ jobs:
         run: |
           mkdir provenance
           cp ${{ inputs.profile }} provenance/profile.yaml || true
-          cp .github/workflows/templates/${{ github.job }}.yml provenance/workflow.yml || true
+          cp .github/workflows/npm-remediation.yml provenance/workflow.yml || true
           cp evidence/scenario-manifest.json provenance/manifest.json || true
           cp evidence/pipeline-summary.json provenance/pipeline-summary.json || true
           env > provenance/environment.txt

@@ -68,7 +68,7 @@ jobs:
         run: |
           mkdir provenance
           cp ${{ inputs.profile }} provenance/profile.yaml || true
-          cp .github/workflows/templates/${{ github.job }}.yml provenance/workflow.yml || true
+          cp .github/workflows/baseline-python-remediation.yml provenance/workflow.yml || true
           env > provenance/environment.txt
           echo '{"python": "${{ env.PYTHON_VERSION }}", "syft": "${{ env.SYFT_VERSION }}", "grype": "${{ env.GRYPE_VERSION }}"}' > provenance/tool_versions.json
 
