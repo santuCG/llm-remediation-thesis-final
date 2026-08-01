@@ -61,11 +61,13 @@ jobs:
               (cd frontend && npm ci --legacy-peer-deps)
             fi
             npm ci 2>&1 | tee ../../dependency_install.log
+            npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
               cp ../evidence/airflow_pip_freeze.txt requirements.txt
             fi
             pip install -r requirements.txt 2>&1 | tee ../../dependency_install.log
+            pip list --format=freeze | tee ../../dependency-graph.log || true
           fi
 
       - name: Phase 2 - Generate SBOM & Scan
@@ -78,6 +80,14 @@ jobs:
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
           tar -xzf grype.tar.gz -C ./bin grype
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
+          {
+            echo "=== SCAN TIMESTAMP ==="
+            date -u +%Y-%m-%dT%H:%M:%SZ
+            echo "=== GRYPE VERSION INFO ==="
+            ./bin/grype version -o json
+            echo "=== GRYPE DB STATUS ==="
+            GRYPE_DB_VALIDATE_AGE=false ./bin/grype db status -o json || true
+          } > ../../grype-db-metadata.json
 
       - name: Initialize Metrics
         run: |
@@ -155,6 +165,8 @@ jobs:
           mv baseline-patch.json evidence/ || true
           mv baseline-sbom.json evidence/ || true
           mv grype.json evidence/baseline-grype.json || true
+          mv grype-db-metadata.json evidence/ || true
+          mv dependency-graph.log evidence/ || true
           mv build.log evidence/ || true
           mv test.log evidence/ || true
           mv post-sbom.json evidence/ || true

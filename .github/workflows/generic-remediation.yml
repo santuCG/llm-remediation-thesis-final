@@ -79,6 +79,14 @@ jobs:
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
           tar -xzf grype.tar.gz -C ./bin grype
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
+          {
+            echo "=== SCAN TIMESTAMP ==="
+            date -u +%Y-%m-%dT%H:%M:%SZ
+            echo "=== GRYPE VERSION INFO ==="
+            ./bin/grype version -o json
+            echo "=== GRYPE DB STATUS ==="
+            GRYPE_DB_VALIDATE_AGE=false ./bin/grype db status -o json || true
+          } > ../../grype-db-metadata.json
 
       - name: Determine Remediation Strategy
         run: |
@@ -92,13 +100,14 @@ jobs:
           if [ "$ECOSYSTEM" == "npm" ]; then
             npm install 2>&1 | tee ../../build.log || (echo "NPM Install Failed" && exit 1)
             echo "=== Phase 4 Log: Package Installation Status ==="
-            npm list --depth=0 || true
+            npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
             pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
             echo "=== Phase 4 Log: Package Installation Status ==="
             pip show redshift-connector || pip show flask || true
             echo "=== Updated requirements.txt ==="
             grep -iE "redshift-connector|flask" requirements.txt || true
+            pip list --format=freeze | tee ../../dependency-graph.log || true
           fi
 
       - name: Fallback Lockfile Regeneration
@@ -219,6 +228,9 @@ jobs:
           mv selected-candidate.json evidence/ || true
           mv llm-request.json evidence/ || true
           mv llm-response.json evidence/ || true
+          mv llm-response-full.json evidence/ || true
+          mv grype-db-metadata.json evidence/ || true
+          mv dependency-graph.log evidence/ || true
           mv build.log evidence/ || true
           mv test.log evidence/ || true
           mv rescan.json evidence/ || true
