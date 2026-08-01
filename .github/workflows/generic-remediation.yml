@@ -57,6 +57,10 @@ jobs:
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             cp ../evidence/juice_shop_package-lock.json package-lock.json || true
+            if [ -f ../evidence/juice_shop_frontend_package-lock.json ] && [ -d frontend ]; then
+              cp ../evidence/juice_shop_frontend_package-lock.json frontend/package-lock.json
+              (cd frontend && npm ci --legacy-peer-deps)
+            fi
             npm ci 2>&1 | tee ../../dependency_install.log
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
