@@ -42,6 +42,7 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None):
                     metrics = json.load(f)
                 metrics["rescan_success"] = False
                 metrics["failure_stage"] = "validator"
+                metrics["validation_stage_reached"] = "validator"
                 with open(metrics_path, 'w') as f:
                     json.dump(metrics, f, indent=2)
             return False

@@ -109,6 +109,13 @@ jobs:
             grep -iE "redshift-connector|flask" requirements.txt || true
             pip list --format=freeze | tee ../../dependency-graph.log || true
           fi
+          # Reaching this point means the install command above completed with
+          # exit 0 under `set -o pipefail` -- a genuine install/build failure
+          # would already have exited this step via the `|| exit 1` gates.
+          # This is the only place build_success is ever set to true; it is
+          # NOT inferred implicitly by validator.py (see validator.py's own
+          # comment) to avoid masking genuine build failures.
+          jq '.build_success = true' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
 
       - name: Fallback Lockfile Regeneration
         if: failure()
@@ -209,8 +216,25 @@ jobs:
             rm -f package-lock.json
             rm -rf node_modules
             npm install 2>&1 | tee ../../build.log
+            INSTALL_EXIT=${PIPESTATUS[0]}
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || true
+            pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log
+            INSTALL_EXIT=${PIPESTATUS[0]}
+          fi
+          # Retry-path install failures are intentionally not fatal here (existing,
+          # unchanged behaviour: the pipeline still proceeds to rescan/validate).
+          # We capture the install's own exit code via PIPESTATUS -- independent of
+          # that -- purely to record an accurate build_success for this attempt,
+          # instead of leaving it stale from Attempt 1 (see retry_remediation.py /
+          # this step's git history for the regression this restores).
+          # Tests are never executed on the retry path, so test_success is recorded
+          # as null (not executed) rather than a misleading stale false.
+          if [ -f ../../metrics.json ]; then
+            if [ "$INSTALL_EXIT" -eq 0 ]; then
+              jq '.build_success = true | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+            else
+              jq '.build_success = false | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+            fi
           fi
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json

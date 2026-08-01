@@ -134,7 +134,10 @@ def main():
         "test_success": False,
         "dependency_verified": False,
         "rescan_success": False,
-        "runtime_success": False,
+        # No runtime-check stage is implemented anywhere in this pipeline --
+        # null (not applicable) rather than False, which would misleadingly
+        # imply a check ran and failed.
+        "runtime_success": None,
         "lockfile_regenerated": False,
         "execution_time_seconds": int(time.time() - start_time),
         "retry_count": 0,

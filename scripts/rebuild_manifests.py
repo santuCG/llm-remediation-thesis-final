@@ -324,6 +324,8 @@ def build_metrics_commented(metrics, ecosystem):
     fail_label = "The stage where the pipeline failed, if any"
 
     def v(val):
+        if val is None:
+            return 'null'
         if isinstance(val, bool):
             return str(val).lower()
         if isinstance(val, str):
