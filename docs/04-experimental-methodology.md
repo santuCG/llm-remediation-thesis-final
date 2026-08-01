@@ -254,6 +254,8 @@ Consequently, successful module loading should not be interpreted as complete ap
 
 > **Note on Build Failures:** Under the recorded execution of JS-09, the workflow continued to later validation stages despite a recorded build failure (see `.github/workflows/generic-remediation.yml`, `results/execution_evidence/JS-09/build.log`, `metrics.json`, and `rescan.json`). The vulnerability eradication signal functions independently of application compilation.
 
+> **Note on `metrics.json` field semantics (`build_success`, `test_success`, `runtime_success`):** `build_success` reflects whether the package manager install for the *current* attempt (first attempt or the single permitted retry) completed without error; it is set explicitly by the workflow at the point that install genuinely succeeds, never inferred implicitly from later stages. `test_success` reflects whether the test suite referenced in this stage actually ran and, if so, whether it passed — but the one-retry mechanism does not re-run tests, so a retried scenario's `test_success` is recorded as JSON `null` ("not executed"), distinct from `false` ("executed and failed"). `runtime_success` is always `null` for every scenario: no dedicated runtime-check stage separate from the test execution above is implemented in the current pipeline, so this field should not be read as a pass/fail signal. Where a field is `null`, treat it as excluded from any aggregate pass/fail statistic rather than coercing it to `false`.
+
 ---
 
 ## Stage 9 — Post-Remediation SBOM Generation
