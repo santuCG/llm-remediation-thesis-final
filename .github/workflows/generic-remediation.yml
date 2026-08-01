@@ -181,9 +181,9 @@ jobs:
           echo "Failure detected. Capturing logs and performing Retry Iteration."
             cd ${{ env.APP_DIR }}
             if [ "$ECOSYSTEM" == "python" ]; then
-              cp ../evidence/airflow_pip_freeze.txt requirements.txt
+              cp ../../package-before.json requirements.txt
             elif [ "$ECOSYSTEM" == "npm" ]; then
-              cp ../evidence/package-before.json package.json
+              cp ../../package-before.json package.json
             fi
             cd ../..
 
