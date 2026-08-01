@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 jobs:
   run-scenario:
-    uses: ./.github/workflows/templates/{template}
+    uses: ./.github/workflows/{template}
     with:
       profile: {profile_path}
     secrets: inherit
@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
 jobs:
   run-scenario:
-    uses: ./.github/workflows/templates/baseline-{template}
+    uses: ./.github/workflows/baseline-{template}
     with:
       profile: {profile_path}
     secrets: inherit

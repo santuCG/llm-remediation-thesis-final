@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   run-scenario:
-    uses: ./.github/workflows/templates/baseline-npm-remediation.yml
+    uses: ./.github/workflows/baseline-npm-remediation.yml
     with:
       profile: profiles/JS-05.yaml
     secrets: inherit

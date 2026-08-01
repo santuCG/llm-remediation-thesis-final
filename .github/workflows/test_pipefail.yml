@@ -1,0 +1,12 @@
+
+name: Test Pipefail
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: |
+          false | tee log.txt || (echo "Failed" && exit 1)
+          echo "Survived"
+
