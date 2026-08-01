@@ -183,7 +183,7 @@ jobs:
             if [ "$ECOSYSTEM" == "python" ]; then
               cp ../evidence/airflow_pip_freeze.txt requirements.txt
             elif [ "$ECOSYSTEM" == "npm" ]; then
-              git checkout package.json package-lock.json
+              cp ../evidence/package-before.json package.json
             fi
             cd ../..
 
