@@ -1,0 +1,9 @@
+name: LLM JS-08
+on:
+  workflow_dispatch:
+jobs:
+  run-scenario:
+    uses: ./.github/workflows/templates/npm-remediation.yml
+    with:
+      profile: profiles/JS-08.yaml
+    secrets: inherit
