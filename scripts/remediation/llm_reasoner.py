@@ -113,7 +113,7 @@ Based on the vulnerability intelligence and context:
 
     # Fallback model list: primary → stable fallback → legacy fallback
     # NOTE: Only real, existing Gemini model identifiers are listed here.
-    models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    models = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
     result = None
 
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")

@@ -97,7 +97,7 @@ def main():
             # reflect what actually responded, not just what was requested
             # first, since llm_reasoner.py can fall back to a different
             # model in its retry list.
-            "model": os.environ.get("LLM_MODEL_USED", "gemini-2.5-flash"),
+            "model": os.environ.get("LLM_MODEL_USED", "gemini-3.6-flash"),
             "temperature": 0.0,
             "seed": 42,
             "topP": 1.0,
