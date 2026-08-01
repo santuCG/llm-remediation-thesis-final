@@ -1,0 +1,7 @@
+{
+  "package": "mysql-connector-python",
+  "original_version": "8.4.0",
+  "new_version": "9.1.0",
+  "manifest_file": "requirements.txt",
+  "application_method": "direct_replacement"
+}

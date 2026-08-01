@@ -1,0 +1,7 @@
+{
+  "package": "cryptography",
+  "original_version": "41.0.7",
+  "new_version": "42.0.0",
+  "manifest_file": "requirements.txt",
+  "application_method": "direct_replacement"
+}

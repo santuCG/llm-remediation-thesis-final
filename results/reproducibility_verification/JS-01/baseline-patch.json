@@ -1,0 +1,7 @@
+{
+  "package": "vm2",
+  "original_version": null,
+  "new_version": "3.9.18",
+  "manifest_file": "package.json",
+  "application_method": "override_added"
+}

@@ -1,0 +1,7 @@
+{
+  "package": "mako",
+  "original_version": "1.3.5",
+  "new_version": "1.3.12",
+  "manifest_file": "requirements.txt",
+  "application_method": "direct_replacement"
+}

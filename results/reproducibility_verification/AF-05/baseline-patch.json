@@ -1,0 +1,7 @@
+{
+  "package": "protobuf",
+  "original_version": "4.25.3",
+  "new_version": "5.29.6",
+  "manifest_file": "requirements.txt",
+  "application_method": "direct_replacement"
+}
