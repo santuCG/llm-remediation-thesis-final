@@ -55,11 +55,13 @@ jobs:
         run: |
           cd ${{ env.APP_DIR }}
           mkdir -p ./bin
-          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/${{ env.SYFT_VERSION }}/syft_${{ env.SYFT_VERSION | replace('v', '') }}_linux_amd64.tar.gz || \
+          SYFT_NO_V=${SYFT_VERSION#v}
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/${SYFT_VERSION}/syft_${SYFT_NO_V}_linux_amd64.tar.gz || \
           curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
           tar -xzf syft.tar.gz -C ./bin syft
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
-          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/${{ env.GRYPE_VERSION }}/grype_${{ env.GRYPE_VERSION | replace('v', '') }}_linux_amd64.tar.gz || \
+          GRYPE_NO_V=${GRYPE_VERSION#v}
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/${GRYPE_VERSION}/grype_${GRYPE_NO_V}_linux_amd64.tar.gz || \
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
           tar -xzf grype.tar.gz -C ./bin grype
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
