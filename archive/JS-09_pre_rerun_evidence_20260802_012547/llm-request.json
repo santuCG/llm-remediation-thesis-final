@@ -1,0 +1,84 @@
+{
+  "scenario_id": "JS-09",
+  "experiment_id": "Supplementary Experiment",
+  "application": "OWASP Juice Shop",
+  "ecosystem": "npm",
+  "prompt_version": "v1.1",
+  "api_payload": {
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Scenario ID: JS-09\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: multer\n* Vulnerable Version: 1.4.5-lts.1\n* CVE ID: GHSA-5528-5vmv-3xc2\n* CVSS Score: 8.7\n* EPSS Probability: 0.00713\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-07-31\n* Fixed Versions: [HIDDEN INTENTIONALLY - YOU MUST DETERMINE THE SAFEST VERSION TO AVOID BREAKING THE BUILD]\n\n### Dependency Context\n```json\n{\n  \"npm_ls\": {\n    \"version\": \"15.3.0\",\n    \"name\": \"juice-shop\",\n    \"dependencies\": {\n      \"multer\": {\n        \"version\": \"1.4.5-lts.2\",\n        \"resolved\": \"https://registry.npmjs.org/multer/-/multer-1.4.5-lts.2.tgz\",\n        \"overridden\": false\n      }\n    }\n  },\n  \"npm_explain\": [\n    {\n      \"name\": \"multer\",\n      \"version\": \"1.4.5-lts.2\",\n      \"location\": \"node_modules/multer\",\n      \"isWorkspace\": false,\n      \"dependents\": [\n        {\n          \"type\": \"prod\",\n          \"name\": \"multer\",\n          \"spec\": \"^1.4.5-lts.1\",\n          \"from\": {\n            \"location\": \"/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop\"\n          }\n        }\n      ],\n      \"dev\": false,\n      \"optional\": false,\n      \"devOptional\": false,\n      \"peer\": false,\n      \"bundled\": false,\n      \"overridden\": false\n    }\n  ],\n  \"package_json\": {\n    \"name\": \"juice-shop\",\n    \"version\": \"15.3.0\",\n    \"dependencies\": {\n      \"multer\": \"^1.4.5-lts.1\"\n    }\n  }\n}\n```\n\n### Previous Attempt Failure Logs\nThe previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.\n```\n              17.16 kB\nruntime.js          | runtime                               |   3.22 kB |                 1.49 kB\n\n| Initial Total                         |   2.48 MB |               438.33 kB\n\nLazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size\n399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB\n202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB\n112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB\n103.js              | confetti                              |  10.86 kB |                 3.92 kB\n67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB\ncommon.js           | common                                |   9.04 kB |               861 bytes\n535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB\n745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB\n613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB\n859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB\n472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes\n\nBuild at: 2026-07-31T17:54:08.104Z - Hash: eec0da7fb4f70cee - Time: 76127ms\n\n> juice-shop@15.3.0 build:server\n> tsc\n\nnode_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.\nnode_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.\n\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+          }
+        ]
+      }
+    ],
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+        }
+      ]
+    },
+    "generationConfig": {
+      "temperature": 0.0,
+      "topP": 1.0,
+      "topK": 1,
+      "seed": 42,
+      "responseMimeType": "application/json",
+      "responseSchema": {
+        "type": "OBJECT",
+        "properties": {
+          "reasoning": {
+            "type": "STRING",
+            "description": "Comprehensive reasoning for the strategy chosen."
+          },
+          "strategy": {
+            "type": "STRING",
+            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+          },
+          "remediation_type": {
+            "type": "STRING",
+            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+          },
+          "recommended_package_version": {
+            "type": "STRING",
+            "description": "The specific semantic version to enforce."
+          },
+          "manifest_patch": {
+            "type": "OBJECT",
+            "description": "The structured intermediate representation of the manifest patch.",
+            "properties": {
+              "operation": {
+                "type": "STRING",
+                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+              },
+              "package": {
+                "type": "STRING",
+                "description": "The target package name to modify."
+              },
+              "constraint": {
+                "type": "STRING",
+                "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."
+              }
+            },
+            "required": [
+              "operation",
+              "package",
+              "constraint"
+            ]
+          }
+        },
+        "required": [
+          "reasoning",
+          "strategy",
+          "remediation_type",
+          "recommended_package_version",
+          "manifest_patch"
+        ]
+      }
+    }
+  }
+}
