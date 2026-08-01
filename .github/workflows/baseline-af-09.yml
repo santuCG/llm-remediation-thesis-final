@@ -1,0 +1,9 @@
+name: Baseline AF-09
+on:
+  workflow_dispatch:
+jobs:
+  run-scenario:
+    uses: ./.github/workflows/templates/baseline-python-remediation.yml
+    with:
+      profile: profiles/AF-09.yaml
+    secrets: inherit

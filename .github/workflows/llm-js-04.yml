@@ -1,0 +1,9 @@
+name: LLM JS-04
+on:
+  workflow_dispatch:
+jobs:
+  run-scenario:
+    uses: ./.github/workflows/templates/npm-remediation.yml
+    with:
+      profile: profiles/JS-04.yaml
+    secrets: inherit

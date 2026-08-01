@@ -1,0 +1,9 @@
+name: Baseline JS-07
+on:
+  workflow_dispatch:
+jobs:
+  run-scenario:
+    uses: ./.github/workflows/templates/baseline-npm-remediation.yml
+    with:
+      profile: profiles/JS-07.yaml
+    secrets: inherit

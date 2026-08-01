@@ -1,12 +1,12 @@
-scenario_id: JS-08
-application: applications/juice-shop
-ecosystem: npm
+scenario_id: AF-01
+application: applications/airflow
+ecosystem: python
 repository:
   url: https://github.com/santuCG/llm-remediation-thesis-final
   commit: HEAD
 pipeline:
   version: '2.0'
-  template: npm-remediation.yml
+  template: python-remediation.yml
   profile_version: '1.0'
 llm:
   provider: Gemini
@@ -16,14 +16,14 @@ llm:
   top_p: 1
   top_k: 1
 tool_versions:
-  node: 20.x
-  syft: v1.11.0
-  grype: v0.80.0
-target_package: body-parser
-target_cve: CVE-2024-45590
+  python: 3.11.x
+  syft: v1.44.0
+  grype: v0.112.0
+target_package: redshift-connector
+target_cve: CVE-2026-8838
 dependency_type: direct
 expected:
-  strategy: transitive_override
-  retry: 1
+  strategy: direct_upgrade
+  retry: 0
   build: true
   rescan: true

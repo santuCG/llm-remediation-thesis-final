@@ -1,4 +1,4 @@
-scenario_id: JS-08
+scenario_id: JS-09
 application: applications/juice-shop
 ecosystem: npm
 repository:
@@ -19,11 +19,11 @@ tool_versions:
   node: 20.x
   syft: v1.11.0
   grype: v0.80.0
-target_package: body-parser
-target_cve: CVE-2024-45590
+target_package: multer
+target_cve: CVE-2026-3520
 dependency_type: direct
 expected:
-  strategy: transitive_override
+  strategy: direct_upgrade
   retry: 1
-  build: true
+  build: false
   rescan: true

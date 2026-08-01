@@ -1,0 +1,9 @@
+name: LLM AF-04
+on:
+  workflow_dispatch:
+jobs:
+  run-scenario:
+    uses: ./.github/workflows/templates/python-remediation.yml
+    with:
+      profile: profiles/AF-04.yaml
+    secrets: inherit
