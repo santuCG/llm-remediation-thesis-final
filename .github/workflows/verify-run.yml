@@ -1,0 +1,52 @@
+name: Golden Verification
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'GitHub Actions Run ID to verify'
+        required: true
+        type: string
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Download Artifacts
+        run: |
+          mkdir -p artifacts
+          gh run download ${{ inputs.run_id }} -D artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Verify Hashes and Validation
+        run: |
+          echo "Starting Artifact Verification for Run ${{ inputs.run_id }}" > verification-report.md
+          echo "=== SHA-256 Hashes ===" >> verification-report.md
+          find artifacts -type f -exec sha256sum {} \; >> verification-report.md
+          
+          # Check validation-report.json if present
+          if find artifacts -name "validation-report.json" -type f | grep -q .; then
+            for f in $(find artifacts -name "validation-report.json" -type f); do
+              status=$(jq -r '.status' $f)
+              if [ "$status" != "PASS" ]; then
+                echo "FAIL: $f reported $status" >> verification-report.md
+                exit 1
+              else
+                echo "PASS: $f reported PASS" >> verification-report.md
+              fi
+            done
+          else
+            echo "Warning: No validation-report.json found." >> verification-report.md
+          fi
+          cat verification-report.md
+
+      - name: Upload Verification Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-report-${{ inputs.run_id }}
+          path: verification-report.md

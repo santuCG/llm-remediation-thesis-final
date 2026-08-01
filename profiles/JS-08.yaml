@@ -1,29 +1,25 @@
 scenario_id: JS-08
 application: applications/juice-shop
+target_cve: CVE-2022-24999
 ecosystem: npm
-repository:
-  url: https://github.com/santuCG/llm-remediation-thesis-final
-  commit: HEAD
-pipeline:
-  version: '2.0'
-  template: npm-remediation.yml
-  profile_version: '1.0'
-llm:
-  provider: Gemini
-  model: gemini-1.5-pro
-  prompt_version: v1.1
-  temperature: 0
-  top_p: 1
-  top_k: 1
+
+baseline:
+  restore_lockfile: true
+  lockfile: evidence/juice_shop_package-lock.json
+
+validation:
+  build:
+    - "npm run build:frontend"
+    - "npm run build:server"
+    - "npm run build"
+  test:
+    - "npm test"
+
+expected:
+  candidate: qs
+  strategy: direct_upgrade
+
 tool_versions:
-  node: 20.x
+  node: 18.x
   syft: v1.44.0
   grype: v0.112.0
-target_package: body-parser
-target_cve: CVE-2024-45590
-dependency_type: direct
-expected:
-  strategy: transitive_override
-  retry: 1
-  build: true
-  rescan: true

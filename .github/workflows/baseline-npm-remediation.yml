@@ -3,8 +3,8 @@ name: Baseline NPM Template
 on:
   workflow_call:
     inputs:
-      profile:
-        description: 'Path to the reproducibility profile YAML'
+      scenario:
+        description: 'Scenario ID'
         required: true
         type: string
 
@@ -18,72 +18,90 @@ jobs:
         uses: actions/checkout@v4.1.7
 
       - name: Parse Profile
-        id: profile
         run: |
           pip install pyyaml
-          python -c "
-          import yaml, os
-          with open('${{ inputs.profile }}', 'r') as f:
-              profile = yaml.safe_load(f)
-          env_file = os.environ['GITHUB_ENV']
-          with open(env_file, 'a') as ef:
-              ef.write(f\"SCENARIO_ID={profile['scenario_id']}\n\")
-              ef.write(f\"APP_DIR={profile['application']}\n\")
-              ef.write(f\"NODE_VERSION={profile['tool_versions']['node']}\n\")
-              ef.write(f\"SYFT_VERSION={profile['tool_versions']['syft']}\n\")
-              ef.write(f\"GRYPE_VERSION={profile['tool_versions']['grype']}\n\")
-          "
+          python scripts/profiles/load_profile.py profiles/${{ inputs.scenario }}.yaml
 
       - name: Initialize Environment
         uses: actions/setup-node@v4.0.3
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install Baseline Dependencies
+          
+      - name: Cache Syft and Grype
+        id: cache-tools
+        uses: actions/cache@v3
+        with:
+          path: ./bin
+          key: ${{ runner.os }}-syft-${{ env.SYFT_VERSION }}-grype-${{ env.GRYPE_VERSION }}
+          
+      - name: Install Syft and Grype
+        if: steps.cache-tools.outputs.cache-hit != 'true'
         run: |
-          cd ${{ env.APP_DIR }}
-          cp ../evidence/juice_shop_package-lock.json package-lock.json || true
-          npm ci 2>&1 | tee ../../dependency_install.log
-
-      - name: Generate SBOM & Run Grype
-        run: |
-          cd ${{ env.APP_DIR }}
           mkdir -p ./bin
           SYFT_NO_V=${SYFT_VERSION#v}
           curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/${SYFT_VERSION}/syft_${SYFT_NO_V}_linux_amd64.tar.gz || \
           curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
           tar -xzf syft.tar.gz -C ./bin syft
-          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
+          
           GRYPE_NO_V=${GRYPE_VERSION#v}
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/${GRYPE_VERSION}/grype_${GRYPE_NO_V}_linux_amd64.tar.gz || \
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
           tar -xzf grype.tar.gz -C ./bin grype
-          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../baseline-grype.json
+
+      - name: Install Baseline Dependencies
+        run: |
+          cd ${{ env.APP_DIR }}
+          if [ "$RESTORE_LOCKFILE" = "true" ]; then
+            cp ../../$LOCKFILE_SOURCE package-lock.json || true
+          fi
+          npm ci 2>&1 | tee ../../dependency_install.log
+
+      - name: Generate SBOM & Run Grype
+        run: |
+          cd ${{ env.APP_DIR }}
+          ../../bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ../../bin/grype sbom:../../baseline-sbom.json -o json > ../../baseline-grype.json
+          
       - name: Validate Baseline Functionality
         run: |
           cd ${{ env.APP_DIR }}
           echo "Validating application functionality..." 2>&1 | tee -a ../../baseline-build.log
-          if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend 2>&1 | tee -a ../../baseline-build.log; fi
-          if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server 2>&1 | tee -a ../../baseline-build.log; fi
-          if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../baseline-build.log; fi
-          if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
-            npm test 2>&1 | tee ../../baseline-test.log || true
+          
+          # Read build array
+          BUILD_CMDS=$(python -c "import yaml; print('\n'.join(yaml.safe_load(open('../../profiles/${{ inputs.scenario }}.yaml'))['validation'].get('build', [])))")
+          if [ -n "$BUILD_CMDS" ]; then
+            while IFS= read -r cmd; do
+              echo "Running $cmd"
+              $cmd 2>&1 | tee -a ../../baseline-build.log || true
+            done <<< "$BUILD_CMDS"
+          fi
+          
+          # Read test array
+          TEST_CMDS=$(python -c "import yaml; print('\n'.join(yaml.safe_load(open('../../profiles/${{ inputs.scenario }}.yaml'))['validation'].get('test', [])))")
+          if [ -n "$TEST_CMDS" ]; then
+            while IFS= read -r cmd; do
+              echo "Running $cmd"
+              $cmd 2>&1 | tee -a ../../baseline-test.log || true
+            done <<< "$TEST_CMDS"
           fi
 
       - name: Build Provenance Bundle
         if: always()
         run: |
           mkdir provenance
-          cp ${{ inputs.profile }} provenance/profile.yaml || true
+          cp profiles/${{ inputs.scenario }}.yaml provenance/profile.yaml || true
           cp .github/workflows/baseline-npm-remediation.yml provenance/workflow.yml || true
-          env > provenance/environment.txt
-          echo '{"node": "${{ env.NODE_VERSION }}", "syft": "${{ env.SYFT_VERSION }}", "grype": "${{ env.GRYPE_VERSION }}"}' > provenance/tool_versions.json
+          cp ${{ env.APP_DIR }}/package.json provenance/package.json || true
+          if [ "$RESTORE_LOCKFILE" = "true" ]; then
+            cp ${{ env.APP_DIR }}/package-lock.json provenance/package-lock.json || true
+          fi
+          python scripts/evidence/build_environment.py
 
       - name: Upload Baseline Evidence
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: baseline-evidence
+          name: ${{ env.SCENARIO_ID }}-baseline-${{ github.run_id }}
           path: |
             baseline-sbom.json
             baseline-grype.json
