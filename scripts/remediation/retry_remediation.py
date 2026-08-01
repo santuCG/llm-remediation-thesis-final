@@ -72,6 +72,13 @@ def main():
     # failure_stage if the retry itself never produced a usable response.
     metrics['failure_stage'] = failure_stage if not llm_response_valid else 'none'
     metrics['strategy'] = recommendation.get('strategy', '')
+    # remediation_type is the human-readable twin of strategy and must be
+    # refreshed alongside it -- leaving it unset here was the same class of
+    # bug as the failure_stage one above: it silently kept the FIRST
+    # attempt's label (e.g. "Transitive Override") even when the retry's
+    # strategy changed to something else (e.g. "direct_upgrade"), producing
+    # a metrics.json that contradicts the LLM's own llm-response.json.
+    metrics['remediation_type'] = recommendation.get('remediation_type', metrics.get('remediation_type', ''))
     metrics['llm_response_valid'] = llm_response_valid
     
     with open('metrics.json', 'w') as f:
