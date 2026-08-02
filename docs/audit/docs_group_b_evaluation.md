@@ -2,6 +2,8 @@
 
 Every item below was investigated directly (API calls, code reads, log inspection) — no answer here is a guess.
 
+> **PARTIALLY SUPERSEDED (2026-08-03).** Item 1's fix correctly replaced fabricated `repository_commit` hashes with real ones, but for 8 of the 9 affected scenarios (AF-05/06/07/08, JS-05/06/07/08) the "real" hash was queried from the `workflow_url` recorded at the time — which was itself wrong (see `docs/audit/workflow_url_provenance_correction_2026-08-03.md`), shared across those scenarios rather than each one's own genuine run. Once each scenario's true run was recovered, each one's true `head_sha` was re-queried directly and found to differ from what this fix had assigned for those 8 (AF-09 and the fifth of the original nine were already correctly attributed and remain so). This section is not rewritten, per this repository's practice — the analysis below reflects what was known and correctly reasoned at the time, given the information available. Full detail: `docs/audit/workflow_url_provenance_correction_2026-08-03.md` and `docs/audit/repository_commit_correction_2026-08-03.md`.
+
 ---
 
 ## 1. Repository provenance fix (9 fabricated `repository_commit` hashes)
