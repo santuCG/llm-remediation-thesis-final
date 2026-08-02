@@ -128,7 +128,7 @@ Threat Intelligence Enrichment
 Structured Prompt Construction
         │
         ▼
-Google Gemini 2.5 Flash
+Google Gemini (model fallback list; see docs/03-llm-configuration.md)
         │
         ▼
 Structured JSON Recommendation

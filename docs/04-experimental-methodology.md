@@ -157,7 +157,7 @@ Instead, it is incorporated into the prompt supplied to the LLM to provide addit
 
 ## Stage 5 — Context-Aware Recommendation Generation
 
-The structured prompt is submitted to **Google Gemini 2.5 Flash (Google AI Studio)**.
+The structured prompt is submitted to **Google Gemini** via the Generative Language API, using the model fallback list and generation configuration documented in `docs/03-llm-configuration.md`.
 
 *(Example execution artifact: `results/execution_evidence/AF-07/llm-request.json` and `llm-response.json`)*
 
@@ -253,6 +253,8 @@ Consequently, successful module loading should not be interpreted as complete ap
 > **Note on Build Failures:** Under the recorded execution of JS-09, the workflow continued to later validation stages despite a recorded build failure (see `.github/workflows/generic-remediation.yml`, `results/execution_evidence/JS-09/build.log`, `metrics.json`, and `rescan.json`). The vulnerability eradication signal functions independently of application compilation.
 
 > **Note on `metrics.json` field semantics (`build_success`, `test_success`, `runtime_success`):** `build_success` reflects whether the package manager install for the *current* attempt (first attempt or the single permitted retry) completed without error; it is set explicitly by the workflow at the point that install genuinely succeeds, never inferred implicitly from later stages. `test_success` reflects whether the test suite referenced in this stage actually ran and, if so, whether it passed — but the one-retry mechanism does not re-run tests, so a retried scenario's `test_success` is recorded as JSON `null` ("not executed"), distinct from `false` ("executed and failed"). `runtime_success` is always `null` for every scenario: no dedicated runtime-check stage separate from the test execution above is implemented in the current pipeline, so this field should not be read as a pass/fail signal. Where a field is `null`, treat it as excluded from any aggregate pass/fail statistic rather than coercing it to `false`.
+
+> **Note on the deterministic baseline's `vulnerability_removed` field (`grype-baseline.yml`, `results/reproducibility_verification/*/metrics.json`):** this field is a legacy field, initialised to `false` at the start of the deterministic baseline workflow and never updated by any subsequent step. It is **not used in any scientific analysis, thesis figure, or thesis table** — confirmed by repository-wide search, it appears nowhere in the thesis or in `docs/`. The field this study actually relies on for "was the target vulnerability removed" is `rescan_success`, which is correctly computed by `scripts/remediation/validator.py` from the regenerated Grype scan. A reader inspecting a raw `metrics.json` from `results/reproducibility_verification/` should disregard `vulnerability_removed` and rely on `rescan_success` instead.
 
 ---
 

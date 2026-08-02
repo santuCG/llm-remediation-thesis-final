@@ -69,9 +69,9 @@ Instead, its output serves as the deterministic baseline against which remediati
 
 ---
 
-## Google Gemini 2.5 Flash
+## Google Gemini
 
-Google Gemini 2.5 Flash (Google AI Studio) was selected as the experimental reasoning engine responsible for generating remediation recommendations.
+Google Gemini was selected as the experimental reasoning engine responsible for generating remediation recommendations. Requests are submitted directly to the Google Generative Language REST API (not the Google AI Studio interface) from `scripts/remediation/llm_reasoner.py`, using a model fallback list headed by `gemini-3.6-flash`. See `docs/03-llm-configuration.md` for the full, evidence-verified provider, model, and parameter configuration.
 
 The model does **not** perform vulnerability discovery.
 
@@ -218,7 +218,7 @@ Threat Intelligence Collection
 Prompt Construction
         │
         ▼
-Google Gemini 2.5 Flash
+Google Gemini (model fallback list; see docs/03-llm-configuration.md)
         │
         ▼
 Structured JSON Recommendation

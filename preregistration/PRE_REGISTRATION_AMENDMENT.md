@@ -222,6 +222,10 @@ As noted in the original pre-registration, all 18 scenarios across both applicat
 
 All enrichment data (EPSS probabilities, KEV status, MITRE CVE descriptions, CVSS vectors) was fetched and frozen at the time of scenario generation: **2026-07-08T18:28:12Z**. Raw API responses are saved to `applications/evidence/` in the repository. This prevents data drift between the scenario selection and the LLM execution phases.
 
+**Clarification (added during documentation synchronisation, Run B remediation, 2026-08-02):** the KEV component of this enrichment data specifically involves two distinct files, not one single snapshot. Scenario generation (`scripts/generate_final_cves.py`) reads `preregistration/kev_snapshot.json` (`catalogVersion 2026.06.18`). The live pipeline's runtime KEV enrichment (`scripts/remediation/prioritize.py`) reads a separate, later file, `scripts/remediation/snapshots/kev_snapshot.json` (`catalogVersion 2026.07.24`), which was introduced in a subsequent commit and was never backported to the file above. This means the single "2026-07-08" date above does not describe the KEV data precisely — the file used for scenario selection and the file used at execution time are genuinely different snapshots, not just differently worded references to the same one.
+
+**This does not affect any reported result.** None of the 18 pre-registered target CVEs appear in either KEV snapshot file's `vulnerabilities` list, confirmed by direct inspection of both files. The recorded `kev_status: false` for all 18 scenarios (`results/execution_evidence/*/metrics.json`) is identical under either file. This clarification is a documentation-accuracy correction only; it changes no experimental evidence, no metric, and no conclusion.
+
 ---
 
 ## Files Updated By This Amendment
