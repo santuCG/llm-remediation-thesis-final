@@ -1,0 +1,34 @@
+# Repository Fact Traceability Matrix
+
+Master synchronisation table for load-bearing facts referenced across this repository's documentation and the accompanying thesis drafts. Each row names one fact, its authoritative source of truth, every document that currently states it, and its sync status after the 2026-08-02 documentation synchronisation pass (see `docs/audit/documentation_reconciliation_2026-08-02.md` for the first, narrower pass, and the git log for the full set of commits this pass produced).
+
+**Status legend:** ✅ synchronised and verified · 🗒️ historical claim, correctly scoped as historical (not expected to match current state) · ⚠️ known, disclosed limitation (not an error)
+
+---
+
+| # | Repository Fact | Source of Truth | Documents Referencing It | Status |
+|---|---|---|---|---|
+| 1 | 4-phase / 12-stage experimental workflow, exact stage order | `docs/04-experimental-methodology.md`; `.github/workflows/generic-remediation.yml` | README.md, docs/01, docs/02, docs/04, THESIS_DRAFT_V3 | ✅ |
+| 2 | Deterministic baseline: pip (Airflow) 9/9 build + eradicate; npm (Juice Shop) 0/9 reach validated remediation (build-stage failure, pre-existing TypeScript toolchain issue) | `results/reproducibility_verification/` | docs/01, docs/05, THESIS_LIMITATIONS.md, THESIS_DRAFT_V3 | ✅ |
+| 3 | `EOVERRIDE` observed in LLM pipeline retries (JS-05, JS-08); not observed in deterministic baseline; `ERESOLVE` appears in no recorded evidence | `results/execution_evidence/JS-05,JS-08/llm-request.json`, `results/reproducibility_verification/JS-0*/metrics.json` | docs/01, docs/04, docs/05, THESIS_LIMITATIONS.md | ✅ |
+| 4 | LLM provider, model fallback list, generation parameters, system/user prompt, response schema | `scripts/remediation/llm_reasoner.py` | docs/03, docs/06, THESIS_DRAFT_V3 | ✅ (rewritten this pass) |
+| 5 | Model actually used per scenario: 17/18 recorded `gemini-2.5-flash`; JS-09 (regenerated) recorded `gemini-3.6-flash` | `results/execution_evidence/*/experiment_manifest.json` | docs/03, PRE_REGISTRATION_AMENDMENT.md | ✅ |
+| 6 | Retry prompt augmentation ("Previous Attempt Failure Logs" section) is implemented, not future work | `scripts/remediation/retry_remediation.py`; `results/execution_evidence/JS-05,JS-08/llm-request.json` | docs/03, docs/04, docs/FUTURE_WORK.md, THESIS_FUTURE_WORK.md, docs/THESIS_IMPROVEMENTS.md | ✅ (corrected this pass) |
+| 7 | Grype DB was live/unpinned for every scan; pre-registered "Cold Start" snapshot-import procedure was never implemented | `.github/workflows/generic-remediation.yml`, `grype-baseline.yml` (no `grype db import` step) | docs/06, preregistration/PRE_REGISTRATION_AMENDMENT.md, THESIS_LIMITATIONS.md, THESIS_FUTURE_WORK.md | ✅ (disclosed this pass) |
+| 8 | JS-01/JS-08 quantitative result: 383→187 total Grype match entries (336→183 unique CVE/GHSA ids) | `results/execution_evidence/JS-01,JS-08/{baseline-grype,rescan}.json` | docs/05, docs/case_studies/JS-01 | ✅ (corrected this pass) |
+| 9 | Tool versions: Syft 1.44.0, Grype 0.112.0, Node 18.x (CI), Python 3.12.x | `.github/workflows/*.yml` | docs/02, FREEZE_REPORT.md, THESIS_DRAFT_V3 | ✅ |
+| 10 | CI runner is `ubuntu-latest` (a floating label, observed as Ubuntu 24.04 at freeze time — not a strict version pin) | `.github/workflows/*.yml` | docs/02 (corrected this pass), FREEZE_REPORT.md (already accurate) | ✅ |
+| 11 | Scenario set: 9 npm (Juice Shop) + 9 pip (Airflow), specific CVE/package/CVSS per scenario | `preregistration/PRE_REGISTRATION_AMENDMENT.md` (locked, amended) | SCENARIOS_LIST.md, README.md, THESIS_DRAFT_V3 | ✅ |
+| 12 | AF-06 / JS-06 executed evidence does not match their locked pre-registered targets | `results/execution_evidence/AF-06,JS-06/metrics.json` vs. `PRE_REGISTRATION_AMENDMENT.md` | PRE_REGISTRATION_AMENDMENT.md (disclosed, unresolved) | ⚠️ open — remedy decision (rerun vs. formal amendment) not yet made by repository owner |
+| 13 | 9 `repository_commit` provenance hashes were fabricated; corrected against real `git`-verified `head_sha` | `results/execution_evidence/*/experiment_manifest.json`; git history | FREEZE_REPORT.md, THESIS_LIMITATIONS.md | ✅ (fixed pre-freeze) |
+| 14 | JS-09 evidence was regenerated post-freeze-prep under the fixed pipeline; pre-rerun state archived | `archive/JS-09_pre_rerun_evidence_20260802_012547/`; `docs/audit/js09_rerun_summary.md` | FREEZE_REPORT.md, THESIS_LIMITATIONS.md | ✅ |
+| 15 | `build_success`/`test_success`/`runtime_success` field semantics (install-success vs. compile-success vs. not-applicable) | `scripts/remediation/validator.py`, `.github/workflows/generic-remediation.yml` | docs/04 Stage 8 note | ✅ |
+| 16 | `docs/07`, `docs/08`, `docs/methodology_evolution_record.md` describe superseded methodology, not current state | git history (single, early commit for docs/03-adjacent files; multiple later commits to actual pipeline code) | Each carries an explicit "Historical Note" banner | 🗒️ correctly scoped as historical |
+| 17 | 12-phase JS-01-specific CI PoC workflow described in `docs/08` is archived, not active | `.github/workflows/archive/js-01-validation.yml` | docs/08 (path corrected this pass) | 🗒️ correctly scoped as historical |
+| 18 | Independent audit trail location | `docs/audit/` (not a root-level `audit_reports/`) | README.md (corrected this pass), docs/06 (already accurate) | ✅ |
+
+---
+
+## How to keep this matrix current
+
+If a future change touches any fact above, update both the source-of-truth artifact and every document listed in that row in the same change, then update this table's Status. If a new load-bearing fact is introduced (a new headline number, a new tool version, a new mechanism), add a row here before or alongside adding it to any narrative document — this is what prevents the drift this synchronisation pass found.
