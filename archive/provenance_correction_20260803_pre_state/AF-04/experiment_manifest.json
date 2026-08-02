@@ -1,7 +1,7 @@
 {
-    "scenario": "AF-07",
+    "scenario": "AF-04",
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-    "workflow_commit": "30619246825",
+    "workflow_commit": "30592634834",
     "pipeline_version": "v2.0",
     "runner": "ubuntu-24.04",
     "python": "3.12.x",
@@ -30,19 +30,19 @@
     },
     "artifact_hashes": {
         "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "c512d561279af7850b8f9e3964f22b0c45b74f1c4e8a0e46cd27b17d4c5c4b4f",
-        "baseline-grype.json": "8e6e098665042ac0cb49f40fc096e649696133d7e637e1b793845ddf0f8b0b26",
-        "candidate-ranking.json": "642ffb4954b94b1bf1a122f6a6a3b2fb8b155b3f9b43572993773c79fc71d068",
-        "build.log": "ff851d808cd7edebe4f800c46d525e7915aef92e578b5660f79a56c319966833",
-        "selected-candidate.json": "e7c010710b05c4f8c8f34343b50de99fbb52b3429e06c636b2dcd2181a7f996c",
-        "metrics.json": "505b9b4e6cd34a4427e2800e4ea1a3f63168f95f18b92c69d60f67106f95dda0",
-        "test.log": "b6e8cec073a52ed2b4a81b3c0447b52f11a027dca972938b969ca6db0fb4e140",
-        "baseline-sbom.json": "9fdaca66720551f0e3ccc1bdb7bfcbe8ac3ac638767b37d300127f91d258323e",
-        "package-after.json": "63f53d5a29af5f9647598e6e26e513b99ed0ce67de3c0b0b7b3b1a3dc67a707b",
-        "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
-        "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
+        "rescan.json": "ef41a11835c0e7ea3a7a3b97892dd63525c3a85e23b14cd63b0d2c820d3015da",
+        "baseline-grype.json": "0658a338dcbafacd3c48eeeff01a60dc91a17a78a2926daf2b6f324a13a34204",
+        "candidate-ranking.json": "85075e9bd7464739fef819cbe4f35b9f14a871ebcc4534de80defd0448811769",
+        "build.log": "51c72091ec82d49854d966238c7682ff5f0ac8583b37ab7fc8805014608699d5",
+        "selected-candidate.json": "a8930ae331563d11339a787f344ee527747987c5818f6fa63e1323e7eea9d2c5",
+        "metrics.json": "d53c79c3b976438dcb265a8e7013d8fa0a6d75e787ca9fb795a3b12835ff6602",
+        "test.log": "3a7f2fd8324b1096e2d8b2d5a5fe3d0d68e17612f072e7cdaa0f18b0236f9520",
+        "baseline-sbom.json": "22ee5c38c3609f4338d0b21b9671d7dd824fa706a2bfed20f7446cfc8390b305",
+        "package-after.json": "f1a86b545220e914aa42e93d2716166e4e0ed17157cc2f46e5455122b5c5f31b",
+        "llm-response.json": "a42776946092e263dee410d32867713472f6a8c1655a5d197466de3ccba0f955",
+        "llm-request.json": "afbff87277a83e7db4e6aba99ead44af2b67e8af0d9e46caeede2e285b97d5cd"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30619246825"
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
 }
 
 === EMPIRICAL EVIDENCE ===
@@ -50,9 +50,9 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 
 --- EXPERIMENT MANIFEST ---
 {
-    "scenario": "AF-07", // The unique identifier for this vulnerability scenario
+    "scenario": "AF-04", // The unique identifier for this vulnerability scenario
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30619246825", // The GitHub Actions run ID that executed this pipeline
+    "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
     "pipeline_version": "v2.0", // The version of the remediation pipeline engine
     "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
     "python": "3.12.x", // The Python version used by the pipeline
@@ -81,19 +81,19 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
     },
     "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
         "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "c512d561279af7850b8f9e3964f22b0c45b74f1c4e8a0e46cd27b17d4c5c4b4f",
-        "baseline-grype.json": "8e6e098665042ac0cb49f40fc096e649696133d7e637e1b793845ddf0f8b0b26",
-        "candidate-ranking.json": "642ffb4954b94b1bf1a122f6a6a3b2fb8b155b3f9b43572993773c79fc71d068",
-        "build.log": "ff851d808cd7edebe4f800c46d525e7915aef92e578b5660f79a56c319966833",
-        "selected-candidate.json": "e7c010710b05c4f8c8f34343b50de99fbb52b3429e06c636b2dcd2181a7f996c",
-        "metrics.json": "505b9b4e6cd34a4427e2800e4ea1a3f63168f95f18b92c69d60f67106f95dda0",
-        "test.log": "b6e8cec073a52ed2b4a81b3c0447b52f11a027dca972938b969ca6db0fb4e140",
-        "baseline-sbom.json": "9fdaca66720551f0e3ccc1bdb7bfcbe8ac3ac638767b37d300127f91d258323e",
-        "package-after.json": "63f53d5a29af5f9647598e6e26e513b99ed0ce67de3c0b0b7b3b1a3dc67a707b",
-        "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
-        "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
+        "rescan.json": "ef41a11835c0e7ea3a7a3b97892dd63525c3a85e23b14cd63b0d2c820d3015da",
+        "baseline-grype.json": "0658a338dcbafacd3c48eeeff01a60dc91a17a78a2926daf2b6f324a13a34204",
+        "candidate-ranking.json": "85075e9bd7464739fef819cbe4f35b9f14a871ebcc4534de80defd0448811769",
+        "build.log": "51c72091ec82d49854d966238c7682ff5f0ac8583b37ab7fc8805014608699d5",
+        "selected-candidate.json": "a8930ae331563d11339a787f344ee527747987c5818f6fa63e1323e7eea9d2c5",
+        "metrics.json": "d53c79c3b976438dcb265a8e7013d8fa0a6d75e787ca9fb795a3b12835ff6602",
+        "test.log": "3a7f2fd8324b1096e2d8b2d5a5fe3d0d68e17612f072e7cdaa0f18b0236f9520",
+        "baseline-sbom.json": "22ee5c38c3609f4338d0b21b9671d7dd824fa706a2bfed20f7446cfc8390b305",
+        "package-after.json": "f1a86b545220e914aa42e93d2716166e4e0ed17157cc2f46e5455122b5c5f31b",
+        "llm-response.json": "a42776946092e263dee410d32867713472f6a8c1655a5d197466de3ccba0f955",
+        "llm-request.json": "afbff87277a83e7db4e6aba99ead44af2b67e8af0d9e46caeede2e285b97d5cd"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30619246825" // Direct link to the successful GitHub Actions workflow run
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834" // Direct link to the successful GitHub Actions workflow run
 }
 
 --- PIPELINE METRICS ---
@@ -101,13 +101,13 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
   "application": "applications/airflow", // The target application being evaluated
   "ecosystem": "python", // Package manager ecosystem (e.g., npm, python)
   "candidate_count": 62, // Total number of vulnerabilities initially scanned
-  "selected_package": "mysql-connector-python", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-hgjp-83m4-h4fj", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2024-21272", // The standard MITRE CVE ID
+  "selected_package": "mako", // The specific vulnerable dependency chosen for remediation
+  "selected_cve": "GHSA-2h4p-vjrc-8xpq", // The GitHub Security Advisory ID
+  "api_cve_id": "CVE-2026-44307", // The standard MITRE CVE ID
   "severity": "high", // CVSS severity rating
-  "cvss": 7.5, // Common Vulnerability Scoring System score
-  "epss": 0.00513, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T09:19:36.803196+00:00", // Time the EPSS score was fetched
+  "cvss": 8.7, // Common Vulnerability Scoring System score
+  "epss": 0.00609, // Exploit Prediction Scoring System probability
+  "epss_timestamp": "2026-07-31T08:32:23.446153+00:00", // Time the EPSS score was fetched
   "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
   "dependency_type": "direct", // Whether the dependency is direct or transitive
   "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
@@ -119,7 +119,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
   "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
   "runtime_success": false, // Runtime tests status
   "lockfile_regenerated": false, // Whether a lockfile was regenerated
-  "execution_time_seconds": 24, // Total pipeline execution time in seconds
+  "execution_time_seconds": 25, // Total pipeline execution time in seconds
   "retry_count": 0, // Number of LLM retries needed
   "llm_iteration": 1, // The specific iteration of the LLM prompting
   "validation_stage_reached": "validator", // The furthest pipeline stage reached
@@ -127,28 +127,28 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 }
 
 --- LLM PROMPT ---
-Scenario ID: AF-07
+Scenario ID: AF-04
 Prompt Version: v1.1
 
 Scenario ID: UNKNOWN
 Prompt Version: v1.1
 
 ### Vulnerability Intelligence
-* Target Package: mysql-connector-python
-* Vulnerable Version: 8.4.0
-* CVE ID: GHSA-hgjp-83m4-h4fj
-* CVSS Score: 7.5
-* EPSS Probability: 0.00513
+* Target Package: mako
+* Vulnerable Version: 1.3.5
+* CVE ID: GHSA-2h4p-vjrc-8xpq
+* CVSS Score: 8.7
+* EPSS Probability: 0.00609
 * CISA KEV Status: False
 * Intelligence Retrieved On: 2026-05-18
-* Fixed Versions: ['9.1.0']
+* Fixed Versions: ['1.3.12']
 
 ### Dependency Context
 ```json
 {
-  "pip_show": "Name: mysql-connector-python\nVersion: 8.4.0\nSummary: MySQL driver written in Python\nHome-page: http://dev.mysql.com/doc/connector-python/en/index.html\nAuthor: Oracle and/or its affiliates\nAuthor-email: \nLicense: GNU GPLv2 (with FOSS License Exception)\nLocation: /home/runner/.local/lib/python3.12/site-packages\nRequires: \nRequired-by: apache-airflow-providers-mysql\n",
-  "pip_freeze": "apache-airflow-providers-mysql==5.6.1\nmysql-connector-python==8.4.0",
-  "requirements_txt": "apache-airflow-providers-mysql==5.6.1\nmysql-connector-python==8.4.0"
+  "pip_show": "Name: Mako\nVersion: 1.3.5\nSummary: A super-fast templating language that borrows the best ideas from the existing templating languages.\nHome-page: https://www.makotemplates.org/\nAuthor: Mike Bayer\nAuthor-email: mike@zzzcomputing.com\nLicense: MIT\nLocation: /home/runner/.local/lib/python3.12/site-packages\nRequires: MarkupSafe\nRequired-by: alembic\n",
+  "pip_freeze": "alembic==1.13.1\nMako==1.3.5\nMarkupSafe==2.1.5",
+  "requirements_txt": "alembic==1.13.1\nMako==1.3.5\nMarkupSafe==2.1.5"
 }
 ```
 
@@ -158,13 +158,13 @@ Based on the vulnerability intelligence and context:
 
 --- LLM OUTPUT ---
 {
-  "reasoning": "The target package mysql-connector-python version 8.4.0 is affected by vulnerability GHSA-hgjp-83m4-h4fj (CVSS 7.5). The issue has been patched in version 9.1.0. Because mysql-connector-python is a direct dependency declared in requirements.txt, performing a direct upgrade to the patched version 9.1.0 is the safest and most effective strategy, ensuring protection against supply chain risks while maintaining dependency resolution integrity.",
+  "reasoning": "Mako is directly declared in requirements.txt at version 1.3.5, which is affected by GHSA-2h4p-vjrc-8xpq. The fixed version is 1.3.12. Alembic 1.13.1 requires Mako >= 0.8.0, so upgrading Mako directly to 1.3.12 maintains compatibility across the dependency graph and safely resolves the vulnerability.",
   "strategy": "direct_upgrade",
   "remediation_type": "Direct Upgrade",
-  "recommended_package_version": "9.1.0",
+  "recommended_package_version": "1.3.12",
   "manifest_patch": {
     "operation": "bump",
-    "package": "mysql-connector-python",
-    "constraint": "9.1.0"
+    "package": "Mako",
+    "constraint": "1.3.12"
   }
 }

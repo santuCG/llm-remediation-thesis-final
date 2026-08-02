@@ -1,7 +1,7 @@
 {
-    "scenario": "JS-02",
+    "scenario": "JS-05",
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-    "workflow_commit": "30592636219",
+    "workflow_commit": "30592634834",
     "pipeline_version": "v2.0",
     "runner": "ubuntu-24.04",
     "python": "3.12.x",
@@ -29,20 +29,20 @@
         "grype": "0.112.0"
     },
     "artifact_hashes": {
-        "package-before.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "rescan.json": "5462e6bd6c5b0bdd80cfd82b64cb16e82cd596553d1c9b5c80444d6286a96e4f",
-        "baseline-grype.json": "586c8d5ffe231d4ac466b6d68316834cbe1db2e0d5b6d9733c8f8a627e4e247e",
-        "candidate-ranking.json": "531c92805a710ff257505fe91e8216566b55d18c709199d90c10909f70aaef79",
-        "build.log": "99e5f4b7d3f8e7a444c6bd49c974f395a20dc9765970c9b2457e59fe2098bf23",
-        "selected-candidate.json": "b3d1439d5788f9726b53eb1a94b2cd3588f1745d0f0f3909225cc7f22cd5d98a",
-        "metrics.json": "791e9129752da21324ab66c94058edc4c70860329c355d704aee11f0629c578f",
+        "package-before.json": "78b3a79ce23b3f62c4d4ca76d4de5a38dc99198caf110195369ca2278c2562db",
+        "rescan.json": "b12d40f10574fba3f11f614f32c0454b9225d5a58b54ad2226f26945da81bffe",
+        "baseline-grype.json": "54b742ca0949d9d3f5333e47ade6f25913fd90979c4e796fafd369f488703868",
+        "candidate-ranking.json": "4d59cc3a6852f9c33517ef8aa32a40546e7f4c550f20dcf8d775813f0a3d9b81",
+        "build.log": "dd19bde3ef68de869b4082c4c244e4364b6fd7b77b2a954f5d517a5c2bf1ec1e",
+        "selected-candidate.json": "39d0c6c7be730cf4e67cc3f36dac273f8efc3261920187638a912e632d9fff0b",
+        "metrics.json": "801b4a3f1eea21d389252fe8a61396599bbee8120e6262fe7876a5d9d66a0a8f",
         "test.log": "96217d1f729b5a73554ce34c1159abb37d7fceb8f90d0ffe975e0a260ecad560",
-        "baseline-sbom.json": "e2c074394bee778c5b3d5999f71d82e188c4952d4bfebbd084d277fab2eca38d",
-        "package-after.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "llm-response.json": "50c318765e9b39baa4d9b7704025a7d45a016e44793e407a128a591ae310192c",
-        "llm-request.json": "f856629d8e5a1209e75cdc0d8a4116f6dae84d170b258503b7c845d33eded1a7"
+        "baseline-sbom.json": "49cab5803f73761063e065f76294d27f95b63a371f0bc20325e6e111e62faa29",
+        "package-after.json": "535ffd02a9fd8d161d5facbe07f926e2fcece876964a928477c5a00512615f03",
+        "llm-response.json": "2afac1fe16c0bd03ab119cadd73df2c5a032a3d0d62f8c0344df98fc43b88f5e",
+        "llm-request.json": "5dfe170fb583b1cb903d33220d1b10077d92371712be3bc1b03980646e8010ca"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592636219"
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
 }
 
 === EMPIRICAL EVIDENCE ===
@@ -50,9 +50,9 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 
 --- EXPERIMENT MANIFEST ---
 {
-    "scenario": "JS-02", // The unique identifier for this vulnerability scenario
+    "scenario": "JS-05", // The unique identifier for this vulnerability scenario
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30592636219", // The GitHub Actions run ID that executed this pipeline
+    "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
     "pipeline_version": "v2.0", // The version of the remediation pipeline engine
     "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
     "python": "3.12.x", // The Python version used by the pipeline
@@ -80,20 +80,20 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
         "grype": "0.112.0"
     },
     "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
-        "package-before.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "rescan.json": "5462e6bd6c5b0bdd80cfd82b64cb16e82cd596553d1c9b5c80444d6286a96e4f",
-        "baseline-grype.json": "586c8d5ffe231d4ac466b6d68316834cbe1db2e0d5b6d9733c8f8a627e4e247e",
-        "candidate-ranking.json": "531c92805a710ff257505fe91e8216566b55d18c709199d90c10909f70aaef79",
-        "build.log": "99e5f4b7d3f8e7a444c6bd49c974f395a20dc9765970c9b2457e59fe2098bf23",
-        "selected-candidate.json": "b3d1439d5788f9726b53eb1a94b2cd3588f1745d0f0f3909225cc7f22cd5d98a",
-        "metrics.json": "791e9129752da21324ab66c94058edc4c70860329c355d704aee11f0629c578f",
+        "package-before.json": "78b3a79ce23b3f62c4d4ca76d4de5a38dc99198caf110195369ca2278c2562db",
+        "rescan.json": "b12d40f10574fba3f11f614f32c0454b9225d5a58b54ad2226f26945da81bffe",
+        "baseline-grype.json": "54b742ca0949d9d3f5333e47ade6f25913fd90979c4e796fafd369f488703868",
+        "candidate-ranking.json": "4d59cc3a6852f9c33517ef8aa32a40546e7f4c550f20dcf8d775813f0a3d9b81",
+        "build.log": "dd19bde3ef68de869b4082c4c244e4364b6fd7b77b2a954f5d517a5c2bf1ec1e",
+        "selected-candidate.json": "39d0c6c7be730cf4e67cc3f36dac273f8efc3261920187638a912e632d9fff0b",
+        "metrics.json": "801b4a3f1eea21d389252fe8a61396599bbee8120e6262fe7876a5d9d66a0a8f",
         "test.log": "96217d1f729b5a73554ce34c1159abb37d7fceb8f90d0ffe975e0a260ecad560",
-        "baseline-sbom.json": "e2c074394bee778c5b3d5999f71d82e188c4952d4bfebbd084d277fab2eca38d",
-        "package-after.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "llm-response.json": "50c318765e9b39baa4d9b7704025a7d45a016e44793e407a128a591ae310192c",
-        "llm-request.json": "f856629d8e5a1209e75cdc0d8a4116f6dae84d170b258503b7c845d33eded1a7"
+        "baseline-sbom.json": "49cab5803f73761063e065f76294d27f95b63a371f0bc20325e6e111e62faa29",
+        "package-after.json": "535ffd02a9fd8d161d5facbe07f926e2fcece876964a928477c5a00512615f03",
+        "llm-response.json": "2afac1fe16c0bd03ab119cadd73df2c5a032a3d0d62f8c0344df98fc43b88f5e",
+        "llm-request.json": "5dfe170fb583b1cb903d33220d1b10077d92371712be3bc1b03980646e8010ca"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592636219" // Direct link to the successful GitHub Actions workflow run
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834" // Direct link to the successful GitHub Actions workflow run
 }
 
 --- PIPELINE METRICS ---
@@ -101,16 +101,16 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
   "application": "applications/juice-shop", // The target application being evaluated
   "ecosystem": "npm", // Package manager ecosystem (e.g., npm, python)
   "candidate_count": 111, // Total number of vulnerabilities initially scanned
-  "selected_package": "handlebars", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-2w6w-674q-4c4q", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2026-33937", // The standard MITRE CVE ID
+  "selected_package": "jsonwebtoken", // The specific vulnerable dependency chosen for remediation
+  "selected_cve": "GHSA-c7hr-j4mj-j2w6", // The GitHub Security Advisory ID
+  "api_cve_id": "CVE-2015-9235", // The standard MITRE CVE ID
   "severity": "critical", // CVSS severity rating
-  "cvss": 9.8, // Common Vulnerability Scoring System score
-  "epss": 0.0178, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T00:14:52.392073+00:00", // Time the EPSS score was fetched
+  "cvss": 0.0, // Common Vulnerability Scoring System score
+  "epss": 0.08655, // Exploit Prediction Scoring System probability
+  "epss_timestamp": "2026-07-31T08:51:29.237771+00:00", // Time the EPSS score was fetched
   "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
   "dependency_type": "direct", // Whether the dependency is direct or transitive
-  "strategy": "transitive_override", // The remediation strategy chosen by the LLM
+  "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
   "remediation_type": "Transitive Override", // The human-readable strategy category
   "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
   "build_success": true, // Whether the application successfully built after remediation
@@ -127,85 +127,35 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 }
 
 --- LLM PROMPT ---
-Scenario ID: JS-02
+Scenario ID: JS-05
 Prompt Version: v1.1
 
 Scenario ID: UNKNOWN
 Prompt Version: v1.1
 
 ### Vulnerability Intelligence
-* Target Package: handlebars
-* Vulnerable Version: 4.7.7
-* CVE ID: GHSA-2w6w-674q-4c4q
-* CVSS Score: 9.8
-* EPSS Probability: 0.0178
+* Target Package: jsonwebtoken
+* Vulnerable Version: 0.1.0
+* CVE ID: GHSA-c7hr-j4mj-j2w6
+* CVSS Score: 0.0
+* EPSS Probability: 0.08655
 * CISA KEV Status: False
 * Intelligence Retrieved On: 2026-05-18
-* Fixed Versions: ['4.7.9']
+* Fixed Versions: ['4.2.2']
 
 ### Dependency Context
 ```json
 {
-  "npm_ls": {
-    "version": "15.3.0",
-    "name": "juice-shop",
-    "dependencies": {
-      "hbs": {
-        "version": "4.2.1",
-        "resolved": "https://registry.npmjs.org/hbs/-/hbs-4.2.1.tgz",
-        "overridden": false,
-        "dependencies": {
-          "handlebars": {
-            "version": "4.7.9",
-            "resolved": "https://registry.npmjs.org/handlebars/-/handlebars-4.7.9.tgz",
-            "overridden": true
-          }
-        }
-      }
-    }
-  },
-  "npm_explain": [
-    {
-      "name": "handlebars",
-      "version": "4.7.9",
-      "location": "node_modules/handlebars",
-      "isWorkspace": false,
-      "dependents": [
-        {
-          "type": "prod",
-          "name": "handlebars",
-          "spec": "4.7.9",
-          "from": {
-            "name": "hbs",
-            "version": "4.2.1",
-            "location": "node_modules/hbs",
-            "isWorkspace": false,
-            "dependents": [
-              {
-                "type": "prod",
-                "name": "hbs",
-                "spec": "^4.0.4",
-                "from": {
-                  "location": "/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop"
-                }
-              }
-            ]
-          }
-        }
-      ],
-      "dev": false,
-      "optional": false,
-      "devOptional": false,
-      "peer": false,
-      "bundled": false,
-      "overridden": true
-    }
-  ],
+  "npm_ls": "npm error code EOVERRIDE\nnpm error Override for jsonwebtoken@0.4.0 conflicts with direct dependency\n{\n  \"error\": {\n    \"code\": \"EOVERRIDE\",\n    \"summary\": \"Override for jsonwebtoken@0.4.0 conflicts with direct dependency\",\n    \"detail\": \"\"\n  }\n}\nnpm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-07-31T08_53_44_080Z-debug-0.log\n",
+  "npm_explain": "Command '['npm', 'explain', 'jsonwebtoken', '--json']' returned non-zero exit status 1.",
   "package_json": {
     "name": "juice-shop",
     "version": "15.3.0",
+    "dependencies": {
+      "jsonwebtoken": "0.4.0"
+    },
     "overrides": {
-      "handlebars": "4.7.9"
+      "jsonwebtoken": "4.2.2"
     }
   }
 }
@@ -214,7 +164,14 @@ Prompt Version: v1.1
 ### Previous Attempt Failure Logs
 The previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.
 ```
-              17.16 kB
+..
+✔ Index html generation complete.
+
+Initial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size
+vendor.js           | vendor                                |   1.36 MB |               306.31 kB
+styles.css          | styles                                | 614.90 kB |                32.22 kB
+main.js             | main                                  | 479.20 kB |                81.16 kB
+polyfills.js        | polyfills                             |  53.67 kB |                17.16 kB
 runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
 
 | Initial Total                         |   2.48 MB |               438.33 kB
@@ -232,17 +189,11 @@ common.js           | common                                |   9.04 kB |       
 859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
 472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
 
-Build at: 2026-07-31T00:19:43.151Z - Hash: eec0da7fb4f70cee - Time: 74275ms
+Build at: 2026-07-31T08:53:00.777Z - Hash: eec0da7fb4f70cee - Time: 53703ms
 
 > juice-shop@15.3.0 build:server
 > tsc
 
-node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
-node_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.
-node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
-node_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.
-node_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.
-node_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.
 
 ```
 
@@ -252,13 +203,13 @@ Based on the vulnerability intelligence and context:
 
 --- LLM OUTPUT ---
 {
-  "reasoning": "The vulnerability GHSA-2w6w-674q-4c4q (CVSS 9.8) in handlebars allows arbitrary code execution and prototype pollution in versions prior to 4.7.9. In this project, handlebars is introduced transitively via the top-level dependency hbs. To remediate the security risk while preserving application compatibility and avoiding type-definition compilation errors, enforcing an override for handlebars to version 4.7.9 is the safest and most effective strategy.",
-  "strategy": "transitive_override",
-  "remediation_type": "Transitive Override",
-  "recommended_package_version": "4.7.9",
+  "reasoning": "The target package 'jsonwebtoken' is specified directly under 'dependencies' in package.json as '0.4.0'. The previous attempt used npm overrides to force version '4.2.2', which caused npm to fail with an EOVERRIDE error because overrides cannot conflict with direct dependency declarations. The correct remediation is a Direct Upgrade of 'jsonwebtoken' to fixed version '4.2.2' directly in 'dependencies', avoiding npm override conflicts.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "4.2.2",
   "manifest_patch": {
-    "operation": "add_override",
-    "package": "handlebars",
-    "constraint": "4.7.9"
+    "operation": "bump",
+    "package": "jsonwebtoken",
+    "constraint": "4.2.2"
   }
 }

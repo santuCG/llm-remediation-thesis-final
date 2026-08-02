@@ -1,7 +1,7 @@
 {
     "scenario": "AF-07",
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-    "workflow_commit": "30619246825",
+    "workflow_commit": "30592634834",
     "pipeline_version": "v2.0",
     "runner": "ubuntu-24.04",
     "python": "3.12.x",
@@ -42,7 +42,7 @@
         "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
         "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30619246825"
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
 }
 
 === EMPIRICAL EVIDENCE ===
@@ -52,7 +52,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 {
     "scenario": "AF-07", // The unique identifier for this vulnerability scenario
     "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30619246825", // The GitHub Actions run ID that executed this pipeline
+    "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
     "pipeline_version": "v2.0", // The version of the remediation pipeline engine
     "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
     "python": "3.12.x", // The Python version used by the pipeline
@@ -93,7 +93,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
         "llm-response.json": "f42133464583b97e6b8699cb332f0298d144554e00ad37a44237fae58f15d1c8",
         "llm-request.json": "0063f3f19a02c81a69263f9c675805957c3f6a07af8ffbc927d67626b786b16b"
     },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30619246825" // Direct link to the successful GitHub Actions workflow run
+    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834" // Direct link to the successful GitHub Actions workflow run
 }
 
 --- PIPELINE METRICS ---
