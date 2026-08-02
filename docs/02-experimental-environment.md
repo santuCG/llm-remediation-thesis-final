@@ -10,7 +10,7 @@ Unlike container image scanning workflows, the definitive experimental evaluatio
 
 | Component | Version |
 | :--- | :--- |
-| **Host Operating System** | Ubuntu 24.04 (GitHub Actions Runner) |
+| **Host Operating System** | `ubuntu-latest` (GitHub Actions Runner; resolved to Ubuntu 24.04 at the time the frozen dataset was generated — this is GitHub's floating runner label, not a strictly pinned OS version) |
 | **Node.js** | 18.x |
 | **npm** | 9.x |
 | **Git** | 2.47.1 |
