@@ -40,7 +40,7 @@
         "baseline-sbom.json": "dd2db0f6ba18b5d860d00d5ed65e61e5b5964cae67ccfb03bf0f430d04c16826",
         "package-after.json": "dfa019fc3507b32db6c6a043b0b48e6dd0011346bc5e87fb1eabfa6bdd848dc3",
         "llm-response.json": "e069fa059e2554a61c39fff28793e377cda76ef05679adf0f63aee8a79c74cf2",
-        "llm-request.json": "19598ede197bd2b10d06e6041eb95ac0698840e23385e6b05674fd6afabc5b72"
+        "llm-request.json": "68ea389ec71f7b9a2022923e89aa7cd9e00daa2adc8df40c60d117164ae1757b"
     },
     "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30574548185"
 }
@@ -91,7 +91,7 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
         "baseline-sbom.json": "dd2db0f6ba18b5d860d00d5ed65e61e5b5964cae67ccfb03bf0f430d04c16826",
         "package-after.json": "dfa019fc3507b32db6c6a043b0b48e6dd0011346bc5e87fb1eabfa6bdd848dc3",
         "llm-response.json": "e069fa059e2554a61c39fff28793e377cda76ef05679adf0f63aee8a79c74cf2",
-        "llm-request.json": "19598ede197bd2b10d06e6041eb95ac0698840e23385e6b05674fd6afabc5b72"
+        "llm-request.json": "68ea389ec71f7b9a2022923e89aa7cd9e00daa2adc8df40c60d117164ae1757b"
     },
     "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30574548185" // Direct link to the successful GitHub Actions workflow run
 }
@@ -130,13 +130,13 @@ NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appende
 Scenario ID: AF-01
 Prompt Version: v1.1
 
-Scenario ID: UNKNOWN
+Scenario ID: AF-01
 Prompt Version: v1.1
 
 ### Vulnerability Intelligence
 * Target Package: redshift-connector
 * Vulnerable Version: 2.1.1
-* CVE ID: GHSA-29h4-r29x-hchv
+* CVE ID: GHSA-29h4-r29x-hchv (CVE-2026-8838)
 * CVSS Score: 9.8
 * EPSS Probability: 0.00808
 * CISA KEV Status: False
