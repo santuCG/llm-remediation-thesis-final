@@ -44,7 +44,7 @@ grype sbom:baseline-lockfile-sbom.json \
   --file baseline-lockfile-grype.json
 ```
 
-> **The "Cold Start" Database Clause:** To ensure exact reproducibility of the scanner findings, researchers must manually import the Grype vulnerability database snapshot from 2026-07-08 using the `grype db import` command (as documented in `preregistration/MASTER_METHODOLOGY_RECORD.md`) before running the scan with auto-updates disabled.
+> **Grype database was not pinned for the frozen dataset.** The pre-registration (`preregistration/MASTER_METHODOLOGY_RECORD.md`) originally specified that researchers should import a specific Grype database snapshot via `grype db import` before scanning, to maximise reproducibility of exact scanner-finding counts. This was not implemented: neither CI workflow (`generic-remediation.yml` nor `grype-baseline.yml`) contains a database-import step; every scan ran against whichever Grype vulnerability database was live at CI-run time (`GRYPE_DB_VALIDATE_AGE=false` only suppresses the staleness check — it does not pin a snapshot). This deviation is recorded in `preregistration/PRE_REGISTRATION_AMENDMENT.md`. Consequently, a later re-run of this workflow should not be expected to reproduce the exact same absolute scanner-finding counts (see the note above this clause); the reproducible signal is target-CVE eradication, not the aggregate count.
 
 ---
 
