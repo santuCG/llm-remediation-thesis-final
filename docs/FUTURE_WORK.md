@@ -1,5 +1,7 @@
 # Future Work
 
+> **Superseded (2026-08-02):** the consolidated, thesis-facing future-work list is now `../THESIS_FUTURE_WORK.md` at the repository root, with the full 4-category classification in `THESIS_IMPROVEMENTS.md`. This file is retained as the original audit-time record.
+
 Research Enhancements identified during the pre-freeze reproducibility audit (see `docs/audit/`). Each was deliberately **not** implemented before freeze because it changes what the LLM is asked to produce, what information it has access to, or how the experiment's success criteria are defined — implementing any of them would mean evaluating a different experiment than the one this thesis reports.
 
 ---
