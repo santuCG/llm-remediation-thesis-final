@@ -15,7 +15,7 @@ The initial prototype methodology successfully demonstrated the conceptual viabi
 
 1.  **Over-reliance on Native Scanners for Resolution Detection**: 
     *   *Flaw*: The prototype depended on OS-level SBOM tooling (`syft`/`grype`) rather than deep-native ecosystem parsers (e.g., `npm audit --json`). These scanners lack the capability to compute logical `ERESOLVE` pathing conflicts inherent to native package managers.
-    *   *Evolution*: The methodology was updated to prioritize native dependency management logic.
+    *   *Evolution*: The methodology was updated to prioritise native dependency management logic.
 2.  **Shallow ERESOLVE Detection Protocol**: 
     *   *Flaw*: Failing native installations were merely classified as generic failures without capturing the underlying package manager exception classes (`ERESOLVE` or `EOVERRIDE`).
     *   *Evolution*: The pipeline was structured to parse standard error outputs directly from the native tools.

@@ -6,7 +6,7 @@
 
 The rigorous Manual Validation Protocol ensures deterministic verification by executing each topological constraint exactly as a human developer would. However, modern DevSecOps environments demand automation.
 
-This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automated Orchestration Pipeline** built on GitHub Actions. It proves that the entire experimental methodology—from establishing the vulnerable baseline to attempting naive scanner fixes, invoking the LLM layer, and validating the final constraint-aware remediation—is translatable into an autonomous CI/CD environment.
+This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automated Orchestration Pipeline** built on GitHub Actions. It demonstrates that the experimental methodology—from establishing the vulnerable baseline to attempting naive scanner fixes, invoking the LLM layer, and validating the final constraint-aware remediation—is translatable into an autonomous CI/CD environment for this scenario.
 
 This pipeline was designed specifically for Scenario JS-01 (`vm2` / CVE-2023-32314), matching the exact parameters and outcomes observed during the manual validation.
 
@@ -48,7 +48,7 @@ A core requirement for this pipeline was maintaining **scientific determinism** 
 
 1. **Pinned Actions:** All third-party GitHub Actions are heavily version-pinned (e.g., `actions/checkout@v4.1.7`). Supply chain attacks on CI/CD pipelines often exploit floating tags. By pinning the exact semantic version, the pipeline is configured to execute precisely the same logic today as it will years from now.
 2. **Deterministic Graph Generation:** `anchore/sbom-action` was replaced with `@cyclonedx/cyclonedx-npm`. Relying on Syft to parse node modules blindly led to inconsistencies. Using CycloneDX leverages NPM's native graph resolution, resulting in a highly accurate SBOM.
-3. **Resilient Assertions:** Previous `grep`-based assertions on terminal tables were highly susceptible to ANSI color codes and formatting changes. Shifting to Grype's `-o json` output and validating strictly via `jq` provides a highly robust, deterministic validation layer.
+3. **Resilient Assertions:** Previous `grep`-based assertions on terminal tables were susceptible to ANSI color codes and formatting changes. Shifting to Grype's `-o json` output and validating strictly via `jq` provides a more deterministic validation layer.
 
 ## 4. Proper Analysis: Manual vs. Pipeline Results
 
@@ -59,8 +59,8 @@ When executed in the GitHub Actions runner, this 12-phase pipeline provided genu
 | **Vulnerable Baseline** | `npm ci` succeeds. Grype flags `vm2` as vulnerable to `GHSA-whpj-8f3w-67p5`. | **Pass** (Phase 1-4). `jq` successfully detected the vulnerability in `baseline-sbom.json`. | 100% Correlation |
 | **Scanner Remediation** | Naive `npm install` succeeds silently (exit code 0) but causes dependency shadowing. Rescan shows vulnerability remains. | **Fail** (Phase 5-7). The pipeline installs the package, but the `jq` assertion confirms the CVE is still present in `grype-scanner.json`. | 100% Correlation |
 | **LLM Remediation** | `overrides` applied to `package.json` resolves the topological constraint without build failure. | **Pass** (Phase 9-10). Node script injected the override, and `npm install` successfully resolved the graph. | 100% Correlation |
-| **Verification** | Re-scanning the SBOM proves eradication. | **Pass** (Phase 11-12). `jq` confirmed the CVE was eliminated from the `llm-sbom.json` output, and exit codes accurately reflected success. | 100% Correlation |
+| **Verification** | Re-scanning the SBOM confirms eradication. | **Pass** (Phase 11-12). `jq` confirmed the CVE was eliminated from the `llm-sbom.json` output, and exit codes accurately reflected success. | 100% Correlation |
 
 ### Conclusion
 
-The CI/CD Proof of Concept solidifies that the constraint-aware methodology is not just theoretically sound, but **highly automatable**. The pipeline effectively proves that LLM-derived fixes (`overrides`/`resolutions`) can be programmatically injected into DevSecOps pipelines, gracefully bypassing standard SCA limitations, and providing cryptographically verifiable proof of vulnerability eradication.
+The CI/CD Proof of Concept indicates that the constraint-aware methodology is not only theoretically sound but automatable for this scenario. The pipeline shows that LLM-derived fixes (`overrides`/`resolutions`) can be programmatically injected into DevSecOps pipelines and that the resulting vulnerability eradication can be verified through deterministic scanner output.
