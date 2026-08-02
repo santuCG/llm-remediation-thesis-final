@@ -1,0 +1,47 @@
+# AF-06 / JS-06 Rerun Attempt (2026-08-02)
+
+**Trigger.** `PRE_REGISTRATION_AMENDMENT.md` previously disclosed that AF-06 and JS-06's executed evidence do not match their locked pre-registered targets, and stated the origin "could not be determined with certainty from committed history alone." This document records a subsequent feasibility check, a real rerun attempt, its outcome, and a confirmed root cause for the original mismatch.
+
+## 1. Root cause of the original mismatch — now confirmed
+
+`profiles/AF-06.yaml`, retrieved from the commit that first introduced it (`31bae4fc`, from an early per-scenario-workflow architecture later replaced by the current `generic-remediation.yml`), already contained `target_package: werkzeug` / `target_cve: CVE-2024-34069` — byte-identical to `profiles/AF-09.yaml`. `profiles/JS-06.yaml` similarly contained `target_package: lodash` / `target_cve: CVE-2021-23337` from its first commit. This is a scenario-profile copy-paste/templating error at initial creation time, not a later pipeline defect, not a deliberate substitution, and not something introduced by the later consolidation into today's two generic workflows. Both profile files and the workflow files that referenced them were deleted when the pipeline was consolidated; the wrong values had already produced the executed evidence before that happened.
+
+## 2. Feasibility check (performed before any rerun)
+
+Per the repository owner's explicit criteria (package availability, version installability, current pipeline support), checked directly against the live PyPI/npm registries and the current pipeline code:
+
+| Check | AF-06 (jinja2) | JS-06 (flatted) |
+|---|---|---|
+| Original package still available | Yes (PyPI) | Yes (npm) |
+| Vulnerable version still installable | Yes — `3.1.4`, not yanked | Yes — `3.2.9`, not deprecated |
+| Fixed version still available | Yes — `3.1.5`, not yanked | Yes — `3.4.2`, not deprecated |
+| Scenario definition still correct | Yes — `results/scenarios/final_18_scenarios.json` already has the correct entry for both, matching pre-registration exactly | Yes — same |
+
+This check passed, so a rerun was attempted per the owner's explicit instruction ("if the answer is yes, then rerun them").
+
+## 3. Rerun attempt
+
+Both scenarios were dispatched via `generic-remediation.yml` with the correct pre-registered `target_cve` and `scenario_id` inputs:
+- AF-06: `app_dir=applications/airflow`, `target_cve=CVE-2024-56326`, `scenario_id=AF-06` — CI run [30756155220](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30756155220), concluded `success`.
+- JS-06: `app_dir=applications/juice-shop`, `target_cve=CVE-2026-33228`, `scenario_id=JS-06` — CI run [30756158221](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30756158221), concluded `failure` (workflow-level; see below for what this reflects).
+
+**Before dispatching, the existing (mismatched) `results/execution_evidence/AF-06` and `results/execution_evidence/JS-06` were copied to a precautionary archive directory.** No historical evidence was modified at any point in this process — `git status` on both paths before, during, and after this rerun attempt shows zero changes. The precautionary archive was removed afterward (§5) because the rerun did not produce a replacement, so it never became part of the evidence chain and had no further purpose.
+
+## 4. Outcome — reruns did not reproduce the original pre-registered targets
+
+Both reruns selected the **same wrong package/CVE as the original, pre-existing (mismatched) evidence** — `werkzeug`/`CVE-2024-34069` for AF-06, `lodash`/`CVE-2021-23337` for JS-06 — despite the correct `target_cve` inputs. Root cause, confirmed by direct inspection of the CI runs' evidence artifacts:
+
+- **`scripts/remediation/generic_remediation.py`** always auto-selects the single highest-priority (KEV → EPSS → CVSS descending) candidate from a fresh Grype scan of the ecosystem's current baseline. **`scripts/remediation/prioritize.py`** does contain a `TARGET_CVE` override mechanism (lines 161–178) that searches the already-filtered candidate list for a match — this mechanism is implemented correctly, but it can only select a candidate that is present in that filtered list.
+- **jinja2 (AF-06):** the fresh scan does detect `jinja2@3.1.4` as vulnerable to `GHSA-q2x7-8rv6-6q7h` (CVE-2024-56326) with a fix available (`3.1.5`) — but Grype's **current, live** database now classifies this advisory's severity as **"Medium,"** not "High." The pipeline's candidate filter requires `severity >= High`, so jinja2 never enters the candidate list the `TARGET_CVE` override searches within.
+- **flatted (JS-06):** the fresh scan does **not detect `flatted` as vulnerable at all** — zero matches for the package in `baseline-grype.json`. Grype's current, live database no longer flags any installed version of `flatted` under this advisory.
+- The originally pre-registered CVSS scores (7.8 for AF-06, 8.9 for JS-06, both would map to "High" or above) were captured from a 2026-07-08 snapshot per `PRE_REGISTRATION_AMENDMENT.md` §"Data Snapshot." Grype's vulnerability database is live and unpinned (a limitation already disclosed elsewhere in this repository — see `docs/06-reproducibility.md`, `THESIS_LIMITATIONS.md` item 4); this is a second, independently observed instance of that same disclosed limitation, this time causing an actual scenario-selection failure rather than only a scanner-finding-count drift.
+
+**Conclusion, per the repository owner's own stated criterion:** these two scenarios are not reproducible against their originally pre-registered targets using the current pipeline, because the live vulnerability-scanning ecosystem state that would need to reclassify or redetect these specific advisories is no longer available — not because the underlying package/version state is unavailable. Per the owner's explicit instruction, this makes keeping the discrepancy honestly documented the scientifically stronger choice over forcing or manufacturing a match.
+
+## 5. Disposition of the two CI runs
+
+Neither rerun corresponds to a valid AF-06 or JS-06 scenario execution (they selected the same off-target package/CVE as the original mismatched evidence, adding no corrective value), so their output was **not** merged into `results/execution_evidence/AF-06` or `results/execution_evidence/JS-06`. Those directories remain exactly as they were before this rerun attempt — unmodified historical evidence. The precautionary archive made before the attempt (`archive/AF-06_JS-06_pre_rerun_evidence_20260802_161344/`, an exact copy of the unchanged originals) was removed after the attempt concluded, since it was never needed and never became part of the evidence chain. The two CI run URLs above remain the verifiable record of the rerun attempt itself.
+
+## 6. Status
+
+The AF-06/JS-06 evidence-identity mismatch remains an **open, disclosed item** — now with a confirmed root cause (§1) and a confirmed current-infeasibility finding (§4), superseding the prior "origin could not be determined with certainty" language. The remedy decision (formally amend the pre-registration to document these two scenarios' actual executed identity, versus some other resolution) remains for the repository owner.
