@@ -42,6 +42,8 @@ Early-stage methodologies, proof-of-concept workflows, and manual testing protoc
 *   [docs/08-cicd-pipeline-poc.md](docs/08-cicd-pipeline-poc.md)
 *   [docs/methodology_evolution_record.md](docs/methodology_evolution_record.md)
 
-## 8. Where are the zero-trust audit reports?
-The final, independent, zero-trust cryptographic and methodological verification reports conducted prior to academic submission are located in:
-*   [audit_reports/](audit_reports/)
+## 8. Where are the independent audit reports?
+The independent reproducibility and methodological verification reports conducted prior to academic submission are located in:
+*   [docs/audit/](docs/audit/)
+
+These reports document the audit process itself and should be treated as a historical record of findings, not as evidence — the underlying claims are verified against the primary sources listed above.

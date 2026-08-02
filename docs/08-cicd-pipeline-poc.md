@@ -10,9 +10,8 @@ This document outlines the **Proof of Concept (PoC) for a Full 12-Phase Automate
 
 This pipeline was designed specifically for Scenario JS-01 (`vm2` / CVE-2023-32314), matching the exact parameters and outcomes observed during the manual validation.
 
-## 2. The 12-Phase Execution Pipeline
+The workflow this PoC describes is archived at `.github/workflows/archive/js-01-validation.yml` (superseded by the generic, scenario-parameterised `.github/workflows/generic-remediation.yml` described in `docs/04-experimental-methodology.md`). It is divided into 12 execution phases spanning three distinct stages of the validation protocol. To ensure readability and reproducibility, all GitHub Actions plugins are explicitly version-pinned.
 
-The GitHub Actions workflow (`.github/workflows/js-01-validation.yml`) is divided into 12 execution phases spanning three distinct stages of the validation protocol. To ensure readability and reproducibility, all GitHub Actions plugins are explicitly version-pinned.
 ## 2. CI/CD Orchestration (12 Phases)
 
 **Status:** SUCCESS
@@ -60,7 +59,7 @@ When executed in the GitHub Actions runner, this 12-phase pipeline provided genu
 | **Vulnerable Baseline** | `npm ci` succeeds. Grype flags `vm2` as vulnerable to `GHSA-whpj-8f3w-67p5`. | **Pass** (Phase 1-4). `jq` successfully detected the vulnerability in `baseline-sbom.json`. | 100% Correlation |
 | **Scanner Remediation** | Naive `npm install` succeeds silently (exit code 0) but causes dependency shadowing. Rescan shows vulnerability remains. | **Fail** (Phase 5-7). The pipeline installs the package, but the `jq` assertion confirms the CVE is still present in `grype-scanner.json`. | 100% Correlation |
 | **LLM Remediation** | `overrides` applied to `package.json` resolves the topological constraint without build failure. | **Pass** (Phase 9-10). Node script injected the override, and `npm install` successfully resolved the graph. | 100% Correlation |
-| **Verification** | Re-scanning the SBOM proves eradication. | **Pass** (Phase 11-12). `jq` confirmed the CVE was eliminated from the `llm-sbom.json` output, and exit codes accurately reflected success. | 100% Correlation |ation |
+| **Verification** | Re-scanning the SBOM proves eradication. | **Pass** (Phase 11-12). `jq` confirmed the CVE was eliminated from the `llm-sbom.json` output, and exit codes accurately reflected success. | 100% Correlation |
 
 ### Conclusion
 
