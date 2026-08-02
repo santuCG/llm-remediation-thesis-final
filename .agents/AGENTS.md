@@ -10,8 +10,6 @@
 
 5. **Strict Retries:** Maximum ONE retry. Flow: LLM Recommendation #1 -> Apply -> Verify/Build/Test. If failure occurs at any stage -> Capture Logs -> LLM Recommendation #2 (Refined) -> Apply -> Verify/Build/Test. If failure again -> Fail Experiment.
 
-6. **Enriched Context:** Always collect deep context for the LLM: 
-pm ls --json, 
-pm explain, package.json, package-lock.json, grype.json, SBOM, and build logs.
+6. **Enriched Context:** Always collect deep context for the LLM: `npm ls --json`, `npm explain`, package.json, package-lock.json, grype.json, SBOM, and build logs.
 
 7. **Enriched Metrics:** Ensure metrics.json captures Application, Ecosystem, Selected Package, CVE, Severity, CVSS, EPSS, KEV, Dependency Type, Strategy, Confidence, Remediation Type, Boolean Success Flags, lockfile_regenerated, execution_time_seconds, retry_count, llm_iteration, and failure_stage.

@@ -39,9 +39,10 @@ For each item: **motivation · scientific benefit · effort · methodology impac
 
 *(These change the independent variable or the success definition. Implementing any of them makes new results **non-comparable** to the frozen 18-scenario dataset — this is the core reason they are deferred, not effort.)*
 
+**Correction (added during documentation synchronisation, 2026-08-02):** the "Retry prompt fed with failure logs" row that previously appeared here was a classification error — this mechanism was already implemented on 2026-07-24 (`scripts/remediation/retry_remediation.py`, `scripts/remediation/llm_reasoner.py`), before this document was written, and is directly evidenced in the frozen dataset (`results/execution_evidence/JS-05/llm-request.json`, `JS-08/llm-request.json`). It is documented as current methodology in `docs/03-llm-configuration.md` and `docs/04-experimental-methodology.md`, and removed from the table below.
+
 | Extension | Motivation | Scientific benefit | Effort | Methodology impact | Evidence impact | Rerun | Recommendation |
 |---|---|---|---|---|---|---|---|
-| **Retry prompt fed with failure logs** | Second attempt could self-correct from diagnostics | Higher retry success | Medium | **High** — changes what the LLM sees on retry | Invalidates comparability for any retried scenario | **Yes (≥ retried scenarios)** | Deferred — Future Work |
 | **LLM confidence scoring** | Enables confidence↔correctness calibration study | New analysis axis | Medium | **High** — changes the response schema/what LLM produces | All 18 for comparability | **Yes (all 18)** | Deferred — Future Work |
 | **Improved prompt engineering** | Prompt structure may lift success rate | Potentially stronger result | Med–High | **High** — the prompt *is* the methodology | All 18 | **Yes (all 18)** | Deferred — Future Work |
 | **Remove the fixed-version hint from the prompt** | Tests whether the LLM can find the fix unaided (harder, more scientifically interesting) | Stronger claim of LLM reasoning | Medium | **High** — changes the task given to the LLM | All 18 | **Yes (all 18)** | Deferred — Future Work |
