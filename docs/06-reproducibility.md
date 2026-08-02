@@ -159,26 +159,28 @@ Only conclusions directly supported by deterministic experimental evidence shoul
 
 # Research Artifact Organisation
 
-The recommended repository layout is shown below.
+The repository layout is shown below.
 
 ```text
 .
-├── applications/
+├── applications/                    # Target applications (juice-shop, airflow) + pinned evidence lockfiles
 │
-├── experiment/
-│   ├── raw_outputs/
-│   ├── remediation_reports/
-│   └── results/
+├── results/
+│   ├── scenarios/                   # The 18 pre-registered scenario definitions
+│   ├── execution_evidence/          # Per-scenario raw evidence (SBOMs, Grype scans, LLM I/O, metrics, manifests)
+│   └── reproducibility_verification/# Post-fix deterministic-baseline re-run evidence (Phase 5 audit)
 │
-├── preregistration/
+├── preregistration/                 # Locked scenario/methodology pre-registration + amendments
 │
-├── scripts/
+├── scripts/                         # remediation/ (CI-invoked pipeline) + baseline/ + orchestration tooling
 │
-├── analysis/
+├── .github/workflows/               # generic-remediation.yml (LLM pipeline) + grype-baseline.yml (deterministic)
 │
-├── manual-validation-docs/
+├── docs/                            # Canonical methodology, results, reproducibility, and audit/ trail
 │
-└── README.md
+├── archive/                         # Superseded drafts and legacy artifacts (not part of the active dataset)
+│
+└── README.md                        # Navigation hub
 ```
 
 Each experimental scenario should preserve:
