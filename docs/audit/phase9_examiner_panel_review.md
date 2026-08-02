@@ -62,7 +62,7 @@ Findings are classified **Blocker** (undermines validity/reproducibility/integri
 
 ### [OBSERVATION] C1 — Provenance corrections verified against primary source
 - **Claim:** The 9 previously-fabricated `repository_commit` hashes and JS-09's new hash resolve to real commits.
-- **Primary evidence:** `git cat-file -e 241b549e07430f9520d1a116360ae194d1ba84f6` and `git cat-file -e d0748e0ac94fe75227d3c57303dfc59ffac78692` both succeed; `results/execution_evidence/AF-05/experiment_manifest.json` now carries the former. (Not taken from `docs/audit/` — re-verified here.)
+- **Primary evidence:** `git cat-file -e 241b549e07430f9520d1a116360ae194d1ba84f6` and `git cat-file -e d0748e0ac94fe75227d3c57303dfc59ffac78692` both succeed; `results/execution_evidence/AF-05/experiment_manifest.json` now carries the former. (Not taken from `docs/audit/` — re-verified here.) **[Superseded 2026-08-03: AF-05's `repository_commit` was subsequently corrected to `796ba575b26a4038bd2393d9f09c6328f06661b1`, its own genuine commit — see `docs/audit/repository_commit_correction_2026-08-03.md`. The commit cited here, while real and git-verified as this review states, was the wrong scenario's commit.]**
 
 ### [OBSERVATION] C2 — Baseline reproducibility fix is real
 - **Claim:** The JS baseline is now deterministic across runs.
