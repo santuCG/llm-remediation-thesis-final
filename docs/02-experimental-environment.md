@@ -21,7 +21,7 @@ Unlike container image scanning workflows, the definitive experimental evaluatio
 
 The software versions above were recorded immediately before the experiments commenced and remained unchanged throughout all validation stages.
 
-> **Note on Node.js Engine Strictness:** The Node.js version (v24.18.0) is newer than Juice Shop's declared engine range (`16 - 20`). This produces `EBADENGINE` warnings during `npm` execution. This does not invalidate the experiment, as `npm` successfully resolves and generates the dependency graph despite the warning.
+> **Note on environments and Node.js engine strictness.** The frozen eighteen-scenario dataset was generated in the CI environment (GitHub Actions, Node.js 18.x, as pinned in `.github/workflows/`), which is the environment recorded in the table above and confirmed by the CI run identifiers in each `experiment_manifest.json`. Separate local exploratory runs used Node.js v24.18.0, which is newer than Juice Shop's declared engine range (`16 - 20`) and produces `EBADENGINE` warnings during `npm` execution. In both environments `npm` successfully resolves and generates the dependency graph despite such warnings, so they do not invalidate the experiment; the specific Node/npm version is not treated as a variable of the study.
 
 ---
 
@@ -265,11 +265,11 @@ The following controls were applied before every experimental execution:
 - Identical model configuration.
 - Identical validation methodology.
 
-When package manager constraints prevented successful remediation (for example, npm `EOVERRIDE`), the experiment was halted.
+When package-manager constraints prevented successful remediation during the initial local experiments (for example, npm `EOVERRIDE`), that initial attempt was stopped before validation.
 
-The observed package manager behaviour was recorded as experimental evidence rather than bypassed.
+The observed package-manager behaviour was recorded as experimental evidence rather than bypassed.
 
-Only after introducing a documented constraint-aware remediation workflow was the experiment repeated under controlled conditions.
+A documented constraint-aware remediation workflow and a single-retry mechanism were then introduced, and the final CI-executed scenarios ran under these controlled conditions; where the constraint recurred (JS-05, JS-08) it was resolved automatically on retry and the scenario reached a validated remediation.
 
 ---
 

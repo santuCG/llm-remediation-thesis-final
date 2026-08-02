@@ -185,7 +185,7 @@ The generated recommendation is translated into package manager operations.
 
 ### Initial Observation
 
-During the initial experiments, the LLM-generated overrides were injected directly into the project manifest.
+During the initial, local development experiments (Node.js v24.18.0), the LLM-generated overrides were injected directly into the project manifest.
 
 Package resolution terminated with:
 
@@ -193,13 +193,11 @@ Package resolution terminated with:
 npm ERR! code EOVERRIDE
 ```
 
-This behaviour was recorded as an observed experimental result.
+This behaviour was recorded as an observed experimental result, and that initial attempt was not carried through to validation.
 
-The experiment was halted without further validation.
+The observation demonstrated that npm prevents an `overrides` entry from replacing a package that is *also declared as a direct dependency* unless the corresponding root dependency declaration is updated simultaneously. (The npm `overrides` mechanism has enforced this since npm 8.3; the specific npm version is not treated as a variable of the study.)
 
-The observation demonstrated that npm v11 prevents overrides from replacing an existing direct dependency unless the corresponding root dependency declaration is updated simultaneously.
-
-Rather than treating this behaviour as an LLM failure, the package manager constraint was incorporated into the experimental methodology.
+Rather than treating this behaviour as an LLM failure, the package-manager constraint was incorporated into the experimental methodology through the constraint-aware injection procedure below and the single-retry mechanism. In the final, CI-executed dataset (Node.js 18.x) this constraint was encountered again and resolved automatically: in scenarios JS-05 and JS-08 the first attempt raised `EOVERRIDE`, that failure was supplied to the retry, and the LLM revised its strategy and reached a validated remediation (see `results/execution_evidence/JS-05/`).
 
 ---
 
