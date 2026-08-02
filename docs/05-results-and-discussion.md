@@ -87,12 +87,14 @@ An important observation during manual inspection of the execution artifacts was
 
 The controlled comparison between the baseline and remediated SBOMs produced the following measurements.
 
+*(Verified directly against `results/execution_evidence/JS-01/baseline-grype.json` and `rescan.json`; JS-08 reports identical totals, since both scenarios share the same OWASP Juice Shop baseline lockfile.)*
+
 | Metric | Baseline | Remediated |
 | :--- | :---: | :---: |
-| **Total detected scanner findings** | 182 | 181 |
-| **npm ecosystem scanner findings** | 182 | 181 |
-| **Net reduction** | — | 1 |
-| **Percentage reduction** | — | 0.55% |
+| **Total Grype match entries** | 383 | 187 |
+| **Unique CVE/GHSA identifiers** | 336 | 183 |
+| **Net reduction (match entries)** | — | 196 |
+| **Percentage reduction (match entries)** | — | 51.2% |
 
 In addition to the aggregate scanner findings shown above:
 
@@ -217,7 +219,7 @@ The experimental workflow has been designed to maximise reproducibility through:
 
 Minor lexical variation may occur within the LLM-generated rationale despite using a temperature of `0.0`.
 
-However, during the documented experiments, no variation affecting the evaluated decision variables (`action_type`, `package_name`, or `target_version`) was observed.
+However, during the documented experiments, no variation affecting the evaluated decision variables (`strategy`, `remediation_type`, `recommended_package_version`, or `manifest_patch`) was observed.
 
 ---
 

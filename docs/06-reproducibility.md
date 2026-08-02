@@ -85,7 +85,7 @@ The system prompt remains identical across every experimental scenario.
 
 ## Step 6 — Generate the Remediation Recommendation
 
-Submit the completed prompt to **Google Gemini 2.5 Flash (Google AI Studio)** using the documented model configuration.
+Submit the completed prompt to the Google Generative Language API using the documented model fallback list and generation configuration (see `docs/03-llm-configuration.md`).
 
 The generated recommendation is treated as a **hypothesis** rather than experimental evidence.
 
@@ -298,7 +298,7 @@ This work builds upon established software supply chain security tooling, includ
 - Grype for deterministic vulnerability analysis.
 - npm for dependency resolution.
 - OWASP Juice Shop and Apache Airflow as representative application ecosystems.
-- Google Gemini 2.5 Flash (Google AI Studio) for structured remediation recommendation generation.
+- Google Gemini (via the Generative Language API, with a documented model fallback list — see `docs/03-llm-configuration.md`) for structured remediation recommendation generation.
 
 The contribution of this repository is not the development of these individual tools, but the reproducible integration of deterministic software supply chain analysis with structured LLM-assisted remediation and deterministic validation.
 
