@@ -162,7 +162,11 @@ Based on the vulnerability intelligence and context:
 
     if not result:
         print("[ERROR] All candidate LLM models failed to return a response.")
-        sys.exit(1)
+        # raise, not sys.exit -- SystemExit isn't an Exception subclass, so
+        # sys.exit here would bypass the caller's `except Exception` and skip
+        # writing metrics.json entirely instead of recording
+        # llm_response_valid=False as intended.
+        raise RuntimeError("All candidate LLM models failed to return a response.")
 
     llm_text = result['candidates'][0]['content']['parts'][0]['text']
 
@@ -185,4 +189,8 @@ Based on the vulnerability intelligence and context:
         print(llm_text)
         print("-------------------------------------------\n")
         print("[ERROR] Failed to parse LLM response as JSON.")
-        sys.exit(1)
+        # raise, not sys.exit -- SystemExit isn't an Exception subclass, so
+        # sys.exit here would bypass the caller's `except Exception` and skip
+        # writing metrics.json entirely instead of recording
+        # llm_response_valid=False as intended.
+        raise ValueError("Failed to parse LLM response as JSON.")
