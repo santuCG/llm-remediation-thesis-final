@@ -125,13 +125,12 @@ jobs:
       - name: Phase 5 - Build / Tests / Rescan
         id: build_test
         run: |
+          REPO_ROOT="$(pwd)"
           set -o pipefail
           cd ${{ env.APP_DIR }}
           echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
           if [ "$ECOSYSTEM" == "npm" ]; then
-            if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend 2>&1 | tee -a ../../build.log || (echo "Build Frontend Failed" && exit 1); fi
-            if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server 2>&1 | tee -a ../../build.log || (echo "Build Server Failed" && exit 1); fi
-            if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../build.log || (echo "Build Failed" && exit 1); fi
+            bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log" --fatal
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test 2>&1 | tee ../../test.log || true; fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -d "tests/core" ]; then 
