@@ -141,7 +141,7 @@ jobs:
           
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
-          python ../../scripts/remediation/validator.py ../../rescan.json ${{ env.TARGET_CVE }} ../../metrics.json
+          python ../../scripts/remediation/validator.py ../../rescan.json ${{ env.TARGET_CVE }} ../../metrics.json "$ECOSYSTEM" "${{ env.PACKAGE_NAME }}" "${{ env.GRYPE_REC_VERSION }}"
 
       - name: Update Metrics on Build Failure
         if: failure() && steps.build_test.conclusion == 'failure'

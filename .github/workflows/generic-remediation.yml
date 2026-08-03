@@ -178,7 +178,7 @@ jobs:
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           echo "=== Post-Remediation Scan Status ==="
           python -c "import json; data=json.load(open('../../rescan.json')); print('Remaining Vulnerabilities:', len(data.get('matches', [])))" || true
-          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
+          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json "$ECOSYSTEM" "$(jq -r '.selected_package' ../../metrics.json)" "$(jq -r '.recommended_package_version // empty' ../../llm-response.json)"
 
       - name: Update Metrics on Build Failure
         if: failure() && steps.build_test.conclusion == 'failure'
@@ -245,7 +245,7 @@ jobs:
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           if [ -f ../../metrics.json ]; then
-            python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json
+            python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json "$ECOSYSTEM" "$(jq -r '.selected_package' ../../metrics.json)" "$(jq -r '.recommended_package_version // empty' ../../llm-response.json)"
           fi
 
       - name: Gather Evidence

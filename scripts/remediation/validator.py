@@ -1,9 +1,60 @@
 import json
 import sys
 import os
+import subprocess
 
 
-def validate_remediation(grype_json_path, target_cve_id, metrics_path=None):
+def _npm_tree_contains_version(node, package_name, expected_version, _depth=0):
+    """Recursively search an `npm ls --json` tree for package_name resolved to
+    exactly expected_version, at any depth (the vulnerable instance may be
+    transitive)."""
+    if _depth > 20 or not isinstance(node, dict):
+        return False
+    deps = node.get('dependencies', {})
+    for name, info in deps.items():
+        if name == package_name and info.get('version') == expected_version:
+            return True
+        if _npm_tree_contains_version(info, package_name, expected_version, _depth + 1):
+            return True
+    return False
+
+
+def verify_dependency_installed(ecosystem, package_name, expected_version):
+    """Independent check that the actual installed/resolved dependency graph
+    contains package_name at expected_version, using the package manager's
+    own resolution (npm ls / pip show). This does not look at the rescan
+    result at all -- it is a separate signal from rescan_success, not a
+    duplicate of it."""
+    if not package_name or not expected_version:
+        return False
+    try:
+        if ecosystem == 'npm':
+            result = subprocess.run(
+                ['npm', 'ls', package_name, '--json', '--all'],
+                capture_output=True, text=True, timeout=60
+            )
+            try:
+                data = json.loads(result.stdout)
+            except json.JSONDecodeError:
+                return False
+            return _npm_tree_contains_version(data, package_name, expected_version)
+        elif ecosystem == 'python':
+            result = subprocess.run(
+                ['pip', 'show', package_name],
+                capture_output=True, text=True, timeout=30
+            )
+            for line in result.stdout.splitlines():
+                if line.startswith('Version:'):
+                    return line.split(':', 1)[1].strip() == expected_version
+            return False
+    except Exception as e:
+        print(f"[VALIDATOR] Dependency verification check failed: {e}")
+        return False
+    return False
+
+
+def validate_remediation(grype_json_path, target_cve_id, metrics_path=None,
+                          ecosystem=None, package_name=None, expected_version=None):
     try:
         with open(grype_json_path, 'r') as f:
             data = json.load(f)
@@ -25,7 +76,12 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None):
                 with open(metrics_path, 'r') as f:
                     metrics = json.load(f)
                 metrics["rescan_success"] = True
-                metrics["dependency_verified"] = True
+                # dependency_verified is an independent check of the actual
+                # installed dependency graph (npm ls / pip show) against the
+                # expected package/version -- not inferred from rescan_success.
+                dep_verified = verify_dependency_installed(ecosystem, package_name, expected_version)
+                metrics["dependency_verified"] = dep_verified
+                print(f"[VALIDATOR] Dependency verification (independent of rescan): {dep_verified}")
                 # NOTE: build_success is NOT set here. It must have been set by the
                 # workflow's build step before reaching this validator. Setting it
                 # implicitly here would mask genuine build failures.
@@ -53,10 +109,15 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python validator.py <grype_json> <cve_id> [metrics_json]")
+        print("Usage: python validator.py <grype_json> <cve_id> [metrics_json] [ecosystem] [package_name] [expected_version]")
         sys.exit(1)
 
     metrics_file = sys.argv[3] if len(sys.argv) > 3 else None
-    success = validate_remediation(sys.argv[1], sys.argv[2], metrics_file)
+    ecosystem_arg = sys.argv[4] if len(sys.argv) > 4 else None
+    package_name_arg = sys.argv[5] if len(sys.argv) > 5 else None
+    expected_version_arg = sys.argv[6] if len(sys.argv) > 6 else None
+
+    success = validate_remediation(sys.argv[1], sys.argv[2], metrics_file,
+                                    ecosystem_arg, package_name_arg, expected_version_arg)
     if not success:
         sys.exit(1)
