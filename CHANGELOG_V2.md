@@ -13,6 +13,35 @@ complete and approved.
 | Fix #1a: unify `grype-baseline.yml` onto `check_npm_build.sh` | Code review found `grype-baseline.yml` had its own separate, duplicated npm build-check implementation that bypassed the shared script entirely — same semantic-drift risk Fix #1 was meant to close. Added a `--fatal` mode to the shared script so both workflows' genuinely different designs (baseline aborts immediately on build failure and never runs tests; LLM-remediation continues to gather evidence) share one implementation instead of two | All npm scenarios in both workflows (18 remediation scenarios + `results/reproducibility_verification/` baseline runs) | No — `grype-baseline.yml`'s behavior was already correct (it already had `set -o pipefail`); this is a pure refactor. Verified via fresh dispatch: JS-01 baseline output is byte-for-byte identical to the historical evidence, AF-01 baseline unaffected | No — pure refactor, verified behavior-preserving |
 | Fix #2: `dependency_verified` is an independent check | `validator.py` set `dependency_verified = true` in the exact same branch as `rescan_success`, purely because the target CVE was absent from the rescan — not an independent verification of the dependency graph despite the field name. Added `verify_dependency_installed()`: an actual `npm ls`/`pip show` check of the installed graph against the LLM's (or Grype's, for the baseline) recommended version, completely decoupled from the rescan result. Required updating all three call sites that invoke `validator.py` — `generic-remediation.yml`'s first attempt and retry, and `grype-baseline.yml` — found via the same completeness check that found Fix #1a | All 18 scenarios (both workflows use the shared `validator.py`) | Yes, for any scenario where a genuinely independent check would produce a different value than the old rescan-coupled one — not yet determined without a full rerun | No — bug fix, not a design change. `rescan_success` logic untouched |
 | Fix #3: install `ng`, `sentry-sdk`, `datadog` for the test stage | Test-stage failures were CI-environment gaps, not remediation defects. Confirmed directly in a Fix #2 verification run: `sentry-sdk` actually installs fine and its own tests pass, but the suite still fails on `ModuleNotFoundError: No module named 'datadog'` (never installed anywhere); `ng` was never installed at all (globally or otherwise), so `npm test` always failed with `ng: not found` even though `npm run build:*` resolves it fine via the local `node_modules` path. Added `npm install -g @angular/cli@15.0.4` (version-matched to `applications/juice-shop/frontend/package.json`'s own `^15.0.4` pin) and added `datadog` to the pip install line in both workflows (also added `sentry-sdk` to `grype-baseline.yml`, which never had it) | All 18 scenarios | Yes, for any scenario where `test_success` was previously false purely due to a missing module | No — infrastructure fix, not a design change |
+| Fix #4: restore missing upstream `karma.conf.js` | Fixing Fix #3's `ng: not found` uncovered a second, previously-masked npm-test blocker: `Error: Cannot find module '.../frontend/src/karma.conf.js'`. Traced to source and ruled out workflow, environment, Node version, Angular CLI, path resolution, and ESM/CommonJS as causes (each checked with direct evidence — see investigation notes). Root cause: `karma.conf.js` is a genuine upstream Juice Shop v15.3.0 source file (confirmed tracked in `juice-shop/juice-shop` at tag `v15.3.0` via the GitHub API), but was never committed to *this* repo because `applications/juice-shop/.gitignore:32` (`frontend/src/**/*.js`, intended to exclude compiled TS output) incidentally also matched this hand-written config, so `actions/checkout` in CI never had it. Added a targeted `!frontend/src/karma.conf.js` exception and force-added the file. **Verified**: fresh JS-01 dispatch (run `30850432630`) shows Karma launching and executing all 686 frontend tests, vs. previously failing before a single test ran | JS scenarios only (npm ecosystem, Karma test stage). AF scenarios unaffected — Python has no Karma stage | Yes, for any npm scenario whose `test_success` was previously false or unreached purely due to this blocker | No — bug fix (missing tracked file), not a design change |
+
+## New Fix #5 candidate — observed during Fix #4 verification, not yet investigated
+
+**Observed in the same JS-01 verification run (30850432630) that confirmed Fix #4.**
+With `karma.conf.js` restored, `npm test` (which runs both `test:client` (Karma)
+and `test:server` (mocha/ts-node) sequentially) progressed past Karma — all 686
+frontend tests executed — and then failed in `test:server`:
+
+```
+TSError: Unable to compile TypeScript:
+lib/insecurity.ts(58,51): error TS2531: Object is possibly 'null'.
+```
+
+This surfaced compiling `routes/b2bOrder.ts`. Not yet root-caused against the
+same taxonomy used for Fix #4 (workflow / environment / Juice Shop / Node
+version / ts-node config / strict-null-checks setting). Matches the
+already-named "Fix 5: Remaining npm test infrastructure" step in the roadmap.
+**Status: recorded only, not investigated, not fixed.**
+
+Also observed: in this same run, `metrics.json` shows `build_success: false`
+(correctly — the retry's `npm run build:server` hit the already-documented
+`TS1005 '?' expected` `@types/babel__traverse`/`@types/lodash` errors recorded
+under the Phase 2 finding above, a known pre-existing JS-01 condition, not a
+regression) alongside `rescan_success: true` and `dependency_verified: true`,
+but `test_success: null` rather than `true`/`false` even though `npm test`
+demonstrably ran. Whether `test_success` should have been set here is a
+single-owner-per-metric-field question — recorded for that already-planned
+audit below, not investigated now.
 
 ## Planned — after Phase 1 is complete (not yet actioned)
 
