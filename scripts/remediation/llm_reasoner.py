@@ -13,7 +13,7 @@ def get_llm_recommendation(candidate, context, ecosystem, is_retry=False, failur
 
     system_prompt = """You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.
 You must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.
-Evaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.
+Evaluate all technically feasible remediation strategies: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, or Manual Review. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.
 Do not hallucinate package versions. Recommend versions that actually exist and solve the CVE."""
 
     scenario_id = os.environ.get('SCENARIO_ID', 'UNKNOWN')
@@ -31,7 +31,7 @@ Do not hallucinate package versions. Recommend versions that actually exist and 
         pass  # fallback to today
 
     user_prompt = f"""Scenario ID: {scenario_id}
-Prompt Version: v1.1
+Prompt Version: v1.2
 
 ### Vulnerability Intelligence
 * Target Package: {candidate['package_name']}
@@ -67,14 +67,33 @@ Based on the vulnerability intelligence and context:
         "type": "OBJECT",
         "properties": {
             "reasoning": {"type": "STRING", "description": "Comprehensive reasoning for the strategy chosen."},
-            "strategy": {"type": "STRING", "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."},
-            "remediation_type": {"type": "STRING", "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."},
+            # enum added in v1.2: strategy/remediation_type/operation were
+            # previously unconstrained strings, compliance with the prose
+            # description was advisory only. manifest_editor.py's own handling
+            # logic already confirms at least 5 distinct literal values were
+            # produced across historical runs -- constraining to the exact
+            # values the pipeline actually understands closes that gap without
+            # excluding anything previously valid. See prompts/PROMPT_CHANGELOG.md.
+            "strategy": {
+                "type": "STRING",
+                "enum": ["direct_upgrade", "transitive_override", "dependency_resolution", "replacement", "manual_review"],
+                "description": "The exact strategy chosen."
+            },
+            "remediation_type": {
+                "type": "STRING",
+                "enum": ["Direct Upgrade", "Transitive Override", "Dependency Resolution", "Replacement", "Manual Review"],
+                "description": "The human-readable twin of strategy."
+            },
             "recommended_package_version": {"type": "STRING", "description": "The specific semantic version to enforce."},
             "manifest_patch": {
                 "type": "OBJECT",
                 "description": "The structured intermediate representation of the manifest patch.",
                 "properties": {
-                    "operation": {"type": "STRING", "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."},
+                    "operation": {
+                        "type": "STRING",
+                        "enum": ["add_override", "transitive_override", "replace", "bump", "direct_upgrade"],
+                        "description": "The operation to perform."
+                    },
                     "package": {"type": "STRING", "description": "The target package name to modify."},
                     "constraint": {"type": "STRING", "description": "The new version constraint to enforce (e.g., '>=42.0.0' or '3.9.18')."}
                 },
@@ -107,7 +126,7 @@ Based on the vulnerability intelligence and context:
         "experiment_id": "2026-final",
         "application": application,
         "ecosystem": ecosystem,
-        "prompt_version": "v1.1",
+        "prompt_version": "v1.2",
         "api_payload": api_payload
     }
 

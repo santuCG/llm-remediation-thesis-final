@@ -1,11 +1,62 @@
 import sys
 import os
+import re
 import json
 import time
 
 from context_builder import get_context
 from llm_reasoner import get_llm_recommendation
 from manifest_editor import apply_remediation
+
+_ERROR_MARKER = re.compile(r'error TS\d|Error:|npm ERR!|FAILED|Traceback|error:', re.IGNORECASE)
+
+
+def _extract_build_errors(log_text, max_chars=3000):
+    """Extract lines that actually look like errors, plus 2 lines of context
+    around each, instead of blindly taking the last N characters of the log.
+    Falls back to a tail-truncation if no recognizable error marker is found,
+    so this never returns less information than the v1.1 behavior did.
+    See scripts/remediation/prompts/PROMPT_CHANGELOG.md (v1.2)."""
+    lines = log_text.splitlines()
+    matched = [i for i, line in enumerate(lines) if _ERROR_MARKER.search(line)]
+    if not matched:
+        return log_text[-max_chars:]
+    keep = set()
+    for i in matched:
+        for j in range(max(0, i - 2), min(len(lines), i + 3)):
+            keep.add(j)
+    excerpt = "\n".join(lines[i] for i in sorted(keep))
+    return excerpt[-max_chars:]
+
+
+def _extract_rescan_summary(target_cve_id):
+    """Summarize why the target CVE is still present in the post-remediation
+    rescan. build.log contains no information about rescan/validator outcomes
+    at all -- a compile failure and 'the CVE is still detected' are two
+    different failure modes needing different evidence, and rescan_success=false
+    (the dominant retry trigger observed for JS-01 across this session's
+    verification runs) previously got no rescan-specific context at all.
+    See scripts/remediation/prompts/PROMPT_CHANGELOG.md (v1.2)."""
+    try:
+        with open('rescan.json', 'r') as f:
+            rescan = json.load(f)
+    except Exception:
+        return ""
+    for match in rescan.get('matches', []):
+        vuln = match.get('vulnerability', {})
+        vuln_id = vuln.get('id', '')
+        related = [r.get('id', '') for r in match.get('relatedVulnerabilities', [])]
+        if vuln_id == target_cve_id or target_cve_id in related:
+            artifact = match.get('artifact', {})
+            fix = vuln.get('fix', {})
+            return (
+                f"Post-remediation rescan still detects {target_cve_id} "
+                f"(scanner ID: {vuln_id}) in package '{artifact.get('name')}' "
+                f"version '{artifact.get('version')}'. "
+                f"Scanner-known fixed versions: {fix.get('versions', [])}."
+            )
+    return ""
+
 
 def main():
     if len(sys.argv) < 4:
@@ -30,13 +81,38 @@ def main():
         print(f"[ERROR] Could not load candidate or metrics: {e}")
         sys.exit(1)
         
-    # Read failure logs (assume saved in build.log or similar based on stage)
-    failure_logs = ""
-    log_file = f"{failure_stage}.log"
-    if os.path.exists(log_file):
-        with open(log_file, 'r') as f:
-            failure_logs = f.read()[-2000:] # last 2000 chars
-            
+    # Read failure context. build_success=false and rescan_success=false are
+    # two different failure modes needing different evidence: a compile error
+    # (in build.log) says nothing about why a CVE is still detected, and a
+    # rescan.json summary says nothing about a compile error. v1.1 always
+    # blindly tail-truncated whichever {failure_stage}.log file was named
+    # (in practice always build.log, since the workflow's "Update Metrics on
+    # Build Failure" step normalizes failure_stage to "build" regardless of
+    # the true cause) -- so a rescan-caused retry (the dominant trigger
+    # observed for JS-01 across this session's verification runs) got no
+    # rescan-specific context at all. See prompts/PROMPT_CHANGELOG.md (v1.2).
+    failure_logs_parts = []
+    if not metrics.get('build_success', True):
+        log_file = f"{failure_stage}.log"
+        if os.path.exists(log_file):
+            with open(log_file, 'r') as f:
+                build_excerpt = _extract_build_errors(f.read())
+            if build_excerpt.strip():
+                failure_logs_parts.append(f"[Build/compile output]\n{build_excerpt}")
+    if not metrics.get('rescan_success', True):
+        rescan_summary = _extract_rescan_summary(candidate.get('cve_id', ''))
+        if rescan_summary:
+            failure_logs_parts.append(f"[Post-remediation scan]\n{rescan_summary}")
+    if not failure_logs_parts:
+        # Fallback: preserve v1.1 behavior for any failure mode not covered
+        # by the two checks above, so this never surfaces strictly less
+        # information than before.
+        log_file = f"{failure_stage}.log"
+        if os.path.exists(log_file):
+            with open(log_file, 'r') as f:
+                failure_logs_parts.append(f.read()[-2000:])
+    failure_logs = "\n\n".join(failure_logs_parts)
+
     print("\n=== Phase 3: Context Collection (Retry) ===")
     context = get_context(ecosystem, candidate['package_name'], app_dir)
     
