@@ -125,10 +125,10 @@ jobs:
           if [ "$ECOSYSTEM" == "npm" ]; then
             rm -f package-lock.json
             rm -rf node_modules
-            npm install 2>&1 | tee ../../build.log
+            npm install 2>&1 | tee -a ../../build.log
           elif [ "$ECOSYSTEM" == "python" ]; then
             rm -f requirements.txt
-            pip install -e . 2>&1 | tee ../../build.log
+            pip install -e . 2>&1 | tee -a ../../build.log
           fi
           if [ -f ../../metrics.json ]; then
             sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
