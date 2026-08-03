@@ -137,12 +137,11 @@ jobs:
       - name: Validate Remediation & Rescan
         id: build_test
         run: |
+          REPO_ROOT="$(pwd)"
           cd ${{ env.APP_DIR }}
           echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
           if [ "$ECOSYSTEM" == "npm" ]; then
-            if jq -e '.scripts["build:frontend"]' package.json > /dev/null 2>&1; then npm run build:frontend 2>&1 | tee -a ../../build.log; fi
-            if jq -e '.scripts["build:server"]' package.json > /dev/null 2>&1; then npm run build:server 2>&1 | tee -a ../../build.log; fi
-            if jq -e '.scripts["build"]' package.json > /dev/null 2>&1; then npm run build 2>&1 | tee -a ../../build.log; fi
+            bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log"
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
               npm test 2>&1 | tee ../../test.log
               TEST_EXIT=${PIPESTATUS[0]}
@@ -198,6 +197,7 @@ jobs:
       - name: Retry Remediation Strategy
         if: failure()
         run: |
+          REPO_ROOT="$(pwd)"
           echo "Failure detected. Capturing logs and performing Retry Iteration."
             cd ${{ env.APP_DIR }}
             if [ "$ECOSYSTEM" == "python" ]; then
@@ -232,6 +232,12 @@ jobs:
           if [ -f ../../metrics.json ]; then
             if [ "$INSTALL_EXIT" -eq 0 ]; then
               jq '.build_success = true | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+              # Same check as the first-attempt path, same script -- build_success
+              # must reflect the actual compile result on retry too, not just
+              # whether npm install succeeded.
+              if [ "$ECOSYSTEM" == "npm" ]; then
+                bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log"
+              fi
             else
               jq '.build_success = false | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
             fi

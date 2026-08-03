@@ -9,3 +9,4 @@
 # fix already-generated manifests; it prevents the same failure for future
 # runs and for anyone re-verifying existing evidence going forward.
 results/execution_evidence/** text eol=lf
+scripts/ci/*.sh text eol=lf
