@@ -98,11 +98,11 @@ jobs:
           set -o pipefail
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
-            npm install 2>&1 | tee ../../build.log || (echo "NPM Install Failed" && exit 1)
+            npm install 2>&1 | tee -a ../../build.log || (echo "NPM Install Failed" && exit 1)
             echo "=== Phase 4 Log: Package Installation Status ==="
             npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
+            pip install --no-deps -r requirements.txt 2>&1 | tee -a ../../build.log || (echo "PIP Install Failed" && exit 1)
             echo "=== Phase 4 Log: Package Installation Status ==="
             pip show redshift-connector || pip show flask || true
             echo "=== Updated requirements.txt ==="
@@ -216,11 +216,16 @@ jobs:
           if [ "$ECOSYSTEM" == "npm" ]; then
             rm -f package-lock.json
             rm -rf node_modules
-            npm install 2>&1 | tee ../../build.log
+            npm install 2>&1 | tee -a ../../build.log
             INSTALL_EXIT=${PIPESTATUS[0]}
+            # Refresh the dependency-graph evidence for the retry's own install --
+            # otherwise this file stays frozen at attempt 1's (superseded) graph
+            # even though dependency_verified checks the live, post-retry state.
+            npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log
+            pip install --no-deps -r requirements.txt 2>&1 | tee -a ../../build.log
             INSTALL_EXIT=${PIPESTATUS[0]}
+            pip list --format=freeze | tee ../../dependency-graph.log || true
           fi
           # Retry-path install failures are intentionally not fatal here (existing,
           # unchanged behaviour: the pipeline still proceeds to rescan/validate).
