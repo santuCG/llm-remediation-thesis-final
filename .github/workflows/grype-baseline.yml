@@ -131,10 +131,13 @@ jobs:
           echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
           if [ "$ECOSYSTEM" == "npm" ]; then
             bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log" --fatal
-            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then npm test 2>&1 | tee ../../test.log || true; fi
+            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
+              npm install -g @angular/cli@15.0.4 --silent || true
+              npm test 2>&1 | tee ../../test.log || true
+            fi
           elif [ "$ECOSYSTEM" == "python" ]; then
-            if [ -d "tests/core" ]; then 
-              pip install pytest==7.4.4 pytest-asyncio || true
+            if [ -d "tests/core" ]; then
+              pip install pytest==7.4.4 pytest-asyncio sentry-sdk datadog || true
               python3 -m pytest tests/core 2>&1 | tee ../../test.log || true
             fi
           fi

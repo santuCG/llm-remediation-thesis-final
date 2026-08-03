@@ -143,6 +143,7 @@ jobs:
           if [ "$ECOSYSTEM" == "npm" ]; then
             bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log"
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
+              npm install -g @angular/cli@15.0.4 --silent || true
               npm test 2>&1 | tee ../../test.log
               TEST_EXIT=${PIPESTATUS[0]}
               echo "=== Test Execution Summary ==="
@@ -158,7 +159,7 @@ jobs:
             fi
           elif [ "$ECOSYSTEM" == "python" ]; then
             if [ -d "tests/core" ]; then
-              pip install pytest==7.4.4 pytest-asyncio sentry-sdk || true
+              pip install pytest==7.4.4 pytest-asyncio sentry-sdk datadog || true
               python3 -m pytest tests/core 2>&1 | tee ../../test.log
               TEST_EXIT=${PIPESTATUS[0]}
               echo "=== Test Execution Summary ==="
