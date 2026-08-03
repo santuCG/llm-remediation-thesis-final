@@ -12,6 +12,31 @@ complete and approved.
 | `build_success` reflects actual compile result, not just install | `npm run build:server` ran in a step with no `set -o pipefail`, so a real `tsc` failure could never flip `build_success` back to false; the retry path never ran a compile step at all | All 9 npm scenarios (JS-01–09). Python unaffected — no separate compile phase exists there | Yes, for all 9 npm scenarios | No — bug fix, not a design change |
 | Fix #1a: unify `grype-baseline.yml` onto `check_npm_build.sh` | Code review found `grype-baseline.yml` had its own separate, duplicated npm build-check implementation that bypassed the shared script entirely — same semantic-drift risk Fix #1 was meant to close. Added a `--fatal` mode to the shared script so both workflows' genuinely different designs (baseline aborts immediately on build failure and never runs tests; LLM-remediation continues to gather evidence) share one implementation instead of two | All npm scenarios in both workflows (18 remediation scenarios + `results/reproducibility_verification/` baseline runs) | No — `grype-baseline.yml`'s behavior was already correct (it already had `set -o pipefail`); this is a pure refactor. Verified via fresh dispatch: JS-01 baseline output is byte-for-byte identical to the historical evidence, AF-01 baseline unaffected | No — pure refactor, verified behavior-preserving |
 | Fix #2: `dependency_verified` is an independent check | `validator.py` set `dependency_verified = true` in the exact same branch as `rescan_success`, purely because the target CVE was absent from the rescan — not an independent verification of the dependency graph despite the field name. Added `verify_dependency_installed()`: an actual `npm ls`/`pip show` check of the installed graph against the LLM's (or Grype's, for the baseline) recommended version, completely decoupled from the rescan result. Required updating all three call sites that invoke `validator.py` — `generic-remediation.yml`'s first attempt and retry, and `grype-baseline.yml` — found via the same completeness check that found Fix #1a | All 18 scenarios (both workflows use the shared `validator.py`) | Yes, for any scenario where a genuinely independent check would produce a different value than the old rescan-coupled one — not yet determined without a full rerun | No — bug fix, not a design change. `rescan_success` logic untouched |
+| Fix #3: install `ng`, `sentry-sdk`, `datadog` for the test stage | Test-stage failures were CI-environment gaps, not remediation defects. Confirmed directly in a Fix #2 verification run: `sentry-sdk` actually installs fine and its own tests pass, but the suite still fails on `ModuleNotFoundError: No module named 'datadog'` (never installed anywhere); `ng` was never installed at all (globally or otherwise), so `npm test` always failed with `ng: not found` even though `npm run build:*` resolves it fine via the local `node_modules` path. Added `npm install -g @angular/cli@15.0.4` (version-matched to `applications/juice-shop/frontend/package.json`'s own `^15.0.4` pin) and added `datadog` to the pip install line in both workflows (also added `sentry-sdk` to `grype-baseline.yml`, which never had it) | All 18 scenarios | Yes, for any scenario where `test_success` was previously false purely due to a missing module | No — infrastructure fix, not a design change |
+
+## Planned — after Phase 1 is complete (not yet actioned)
+
+**Single-owner-per-metric-field audit.** Once all Phase 1 fixes land, verify every
+`metrics.json` field has exactly one clear owner in the code, e.g.:
+
+| Metric | Source |
+|---|---|
+| `build_success` | build validation (`check_npm_build.sh` / install step) |
+| `dependency_verified` | independent dependency graph check (`validator.py`) |
+| `rescan_success` | validator/rescan (`validator.py`) |
+| `test_success` | test runner (workflow `TEST_EXIT` check) |
+| `failure_stage` | workflow control logic |
+
+This is a completeness check, not a new fix — its purpose is to confirm the Phase 1
+defect register work actually closed every field, not just the ones that were
+already suspected.
+
+**Phase 5 regeneration sequencing.** Do not regenerate all 18 scenarios in one
+batch. First regenerate AF-01 and JS-01 only as smoke tests (one npm, one Python)
+and confirm they behave correctly end-to-end. Only after that passes, regenerate
+the remaining scenarios one at a time (not in parallel), given each is a real
+Gemini API call — this minimizes the chance of discovering a pipeline regression
+after already spending hours rerunning every scenario.
 
 ## Phase 2 — Findings recorded, not yet actioned
 
