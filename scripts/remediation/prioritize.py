@@ -164,6 +164,14 @@ def prioritize_vulnerabilities(matches, ecosystem):
 
     target_cve = os.environ.get('TARGET_CVE')
 
+    # Severity-filtered pool, computed unconditionally so candidate_count and
+    # candidate-ranking.json keep the same meaning ("how many high/critical,
+    # fixable candidates existed in this scan") regardless of which branch
+    # below actually selects the target -- this is also the automatic-
+    # discovery pool used when TARGET_CVE isn't set at all.
+    severity_filtered_candidates = [c for c in all_structural_candidates if c['severity'] in ['high', 'critical']]
+    severity_filtered_candidates.sort(key=lambda x: (x['kev'], x['epss'], x['cvss']), reverse=True)
+
     if target_cve:
         print(f"[PRIORITIZE] TARGET_CVE={target_cve} is set: performing an authoritative lookup "
               f"against all {len(all_structural_candidates)} structurally-valid candidates "
@@ -177,11 +185,24 @@ def prioritize_vulnerabilities(matches, ecosystem):
                     c['api_cve_id'] = target_cve
                     c['epss'] = get_epss_score(target_cve)
                     c['kev'] = get_kev_status(target_cve)
+                # Report the same severity-filtered pool as automatic discovery
+                # would have (preserves candidate_count's established meaning
+                # across all 18 scenarios), plus the matched candidate itself
+                # if the severity bypass is what found it -- so the evidence
+                # shows exactly what was ranked AND what was explicitly pulled
+                # in despite not ranking.
+                if c in severity_filtered_candidates:
+                    ranking_output = severity_filtered_candidates
+                else:
+                    print(f"[PRIORITIZE] Note: matched candidate's severity ({c['severity']}) is below "
+                          f"the high/critical automatic-discovery threshold -- included via explicit "
+                          f"TARGET_CVE override, appended to the reported candidate pool.")
+                    ranking_output = severity_filtered_candidates + [c]
                 with open('candidate-ranking.json', 'w') as f:
-                    json.dump([c], f, indent=2)
+                    json.dump(ranking_output, f, indent=2)
                 print(f"[PRIORITIZE] TARGET_CVE matched: {c['package_name']} ({c['cve_id']}, "
                       f"severity={c['severity']}).")
-                return c, [c]
+                return c, ranking_output
 
         # No structurally-valid candidate matches the requested TARGET_CVE.
         # Fail loudly instead of silently falling back to a different
@@ -199,14 +220,11 @@ def prioritize_vulnerabilities(matches, ecosystem):
     # here, and only here -- it exists to guide unattended candidate
     # discovery, not to override an explicitly preregistered target.
     print("[PRIORITIZE] No TARGET_CVE set: automatic discovery mode (severity >= high required).")
-    candidates = [c for c in all_structural_candidates if c['severity'] in ['high', 'critical']]
+    candidates = severity_filtered_candidates
 
     if not candidates:
         print("[PRIORITIZE] No automatically remediable candidates found.")
         return None, candidates
-
-    # Sorting Logic: KEV (True) -> EPSS (Descending) -> CVSS (Descending)
-    candidates.sort(key=lambda x: (x['kev'], x['epss'], x['cvss']), reverse=True)
 
     with open('candidate-ranking.json', 'w') as f:
         json.dump(candidates, f, indent=2)
