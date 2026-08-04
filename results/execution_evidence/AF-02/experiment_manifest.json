@@ -1,170 +1,51 @@
 {
-    "scenario": "AF-02",
-    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-    "workflow_commit": "30592634834",
-    "pipeline_version": "v2.0",
-    "runner": "ubuntu-24.04",
-    "python": "3.12.x",
-    "llm": {
-        "model": "gemini-2.5-flash",
-        "temperature": 0.0,
-        "seed": 42,
-        "topP": 1.0,
-        "topK": 1
+  "schema_version": "2.0",
+  "scenario": "AF-02-regen",
+  "repository_commit": "8916b39585dde2eac67063622ea1f036e543cb59",
+  "workflow_run_id": "30865157364",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30865157364",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-04T00:23:13.849220+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
     },
-    "snapshots": {
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": {
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": {
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "3d9f2cf417dce427bf5ece937e9b68ef11d1216966b0d1f5f042c408c8e7357b",
-        "baseline-grype.json": "38175a5e6bb332ff7e462576e28f672bbab1698e77e16de8562bd8e4e5ab981e",
-        "candidate-ranking.json": "51d4dc265addfc2c0d67bd8fdb8dac9addaab74700a257bda8a5dd46f5319594",
-        "build.log": "75ee9a24441ca6facbdd6f96dfb02b3dc96e0ee65f873ad7ec86e8d79f990cb4",
-        "selected-candidate.json": "fc96fd8fe59d88af089e388bfa2bc717672005c3a146f0d904ddb8fe79968d6f",
-        "metrics.json": "284d3932e3597a0528ed83094397840cad7ee58bf058d6ad9cb33d524f9283b1",
-        "test.log": "9a632867fb4b9f79fb15364419855676ccaea56eda626c8c3b51439ccb8fe2af",
-        "baseline-sbom.json": "b0e013a0ed3c2f7df48d11a26ca92ff59e9d3cddad86a69e772402f98a7eb5c7",
-        "package-after.json": "8161df3ee4e80dd0ebff143c73c24075267b8b5b6fff4343d7c506e60667ec60",
-        "llm-response.json": "9f7a64fff055f574e8abb17ae538ed4f6cbcae1f2b9bdef3e3214bb951865efa",
-        "llm-request.json": "91adba8c7ccda0312ab474ca5d833d0a99c54608c4d5c998c6ab1587ade02cd1"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834"
-}
-
-=== EMPIRICAL EVIDENCE ===
-NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
-
---- EXPERIMENT MANIFEST ---
-{
-    "scenario": "AF-02", // The unique identifier for this vulnerability scenario
-    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30592634834", // The GitHub Actions run ID that executed this pipeline
-    "pipeline_version": "v2.0", // The version of the remediation pipeline engine
-    "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
-    "python": "3.12.x", // The Python version used by the pipeline
-    "llm": { // LLM configuration settings
-        "model": "gemini-2.5-flash", // The exact LLM model used for reasoning
-        "temperature": 0.0, // Temperature setting (0.0 for deterministic output)
-        "seed": 42, // Seed for reproducibility
-        "topP": 1.0, // Top-P sampling setting
-        "topK": 1 // Top-K sampling setting
-    },
-    "snapshots": { // Hashes of vulnerability intelligence snapshots
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": { // Versions of security scanners used
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "3d9f2cf417dce427bf5ece937e9b68ef11d1216966b0d1f5f042c408c8e7357b",
-        "baseline-grype.json": "38175a5e6bb332ff7e462576e28f672bbab1698e77e16de8562bd8e4e5ab981e",
-        "candidate-ranking.json": "51d4dc265addfc2c0d67bd8fdb8dac9addaab74700a257bda8a5dd46f5319594",
-        "build.log": "75ee9a24441ca6facbdd6f96dfb02b3dc96e0ee65f873ad7ec86e8d79f990cb4",
-        "selected-candidate.json": "fc96fd8fe59d88af089e388bfa2bc717672005c3a146f0d904ddb8fe79968d6f",
-        "metrics.json": "284d3932e3597a0528ed83094397840cad7ee58bf058d6ad9cb33d524f9283b1",
-        "test.log": "9a632867fb4b9f79fb15364419855676ccaea56eda626c8c3b51439ccb8fe2af",
-        "baseline-sbom.json": "b0e013a0ed3c2f7df48d11a26ca92ff59e9d3cddad86a69e772402f98a7eb5c7",
-        "package-after.json": "8161df3ee4e80dd0ebff143c73c24075267b8b5b6fff4343d7c506e60667ec60",
-        "llm-response.json": "9f7a64fff055f574e8abb17ae538ed4f6cbcae1f2b9bdef3e3214bb951865efa",
-        "llm-request.json": "91adba8c7ccda0312ab474ca5d833d0a99c54608c4d5c998c6ab1587ade02cd1"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592634834" // Direct link to the successful GitHub Actions workflow run
-}
-
---- PIPELINE METRICS ---
-{
-  "application": "applications/airflow", // The target application being evaluated
-  "ecosystem": "python", // Package manager ecosystem (e.g., npm, python)
-  "candidate_count": 62, // Total number of vulnerabilities initially scanned
-  "selected_package": "h11", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-vqfr-h8mv-ghfj", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2025-43859", // The standard MITRE CVE ID
-  "severity": "critical", // CVSS severity rating
-  "cvss": 9.1, // Common Vulnerability Scoring System score
-  "epss": 0.00581, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T00:11:38.752865+00:00", // Time the EPSS score was fetched
-  "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
-  "dependency_type": "direct", // Whether the dependency is direct or transitive
-  "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
-  "remediation_type": "Direct Upgrade", // The human-readable strategy category
-  "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
-  "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application's test suite passed
-  "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
-  "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
-  "runtime_success": false, // Runtime tests status
-  "lockfile_regenerated": false, // Whether a lockfile was regenerated
-  "execution_time_seconds": 12, // Total pipeline execution time in seconds
-  "retry_count": 0, // Number of LLM retries needed
-  "llm_iteration": 1, // The specific iteration of the LLM prompting
-  "validation_stage_reached": "validator", // The furthest pipeline stage reached
-  "failure_stage": "none" // The stage where the pipeline failed, if any
-}
-
---- LLM PROMPT ---
-Scenario ID: AF-02
-Prompt Version: v1.1
-
-Scenario ID: UNKNOWN
-Prompt Version: v1.1
-
-### Vulnerability Intelligence
-* Target Package: h11
-* Vulnerable Version: 0.14.0
-* CVE ID: GHSA-vqfr-h8mv-ghfj
-* CVSS Score: 9.1
-* EPSS Probability: 0.00581
-* CISA KEV Status: False
-* Intelligence Retrieved On: 2026-05-18
-* Fixed Versions: ['0.16.0']
-
-### Dependency Context
-```json
-{
-  "pip_show": "Name: h11\nVersion: 0.14.0\nSummary: A pure-Python, bring-your-own-I/O implementation of HTTP/1.1\nHome-page: https://github.com/python-hyper/h11\nAuthor: Nathaniel J. Smith\nAuthor-email: njs@pobox.com\nLicense: MIT\nLocation: /home/runner/.local/lib/python3.12/site-packages\nRequires: \nRequired-by: httpcore\n",
-  "pip_freeze": "h11==0.14.0\nhttpcore==0.16.3",
-  "requirements_txt": "h11==0.14.0\nhttpcore==0.16.3"
-}
-```
-
-Based on the vulnerability intelligence and context:
-1. Recommend the safest strategy.
-2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
-
---- LLM OUTPUT ---
-{
-  "reasoning": "The target package h11 version 0.14.0 is vulnerable to CVE GHSA-vqfr-h8mv-ghfj with a CVSS score of 9.1. Since h11 is explicitly specified in requirements.txt, performing a direct upgrade to fixed version 0.16.0 is the safest and most effective remediation strategy. Alternative strategies like transitive overrides are unnecessary as h11 is directly declared in the project manifest.",
-  "strategy": "direct_upgrade",
-  "remediation_type": "Direct Upgrade",
-  "recommended_package_version": "0.16.0",
-  "manifest_patch": {
-    "operation": "bump",
-    "package": "h11",
-    "constraint": "==0.16.0"
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "c75ae6f26c03b45d9182ad348cfc7b51feca9569508ba648f877e168560fdd1a",
+    "baseline-sbom.json": "8d51bec4764747e0912d09173202fb6b190d14a9b70b8b4a98653e7633a5f034",
+    "build.log": "75ee9a24441ca6facbdd6f96dfb02b3dc96e0ee65f873ad7ec86e8d79f990cb4",
+    "candidate-ranking.json": "defbcb349175acd2f46ebb52d438e68dad9c38554669d95255d5a1794624d3e2",
+    "dependency-graph.log": "8c614aff92584033ab6453ad619a4cc5db4c64339938bfda10660c62afaae62e",
+    "grype-db-metadata.json": "4ad63ebacc6ba8f02b6d8d9cc67540e6cf9d3166f566c7f8120d117dbea5813a",
+    "llm-request.json": "42cef2c07148cf781bd9ec847e8a10343b1c9cfed18da54f96a5dc106b628c28",
+    "llm-response-full.json": "99a1bb0a892087ce49a6e54529dbe921a38536adaf3e2cf22f230f92705effd4",
+    "llm-response.json": "02093e51c43953da54c140d12cdd6aa59e4b0a0319f393a6674a12483fc935ab",
+    "metrics.json": "e66752aa4df955fb77fb4b9e4f549814aafa9e164ec2bfa00d9a2a54b33aeb51",
+    "package-after.json": "8161df3ee4e80dd0ebff143c73c24075267b8b5b6fff4343d7c506e60667ec60",
+    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+    "rescan.json": "aaaac2e0d537cc9e2bb595b8c5a5c6a710d30ed957dfe3b9196a161c4936630d",
+    "selected-candidate.json": "011397ded11460fca946e0fdeea185fde07e9046daf8debe9f6255a0718903e6",
+    "test.log": "face680fabacee607f37720452068635424a722da03afc5f56d7c7db723a279d"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "reasoning": "The target package `crypto-js` version `3.3.0` is vulnerable to GHSA-xwcq-pm8m-c4vf (CVSS 9.1). It is pulled in as a transitive dependency by `pdfkit` (version 0.11.0), which requires `crypto-js` version spec `^3.1.9-1`. Since `crypto-js` is not declared directly in the root package manifest (`package.json`), a direct dependency upgrade cannot resolve the vulnerability. The safest and most effective solution is to enforce a transitive override using npm's `overrides` configuration in `package.json` targeting `crypto-js` version `4.2.0`.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "4.2.0",
+  "manifest_patch": {
+    "operation": "transitive_override",
+    "package": "crypto-js",
+    "constraint": "4.2.0"
+  }
+}

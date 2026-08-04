@@ -1,12 +1,13 @@
 {
   "cve_id": "GHSA-c7hr-j4mj-j2w6",
+  "scanner_cve_id": "GHSA-c7hr-j4mj-j2w6",
   "api_cve_id": "CVE-2015-9235",
   "package_name": "jsonwebtoken",
   "vulnerable_version": "0.1.0",
   "severity": "critical",
   "cvss": 0.0,
   "epss": 0.08655,
-  "epss_timestamp": "2026-07-31T08:51:29.237771+00:00",
+  "epss_timestamp": "2026-08-04T03:41:01.399511+00:00",
   "kev": false,
   "fixed_versions": [
     "4.2.2"

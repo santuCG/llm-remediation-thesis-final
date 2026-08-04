@@ -1,12 +1,13 @@
 {
   "cve_id": "GHSA-3h5v-q93c-6h6q",
+  "scanner_cve_id": "GHSA-3h5v-q93c-6h6q",
   "api_cve_id": "CVE-2024-37890",
   "package_name": "ws",
   "vulnerable_version": "7.4.6",
   "severity": "high",
   "cvss": 7.5,
   "epss": 0.01357,
-  "epss_timestamp": "2026-07-31T09:22:39.510501+00:00",
+  "epss_timestamp": "2026-08-04T19:36:07.872975+00:00",
   "kev": false,
   "fixed_versions": [
     "7.5.10"

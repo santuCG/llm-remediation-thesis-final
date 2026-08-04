@@ -1,12 +1,13 @@
 {
   "cve_id": "GHSA-xwcq-pm8m-c4vf",
+  "scanner_cve_id": "GHSA-xwcq-pm8m-c4vf",
   "api_cve_id": "CVE-2023-46233",
   "package_name": "crypto-js",
   "vulnerable_version": "3.3.0",
   "severity": "critical",
   "cvss": 9.1,
   "epss": 0.00635,
-  "epss_timestamp": "2026-07-31T08:35:13.969880+00:00",
+  "epss_timestamp": "2026-08-04T00:56:12.798873+00:00",
   "kev": false,
   "fixed_versions": [
     "4.2.0"

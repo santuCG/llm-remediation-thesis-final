@@ -206,7 +206,8 @@ Requirement already satisfied: importlib_resources==6.4.0 in /home/runner/.local
 Requirement already satisfied: inflection==0.5.1 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 205)) (0.5.1)
 Requirement already satisfied: isodate==0.6.1 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 206)) (0.6.1)
 Requirement already satisfied: itsdangerous==2.2.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 207)) (2.2.0)
-Requirement already satisfied: Jinja2==3.1.4 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 208)) (3.1.4)
+Collecting Jinja2==3.1.5 (from -r requirements.txt (line 208))
+  Downloading jinja2-3.1.5-py3-none-any.whl.metadata (2.6 kB)
 Requirement already satisfied: jmespath==0.10.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 209)) (0.10.0)
 Requirement already satisfied: json-merge-patch==0.2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 210)) (0.2)
 Requirement already satisfied: jsonpath-ng==1.6.1 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 211)) (1.6.1)
@@ -353,8 +354,7 @@ Requirement already satisfied: virtualenv==20.26.2 in /home/runner/.local/lib/py
 Requirement already satisfied: watchtower==3.2.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 352)) (3.2.0)
 Requirement already satisfied: wcwidth==0.2.13 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 353)) (0.2.13)
 Requirement already satisfied: websocket-client==1.8.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 354)) (1.8.0)
-Collecting Werkzeug==3.0.3 (from -r requirements.txt (line 355))
-  Downloading werkzeug-3.0.3-py3-none-any.whl.metadata (3.7 kB)
+Requirement already satisfied: Werkzeug==2.2.3 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 355)) (2.2.3)
 Requirement already satisfied: wirerope==0.4.7 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 356)) (0.4.7)
 Requirement already satisfied: wrapt==1.16.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 357)) (1.16.0)
 Requirement already satisfied: WTForms==3.1.2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 358)) (3.1.2)
@@ -362,12 +362,12 @@ Requirement already satisfied: yarl==1.9.4 in /home/runner/.local/lib/python3.12
 Requirement already satisfied: zipp==3.19.2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 360)) (3.19.2)
 Requirement already satisfied: zope.event==5.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 361)) (5.0)
 Requirement already satisfied: zope.interface==6.4.post2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 362)) (6.4.post2)
-Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 kB 11.5 MB/s eta 0:00:00
-Installing collected packages: Werkzeug
-  Attempting uninstall: Werkzeug
-    Found existing installation: Werkzeug 2.2.3
-    Uninstalling Werkzeug-2.2.3:
-      Successfully uninstalled Werkzeug-2.2.3
-Successfully installed Werkzeug-3.0.3
+Downloading jinja2-3.1.5-py3-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.6/134.6 kB 7.7 MB/s eta 0:00:00
+Installing collected packages: Jinja2
+  Attempting uninstall: Jinja2
+    Found existing installation: Jinja2 3.1.4
+    Uninstalling Jinja2-3.1.4:
+      Successfully uninstalled Jinja2-3.1.4
+Successfully installed Jinja2-3.1.5
 Validating application functionality...

@@ -1,12 +1,13 @@
 {
   "cve_id": "GHSA-fjxv-7rqg-78g4",
+  "scanner_cve_id": "GHSA-fjxv-7rqg-78g4",
   "api_cve_id": "CVE-2025-7783",
   "package_name": "form-data",
   "vulnerable_version": "2.3.3",
   "severity": "critical",
   "cvss": 9.4,
   "epss": 0.01735,
-  "epss_timestamp": "2026-07-31T00:35:43.113801+00:00",
+  "epss_timestamp": "2026-08-04T00:40:19.791111+00:00",
   "kev": false,
   "fixed_versions": [
     "2.5.4"

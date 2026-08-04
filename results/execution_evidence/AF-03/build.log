@@ -97,8 +97,8 @@ Requirement already satisfied: ConfigUpdater==3.2 in /home/runner/.local/lib/pyt
 Requirement already satisfied: connexion==2.14.2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 96)) (2.14.2)
 Requirement already satisfied: cron-descriptor==1.4.3 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 97)) (1.4.3)
 Requirement already satisfied: croniter==2.0.5 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 98)) (2.0.5)
-Collecting cryptography>=42.0.0 (from -r requirements.txt (line 99))
-  Downloading cryptography-49.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+Collecting cryptography==42.0.0 (from -r requirements.txt (line 99))
+  Downloading cryptography-42.0.0-cp39-abi3-manylinux_2_28_x86_64.whl.metadata (5.3 kB)
 Requirement already satisfied: db-dtypes==1.2.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 100)) (1.2.0)
 Requirement already satisfied: decorator==5.1.1 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 101)) (5.1.1)
 Requirement already satisfied: Deprecated==1.2.14 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 102)) (1.2.14)
@@ -362,8 +362,8 @@ Requirement already satisfied: yarl==1.9.4 in /home/runner/.local/lib/python3.12
 Requirement already satisfied: zipp==3.19.2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 360)) (3.19.2)
 Requirement already satisfied: zope.event==5.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 361)) (5.0)
 Requirement already satisfied: zope.interface==6.4.post2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 362)) (6.4.post2)
-Downloading cryptography-49.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 67.8 MB/s eta 0:00:00
+Downloading cryptography-42.0.0-cp39-abi3-manylinux_2_28_x86_64.whl (4.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.6/4.6 MB 32.6 MB/s eta 0:00:00
 Installing collected packages: cryptography
-Successfully installed cryptography-49.0.0
+Successfully installed cryptography-42.0.0
 Validating application functionality...

@@ -1,264 +1,56 @@
 {
-    "scenario": "JS-02",
-    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-    "workflow_commit": "30592636219",
-    "pipeline_version": "v2.0",
-    "runner": "ubuntu-24.04",
-    "python": "3.12.x",
-    "llm": {
-        "model": "gemini-2.5-flash",
-        "temperature": 0.0,
-        "seed": 42,
-        "topP": 1.0,
-        "topK": 1
+  "schema_version": "2.0",
+  "scenario": "JS-02-regen",
+  "repository_commit": "8916b39585dde2eac67063622ea1f036e543cb59",
+  "workflow_run_id": "30865161354",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30865161354",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-04T00:27:31.110842+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
     },
-    "snapshots": {
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": {
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": {
-        "package-before.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "rescan.json": "5462e6bd6c5b0bdd80cfd82b64cb16e82cd596553d1c9b5c80444d6286a96e4f",
-        "baseline-grype.json": "586c8d5ffe231d4ac466b6d68316834cbe1db2e0d5b6d9733c8f8a627e4e247e",
-        "candidate-ranking.json": "531c92805a710ff257505fe91e8216566b55d18c709199d90c10909f70aaef79",
-        "build.log": "99e5f4b7d3f8e7a444c6bd49c974f395a20dc9765970c9b2457e59fe2098bf23",
-        "selected-candidate.json": "b3d1439d5788f9726b53eb1a94b2cd3588f1745d0f0f3909225cc7f22cd5d98a",
-        "metrics.json": "791e9129752da21324ab66c94058edc4c70860329c355d704aee11f0629c578f",
-        "test.log": "96217d1f729b5a73554ce34c1159abb37d7fceb8f90d0ffe975e0a260ecad560",
-        "baseline-sbom.json": "e2c074394bee778c5b3d5999f71d82e188c4952d4bfebbd084d277fab2eca38d",
-        "package-after.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "llm-response.json": "50c318765e9b39baa4d9b7704025a7d45a016e44793e407a128a591ae310192c",
-        "llm-request.json": "f856629d8e5a1209e75cdc0d8a4116f6dae84d170b258503b7c845d33eded1a7"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592636219"
-}
-
-=== EMPIRICAL EVIDENCE ===
-NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
-
---- EXPERIMENT MANIFEST ---
-{
-    "scenario": "JS-02", // The unique identifier for this vulnerability scenario
-    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30592636219", // The GitHub Actions run ID that executed this pipeline
-    "pipeline_version": "v2.0", // The version of the remediation pipeline engine
-    "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
-    "python": "3.12.x", // The Python version used by the pipeline
-    "llm": { // LLM configuration settings
-        "model": "gemini-2.5-flash", // The exact LLM model used for reasoning
-        "temperature": 0.0, // Temperature setting (0.0 for deterministic output)
-        "seed": 42, // Seed for reproducibility
-        "topP": 1.0, // Top-P sampling setting
-        "topK": 1 // Top-K sampling setting
-    },
-    "snapshots": { // Hashes of vulnerability intelligence snapshots
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": { // Versions of security scanners used
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
-        "package-before.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "rescan.json": "5462e6bd6c5b0bdd80cfd82b64cb16e82cd596553d1c9b5c80444d6286a96e4f",
-        "baseline-grype.json": "586c8d5ffe231d4ac466b6d68316834cbe1db2e0d5b6d9733c8f8a627e4e247e",
-        "candidate-ranking.json": "531c92805a710ff257505fe91e8216566b55d18c709199d90c10909f70aaef79",
-        "build.log": "99e5f4b7d3f8e7a444c6bd49c974f395a20dc9765970c9b2457e59fe2098bf23",
-        "selected-candidate.json": "b3d1439d5788f9726b53eb1a94b2cd3588f1745d0f0f3909225cc7f22cd5d98a",
-        "metrics.json": "791e9129752da21324ab66c94058edc4c70860329c355d704aee11f0629c578f",
-        "test.log": "96217d1f729b5a73554ce34c1159abb37d7fceb8f90d0ffe975e0a260ecad560",
-        "baseline-sbom.json": "e2c074394bee778c5b3d5999f71d82e188c4952d4bfebbd084d277fab2eca38d",
-        "package-after.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
-        "llm-response.json": "50c318765e9b39baa4d9b7704025a7d45a016e44793e407a128a591ae310192c",
-        "llm-request.json": "f856629d8e5a1209e75cdc0d8a4116f6dae84d170b258503b7c845d33eded1a7"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30592636219" // Direct link to the successful GitHub Actions workflow run
-}
-
---- PIPELINE METRICS ---
-{
-  "application": "applications/juice-shop", // The target application being evaluated
-  "ecosystem": "npm", // Package manager ecosystem (e.g., npm, python)
-  "candidate_count": 111, // Total number of vulnerabilities initially scanned
-  "selected_package": "handlebars", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-2w6w-674q-4c4q", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2026-33937", // The standard MITRE CVE ID
-  "severity": "critical", // CVSS severity rating
-  "cvss": 9.8, // Common Vulnerability Scoring System score
-  "epss": 0.0178, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T00:14:52.392073+00:00", // Time the EPSS score was fetched
-  "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
-  "dependency_type": "direct", // Whether the dependency is direct or transitive
-  "strategy": "transitive_override", // The remediation strategy chosen by the LLM
-  "remediation_type": "Transitive Override", // The human-readable strategy category
-  "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
-  "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application's test suite passed
-  "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
-  "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
-  "runtime_success": false, // Runtime tests status
-  "lockfile_regenerated": false, // Whether a lockfile was regenerated
-  "execution_time_seconds": 35, // Total pipeline execution time in seconds
-  "retry_count": 1, // Number of LLM retries needed
-  "llm_iteration": 2, // The specific iteration of the LLM prompting
-  "validation_stage_reached": "validator", // The furthest pipeline stage reached
-  "failure_stage": "build" // The stage where the pipeline failed, if any
-}
-
---- LLM PROMPT ---
-Scenario ID: JS-02
-Prompt Version: v1.1
-
-Scenario ID: UNKNOWN
-Prompt Version: v1.1
-
-### Vulnerability Intelligence
-* Target Package: handlebars
-* Vulnerable Version: 4.7.7
-* CVE ID: GHSA-2w6w-674q-4c4q
-* CVSS Score: 9.8
-* EPSS Probability: 0.0178
-* CISA KEV Status: False
-* Intelligence Retrieved On: 2026-05-18
-* Fixed Versions: ['4.7.9']
-
-### Dependency Context
-```json
-{
-  "npm_ls": {
-    "version": "15.3.0",
-    "name": "juice-shop",
-    "dependencies": {
-      "hbs": {
-        "version": "4.2.1",
-        "resolved": "https://registry.npmjs.org/hbs/-/hbs-4.2.1.tgz",
-        "overridden": false,
-        "dependencies": {
-          "handlebars": {
-            "version": "4.7.9",
-            "resolved": "https://registry.npmjs.org/handlebars/-/handlebars-4.7.9.tgz",
-            "overridden": true
-          }
-        }
-      }
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
     }
   },
-  "npm_explain": [
-    {
-      "name": "handlebars",
-      "version": "4.7.9",
-      "location": "node_modules/handlebars",
-      "isWorkspace": false,
-      "dependents": [
-        {
-          "type": "prod",
-          "name": "handlebars",
-          "spec": "4.7.9",
-          "from": {
-            "name": "hbs",
-            "version": "4.2.1",
-            "location": "node_modules/hbs",
-            "isWorkspace": false,
-            "dependents": [
-              {
-                "type": "prod",
-                "name": "hbs",
-                "spec": "^4.0.4",
-                "from": {
-                  "location": "/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop"
-                }
-              }
-            ]
-          }
-        }
-      ],
-      "dev": false,
-      "optional": false,
-      "devOptional": false,
-      "peer": false,
-      "bundled": false,
-      "overridden": true
-    }
-  ],
-  "package_json": {
-    "name": "juice-shop",
-    "version": "15.3.0",
-    "overrides": {
-      "handlebars": "4.7.9"
-    }
-  }
-}
-```
-
-### Previous Attempt Failure Logs
-The previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.
-```
-              17.16 kB
-runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
-
-| Initial Total                         |   2.48 MB |               438.33 kB
-
-Lazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size
-399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB
-202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB
-112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB
-103.js              | confetti                              |  10.86 kB |                 3.92 kB
-67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB
-common.js           | common                                |   9.04 kB |               861 bytes
-535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB
-745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB
-613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB
-859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
-472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
-
-Build at: 2026-07-31T00:19:43.151Z - Hash: eec0da7fb4f70cee - Time: 74275ms
-
-> juice-shop@15.3.0 build:server
-> tsc
-
-node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
-node_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.
-node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
-node_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.
-node_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.
-node_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.
-
-```
-
-Based on the vulnerability intelligence and context:
-1. Recommend the safest strategy.
-2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
-
---- LLM OUTPUT ---
-{
-  "reasoning": "The vulnerability GHSA-2w6w-674q-4c4q (CVSS 9.8) in handlebars allows arbitrary code execution and prototype pollution in versions prior to 4.7.9. In this project, handlebars is introduced transitively via the top-level dependency hbs. To remediate the security risk while preserving application compatibility and avoiding type-definition compilation errors, enforcing an override for handlebars to version 4.7.9 is the safest and most effective strategy.",
-  "strategy": "transitive_override",
-  "remediation_type": "Transitive Override",
-  "recommended_package_version": "4.7.9",
-  "manifest_patch": {
-    "operation": "add_override",
-    "package": "handlebars",
-    "constraint": "4.7.9"
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "3d69246dcdba8a27ca78b4b150a3b011266071d84e1c241449757cc5eb7f264c",
+    "baseline-sbom.json": "a2052e0b62d271c6f4a802e523ad9da39fb6f5930a27dfe3eb5e7d5c05570d6a",
+    "build.log": "9d6e413dc717d2cf53d915a1ad0cd59c9d16b0f3d9f3dad8d898dcfc27441345",
+    "candidate-ranking.json": "993fb0ad7578a5f95e7794d55e9a5dda8c0a02949ef14e7a5ee4e30bdd765ccb",
+    "dependency-graph.log": "b940c5fadc9b5d0528d555db4478cf3d46e73be9c96de664cfa0d6b4414c6413",
+    "grype-db-metadata.json": "e211dc5c165b3b2a05c670e72beadf5c9e7d58001a19c738542b9b69b029f087",
+    "llm-request-attempt1.json": "981476f0500f81530d03a1c3674f1397b70a7725954228edac6d035bccb68697",
+    "llm-request.json": "a6c4ddd97b1b43b424f8f36aa4d4835037baccc788c49e3349c50b39bb857632",
+    "llm-response-attempt1.json": "89618b74a22dd38292d3002e07c49f5b2fdda5a16615e7af61dc0c4da5be412b",
+    "llm-response-full-attempt1.json": "821594f93b2ec5fcd8d554796a9f429030c63ce7eb36cd938d379323b228c7b4",
+    "llm-response-full.json": "821594f93b2ec5fcd8d554796a9f429030c63ce7eb36cd938d379323b228c7b4",
+    "llm-response.json": "89618b74a22dd38292d3002e07c49f5b2fdda5a16615e7af61dc0c4da5be412b",
+    "metrics-attempt1.json": "262b70293e964e590db0313cce126bd3ec9d4a82958ad9ce0d89814811f6f7d8",
+    "metrics.json": "a1fc412e571fcc36751c3437e236350d55b8c2e9015a40fad1a5648c51873c88",
+    "package-after-attempt1.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
+    "package-after.json": "677a847719a69dba603a70290ef29037e948fc89dea10a470f041fa9d410e86d",
+    "package-before.json": "896b949983c177cc1aff96e9c90d53ebb219025817b3f6ce25913cc5511ceab5",
+    "rescan.json": "7238338a07476cbe1d0181d7bab6eba54b04315bd4fcb0cf40add454a9493fcc",
+    "selected-candidate.json": "4e954fbf1d10a4d3117b3d0e31df6e0ef830b0c4adbb106aa0fa9a266e0a6542",
+    "test.log": "3ada9a214547218fbb45de295854a833501978caa0ab696795fe4c15d16fe70e"
   }
 }

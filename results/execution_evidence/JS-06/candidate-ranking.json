@@ -1,13 +1,14 @@
 [
   {
     "cve_id": "GHSA-35jh-r3h4-6jhm",
+    "scanner_cve_id": "GHSA-35jh-r3h4-6jhm",
     "api_cve_id": "CVE-2021-23337",
     "package_name": "lodash",
     "vulnerable_version": "2.4.2",
     "severity": "high",
     "cvss": 7.2,
     "epss": 0.21333,
-    "epss_timestamp": "2026-07-31T09:05:26.164286+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.069181+00:00",
     "kev": false,
     "fixed_versions": [
       "4.17.21"
@@ -15,13 +16,14 @@
   },
   {
     "cve_id": "GHSA-c7hr-j4mj-j2w6",
+    "scanner_cve_id": "GHSA-c7hr-j4mj-j2w6",
     "api_cve_id": "CVE-2015-9235",
     "package_name": "jsonwebtoken",
     "vulnerable_version": "0.1.0",
     "severity": "critical",
     "cvss": 0.0,
     "epss": 0.08655,
-    "epss_timestamp": "2026-07-31T09:05:26.272652+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.121891+00:00",
     "kev": false,
     "fixed_versions": [
       "4.2.2"
@@ -29,13 +31,14 @@
   },
   {
     "cve_id": "GHSA-c7hr-j4mj-j2w6",
+    "scanner_cve_id": "GHSA-c7hr-j4mj-j2w6",
     "api_cve_id": "CVE-2015-9235",
     "package_name": "jsonwebtoken",
     "vulnerable_version": "0.4.0",
     "severity": "critical",
     "cvss": 0.0,
     "epss": 0.08655,
-    "epss_timestamp": "2026-07-31T09:05:26.272670+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.121911+00:00",
     "kev": false,
     "fixed_versions": [
       "4.2.2"
@@ -43,55 +46,74 @@
   },
   {
     "cve_id": "GHSA-whpj-8f3w-67p5",
+    "scanner_cve_id": "GHSA-whpj-8f3w-67p5",
     "api_cve_id": "CVE-2023-32314",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.08127,
-    "epss_timestamp": "2026-07-31T09:05:26.366295+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.161714+00:00",
     "kev": false,
     "fixed_versions": [
       "3.9.18"
     ]
   },
   {
-    "cve_id": "GHSA-8hfj-j24r-96c4",
-    "api_cve_id": "CVE-2022-24785",
+    "cve_id": "GHSA-87vv-r9j6-g5qv",
+    "scanner_cve_id": "GHSA-87vv-r9j6-g5qv",
+    "api_cve_id": "CVE-2016-4055",
     "package_name": "moment",
     "vulnerable_version": "2.0.0",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.0552,
-    "epss_timestamp": "2026-07-31T09:05:26.560713+00:00",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.09905,
+    "epss_timestamp": "2026-08-04T19:11:46.204528+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.29.2"
+      "2.11.2"
     ]
   },
   {
     "cve_id": "GHSA-jf85-cpcp-j695",
+    "scanner_cve_id": "GHSA-jf85-cpcp-j695",
     "api_cve_id": "CVE-2019-10744",
     "package_name": "lodash",
     "vulnerable_version": "2.4.2",
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.05006,
-    "epss_timestamp": "2026-07-31T09:05:26.455965+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.249889+00:00",
     "kev": false,
     "fixed_versions": [
       "4.17.12"
     ]
   },
   {
+    "cve_id": "GHSA-8hfj-j24r-96c4",
+    "scanner_cve_id": "GHSA-8hfj-j24r-96c4",
+    "api_cve_id": "CVE-2022-24785",
+    "package_name": "moment",
+    "vulnerable_version": "2.0.0",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.0552,
+    "epss_timestamp": "2026-08-04T19:11:46.279344+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.29.2"
+    ]
+  },
+  {
     "cve_id": "GHSA-cchq-frgv-rjh5",
+    "scanner_cve_id": "GHSA-cchq-frgv-rjh5",
     "api_cve_id": "CVE-2023-37466",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.03867,
-    "epss_timestamp": "2026-07-31T09:05:26.649697+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.321043+00:00",
     "kev": false,
     "fixed_versions": [
       "3.10.0"
@@ -99,97 +121,134 @@
   },
   {
     "cve_id": "GHSA-446m-mv8f-q348",
+    "scanner_cve_id": "GHSA-446m-mv8f-q348",
     "api_cve_id": "CVE-2017-18214",
     "package_name": "moment",
     "vulnerable_version": "2.0.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.03673,
-    "epss_timestamp": "2026-07-31T09:05:26.750140+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.374393+00:00",
     "kev": false,
     "fixed_versions": [
       "2.19.3"
     ]
   },
   {
-    "cve_id": "GHSA-r5fr-rjxr-66jc",
-    "api_cve_id": "CVE-2026-4800",
-    "package_name": "lodash",
-    "vulnerable_version": "4.17.21",
-    "severity": "high",
-    "cvss": 8.1,
-    "epss": 0.02566,
-    "epss_timestamp": "2026-07-31T09:05:26.849423+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "4.18.0"
-    ]
-  },
-  {
-    "cve_id": "GHSA-pq67-2wwv-3xjx",
-    "api_cve_id": "CVE-2024-12905",
-    "package_name": "tar-fs",
-    "vulnerable_version": "2.1.1",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.02205,
-    "epss_timestamp": "2026-07-31T09:05:27.113539+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "2.1.2"
-    ]
-  },
-  {
-    "cve_id": "GHSA-6j2x-vhqr-qr7q",
-    "api_cve_id": "CVE-2026-47210",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 9.8,
-    "epss": 0.01801,
-    "epss_timestamp": "2026-07-31T09:05:26.935083+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.11.4"
-    ]
-  },
-  {
     "cve_id": "GHSA-2w6w-674q-4c4q",
+    "scanner_cve_id": "GHSA-2w6w-674q-4c4q",
     "api_cve_id": "CVE-2026-33937",
     "package_name": "handlebars",
     "vulnerable_version": "4.7.7",
     "severity": "critical",
     "cvss": 9.8,
-    "epss": 0.0178,
-    "epss_timestamp": "2026-07-31T09:05:27.027687+00:00",
+    "epss": 0.02254,
+    "epss_timestamp": "2026-08-04T19:11:46.428689+00:00",
     "kev": false,
     "fixed_versions": [
       "4.7.9"
     ]
   },
   {
+    "cve_id": "GHSA-r5fr-rjxr-66jc",
+    "scanner_cve_id": "GHSA-r5fr-rjxr-66jc",
+    "api_cve_id": "CVE-2026-4800",
+    "package_name": "lodash",
+    "vulnerable_version": "4.17.21",
+    "severity": "high",
+    "cvss": 8.1,
+    "epss": 0.02566,
+    "epss_timestamp": "2026-08-04T19:11:46.462641+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.18.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-6j2x-vhqr-qr7q",
+    "scanner_cve_id": "GHSA-6j2x-vhqr-qr7q",
+    "api_cve_id": "CVE-2026-47210",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 9.8,
+    "epss": 0.01801,
+    "epss_timestamp": "2026-08-04T19:11:46.517437+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-pq67-2wwv-3xjx",
+    "scanner_cve_id": "GHSA-pq67-2wwv-3xjx",
+    "api_cve_id": "CVE-2024-12905",
+    "package_name": "tar-fs",
+    "vulnerable_version": "2.1.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.02205,
+    "epss_timestamp": "2026-08-04T19:11:46.546909+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.1.2"
+    ]
+  },
+  {
     "cve_id": "GHSA-fjxv-7rqg-78g4",
+    "scanner_cve_id": "GHSA-fjxv-7rqg-78g4",
     "api_cve_id": "CVE-2025-7783",
     "package_name": "form-data",
     "vulnerable_version": "2.3.3",
     "severity": "critical",
     "cvss": 9.4,
     "epss": 0.01735,
-    "epss_timestamp": "2026-07-31T09:05:27.203210+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.593732+00:00",
     "kev": false,
     "fixed_versions": [
       "2.5.4"
     ]
   },
   {
+    "cve_id": "GHSA-72xf-g2v4-qvf3",
+    "scanner_cve_id": "GHSA-72xf-g2v4-qvf3",
+    "api_cve_id": "CVE-2023-26136",
+    "package_name": "tough-cookie",
+    "vulnerable_version": "2.5.0",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.02542,
+    "epss_timestamp": "2026-08-04T19:11:46.635837+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.1.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-fvqr-27wr-82fm",
+    "scanner_cve_id": "GHSA-fvqr-27wr-82fm",
+    "api_cve_id": "CVE-2018-3721",
+    "package_name": "lodash",
+    "vulnerable_version": "2.4.2",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.02413,
+    "epss_timestamp": "2026-08-04T19:11:46.689450+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.17.5"
+    ]
+  },
+  {
     "cve_id": "GHSA-rc47-6667-2j5j",
+    "scanner_cve_id": "GHSA-rc47-6667-2j5j",
     "api_cve_id": "CVE-2022-25881",
     "package_name": "http-cache-semantics",
     "vulnerable_version": "3.8.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01613,
-    "epss_timestamp": "2026-07-31T09:05:27.294454+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.746246+00:00",
     "kev": false,
     "fixed_versions": [
       "4.1.1"
@@ -197,27 +256,89 @@
   },
   {
     "cve_id": "GHSA-4xc9-xhrj-v574",
+    "scanner_cve_id": "GHSA-4xc9-xhrj-v574",
     "api_cve_id": "CVE-2018-16487",
     "package_name": "lodash",
     "vulnerable_version": "2.4.2",
     "severity": "high",
     "cvss": 0.0,
     "epss": 0.01553,
-    "epss_timestamp": "2026-07-31T09:05:27.393234+00:00",
+    "epss_timestamp": "2026-08-04T19:11:46.790034+00:00",
     "kev": false,
     "fixed_versions": [
       "4.17.11"
     ]
   },
   {
+    "cve_id": "GHSA-99p7-6v5w-7xg8",
+    "scanner_cve_id": "GHSA-99p7-6v5w-7xg8",
+    "api_cve_id": "CVE-2026-22709",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 9.8,
+    "epss": 0.01222,
+    "epss_timestamp": "2026-08-04T19:11:46.838406+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.10.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r7qp-cfhv-p84w",
+    "scanner_cve_id": "GHSA-r7qp-cfhv-p84w",
+    "api_cve_id": "CVE-2022-41940",
+    "package_name": "engine.io",
+    "vulnerable_version": "4.1.2",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.01939,
+    "epss_timestamp": "2026-08-04T19:11:46.881311+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.2.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v37h-5mfm-c47c",
+    "scanner_cve_id": "GHSA-v37h-5mfm-c47c",
+    "api_cve_id": "CVE-2026-24781",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 9.8,
+    "epss": 0.01186,
+    "epss_timestamp": "2026-08-04T19:11:46.945519+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-pfrx-2q88-qq97",
+    "scanner_cve_id": "GHSA-pfrx-2q88-qq97",
+    "api_cve_id": "CVE-2022-33987",
+    "package_name": "got",
+    "vulnerable_version": "8.3.2",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.02162,
+    "epss_timestamp": "2026-08-04T19:11:47.005419+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "11.8.5"
+    ]
+  },
+  {
     "cve_id": "GHSA-grv7-fg5c-xmjg",
+    "scanner_cve_id": "GHSA-grv7-fg5c-xmjg",
     "api_cve_id": "CVE-2024-4068",
     "package_name": "braces",
     "vulnerable_version": "2.3.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01471,
-    "epss_timestamp": "2026-07-31T09:05:27.709992+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.049303+00:00",
     "kev": false,
     "fixed_versions": [
       "3.0.3"
@@ -225,13 +346,14 @@
   },
   {
     "cve_id": "GHSA-grv7-fg5c-xmjg",
+    "scanner_cve_id": "GHSA-grv7-fg5c-xmjg",
     "api_cve_id": "CVE-2024-4068",
     "package_name": "braces",
     "vulnerable_version": "3.0.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01471,
-    "epss_timestamp": "2026-07-31T09:05:27.710009+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.049326+00:00",
     "kev": false,
     "fixed_versions": [
       "3.0.3"
@@ -239,13 +361,14 @@
   },
   {
     "cve_id": "GHSA-3h5v-q93c-6h6q",
+    "scanner_cve_id": "GHSA-3h5v-q93c-6h6q",
     "api_cve_id": "CVE-2024-37890",
     "package_name": "ws",
     "vulnerable_version": "7.4.6",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01357,
-    "epss_timestamp": "2026-07-31T09:05:27.803252+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.100794+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.10"
@@ -253,13 +376,29 @@
   },
   {
     "cve_id": "GHSA-3h5v-q93c-6h6q",
+    "scanner_cve_id": "GHSA-3h5v-q93c-6h6q",
+    "api_cve_id": "CVE-2024-37890",
+    "package_name": "ws",
+    "vulnerable_version": "7.4.6",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.01357,
+    "epss_timestamp": "2026-08-04T19:11:47.100818+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.10"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3h5v-q93c-6h6q",
+    "scanner_cve_id": "GHSA-3h5v-q93c-6h6q",
     "api_cve_id": "CVE-2024-37890",
     "package_name": "ws",
     "vulnerable_version": "8.14.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01357,
-    "epss_timestamp": "2026-07-31T09:05:27.803270+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.100827+00:00",
     "kev": false,
     "fixed_versions": [
       "8.17.1"
@@ -267,167 +406,179 @@
   },
   {
     "cve_id": "GHSA-3h5v-q93c-6h6q",
+    "scanner_cve_id": "GHSA-3h5v-q93c-6h6q",
     "api_cve_id": "CVE-2024-37890",
     "package_name": "ws",
     "vulnerable_version": "8.5.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01357,
-    "epss_timestamp": "2026-07-31T09:05:27.803277+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.100834+00:00",
     "kev": false,
     "fixed_versions": [
       "8.17.1"
     ]
   },
   {
-    "cve_id": "GHSA-99p7-6v5w-7xg8",
-    "api_cve_id": "CVE-2026-22709",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 9.8,
-    "epss": 0.01222,
-    "epss_timestamp": "2026-07-31T09:05:27.476251+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.10.2"
-    ]
-  },
-  {
-    "cve_id": "GHSA-v37h-5mfm-c47c",
-    "api_cve_id": "CVE-2026-24781",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 9.8,
-    "epss": 0.01186,
-    "epss_timestamp": "2026-07-31T09:05:27.591428+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.11.0"
-    ]
-  },
-  {
-    "cve_id": "GHSA-cgfm-xwp7-2cvr",
-    "api_cve_id": "CVE-2022-25887",
+    "cve_id": "GHSA-rjqq-98f6-6j3r",
+    "scanner_cve_id": "GHSA-rjqq-98f6-6j3r",
+    "api_cve_id": "CVE-2021-26539",
     "package_name": "sanitize-html",
     "vulnerable_version": "1.4.2",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.0115,
-    "epss_timestamp": "2026-07-31T09:05:28.119058+00:00",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.01953,
+    "epss_timestamp": "2026-08-04T19:11:47.144305+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.7.1"
-    ]
-  },
-  {
-    "cve_id": "GHSA-6g6m-m6h5-w9gf",
-    "api_cve_id": "CVE-2020-15084",
-    "package_name": "express-jwt",
-    "vulnerable_version": "0.1.3",
-    "severity": "high",
-    "cvss": 7.7,
-    "epss": 0.01054,
-    "epss_timestamp": "2026-07-31T09:05:28.504058+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "6.0.0"
+      "2.3.1"
     ]
   },
   {
     "cve_id": "GHSA-47x8-96vw-5wg6",
+    "scanner_cve_id": "GHSA-47x8-96vw-5wg6",
     "api_cve_id": "CVE-2026-43997",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 10,
     "epss": 0.00976,
-    "epss_timestamp": "2026-07-31T09:05:27.896391+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.193943+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.0"
     ]
   },
   {
-    "cve_id": "GHSA-9wv6-86v2-598j",
-    "api_cve_id": "CVE-2024-45296",
-    "package_name": "path-to-regexp",
-    "vulnerable_version": "0.1.7",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00932,
-    "epss_timestamp": "2026-07-31T09:05:29.177582+00:00",
+    "cve_id": "GHSA-mjxr-4v3x-q3m4",
+    "scanner_cve_id": "GHSA-mjxr-4v3x-q3m4",
+    "api_cve_id": "CVE-2021-26540",
+    "package_name": "sanitize-html",
+    "vulnerable_version": "1.4.2",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.01754,
+    "epss_timestamp": "2026-08-04T19:11:47.248194+00:00",
     "kev": false,
     "fixed_versions": [
-      "0.1.10"
+      "2.3.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-xxjr-mmjv-4gpg",
+    "scanner_cve_id": "GHSA-xxjr-mmjv-4gpg",
+    "api_cve_id": "CVE-2025-13465",
+    "package_name": "lodash",
+    "vulnerable_version": "4.17.21",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.01535,
+    "epss_timestamp": "2026-08-04T19:11:47.290520+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.17.23"
     ]
   },
   {
     "cve_id": "GHSA-ffh4-j6h5-pg66",
+    "scanner_cve_id": "GHSA-ffh4-j6h5-pg66",
     "api_cve_id": "CVE-2026-26956",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00921,
-    "epss_timestamp": "2026-07-31T09:05:27.986158+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.342813+00:00",
     "kev": false,
     "fixed_versions": [
       "3.10.5"
     ]
   },
   {
+    "cve_id": "GHSA-cgfm-xwp7-2cvr",
+    "scanner_cve_id": "GHSA-cgfm-xwp7-2cvr",
+    "api_cve_id": "CVE-2022-25887",
+    "package_name": "sanitize-html",
+    "vulnerable_version": "1.4.2",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.0115,
+    "epss_timestamp": "2026-08-04T19:11:47.395682+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.7.1"
+    ]
+  },
+  {
     "cve_id": "GHSA-grj5-jjm8-h35p",
+    "scanner_cve_id": "GHSA-grj5-jjm8-h35p",
     "api_cve_id": "CVE-2026-24118",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00905,
-    "epss_timestamp": "2026-07-31T09:05:28.202231+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.444081+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.0"
     ]
   },
   {
-    "cve_id": "GHSA-8hg8-63c5-gwmx",
-    "api_cve_id": "CVE-2026-44007",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 9.1,
-    "epss": 0.00901,
-    "epss_timestamp": "2026-07-31T09:05:28.401052+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.11.1"
-    ]
-  },
-  {
     "cve_id": "GHSA-qvjj-29qf-hp7p",
+    "scanner_cve_id": "GHSA-qvjj-29qf-hp7p",
     "api_cve_id": "CVE-2026-24120",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00896,
-    "epss_timestamp": "2026-07-31T09:05:28.299546+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.493624+00:00",
     "kev": false,
     "fixed_versions": [
       "3.10.5"
     ]
   },
   {
+    "cve_id": "GHSA-8hg8-63c5-gwmx",
+    "scanner_cve_id": "GHSA-8hg8-63c5-gwmx",
+    "api_cve_id": "CVE-2026-44007",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 9.1,
+    "epss": 0.00901,
+    "epss_timestamp": "2026-08-04T19:11:47.537162+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-6g6m-m6h5-w9gf",
+    "scanner_cve_id": "GHSA-6g6m-m6h5-w9gf",
+    "api_cve_id": "CVE-2020-15084",
+    "package_name": "express-jwt",
+    "vulnerable_version": "0.1.3",
+    "severity": "high",
+    "cvss": 7.7,
+    "epss": 0.01054,
+    "epss_timestamp": "2026-08-04T19:11:47.584016+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.0.0"
+    ]
+  },
+  {
     "cve_id": "GHSA-9qj6-qjgg-37qq",
+    "scanner_cve_id": "GHSA-9qj6-qjgg-37qq",
     "api_cve_id": "CVE-2026-44008",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00851,
-    "epss_timestamp": "2026-07-31T09:05:28.602242+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.634149+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.2"
@@ -435,55 +586,29 @@
   },
   {
     "cve_id": "GHSA-vwrp-x96c-mhwq",
+    "scanner_cve_id": "GHSA-vwrp-x96c-mhwq",
     "api_cve_id": "CVE-2026-44005",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 10,
     "epss": 0.00831,
-    "epss_timestamp": "2026-07-31T09:05:28.725239+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.682448+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.0"
     ]
   },
   {
-    "cve_id": "GHSA-qwcr-r2fm-qrc7",
-    "api_cve_id": "CVE-2024-45590",
-    "package_name": "body-parser",
-    "vulnerable_version": "1.20.1",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00824,
-    "epss_timestamp": "2026-07-31T09:05:29.412561+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "1.20.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-qwcr-r2fm-qrc7",
-    "api_cve_id": "CVE-2024-45590",
-    "package_name": "body-parser",
-    "vulnerable_version": "1.20.2",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00824,
-    "epss_timestamp": "2026-07-31T09:05:29.412583+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "1.20.3"
-    ]
-  },
-  {
     "cve_id": "GHSA-rp36-8xq3-r6c4",
+    "scanner_cve_id": "GHSA-rp36-8xq3-r6c4",
     "api_cve_id": "CVE-2026-47140",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 10,
     "epss": 0.00817,
-    "epss_timestamp": "2026-07-31T09:05:28.809550+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.740498+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.4"
@@ -491,13 +616,14 @@
   },
   {
     "cve_id": "GHSA-qcp4-v2jj-fjx8",
+    "scanner_cve_id": "GHSA-qcp4-v2jj-fjx8",
     "api_cve_id": "CVE-2026-44006",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 10,
     "epss": 0.00815,
-    "epss_timestamp": "2026-07-31T09:05:28.901619+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.787198+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.0"
@@ -505,41 +631,209 @@
   },
   {
     "cve_id": "GHSA-9vg3-4rfj-wgcm",
+    "scanner_cve_id": "GHSA-9vg3-4rfj-wgcm",
     "api_cve_id": "CVE-2026-44009",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00812,
-    "epss_timestamp": "2026-07-31T09:05:28.998820+00:00",
+    "epss_timestamp": "2026-08-04T19:11:47.830894+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.2"
     ]
   },
   {
+    "cve_id": "GHSA-952p-6rrq-rcjv",
+    "scanner_cve_id": "GHSA-952p-6rrq-rcjv",
+    "api_cve_id": "CVE-2024-4067",
+    "package_name": "micromatch",
+    "vulnerable_version": "3.1.10",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.01429,
+    "epss_timestamp": "2026-08-04T19:11:47.859698+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.0.8"
+    ]
+  },
+  {
+    "cve_id": "GHSA-952p-6rrq-rcjv",
+    "scanner_cve_id": "GHSA-952p-6rrq-rcjv",
+    "api_cve_id": "CVE-2024-4067",
+    "package_name": "micromatch",
+    "vulnerable_version": "4.0.5",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.01429,
+    "epss_timestamp": "2026-08-04T19:11:47.859716+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.0.8"
+    ]
+  },
+  {
+    "cve_id": "GHSA-76w7-j9cq-rx2j",
+    "scanner_cve_id": "GHSA-76w7-j9cq-rx2j",
+    "api_cve_id": "CVE-2026-47208",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 10,
+    "epss": 0.00762,
+    "epss_timestamp": "2026-08-04T19:11:47.907113+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-9wv6-86v2-598j",
+    "scanner_cve_id": "GHSA-9wv6-86v2-598j",
+    "api_cve_id": "CVE-2024-45296",
+    "package_name": "path-to-regexp",
+    "vulnerable_version": "0.1.7",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00932,
+    "epss_timestamp": "2026-08-04T19:11:47.948439+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.1.10"
+    ]
+  },
+  {
+    "cve_id": "GHSA-xc6g-ggrc-qq4r",
+    "scanner_cve_id": "GHSA-xc6g-ggrc-qq4r",
+    "api_cve_id": "CVE-2017-16016",
+    "package_name": "sanitize-html",
+    "vulnerable_version": "1.4.2",
+    "severity": "medium",
+    "cvss": 0.0,
+    "epss": 0.01357,
+    "epss_timestamp": "2026-08-04T19:11:47.992763+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.11.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-55hx-c926-fr95",
+    "scanner_cve_id": "GHSA-55hx-c926-fr95",
+    "api_cve_id": "CVE-2026-26332",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 9.8,
+    "epss": 0.0071,
+    "epss_timestamp": "2026-08-04T19:11:48.040572+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qwcr-r2fm-qrc7",
+    "scanner_cve_id": "GHSA-qwcr-r2fm-qrc7",
+    "api_cve_id": "CVE-2024-45590",
+    "package_name": "body-parser",
+    "vulnerable_version": "1.20.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00824,
+    "epss_timestamp": "2026-08-04T19:11:48.081770+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.20.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qwcr-r2fm-qrc7",
+    "scanner_cve_id": "GHSA-qwcr-r2fm-qrc7",
+    "api_cve_id": "CVE-2024-45590",
+    "package_name": "body-parser",
+    "vulnerable_version": "1.20.2",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00824,
+    "epss_timestamp": "2026-08-04T19:11:48.081793+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.20.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-cqmj-92xf-r6r9",
+    "scanner_cve_id": "GHSA-cqmj-92xf-r6r9",
+    "api_cve_id": "CVE-2023-32695",
+    "package_name": "socket.io-parser",
+    "vulnerable_version": "4.0.5",
+    "severity": "medium",
+    "cvss": 7.3,
+    "epss": 0.01059,
+    "epss_timestamp": "2026-08-04T19:11:48.135292+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.2.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-cqmj-92xf-r6r9",
+    "scanner_cve_id": "GHSA-cqmj-92xf-r6r9",
+    "api_cve_id": "CVE-2023-32695",
+    "package_name": "socket.io-parser",
+    "vulnerable_version": "4.0.5",
+    "severity": "medium",
+    "cvss": 7.3,
+    "epss": 0.01059,
+    "epss_timestamp": "2026-08-04T19:11:48.135312+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.2.3"
+    ]
+  },
+  {
     "cve_id": "GHSA-rhx6-c78j-4q9w",
+    "scanner_cve_id": "GHSA-rhx6-c78j-4q9w",
     "api_cve_id": "CVE-2024-52798",
     "package_name": "path-to-regexp",
     "vulnerable_version": "0.1.7",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00792,
-    "epss_timestamp": "2026-07-31T09:05:29.500933+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.183536+00:00",
     "kev": false,
     "fixed_versions": [
       "0.1.12"
     ]
   },
   {
+    "cve_id": "GHSA-v6mx-mf47-r5wg",
+    "scanner_cve_id": "GHSA-v6mx-mf47-r5wg",
+    "api_cve_id": "CVE-2026-47131",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 10,
+    "epss": 0.00619,
+    "epss_timestamp": "2026-08-04T19:11:48.232437+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.4"
+    ]
+  },
+  {
     "cve_id": "GHSA-96hv-2xvq-fx4p",
+    "scanner_cve_id": "GHSA-96hv-2xvq-fx4p",
     "api_cve_id": "CVE-2026-48779",
     "package_name": "ws",
     "vulnerable_version": "7.4.6",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00782,
-    "epss_timestamp": "2026-07-31T09:05:29.690758+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.281381+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.11"
@@ -547,13 +841,29 @@
   },
   {
     "cve_id": "GHSA-96hv-2xvq-fx4p",
+    "scanner_cve_id": "GHSA-96hv-2xvq-fx4p",
+    "api_cve_id": "CVE-2026-48779",
+    "package_name": "ws",
+    "vulnerable_version": "7.4.6",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00782,
+    "epss_timestamp": "2026-08-04T19:11:48.281400+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.11"
+    ]
+  },
+  {
+    "cve_id": "GHSA-96hv-2xvq-fx4p",
+    "scanner_cve_id": "GHSA-96hv-2xvq-fx4p",
     "api_cve_id": "CVE-2026-48779",
     "package_name": "ws",
     "vulnerable_version": "8.14.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00782,
-    "epss_timestamp": "2026-07-31T09:05:29.690777+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.281409+00:00",
     "kev": false,
     "fixed_versions": [
       "8.21.0"
@@ -561,111 +871,74 @@
   },
   {
     "cve_id": "GHSA-96hv-2xvq-fx4p",
+    "scanner_cve_id": "GHSA-96hv-2xvq-fx4p",
     "api_cve_id": "CVE-2026-48779",
     "package_name": "ws",
-    "vulnerable_version": "8.5.0",
+    "vulnerable_version": "8.18.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00782,
-    "epss_timestamp": "2026-07-31T09:05:29.690784+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.281416+00:00",
     "kev": false,
     "fixed_versions": [
       "8.21.0"
     ]
   },
   {
-    "cve_id": "GHSA-76w7-j9cq-rx2j",
-    "api_cve_id": "CVE-2026-47208",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 10,
-    "epss": 0.00762,
-    "epss_timestamp": "2026-07-31T09:05:29.091010+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.11.4"
-    ]
-  },
-  {
-    "cve_id": "GHSA-4pg4-qvpc-4q3h",
-    "api_cve_id": "CVE-2025-47944",
-    "package_name": "multer",
-    "vulnerable_version": "1.4.5-lts.1",
+    "cve_id": "GHSA-96hv-2xvq-fx4p",
+    "scanner_cve_id": "GHSA-96hv-2xvq-fx4p",
+    "api_cve_id": "CVE-2026-48779",
+    "package_name": "ws",
+    "vulnerable_version": "8.5.0",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00726,
-    "epss_timestamp": "2026-07-31T09:05:30.142903+00:00",
+    "epss": 0.00782,
+    "epss_timestamp": "2026-08-04T19:11:48.281422+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.0.0"
+      "8.21.0"
     ]
   },
   {
     "cve_id": "GHSA-5528-5vmv-3xc2",
+    "scanner_cve_id": "GHSA-5528-5vmv-3xc2",
     "api_cve_id": "CVE-2026-3520",
     "package_name": "multer",
     "vulnerable_version": "1.4.5-lts.1",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00713,
-    "epss_timestamp": "2026-07-31T09:05:29.795042+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.332945+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.1"
     ]
   },
   {
-    "cve_id": "GHSA-2g4c-8fpm-c46v",
-    "api_cve_id": "CVE-2024-21505",
-    "package_name": "web3-utils",
-    "vulnerable_version": "4.0.7",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00712,
-    "epss_timestamp": "2026-07-31T09:05:30.406931+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "4.2.1"
-    ]
-  },
-  {
-    "cve_id": "GHSA-44fp-w29j-9vj5",
-    "api_cve_id": "CVE-2025-47935",
-    "package_name": "multer",
-    "vulnerable_version": "1.4.5-lts.1",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00711,
-    "epss_timestamp": "2026-07-31T09:05:30.587677+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "2.0.0"
-    ]
-  },
-  {
-    "cve_id": "GHSA-55hx-c926-fr95",
-    "api_cve_id": "CVE-2026-26332",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
+    "cve_id": "GHSA-xwcq-pm8m-c4vf",
+    "scanner_cve_id": "GHSA-xwcq-pm8m-c4vf",
+    "api_cve_id": "CVE-2023-46233",
+    "package_name": "crypto-js",
+    "vulnerable_version": "3.3.0",
     "severity": "critical",
-    "cvss": 9.8,
-    "epss": 0.0071,
-    "epss_timestamp": "2026-07-31T09:05:29.267831+00:00",
+    "cvss": 9.1,
+    "epss": 0.00635,
+    "epss_timestamp": "2026-08-04T19:11:48.381376+00:00",
     "kev": false,
     "fixed_versions": [
-      "3.11.0"
+      "4.2.0"
     ]
   },
   {
     "cve_id": "GHSA-3mfm-83xf-c92r",
+    "scanner_cve_id": "GHSA-3mfm-83xf-c92r",
     "api_cve_id": "CVE-2026-33938",
     "package_name": "handlebars",
     "vulnerable_version": "4.7.7",
     "severity": "high",
     "cvss": 8.1,
     "epss": 0.00709,
-    "epss_timestamp": "2026-07-31T09:05:29.964999+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.426095+00:00",
     "kev": false,
     "fixed_versions": [
       "4.7.9"
@@ -673,27 +946,44 @@
   },
   {
     "cve_id": "GHSA-xhpv-hc6g-r9c6",
+    "scanner_cve_id": "GHSA-xhpv-hc6g-r9c6",
     "api_cve_id": "CVE-2026-33940",
     "package_name": "handlebars",
     "vulnerable_version": "4.7.7",
     "severity": "high",
     "cvss": 8.1,
     "epss": 0.00703,
-    "epss_timestamp": "2026-07-31T09:05:30.050534+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.476205+00:00",
     "kev": false,
     "fixed_versions": [
       "4.7.9"
     ]
   },
   {
+    "cve_id": "GHSA-4pg4-qvpc-4q3h",
+    "scanner_cve_id": "GHSA-4pg4-qvpc-4q3h",
+    "api_cve_id": "CVE-2025-47944",
+    "package_name": "multer",
+    "vulnerable_version": "1.4.5-lts.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00726,
+    "epss_timestamp": "2026-08-04T19:11:48.520498+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.0"
+    ]
+  },
+  {
     "cve_id": "GHSA-v52c-386h-88mc",
+    "scanner_cve_id": "GHSA-v52c-386h-88mc",
     "api_cve_id": "CVE-2026-2359",
     "package_name": "multer",
     "vulnerable_version": "1.4.5-lts.1",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00663,
-    "epss_timestamp": "2026-07-31T09:05:30.234135+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.570439+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.0"
@@ -701,97 +991,239 @@
   },
   {
     "cve_id": "GHSA-xf7r-hgr6-v32p",
+    "scanner_cve_id": "GHSA-xf7r-hgr6-v32p",
     "api_cve_id": "CVE-2026-3304",
     "package_name": "multer",
     "vulnerable_version": "1.4.5-lts.1",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00663,
-    "epss_timestamp": "2026-07-31T09:05:30.322498+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.613252+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.0"
     ]
   },
   {
-    "cve_id": "GHSA-fjgf-rc76-4x9p",
-    "api_cve_id": "CVE-2025-7338",
-    "package_name": "multer",
-    "vulnerable_version": "1.4.5-lts.1",
+    "cve_id": "GHSA-f5x3-32g6-xq36",
+    "scanner_cve_id": "GHSA-f5x3-32g6-xq36",
+    "api_cve_id": "CVE-2024-28863",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.00929,
+    "epss_timestamp": "2026-08-04T19:11:48.666429+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.2.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-f5x3-32g6-xq36",
+    "scanner_cve_id": "GHSA-f5x3-32g6-xq36",
+    "api_cve_id": "CVE-2024-28863",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.00929,
+    "epss_timestamp": "2026-08-04T19:11:48.666452+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.2.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2g4c-8fpm-c46v",
+    "scanner_cve_id": "GHSA-2g4c-8fpm-c46v",
+    "api_cve_id": "CVE-2024-21505",
+    "package_name": "web3-utils",
+    "vulnerable_version": "4.0.7",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00649,
-    "epss_timestamp": "2026-07-31T09:05:30.678135+00:00",
+    "epss": 0.00712,
+    "epss_timestamp": "2026-08-04T19:11:48.711818+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.0.2"
-    ]
-  },
-  {
-    "cve_id": "GHSA-xwcq-pm8m-c4vf",
-    "api_cve_id": "CVE-2023-46233",
-    "package_name": "crypto-js",
-    "vulnerable_version": "3.3.0",
-    "severity": "critical",
-    "cvss": 9.1,
-    "epss": 0.00635,
-    "epss_timestamp": "2026-07-31T09:05:29.884494+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "4.2.0"
-    ]
-  },
-  {
-    "cve_id": "GHSA-v6mx-mf47-r5wg",
-    "api_cve_id": "CVE-2026-47131",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 10,
-    "epss": 0.00619,
-    "epss_timestamp": "2026-07-31T09:05:29.594771+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.11.4"
-    ]
-  },
-  {
-    "cve_id": "GHSA-9cx6-37pm-9jff",
-    "api_cve_id": "CVE-2026-33939",
-    "package_name": "handlebars",
-    "vulnerable_version": "4.7.7",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00616,
-    "epss_timestamp": "2026-07-31T09:05:30.764832+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "4.7.9"
+      "4.2.1"
     ]
   },
   {
     "cve_id": "GHSA-248r-7h7q-cr24",
+    "scanner_cve_id": "GHSA-248r-7h7q-cr24",
     "api_cve_id": "CVE-2026-45411",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00568,
-    "epss_timestamp": "2026-07-31T09:05:30.492425+00:00",
+    "epss_timestamp": "2026-08-04T19:11:48.758024+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.3"
     ]
   },
   {
+    "cve_id": "GHSA-44fp-w29j-9vj5",
+    "scanner_cve_id": "GHSA-44fp-w29j-9vj5",
+    "api_cve_id": "CVE-2025-47935",
+    "package_name": "multer",
+    "vulnerable_version": "1.4.5-lts.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00711,
+    "epss_timestamp": "2026-08-04T19:11:48.800046+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-rm97-x556-q36h",
+    "scanner_cve_id": "GHSA-rm97-x556-q36h",
+    "api_cve_id": "CVE-2024-21501",
+    "package_name": "sanitize-html",
+    "vulnerable_version": "1.4.2",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.01018,
+    "epss_timestamp": "2026-08-04T19:11:48.842751+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.12.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-4vvj-4cpr-p986",
+    "scanner_cve_id": "GHSA-4vvj-4cpr-p986",
+    "api_cve_id": "CVE-2024-43788",
+    "package_name": "webpack",
+    "vulnerable_version": "5.76.1",
+    "severity": "medium",
+    "cvss": 6.4,
+    "epss": 0.00904,
+    "epss_timestamp": "2026-08-04T19:11:48.889416+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.94.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-58c5-g7wp-6w37",
+    "scanner_cve_id": "GHSA-58c5-g7wp-6w37",
+    "api_cve_id": "CVE-2025-66035",
+    "package_name": "@angular/common",
+    "vulnerable_version": "15.2.10",
+    "severity": "high",
+    "cvss": 7.7,
+    "epss": 0.00645,
+    "epss_timestamp": "2026-08-04T19:11:48.931432+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "19.2.16"
+    ]
+  },
+  {
+    "cve_id": "GHSA-fjgf-rc76-4x9p",
+    "scanner_cve_id": "GHSA-fjgf-rc76-4x9p",
+    "api_cve_id": "CVE-2025-7338",
+    "package_name": "multer",
+    "vulnerable_version": "1.4.5-lts.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00649,
+    "epss_timestamp": "2026-08-04T19:11:48.978870+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-78xj-cgh5-2h22",
+    "scanner_cve_id": "GHSA-78xj-cgh5-2h22",
+    "api_cve_id": "CVE-2023-42282",
+    "package_name": "ip",
+    "vulnerable_version": "1.1.8",
+    "severity": "low",
+    "cvss": 0.0,
+    "epss": 0.01613,
+    "epss_timestamp": "2026-08-04T19:11:49.025483+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.1.9"
+    ]
+  },
+  {
+    "cve_id": "GHSA-78xj-cgh5-2h22",
+    "scanner_cve_id": "GHSA-78xj-cgh5-2h22",
+    "api_cve_id": "CVE-2023-42282",
+    "package_name": "ip",
+    "vulnerable_version": "2.0.0",
+    "severity": "low",
+    "cvss": 0.0,
+    "epss": 0.01613,
+    "epss_timestamp": "2026-08-04T19:11:49.025503+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3j7m-hmh3-9jmp",
+    "scanner_cve_id": "GHSA-3j7m-hmh3-9jmp",
+    "api_cve_id": "CVE-2016-1000237",
+    "package_name": "sanitize-html",
+    "vulnerable_version": "1.4.2",
+    "severity": "medium",
+    "cvss": 6.1,
+    "epss": 0.0084,
+    "epss_timestamp": "2026-08-04T19:11:49.069836+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.4.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-9cx6-37pm-9jff",
+    "scanner_cve_id": "GHSA-9cx6-37pm-9jff",
+    "api_cve_id": "CVE-2026-33939",
+    "package_name": "handlebars",
+    "vulnerable_version": "4.7.7",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00616,
+    "epss_timestamp": "2026-08-04T19:11:49.110599+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.7.9"
+    ]
+  },
+  {
+    "cve_id": "GHSA-rv95-896h-c2vc",
+    "scanner_cve_id": "GHSA-rv95-896h-c2vc",
+    "api_cve_id": "CVE-2024-29041",
+    "package_name": "express",
+    "vulnerable_version": "4.18.2",
+    "severity": "medium",
+    "cvss": 6.1,
+    "epss": 0.00786,
+    "epss_timestamp": "2026-08-04T19:11:49.162129+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.19.2"
+    ]
+  },
+  {
     "cve_id": "GHSA-34x7-hfp2-rc4v",
+    "scanner_cve_id": "GHSA-34x7-hfp2-rc4v",
     "api_cve_id": "CVE-2026-24842",
     "package_name": "tar",
     "vulnerable_version": "4.4.19",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00541,
-    "epss_timestamp": "2026-07-31T09:05:30.859045+00:00",
+    "epss_timestamp": "2026-08-04T19:11:49.203031+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.7"
@@ -799,321 +1231,404 @@
   },
   {
     "cve_id": "GHSA-34x7-hfp2-rc4v",
+    "scanner_cve_id": "GHSA-34x7-hfp2-rc4v",
     "api_cve_id": "CVE-2026-24842",
     "package_name": "tar",
     "vulnerable_version": "6.2.0",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00541,
-    "epss_timestamp": "2026-07-31T09:05:30.859064+00:00",
+    "epss_timestamp": "2026-08-04T19:11:49.203051+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.7"
     ]
   },
   {
-    "cve_id": "GHSA-hmw2-7cc7-3qxx",
-    "api_cve_id": "CVE-2026-12143",
-    "package_name": "form-data",
-    "vulnerable_version": "2.3.3",
+    "cve_id": "GHSA-34x7-hfp2-rc4v",
+    "scanner_cve_id": "GHSA-34x7-hfp2-rc4v",
+    "api_cve_id": "CVE-2026-24842",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
     "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00535,
-    "epss_timestamp": "2026-07-31T09:05:31.140673+00:00",
+    "cvss": 8.2,
+    "epss": 0.00541,
+    "epss_timestamp": "2026-08-04T19:11:49.203060+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.5.6"
-    ]
-  },
-  {
-    "cve_id": "GHSA-3ppc-4f35-3m26",
-    "api_cve_id": "CVE-2026-26996",
-    "package_name": "minimatch",
-    "vulnerable_version": "3.0.5",
-    "severity": "high",
-    "cvss": 8.7,
-    "epss": 0.00519,
-    "epss_timestamp": "2026-07-31T09:05:30.938979+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.1.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-3ppc-4f35-3m26",
-    "api_cve_id": "CVE-2026-26996",
-    "package_name": "minimatch",
-    "vulnerable_version": "3.0.8",
-    "severity": "high",
-    "cvss": 8.7,
-    "epss": 0.00519,
-    "epss_timestamp": "2026-07-31T09:05:30.939000+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.1.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-3ppc-4f35-3m26",
-    "api_cve_id": "CVE-2026-26996",
-    "package_name": "minimatch",
-    "vulnerable_version": "3.1.2",
-    "severity": "high",
-    "cvss": 8.7,
-    "epss": 0.00519,
-    "epss_timestamp": "2026-07-31T09:05:30.939008+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.1.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-3ppc-4f35-3m26",
-    "api_cve_id": "CVE-2026-26996",
-    "package_name": "minimatch",
-    "vulnerable_version": "5.1.6",
-    "severity": "high",
-    "cvss": 8.7,
-    "epss": 0.00519,
-    "epss_timestamp": "2026-07-31T09:05:30.939014+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "5.1.7"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7r86-cg39-jmmj",
-    "api_cve_id": "CVE-2026-27903",
-    "package_name": "minimatch",
-    "vulnerable_version": "3.0.5",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00517,
-    "epss_timestamp": "2026-07-31T09:05:31.409822+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.1.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7r86-cg39-jmmj",
-    "api_cve_id": "CVE-2026-27903",
-    "package_name": "minimatch",
-    "vulnerable_version": "3.0.8",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00517,
-    "epss_timestamp": "2026-07-31T09:05:31.409840+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.1.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7r86-cg39-jmmj",
-    "api_cve_id": "CVE-2026-27903",
-    "package_name": "minimatch",
-    "vulnerable_version": "3.1.2",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00517,
-    "epss_timestamp": "2026-07-31T09:05:31.409847+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.1.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7r86-cg39-jmmj",
-    "api_cve_id": "CVE-2026-27903",
-    "package_name": "minimatch",
-    "vulnerable_version": "5.1.6",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00517,
-    "epss_timestamp": "2026-07-31T09:05:31.409852+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "5.1.8"
-    ]
-  },
-  {
-    "cve_id": "GHSA-vj76-c3g6-qr5v",
-    "api_cve_id": "CVE-2025-59343",
-    "package_name": "tar-fs",
-    "vulnerable_version": "2.1.1",
-    "severity": "high",
-    "cvss": 8.7,
-    "epss": 0.00516,
-    "epss_timestamp": "2026-07-31T09:05:31.045967+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "2.1.4"
-    ]
-  },
-  {
-    "cve_id": "GHSA-677m-j7p3-52f9",
-    "api_cve_id": "CVE-2026-33151",
-    "package_name": "socket.io-parser",
-    "vulnerable_version": "4.0.5",
-    "severity": "high",
-    "cvss": 8.7,
-    "epss": 0.00514,
-    "epss_timestamp": "2026-07-31T09:05:31.237232+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "4.2.6"
-    ]
-  },
-  {
-    "cve_id": "GHSA-vghf-hv5q-vc2g",
-    "api_cve_id": "CVE-2025-12758",
-    "package_name": "validator",
-    "vulnerable_version": "13.11.0",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00506,
-    "epss_timestamp": "2026-07-31T09:05:31.503974+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "13.15.22"
+      "7.5.7"
     ]
   },
   {
     "cve_id": "GHSA-8cj5-5rvv-wf4v",
+    "scanner_cve_id": "GHSA-8cj5-5rvv-wf4v",
     "api_cve_id": "CVE-2025-48387",
     "package_name": "tar-fs",
     "vulnerable_version": "2.1.1",
     "severity": "high",
     "cvss": 8.7,
-    "epss": 0.00502,
-    "epss_timestamp": "2026-07-31T09:05:31.320025+00:00",
+    "epss": 0.00522,
+    "epss_timestamp": "2026-08-04T19:11:49.231321+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.3"
     ]
   },
   {
-    "cve_id": "GHSA-37ch-88jc-xwx2",
-    "api_cve_id": "CVE-2026-4867",
-    "package_name": "path-to-regexp",
-    "vulnerable_version": "0.1.7",
+    "cve_id": "GHSA-3ppc-4f35-3m26",
+    "scanner_cve_id": "GHSA-3ppc-4f35-3m26",
+    "api_cve_id": "CVE-2026-26996",
+    "package_name": "minimatch",
+    "vulnerable_version": "3.0.5",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00519,
+    "epss_timestamp": "2026-08-04T19:11:49.260780+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.1.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3ppc-4f35-3m26",
+    "scanner_cve_id": "GHSA-3ppc-4f35-3m26",
+    "api_cve_id": "CVE-2026-26996",
+    "package_name": "minimatch",
+    "vulnerable_version": "3.0.8",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00519,
+    "epss_timestamp": "2026-08-04T19:11:49.260800+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.1.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3ppc-4f35-3m26",
+    "scanner_cve_id": "GHSA-3ppc-4f35-3m26",
+    "api_cve_id": "CVE-2026-26996",
+    "package_name": "minimatch",
+    "vulnerable_version": "3.1.2",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00519,
+    "epss_timestamp": "2026-08-04T19:11:49.260807+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.1.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3ppc-4f35-3m26",
+    "scanner_cve_id": "GHSA-3ppc-4f35-3m26",
+    "api_cve_id": "CVE-2026-26996",
+    "package_name": "minimatch",
+    "vulnerable_version": "5.1.6",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00519,
+    "epss_timestamp": "2026-08-04T19:11:49.260813+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.1.7"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3ppc-4f35-3m26",
+    "scanner_cve_id": "GHSA-3ppc-4f35-3m26",
+    "api_cve_id": "CVE-2026-26996",
+    "package_name": "minimatch",
+    "vulnerable_version": "9.0.3",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00519,
+    "epss_timestamp": "2026-08-04T19:11:49.260819+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vj76-c3g6-qr5v",
+    "scanner_cve_id": "GHSA-vj76-c3g6-qr5v",
+    "api_cve_id": "CVE-2025-59343",
+    "package_name": "tar-fs",
+    "vulnerable_version": "2.1.1",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00516,
+    "epss_timestamp": "2026-08-04T19:11:49.288314+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.1.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-25hc-qcg6-38wj",
+    "scanner_cve_id": "GHSA-25hc-qcg6-38wj",
+    "api_cve_id": "CVE-2024-38355",
+    "package_name": "socket.io",
+    "vulnerable_version": "3.1.2",
+    "severity": "medium",
+    "cvss": 7.3,
+    "epss": 0.0069,
+    "epss_timestamp": "2026-08-04T19:11:49.339019+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.6.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-hmw2-7cc7-3qxx",
+    "scanner_cve_id": "GHSA-hmw2-7cc7-3qxx",
+    "api_cve_id": "CVE-2026-12143",
+    "package_name": "form-data",
+    "vulnerable_version": "2.3.3",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00496,
-    "epss_timestamp": "2026-07-31T09:05:31.661311+00:00",
+    "epss": 0.00535,
+    "epss_timestamp": "2026-08-04T19:11:49.367690+00:00",
     "kev": false,
     "fixed_versions": [
-      "0.1.13"
+      "2.5.6"
     ]
   },
   {
-    "cve_id": "GHSA-8cf7-32gw-wr33",
-    "api_cve_id": "CVE-2022-23539",
-    "package_name": "jsonwebtoken",
-    "vulnerable_version": "0.1.0",
+    "cve_id": "GHSA-677m-j7p3-52f9",
+    "scanner_cve_id": "GHSA-677m-j7p3-52f9",
+    "api_cve_id": "CVE-2026-33151",
+    "package_name": "socket.io-parser",
+    "vulnerable_version": "4.0.5",
     "severity": "high",
-    "cvss": 8.1,
-    "epss": 0.00479,
-    "epss_timestamp": "2026-07-31T09:05:31.602655+00:00",
+    "cvss": 8.7,
+    "epss": 0.00514,
+    "epss_timestamp": "2026-08-04T19:11:49.407603+00:00",
     "kev": false,
     "fixed_versions": [
-      "9.0.0"
+      "4.2.6"
     ]
   },
   {
-    "cve_id": "GHSA-8cf7-32gw-wr33",
-    "api_cve_id": "CVE-2022-23539",
-    "package_name": "jsonwebtoken",
-    "vulnerable_version": "0.4.0",
+    "cve_id": "GHSA-677m-j7p3-52f9",
+    "scanner_cve_id": "GHSA-677m-j7p3-52f9",
+    "api_cve_id": "CVE-2026-33151",
+    "package_name": "socket.io-parser",
+    "vulnerable_version": "4.0.5",
     "severity": "high",
-    "cvss": 8.1,
-    "epss": 0.00479,
-    "epss_timestamp": "2026-07-31T09:05:31.602677+00:00",
+    "cvss": 8.7,
+    "epss": 0.00514,
+    "epss_timestamp": "2026-08-04T19:11:49.407623+00:00",
     "kev": false,
     "fixed_versions": [
-      "9.0.0"
+      "4.2.6"
     ]
   },
   {
-    "cve_id": "GHSA-23c5-xmqv-rm74",
-    "api_cve_id": "CVE-2026-27904",
+    "cve_id": "GHSA-p5gc-c584-jj6v",
+    "scanner_cve_id": "GHSA-p5gc-c584-jj6v",
+    "api_cve_id": "CVE-2023-32313",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0079,
+    "epss_timestamp": "2026-08-04T19:11:49.457230+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.9.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-7r86-cg39-jmmj",
+    "scanner_cve_id": "GHSA-7r86-cg39-jmmj",
+    "api_cve_id": "CVE-2026-27903",
     "package_name": "minimatch",
     "vulnerable_version": "3.0.5",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00472,
-    "epss_timestamp": "2026-07-31T09:05:31.832729+00:00",
+    "epss": 0.00517,
+    "epss_timestamp": "2026-08-04T19:11:49.484553+00:00",
     "kev": false,
     "fixed_versions": [
-      "3.1.4"
+      "3.1.3"
     ]
   },
   {
-    "cve_id": "GHSA-23c5-xmqv-rm74",
-    "api_cve_id": "CVE-2026-27904",
+    "cve_id": "GHSA-7r86-cg39-jmmj",
+    "scanner_cve_id": "GHSA-7r86-cg39-jmmj",
+    "api_cve_id": "CVE-2026-27903",
     "package_name": "minimatch",
     "vulnerable_version": "3.0.8",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00472,
-    "epss_timestamp": "2026-07-31T09:05:31.832747+00:00",
+    "epss": 0.00517,
+    "epss_timestamp": "2026-08-04T19:11:49.484571+00:00",
     "kev": false,
     "fixed_versions": [
-      "3.1.4"
+      "3.1.3"
     ]
   },
   {
-    "cve_id": "GHSA-23c5-xmqv-rm74",
-    "api_cve_id": "CVE-2026-27904",
+    "cve_id": "GHSA-7r86-cg39-jmmj",
+    "scanner_cve_id": "GHSA-7r86-cg39-jmmj",
+    "api_cve_id": "CVE-2026-27903",
     "package_name": "minimatch",
     "vulnerable_version": "3.1.2",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00472,
-    "epss_timestamp": "2026-07-31T09:05:31.832753+00:00",
+    "epss": 0.00517,
+    "epss_timestamp": "2026-08-04T19:11:49.484579+00:00",
     "kev": false,
     "fixed_versions": [
-      "3.1.4"
+      "3.1.3"
     ]
   },
   {
-    "cve_id": "GHSA-23c5-xmqv-rm74",
-    "api_cve_id": "CVE-2026-27904",
+    "cve_id": "GHSA-7r86-cg39-jmmj",
+    "scanner_cve_id": "GHSA-7r86-cg39-jmmj",
+    "api_cve_id": "CVE-2026-27903",
     "package_name": "minimatch",
     "vulnerable_version": "5.1.6",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00472,
-    "epss_timestamp": "2026-07-31T09:05:31.832759+00:00",
+    "epss": 0.00517,
+    "epss_timestamp": "2026-08-04T19:11:49.484585+00:00",
     "kev": false,
     "fixed_versions": [
       "5.1.8"
     ]
   },
   {
-    "cve_id": "GHSA-hw58-p9xv-2mjh",
-    "api_cve_id": "CVE-2026-44001",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
+    "cve_id": "GHSA-7r86-cg39-jmmj",
+    "scanner_cve_id": "GHSA-7r86-cg39-jmmj",
+    "api_cve_id": "CVE-2026-27903",
+    "package_name": "minimatch",
+    "vulnerable_version": "9.0.3",
     "severity": "high",
-    "cvss": 8.6,
-    "epss": 0.00448,
-    "epss_timestamp": "2026-07-31T09:05:31.790262+00:00",
+    "cvss": 7.5,
+    "epss": 0.00517,
+    "epss_timestamp": "2026-08-04T19:11:49.484591+00:00",
     "kev": false,
     "fixed_versions": [
-      "3.11.0"
+      "9.0.7"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vghf-hv5q-vc2g",
+    "scanner_cve_id": "GHSA-vghf-hv5q-vc2g",
+    "api_cve_id": "CVE-2025-12758",
+    "package_name": "validator",
+    "vulnerable_version": "13.11.0",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00506,
+    "epss_timestamp": "2026-08-04T19:11:49.532164+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "13.15.22"
+    ]
+  },
+  {
+    "cve_id": "GHSA-6g55-p6wh-862q",
+    "scanner_cve_id": "GHSA-6g55-p6wh-862q",
+    "api_cve_id": "CVE-2026-45623",
+    "package_name": "postcss",
+    "vulnerable_version": "8.4.31",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00503,
+    "epss_timestamp": "2026-08-04T19:11:49.560750+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.5.12"
+    ]
+  },
+  {
+    "cve_id": "GHSA-hjrf-2m68-5959",
+    "scanner_cve_id": "GHSA-hjrf-2m68-5959",
+    "api_cve_id": "CVE-2022-23541",
+    "package_name": "jsonwebtoken",
+    "vulnerable_version": "0.1.0",
+    "severity": "medium",
+    "cvss": 5,
+    "epss": 0.00753,
+    "epss_timestamp": "2026-08-04T19:11:49.600051+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-hjrf-2m68-5959",
+    "scanner_cve_id": "GHSA-hjrf-2m68-5959",
+    "api_cve_id": "CVE-2022-23541",
+    "package_name": "jsonwebtoken",
+    "vulnerable_version": "0.4.0",
+    "severity": "medium",
+    "cvss": 5,
+    "epss": 0.00753,
+    "epss_timestamp": "2026-08-04T19:11:49.600070+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8cf7-32gw-wr33",
+    "scanner_cve_id": "GHSA-8cf7-32gw-wr33",
+    "api_cve_id": "CVE-2022-23539",
+    "package_name": "jsonwebtoken",
+    "vulnerable_version": "0.1.0",
+    "severity": "high",
+    "cvss": 8.1,
+    "epss": 0.00479,
+    "epss_timestamp": "2026-08-04T19:11:49.650669+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8cf7-32gw-wr33",
+    "scanner_cve_id": "GHSA-8cf7-32gw-wr33",
+    "api_cve_id": "CVE-2022-23539",
+    "package_name": "jsonwebtoken",
+    "vulnerable_version": "0.4.0",
+    "severity": "high",
+    "cvss": 8.1,
+    "epss": 0.00479,
+    "epss_timestamp": "2026-08-04T19:11:49.650689+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-37ch-88jc-xwx2",
+    "scanner_cve_id": "GHSA-37ch-88jc-xwx2",
+    "api_cve_id": "CVE-2026-4867",
+    "package_name": "path-to-regexp",
+    "vulnerable_version": "0.1.7",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00496,
+    "epss_timestamp": "2026-08-04T19:11:49.679465+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.1.13"
     ]
   },
   {
     "cve_id": "GHSA-23hp-3jrh-7fpw",
+    "scanner_cve_id": "GHSA-23hp-3jrh-7fpw",
     "api_cve_id": "CVE-2026-59873",
     "package_name": "tar",
     "vulnerable_version": "4.4.19",
     "severity": "critical",
     "cvss": 7.5,
     "epss": 0.00424,
-    "epss_timestamp": "2026-07-31T09:05:31.702714+00:00",
+    "epss_timestamp": "2026-08-04T19:11:49.725722+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.19"
@@ -1121,27 +1636,314 @@
   },
   {
     "cve_id": "GHSA-23hp-3jrh-7fpw",
+    "scanner_cve_id": "GHSA-23hp-3jrh-7fpw",
     "api_cve_id": "CVE-2026-59873",
     "package_name": "tar",
     "vulnerable_version": "6.2.0",
     "severity": "critical",
     "cvss": 7.5,
     "epss": 0.00424,
-    "epss_timestamp": "2026-07-31T09:05:31.702732+00:00",
+    "epss_timestamp": "2026-08-04T19:11:49.725742+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.19"
     ]
   },
   {
+    "cve_id": "GHSA-23hp-3jrh-7fpw",
+    "scanner_cve_id": "GHSA-23hp-3jrh-7fpw",
+    "api_cve_id": "CVE-2026-59873",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "critical",
+    "cvss": 7.5,
+    "epss": 0.00424,
+    "epss_timestamp": "2026-08-04T19:11:49.725749+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.19"
+    ]
+  },
+  {
+    "cve_id": "GHSA-m4wx-m65x-ghrr",
+    "scanner_cve_id": "GHSA-m4wx-m65x-ghrr",
+    "api_cve_id": "CVE-2026-47137",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "critical",
+    "cvss": 10,
+    "epss": 0.00382,
+    "epss_timestamp": "2026-08-04T19:11:49.771732+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-hw58-p9xv-2mjh",
+    "scanner_cve_id": "GHSA-hw58-p9xv-2mjh",
+    "api_cve_id": "CVE-2026-44001",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "high",
+    "cvss": 8.6,
+    "epss": 0.00448,
+    "epss_timestamp": "2026-08-04T19:11:49.822327+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-x9g3-xrwr-cwfg",
+    "scanner_cve_id": "GHSA-x9g3-xrwr-cwfg",
+    "api_cve_id": "CVE-2026-55388",
+    "package_name": "piscina",
+    "vulnerable_version": "3.2.0",
+    "severity": "high",
+    "cvss": 8.1,
+    "epss": 0.00454,
+    "epss_timestamp": "2026-08-04T19:11:49.866969+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.9.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-23c5-xmqv-rm74",
+    "scanner_cve_id": "GHSA-23c5-xmqv-rm74",
+    "api_cve_id": "CVE-2026-27904",
+    "package_name": "minimatch",
+    "vulnerable_version": "3.0.5",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00472,
+    "epss_timestamp": "2026-08-04T19:11:49.896034+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.1.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-23c5-xmqv-rm74",
+    "scanner_cve_id": "GHSA-23c5-xmqv-rm74",
+    "api_cve_id": "CVE-2026-27904",
+    "package_name": "minimatch",
+    "vulnerable_version": "3.0.8",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00472,
+    "epss_timestamp": "2026-08-04T19:11:49.896055+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.1.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-23c5-xmqv-rm74",
+    "scanner_cve_id": "GHSA-23c5-xmqv-rm74",
+    "api_cve_id": "CVE-2026-27904",
+    "package_name": "minimatch",
+    "vulnerable_version": "3.1.2",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00472,
+    "epss_timestamp": "2026-08-04T19:11:49.896063+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.1.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-23c5-xmqv-rm74",
+    "scanner_cve_id": "GHSA-23c5-xmqv-rm74",
+    "api_cve_id": "CVE-2026-27904",
+    "package_name": "minimatch",
+    "vulnerable_version": "5.1.6",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00472,
+    "epss_timestamp": "2026-08-04T19:11:49.896069+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.1.8"
+    ]
+  },
+  {
+    "cve_id": "GHSA-23c5-xmqv-rm74",
+    "scanner_cve_id": "GHSA-23c5-xmqv-rm74",
+    "api_cve_id": "CVE-2026-27904",
+    "package_name": "minimatch",
+    "vulnerable_version": "9.0.3",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00472,
+    "epss_timestamp": "2026-08-04T19:11:49.896075+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.7"
+    ]
+  },
+  {
+    "cve_id": "GHSA-58qx-3vcg-4xpx",
+    "scanner_cve_id": "GHSA-58qx-3vcg-4xpx",
+    "api_cve_id": "CVE-2026-45736",
+    "package_name": "ws",
+    "vulnerable_version": "8.14.2",
+    "severity": "medium",
+    "cvss": 4.4,
+    "epss": 0.00745,
+    "epss_timestamp": "2026-08-04T19:11:49.949525+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.20.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-58qx-3vcg-4xpx",
+    "scanner_cve_id": "GHSA-58qx-3vcg-4xpx",
+    "api_cve_id": "CVE-2026-45736",
+    "package_name": "ws",
+    "vulnerable_version": "8.18.0",
+    "severity": "medium",
+    "cvss": 4.4,
+    "epss": 0.00745,
+    "epss_timestamp": "2026-08-04T19:11:49.949547+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.20.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-58qx-3vcg-4xpx",
+    "scanner_cve_id": "GHSA-58qx-3vcg-4xpx",
+    "api_cve_id": "CVE-2026-45736",
+    "package_name": "ws",
+    "vulnerable_version": "8.5.0",
+    "severity": "medium",
+    "cvss": 4.4,
+    "epss": 0.00745,
+    "epss_timestamp": "2026-08-04T19:11:49.949555+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.20.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8x88-c5mf-7j5w",
+    "scanner_cve_id": "GHSA-8x88-c5mf-7j5w",
+    "api_cve_id": "CVE-2026-59874",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00418,
+    "epss_timestamp": "2026-08-04T19:11:49.991291+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8x88-c5mf-7j5w",
+    "scanner_cve_id": "GHSA-8x88-c5mf-7j5w",
+    "api_cve_id": "CVE-2026-59874",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00418,
+    "epss_timestamp": "2026-08-04T19:11:49.991309+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8x88-c5mf-7j5w",
+    "scanner_cve_id": "GHSA-8x88-c5mf-7j5w",
+    "api_cve_id": "CVE-2026-59874",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00418,
+    "epss_timestamp": "2026-08-04T19:11:49.991317+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qffp-2rhf-9h96",
+    "scanner_cve_id": "GHSA-qffp-2rhf-9h96",
+    "api_cve_id": "CVE-2026-29786",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00408,
+    "epss_timestamp": "2026-08-04T19:11:50.032409+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.10"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qffp-2rhf-9h96",
+    "scanner_cve_id": "GHSA-qffp-2rhf-9h96",
+    "api_cve_id": "CVE-2026-29786",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00408,
+    "epss_timestamp": "2026-08-04T19:11:50.032430+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.10"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qffp-2rhf-9h96",
+    "scanner_cve_id": "GHSA-qffp-2rhf-9h96",
+    "api_cve_id": "CVE-2026-29786",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00408,
+    "epss_timestamp": "2026-08-04T19:11:50.032439+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.10"
+    ]
+  },
+  {
     "cve_id": "GHSA-52cp-r559-cp3m",
+    "scanner_cve_id": "GHSA-52cp-r559-cp3m",
     "api_cve_id": "CVE-2026-59869",
     "package_name": "js-yaml",
     "vulnerable_version": "3.14.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00423,
-    "epss_timestamp": "2026-07-31T09:05:31.968844+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.064484+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.15.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-52cp-r559-cp3m",
+    "scanner_cve_id": "GHSA-52cp-r559-cp3m",
+    "api_cve_id": "CVE-2026-59869",
+    "package_name": "js-yaml",
+    "vulnerable_version": "3.14.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00423,
+    "epss_timestamp": "2026-08-04T19:11:50.064502+00:00",
     "kev": false,
     "fixed_versions": [
       "3.15.0"
@@ -1149,13 +1951,14 @@
   },
   {
     "cve_id": "GHSA-6457-6jrx-69cr",
+    "scanner_cve_id": "GHSA-6457-6jrx-69cr",
     "api_cve_id": "CVE-2026-30951",
     "package_name": "sequelize",
     "vulnerable_version": "6.34.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00422,
-    "epss_timestamp": "2026-07-31T09:05:32.014467+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.114136+00:00",
     "kev": false,
     "fixed_versions": [
       "6.37.8"
@@ -1163,139 +1966,329 @@
   },
   {
     "cve_id": "GHSA-6785-pvv7-mvg7",
+    "scanner_cve_id": "GHSA-6785-pvv7-mvg7",
     "api_cve_id": "CVE-2026-44004",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00419,
-    "epss_timestamp": "2026-07-31T09:05:32.057297+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.160630+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.0"
     ]
   },
   {
-    "cve_id": "GHSA-8x88-c5mf-7j5w",
-    "api_cve_id": "CVE-2026-59874",
-    "package_name": "tar",
-    "vulnerable_version": "4.4.19",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00418,
-    "epss_timestamp": "2026-07-31T09:05:31.876777+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.18"
-    ]
-  },
-  {
-    "cve_id": "GHSA-8x88-c5mf-7j5w",
-    "api_cve_id": "CVE-2026-59874",
-    "package_name": "tar",
-    "vulnerable_version": "6.2.0",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00418,
-    "epss_timestamp": "2026-07-31T09:05:31.876798+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.18"
-    ]
-  },
-  {
-    "cve_id": "GHSA-qffp-2rhf-9h96",
-    "api_cve_id": "CVE-2026-29786",
-    "package_name": "tar",
-    "vulnerable_version": "4.4.19",
-    "severity": "high",
-    "cvss": 8.2,
-    "epss": 0.00408,
-    "epss_timestamp": "2026-07-31T09:05:31.923209+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.10"
-    ]
-  },
-  {
-    "cve_id": "GHSA-qffp-2rhf-9h96",
-    "api_cve_id": "CVE-2026-29786",
-    "package_name": "tar",
-    "vulnerable_version": "6.2.0",
-    "severity": "high",
-    "cvss": 8.2,
-    "epss": 0.00408,
-    "epss_timestamp": "2026-07-31T09:05:31.923231+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.10"
-    ]
-  },
-  {
-    "cve_id": "GHSA-c2c7-rcm5-vvqj",
-    "api_cve_id": "CVE-2026-33671",
-    "package_name": "picomatch",
-    "vulnerable_version": "2.3.1",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00404,
-    "epss_timestamp": "2026-07-31T09:05:32.100718+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "2.3.2"
-    ]
-  },
-  {
-    "cve_id": "GHSA-m4wx-m65x-ghrr",
-    "api_cve_id": "CVE-2026-47137",
-    "package_name": "vm2",
-    "vulnerable_version": "3.9.17",
-    "severity": "critical",
-    "cvss": 10,
-    "epss": 0.00382,
-    "epss_timestamp": "2026-07-31T09:05:31.747672+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.11.4"
-    ]
-  },
-  {
     "cve_id": "GHSA-g5hg-p3ph-g8qg",
+    "scanner_cve_id": "GHSA-g5hg-p3ph-g8qg",
     "api_cve_id": "CVE-2025-48997",
     "package_name": "multer",
     "vulnerable_version": "1.4.5-lts.1",
     "severity": "high",
     "cvss": 8.7,
-    "epss": 0.00368,
-    "epss_timestamp": "2026-07-31T09:05:32.144465+00:00",
+    "epss": 0.00383,
+    "epss_timestamp": "2026-08-04T19:11:50.209184+00:00",
     "kev": false,
     "fixed_versions": [
       "2.0.1"
     ]
   },
   {
+    "cve_id": "GHSA-qwph-4952-7xr6",
+    "scanner_cve_id": "GHSA-qwph-4952-7xr6",
+    "api_cve_id": "CVE-2022-23540",
+    "package_name": "jsonwebtoken",
+    "vulnerable_version": "0.1.0",
+    "severity": "medium",
+    "cvss": 6.4,
+    "epss": 0.00532,
+    "epss_timestamp": "2026-08-04T19:11:50.259363+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qwph-4952-7xr6",
+    "scanner_cve_id": "GHSA-qwph-4952-7xr6",
+    "api_cve_id": "CVE-2022-23540",
+    "package_name": "jsonwebtoken",
+    "vulnerable_version": "0.4.0",
+    "severity": "medium",
+    "cvss": 6.4,
+    "epss": 0.00532,
+    "epss_timestamp": "2026-08-04T19:11:50.259384+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-c2c7-rcm5-vvqj",
+    "scanner_cve_id": "GHSA-c2c7-rcm5-vvqj",
+    "api_cve_id": "CVE-2026-33671",
+    "package_name": "picomatch",
+    "vulnerable_version": "2.3.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00404,
+    "epss_timestamp": "2026-08-04T19:11:50.287394+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.3.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3965-hpx2-q597",
+    "scanner_cve_id": "GHSA-3965-hpx2-q597",
+    "api_cve_id": "CVE-2024-36361",
+    "package_name": "pug",
+    "vulnerable_version": "3.0.2",
+    "severity": "medium",
+    "cvss": 6.8,
+    "epss": 0.00491,
+    "epss_timestamp": "2026-08-04T19:11:50.329671+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.0.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3965-hpx2-q597",
+    "scanner_cve_id": "GHSA-3965-hpx2-q597",
+    "api_cve_id": "CVE-2024-36361",
+    "package_name": "pug-code-gen",
+    "vulnerable_version": "3.0.2",
+    "severity": "medium",
+    "cvss": 6.8,
+    "epss": 0.00491,
+    "epss_timestamp": "2026-08-04T19:11:50.329689+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.0.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-ph9p-34f9-6g65",
+    "scanner_cve_id": "GHSA-ph9p-34f9-6g65",
+    "api_cve_id": "CVE-2026-44705",
+    "package_name": "tmp",
+    "vulnerable_version": "0.0.33",
+    "severity": "high",
+    "cvss": 7.7,
+    "epss": 0.00354,
+    "epss_timestamp": "2026-08-04T19:11:50.359062+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.2.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-968p-4wvh-cqc8",
+    "scanner_cve_id": "GHSA-968p-4wvh-cqc8",
+    "api_cve_id": "CVE-2025-27789",
+    "package_name": "@babel/runtime",
+    "vulnerable_version": "7.20.13",
+    "severity": "medium",
+    "cvss": 6.2,
+    "epss": 0.00478,
+    "epss_timestamp": "2026-08-04T19:11:50.403056+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.26.10"
+    ]
+  },
+  {
+    "cve_id": "GHSA-968p-4wvh-cqc8",
+    "scanner_cve_id": "GHSA-968p-4wvh-cqc8",
+    "api_cve_id": "CVE-2025-27789",
+    "package_name": "@babel/runtime",
+    "vulnerable_version": "7.23.2",
+    "severity": "medium",
+    "cvss": 6.2,
+    "epss": 0.00478,
+    "epss_timestamp": "2026-08-04T19:11:50.403080+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.26.10"
+    ]
+  },
+  {
     "cve_id": "GHSA-r635-g3xr-vw7x",
+    "scanner_cve_id": "GHSA-r635-g3xr-vw7x",
     "api_cve_id": "CVE-2026-59725",
     "package_name": "engine.io",
     "vulnerable_version": "4.1.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00354,
-    "epss_timestamp": "2026-07-31T09:05:32.187656+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.449740+00:00",
     "kev": false,
     "fixed_versions": [
       "6.6.7"
     ]
   },
   {
+    "cve_id": "GHSA-8qq5-rm4j-mr97",
+    "scanner_cve_id": "GHSA-8qq5-rm4j-mr97",
+    "api_cve_id": "CVE-2026-23745",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00334,
+    "epss_timestamp": "2026-08-04T19:11:50.498274+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8qq5-rm4j-mr97",
+    "scanner_cve_id": "GHSA-8qq5-rm4j-mr97",
+    "api_cve_id": "CVE-2026-23745",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00334,
+    "epss_timestamp": "2026-08-04T19:11:50.498295+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8qq5-rm4j-mr97",
+    "scanner_cve_id": "GHSA-8qq5-rm4j-mr97",
+    "api_cve_id": "CVE-2026-23745",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00334,
+    "epss_timestamp": "2026-08-04T19:11:50.498303+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2g4f-4pwh-qvx6",
+    "scanner_cve_id": "GHSA-2g4f-4pwh-qvx6",
+    "api_cve_id": "CVE-2025-69873",
+    "package_name": "ajv",
+    "vulnerable_version": "6.12.6",
+    "severity": "medium",
+    "cvss": 5.5,
+    "epss": 0.00492,
+    "epss_timestamp": "2026-08-04T19:11:50.545785+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.14.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2g4f-4pwh-qvx6",
+    "scanner_cve_id": "GHSA-2g4f-4pwh-qvx6",
+    "api_cve_id": "CVE-2025-69873",
+    "package_name": "ajv",
+    "vulnerable_version": "8.12.0",
+    "severity": "medium",
+    "cvss": 5.5,
+    "epss": 0.00492,
+    "epss_timestamp": "2026-08-04T19:11:50.545806+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.18.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qj8w-gfj5-8c6v",
+    "scanner_cve_id": "GHSA-qj8w-gfj5-8c6v",
+    "api_cve_id": "CVE-2026-34043",
+    "package_name": "serialize-javascript",
+    "vulnerable_version": "6.0.2",
+    "severity": "medium",
+    "cvss": 5.9,
+    "epss": 0.00472,
+    "epss_timestamp": "2026-08-04T19:11:50.591148+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.0.5"
+    ]
+  },
+  {
+    "cve_id": "GHSA-mh99-v99m-4gvg",
+    "scanner_cve_id": "GHSA-mh99-v99m-4gvg",
+    "api_cve_id": "CVE-2026-14257",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "1.1.11",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00339,
+    "epss_timestamp": "2026-08-04T19:11:50.642260+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.1.17"
+    ]
+  },
+  {
+    "cve_id": "GHSA-mh99-v99m-4gvg",
+    "scanner_cve_id": "GHSA-mh99-v99m-4gvg",
+    "api_cve_id": "CVE-2026-14257",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "2.0.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00339,
+    "epss_timestamp": "2026-08-04T19:11:50.642281+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.1.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-f886-m6hf-6m8v",
+    "scanner_cve_id": "GHSA-f886-m6hf-6m8v",
+    "api_cve_id": "CVE-2026-33750",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "1.1.11",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.0043,
+    "epss_timestamp": "2026-08-04T19:11:50.696659+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.1.13"
+    ]
+  },
+  {
+    "cve_id": "GHSA-f886-m6hf-6m8v",
+    "scanner_cve_id": "GHSA-f886-m6hf-6m8v",
+    "api_cve_id": "CVE-2026-33750",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "2.0.1",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.0043,
+    "epss_timestamp": "2026-08-04T19:11:50.696682+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.3"
+    ]
+  },
+  {
     "cve_id": "GHSA-3jxr-9vmj-r5cp",
+    "scanner_cve_id": "GHSA-3jxr-9vmj-r5cp",
     "api_cve_id": "CVE-2026-13149",
     "package_name": "brace-expansion",
     "vulnerable_version": "1.1.11",
     "severity": "high",
     "cvss": 5.3,
     "epss": 0.00348,
-    "epss_timestamp": "2026-07-31T09:05:32.328911+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.725723+00:00",
     "kev": false,
     "fixed_versions": [
       "1.1.16"
@@ -1303,181 +2296,374 @@
   },
   {
     "cve_id": "GHSA-3jxr-9vmj-r5cp",
+    "scanner_cve_id": "GHSA-3jxr-9vmj-r5cp",
     "api_cve_id": "CVE-2026-13149",
     "package_name": "brace-expansion",
     "vulnerable_version": "2.0.1",
     "severity": "high",
     "cvss": 5.3,
     "epss": 0.00348,
-    "epss_timestamp": "2026-07-31T09:05:32.328934+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.725739+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.2"
     ]
   },
   {
-    "cve_id": "GHSA-mh99-v99m-4gvg",
-    "api_cve_id": "CVE-2026-14257",
-    "package_name": "brace-expansion",
-    "vulnerable_version": "1.1.11",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00339,
-    "epss_timestamp": "2026-07-31T09:05:32.283531+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "5.0.8"
-    ]
-  },
-  {
-    "cve_id": "GHSA-mh99-v99m-4gvg",
-    "api_cve_id": "CVE-2026-14257",
-    "package_name": "brace-expansion",
-    "vulnerable_version": "2.0.1",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00339,
-    "epss_timestamp": "2026-07-31T09:05:32.283554+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "5.0.8"
-    ]
-  },
-  {
-    "cve_id": "GHSA-8qq5-rm4j-mr97",
-    "api_cve_id": "CVE-2026-23745",
-    "package_name": "tar",
-    "vulnerable_version": "4.4.19",
-    "severity": "high",
-    "cvss": 8.2,
-    "epss": 0.00334,
-    "epss_timestamp": "2026-07-31T09:05:32.229670+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-8qq5-rm4j-mr97",
-    "api_cve_id": "CVE-2026-23745",
-    "package_name": "tar",
-    "vulnerable_version": "6.2.0",
-    "severity": "high",
-    "cvss": 8.2,
-    "epss": 0.00334,
-    "epss_timestamp": "2026-07-31T09:05:32.229693+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-xjpj-3mr7-gcpf",
-    "api_cve_id": "CVE-2026-33941",
-    "package_name": "handlebars",
-    "vulnerable_version": "4.7.7",
-    "severity": "high",
-    "cvss": 8.2,
-    "epss": 0.00291,
-    "epss_timestamp": "2026-07-31T09:05:32.415283+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "4.7.9"
-    ]
-  },
-  {
-    "cve_id": "GHSA-83g3-92jg-28cx",
-    "api_cve_id": "CVE-2026-26960",
-    "package_name": "tar",
-    "vulnerable_version": "4.4.19",
-    "severity": "high",
-    "cvss": 7.1,
-    "epss": 0.00288,
-    "epss_timestamp": "2026-07-31T09:05:32.554170+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.8"
-    ]
-  },
-  {
-    "cve_id": "GHSA-83g3-92jg-28cx",
-    "api_cve_id": "CVE-2026-26960",
-    "package_name": "tar",
-    "vulnerable_version": "6.2.0",
-    "severity": "high",
-    "cvss": 7.1,
-    "epss": 0.00288,
-    "epss_timestamp": "2026-07-31T09:05:32.554191+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "7.5.8"
-    ]
-  },
-  {
     "cve_id": "GHSA-c4cf-2hgv-2qv6",
+    "scanner_cve_id": "GHSA-c4cf-2hgv-2qv6",
     "api_cve_id": "CVE-2026-47209",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "high",
     "cvss": 8.6,
     "epss": 0.00287,
-    "epss_timestamp": "2026-07-31T09:05:32.372127+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.773040+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.4"
     ]
   },
   {
+    "cve_id": "GHSA-xjpj-3mr7-gcpf",
+    "scanner_cve_id": "GHSA-xjpj-3mr7-gcpf",
+    "api_cve_id": "CVE-2026-33941",
+    "package_name": "handlebars",
+    "vulnerable_version": "4.7.7",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00291,
+    "epss_timestamp": "2026-08-04T19:11:50.821675+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.7.9"
+    ]
+  },
+  {
     "cve_id": "GHSA-r9pm-gxmw-wv6p",
+    "scanner_cve_id": "GHSA-r9pm-gxmw-wv6p",
     "api_cve_id": "CVE-2026-47139",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "high",
     "cvss": 8.6,
     "epss": 0.00282,
-    "epss_timestamp": "2026-07-31T09:05:32.461133+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.871354+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.4"
     ]
   },
   {
-    "cve_id": "GHSA-72gw-mp4g-v24j",
-    "api_cve_id": "CVE-2026-5079",
-    "package_name": "multer",
-    "vulnerable_version": "1.4.5-lts.1",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00278,
-    "epss_timestamp": "2026-07-31T09:05:32.597932+00:00",
+    "cve_id": "GHSA-pxg6-pf52-xh8x",
+    "scanner_cve_id": "GHSA-pxg6-pf52-xh8x",
+    "api_cve_id": "CVE-2024-47764",
+    "package_name": "cookie",
+    "vulnerable_version": "0.4.1",
+    "severity": "low",
+    "cvss": 0.0,
+    "epss": 0.00744,
+    "epss_timestamp": "2026-08-04T19:11:50.903307+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.2.0"
+      "0.7.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-pxg6-pf52-xh8x",
+    "scanner_cve_id": "GHSA-pxg6-pf52-xh8x",
+    "api_cve_id": "CVE-2024-47764",
+    "package_name": "cookie",
+    "vulnerable_version": "0.5.0",
+    "severity": "low",
+    "cvss": 0.0,
+    "epss": 0.00744,
+    "epss_timestamp": "2026-08-04T19:11:50.903322+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.7.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-4v9v-hfq4-rm2v",
+    "scanner_cve_id": "GHSA-4v9v-hfq4-rm2v",
+    "api_cve_id": "CVE-2025-30359",
+    "package_name": "webpack-dev-server",
+    "vulnerable_version": "4.11.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00427,
+    "epss_timestamp": "2026-08-04T19:11:50.949183+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.2.1"
     ]
   },
   {
     "cve_id": "GHSA-m5q2-4fm3-vfqp",
+    "scanner_cve_id": "GHSA-m5q2-4fm3-vfqp",
     "api_cve_id": "CVE-2026-47135",
     "package_name": "vm2",
     "vulnerable_version": "3.9.17",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00266,
-    "epss_timestamp": "2026-07-31T09:05:32.504591+00:00",
+    "epss_timestamp": "2026-08-04T19:11:50.988752+00:00",
     "kev": false,
     "fixed_versions": [
       "3.11.4"
     ]
   },
   {
+    "cve_id": "GHSA-mh29-5h37-fv8m",
+    "scanner_cve_id": "GHSA-mh29-5h37-fv8m",
+    "api_cve_id": "CVE-2025-64718",
+    "package_name": "js-yaml",
+    "vulnerable_version": "3.14.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00414,
+    "epss_timestamp": "2026-08-04T19:11:51.022224+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.14.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-mh29-5h37-fv8m",
+    "scanner_cve_id": "GHSA-mh29-5h37-fv8m",
+    "api_cve_id": "CVE-2025-64718",
+    "package_name": "js-yaml",
+    "vulnerable_version": "3.14.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00414,
+    "epss_timestamp": "2026-08-04T19:11:51.022242+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.14.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-3v7f-55p6-f55p",
+    "scanner_cve_id": "GHSA-3v7f-55p6-f55p",
+    "api_cve_id": "CVE-2026-33672",
+    "package_name": "picomatch",
+    "vulnerable_version": "2.3.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0041,
+    "epss_timestamp": "2026-08-04T19:11:51.071156+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.3.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w8wr-v893-vjvp",
+    "scanner_cve_id": "GHSA-w8wr-v893-vjvp",
+    "api_cve_id": "CVE-2026-59871",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0041,
+    "epss_timestamp": "2026-08-04T19:11:51.104819+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w8wr-v893-vjvp",
+    "scanner_cve_id": "GHSA-w8wr-v893-vjvp",
+    "api_cve_id": "CVE-2026-59871",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0041,
+    "epss_timestamp": "2026-08-04T19:11:51.104838+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w8wr-v893-vjvp",
+    "scanner_cve_id": "GHSA-w8wr-v893-vjvp",
+    "api_cve_id": "CVE-2026-59871",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0041,
+    "epss_timestamp": "2026-08-04T19:11:51.104846+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-83g3-92jg-28cx",
+    "scanner_cve_id": "GHSA-83g3-92jg-28cx",
+    "api_cve_id": "CVE-2026-26960",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "high",
+    "cvss": 7.1,
+    "epss": 0.00288,
+    "epss_timestamp": "2026-08-04T19:11:51.152690+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.8"
+    ]
+  },
+  {
+    "cve_id": "GHSA-83g3-92jg-28cx",
+    "scanner_cve_id": "GHSA-83g3-92jg-28cx",
+    "api_cve_id": "CVE-2026-26960",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "high",
+    "cvss": 7.1,
+    "epss": 0.00288,
+    "epss_timestamp": "2026-08-04T19:11:51.152709+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.8"
+    ]
+  },
+  {
+    "cve_id": "GHSA-83g3-92jg-28cx",
+    "scanner_cve_id": "GHSA-83g3-92jg-28cx",
+    "api_cve_id": "CVE-2026-26960",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "high",
+    "cvss": 7.1,
+    "epss": 0.00288,
+    "epss_timestamp": "2026-08-04T19:11:51.152716+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.8"
+    ]
+  },
+  {
+    "cve_id": "GHSA-m28w-2pqf-7qgj",
+    "scanner_cve_id": "GHSA-m28w-2pqf-7qgj",
+    "api_cve_id": "CVE-2026-14631",
+    "package_name": "webpack-dev-server",
+    "vulnerable_version": "4.11.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00405,
+    "epss_timestamp": "2026-08-04T19:11:51.181114+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.2.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-72gw-mp4g-v24j",
+    "scanner_cve_id": "GHSA-72gw-mp4g-v24j",
+    "api_cve_id": "CVE-2026-5079",
+    "package_name": "multer",
+    "vulnerable_version": "1.4.5-lts.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00278,
+    "epss_timestamp": "2026-08-04T19:11:51.230939+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.2.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-6rw7-vpxm-498p",
+    "scanner_cve_id": "GHSA-6rw7-vpxm-498p",
+    "api_cve_id": "CVE-2025-15284",
+    "package_name": "qs",
+    "vulnerable_version": "6.11.0",
+    "severity": "medium",
+    "cvss": 3.7,
+    "epss": 0.00417,
+    "epss_timestamp": "2026-08-04T19:11:51.283380+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.14.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-6rw7-vpxm-498p",
+    "scanner_cve_id": "GHSA-6rw7-vpxm-498p",
+    "api_cve_id": "CVE-2025-15284",
+    "package_name": "qs",
+    "vulnerable_version": "6.5.3",
+    "severity": "medium",
+    "cvss": 3.7,
+    "epss": 0.00417,
+    "epss_timestamp": "2026-08-04T19:11:51.283402+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.14.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w5hq-g745-h8pq",
+    "scanner_cve_id": "GHSA-w5hq-g745-h8pq",
+    "api_cve_id": "CVE-2026-41907",
+    "package_name": "uuid",
+    "vulnerable_version": "3.4.0",
+    "severity": "medium",
+    "cvss": 7.5,
+    "epss": 0.00337,
+    "epss_timestamp": "2026-08-04T19:11:51.333428+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "11.1.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w5hq-g745-h8pq",
+    "scanner_cve_id": "GHSA-w5hq-g745-h8pq",
+    "api_cve_id": "CVE-2026-41907",
+    "package_name": "uuid",
+    "vulnerable_version": "8.3.2",
+    "severity": "medium",
+    "cvss": 7.5,
+    "epss": 0.00337,
+    "epss_timestamp": "2026-08-04T19:11:51.333448+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "11.1.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w5hq-g745-h8pq",
+    "scanner_cve_id": "GHSA-w5hq-g745-h8pq",
+    "api_cve_id": "CVE-2026-41907",
+    "package_name": "uuid",
+    "vulnerable_version": "8.3.2",
+    "severity": "medium",
+    "cvss": 7.5,
+    "epss": 0.00337,
+    "epss_timestamp": "2026-08-04T19:11:51.333456+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "11.1.1"
+    ]
+  },
+  {
     "cve_id": "GHSA-9ppj-qmqm-q256",
+    "scanner_cve_id": "GHSA-9ppj-qmqm-q256",
     "api_cve_id": "CVE-2026-31802",
     "package_name": "tar",
     "vulnerable_version": "4.4.19",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00253,
-    "epss_timestamp": "2026-07-31T09:05:32.640687+00:00",
+    "epss_timestamp": "2026-08-04T19:11:51.380707+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.11"
@@ -1485,27 +2671,89 @@
   },
   {
     "cve_id": "GHSA-9ppj-qmqm-q256",
+    "scanner_cve_id": "GHSA-9ppj-qmqm-q256",
     "api_cve_id": "CVE-2026-31802",
     "package_name": "tar",
     "vulnerable_version": "6.2.0",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00253,
-    "epss_timestamp": "2026-07-31T09:05:32.640706+00:00",
+    "epss_timestamp": "2026-08-04T19:11:51.380727+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.11"
     ]
   },
   {
+    "cve_id": "GHSA-9ppj-qmqm-q256",
+    "scanner_cve_id": "GHSA-9ppj-qmqm-q256",
+    "api_cve_id": "CVE-2026-31802",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00253,
+    "epss_timestamp": "2026-08-04T19:11:51.380735+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.11"
+    ]
+  },
+  {
+    "cve_id": "GHSA-cm22-4g7w-348p",
+    "scanner_cve_id": "GHSA-cm22-4g7w-348p",
+    "api_cve_id": "CVE-2024-43800",
+    "package_name": "serve-static",
+    "vulnerable_version": "1.15.0",
+    "severity": "low",
+    "cvss": 5,
+    "epss": 0.00595,
+    "epss_timestamp": "2026-08-04T19:11:51.451158+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.16.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-h67p-54hq-rp68",
+    "scanner_cve_id": "GHSA-h67p-54hq-rp68",
+    "api_cve_id": "CVE-2026-53550",
+    "package_name": "js-yaml",
+    "vulnerable_version": "3.14.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00378,
+    "epss_timestamp": "2026-08-04T19:11:51.500392+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.15.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-h67p-54hq-rp68",
+    "scanner_cve_id": "GHSA-h67p-54hq-rp68",
+    "api_cve_id": "CVE-2026-53550",
+    "package_name": "js-yaml",
+    "vulnerable_version": "3.14.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00378,
+    "epss_timestamp": "2026-08-04T19:11:51.500411+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.15.0"
+    ]
+  },
+  {
     "cve_id": "GHSA-r6q2-hw4h-h46w",
+    "scanner_cve_id": "GHSA-r6q2-hw4h-h46w",
     "api_cve_id": "CVE-2026-23950",
     "package_name": "tar",
     "vulnerable_version": "4.4.19",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.00225,
-    "epss_timestamp": "2026-07-31T09:05:32.693589+00:00",
+    "epss_timestamp": "2026-08-04T19:11:51.553722+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.4"
@@ -1513,44 +2761,917 @@
   },
   {
     "cve_id": "GHSA-r6q2-hw4h-h46w",
+    "scanner_cve_id": "GHSA-r6q2-hw4h-h46w",
     "api_cve_id": "CVE-2026-23950",
     "package_name": "tar",
     "vulnerable_version": "6.2.0",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.00225,
-    "epss_timestamp": "2026-07-31T09:05:32.693611+00:00",
+    "epss_timestamp": "2026-08-04T19:11:51.553741+00:00",
     "kev": false,
     "fixed_versions": [
       "7.5.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r6q2-hw4h-h46w",
+    "scanner_cve_id": "GHSA-r6q2-hw4h-h46w",
+    "api_cve_id": "CVE-2026-23950",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "high",
+    "cvss": 8.8,
+    "epss": 0.00225,
+    "epss_timestamp": "2026-08-04T19:11:51.553748+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-f23m-r3pf-42rh",
+    "scanner_cve_id": "GHSA-f23m-r3pf-42rh",
+    "api_cve_id": "CVE-2026-2950",
+    "package_name": "lodash",
+    "vulnerable_version": "2.4.2",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.00317,
+    "epss_timestamp": "2026-08-04T19:11:51.603256+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.18.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-f23m-r3pf-42rh",
+    "scanner_cve_id": "GHSA-f23m-r3pf-42rh",
+    "api_cve_id": "CVE-2026-2950",
+    "package_name": "lodash",
+    "vulnerable_version": "4.17.21",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.00317,
+    "epss_timestamp": "2026-08-04T19:11:51.603274+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.18.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-9jgg-88mc-972h",
+    "scanner_cve_id": "GHSA-9jgg-88mc-972h",
+    "api_cve_id": "CVE-2025-30360",
+    "package_name": "webpack-dev-server",
+    "vulnerable_version": "4.11.1",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.00301,
+    "epss_timestamp": "2026-08-04T19:11:51.653905+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.2.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r5mx-6wc6-7h9w",
+    "scanner_cve_id": "GHSA-r5mx-6wc6-7h9w",
+    "api_cve_id": "CVE-2026-27837",
+    "package_name": "dottie",
+    "vulnerable_version": "2.0.6",
+    "severity": "medium",
+    "cvss": 6.3,
+    "epss": 0.00303,
+    "epss_timestamp": "2026-08-04T19:11:51.703238+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.7"
+    ]
+  },
+  {
+    "cve_id": "GHSA-m6fv-jmcg-4jfg",
+    "scanner_cve_id": "GHSA-m6fv-jmcg-4jfg",
+    "api_cve_id": "CVE-2024-43799",
+    "package_name": "send",
+    "vulnerable_version": "0.18.0",
+    "severity": "low",
+    "cvss": 5,
+    "epss": 0.00511,
+    "epss_timestamp": "2026-08-04T19:11:51.742804+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.19.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-9965-vmph-33xx",
+    "scanner_cve_id": "GHSA-9965-vmph-33xx",
+    "api_cve_id": "CVE-2025-56200",
+    "package_name": "validator",
+    "vulnerable_version": "13.11.0",
+    "severity": "medium",
+    "cvss": 6.1,
+    "epss": 0.00302,
+    "epss_timestamp": "2026-08-04T19:11:51.788361+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "13.15.20"
+    ]
+  },
+  {
+    "cve_id": "GHSA-4vj7-5mj6-jm8m",
+    "scanner_cve_id": "GHSA-4vj7-5mj6-jm8m",
+    "api_cve_id": "CVE-2026-5078",
+    "package_name": "morgan",
+    "vulnerable_version": "1.10.0",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00325,
+    "epss_timestamp": "2026-08-04T19:11:51.829473+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-5v7r-6r5c-r473",
+    "scanner_cve_id": "GHSA-5v7r-6r5c-r473",
+    "api_cve_id": "CVE-2026-31808",
+    "package_name": "file-type",
+    "vulnerable_version": "16.5.4",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00325,
+    "epss_timestamp": "2026-08-04T19:11:51.876189+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "21.3.1"
     ]
   },
   {
     "cve_id": "GHSA-869p-cjfg-cm3x",
+    "scanner_cve_id": "GHSA-869p-cjfg-cm3x",
     "api_cve_id": "CVE-2025-65945",
     "package_name": "jws",
     "vulnerable_version": "0.2.6",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00204,
-    "epss_timestamp": "2026-07-31T09:05:32.737239+00:00",
+    "epss": 0.00219,
+    "epss_timestamp": "2026-08-04T19:11:51.926766+00:00",
     "kev": false,
     "fixed_versions": [
       "3.2.3"
     ]
   },
   {
+    "cve_id": "GHSA-73rr-hh4g-fpgx",
+    "scanner_cve_id": "GHSA-73rr-hh4g-fpgx",
+    "api_cve_id": "CVE-2026-24001",
+    "package_name": "diff",
+    "vulnerable_version": "4.0.2",
+    "severity": "low",
+    "cvss": 2.7,
+    "epss": 0.00562,
+    "epss_timestamp": "2026-08-04T19:11:51.966747+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.0.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-w7fw-mjwx-w883",
+    "scanner_cve_id": "GHSA-w7fw-mjwx-w883",
+    "api_cve_id": "CVE-2026-2391",
+    "package_name": "qs",
+    "vulnerable_version": "6.11.0",
+    "severity": "low",
+    "cvss": 3.7,
+    "epss": 0.00478,
+    "epss_timestamp": "2026-08-04T19:11:51.994861+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.14.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qw6h-vgh9-j6wx",
+    "scanner_cve_id": "GHSA-qw6h-vgh9-j6wx",
+    "api_cve_id": "CVE-2024-43796",
+    "package_name": "express",
+    "vulnerable_version": "4.18.2",
+    "severity": "low",
+    "cvss": 5,
+    "epss": 0.00458,
+    "epss_timestamp": "2026-08-04T19:11:52.036634+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.20.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-gvwx-54wh-qm9j",
+    "scanner_cve_id": "GHSA-gvwx-54wh-qm9j",
+    "api_cve_id": "CVE-2026-59875",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00292,
+    "epss_timestamp": "2026-08-04T19:11:52.066030+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.17"
+    ]
+  },
+  {
+    "cve_id": "GHSA-gvwx-54wh-qm9j",
+    "scanner_cve_id": "GHSA-gvwx-54wh-qm9j",
+    "api_cve_id": "CVE-2026-59875",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00292,
+    "epss_timestamp": "2026-08-04T19:11:52.066047+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.17"
+    ]
+  },
+  {
+    "cve_id": "GHSA-gvwx-54wh-qm9j",
+    "scanner_cve_id": "GHSA-gvwx-54wh-qm9j",
+    "api_cve_id": "CVE-2026-59875",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00292,
+    "epss_timestamp": "2026-08-04T19:11:52.066055+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.17"
+    ]
+  },
+  {
+    "cve_id": "GHSA-9g8x-92q2-p28f",
+    "scanner_cve_id": "GHSA-9g8x-92q2-p28f",
+    "api_cve_id": "CVE-2026-47141",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "medium",
+    "cvss": 4.6,
+    "epss": 0.00308,
+    "epss_timestamp": "2026-08-04T19:11:52.115223+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qhxp-v273-g94h",
+    "scanner_cve_id": "GHSA-qhxp-v273-g94h",
+    "api_cve_id": "CVE-2019-25225",
+    "package_name": "sanitize-html",
+    "vulnerable_version": "1.4.2",
+    "severity": "medium",
+    "cvss": 6.1,
+    "epss": 0.00251,
+    "epss_timestamp": "2026-08-04T19:11:52.172940+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.0-beta"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2qvq-rjwj-gvw9",
+    "scanner_cve_id": "GHSA-2qvq-rjwj-gvw9",
+    "api_cve_id": "CVE-2026-33916",
+    "package_name": "handlebars",
+    "vulnerable_version": "4.7.7",
+    "severity": "medium",
+    "cvss": 4.7,
+    "epss": 0.00276,
+    "epss_timestamp": "2026-08-04T19:11:52.230451+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.7.9"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v27g-jcqj-v8rw",
+    "scanner_cve_id": "GHSA-v27g-jcqj-v8rw",
+    "api_cve_id": "CVE-2026-44002",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "medium",
+    "cvss": 5.8,
+    "epss": 0.00241,
+    "epss_timestamp": "2026-08-04T19:11:52.274399+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-wp5r-2gw5-m7q7",
+    "scanner_cve_id": "GHSA-wp5r-2gw5-m7q7",
+    "api_cve_id": "CVE-2026-44003",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00248,
+    "epss_timestamp": "2026-08-04T19:11:52.313634+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v6h2-p8h4-qcjw",
+    "scanner_cve_id": "GHSA-v6h2-p8h4-qcjw",
+    "api_cve_id": "CVE-2025-5889",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "1.1.11",
+    "severity": "low",
+    "cvss": 3.1,
+    "epss": 0.00459,
+    "epss_timestamp": "2026-08-04T19:11:52.363958+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.1.12"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v6h2-p8h4-qcjw",
+    "scanner_cve_id": "GHSA-v6h2-p8h4-qcjw",
+    "api_cve_id": "CVE-2025-5889",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "2.0.1",
+    "severity": "low",
+    "cvss": 3.1,
+    "epss": 0.00459,
+    "epss_timestamp": "2026-08-04T19:11:52.364015+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-mpf8-4hx2-7cjg",
+    "scanner_cve_id": "GHSA-mpf8-4hx2-7cjg",
+    "api_cve_id": "CVE-2026-44000",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "medium",
+    "cvss": 6.5,
+    "epss": 0.002,
+    "epss_timestamp": "2026-08-04T19:11:52.406785+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-qx2v-qp2m-jg93",
+    "scanner_cve_id": "GHSA-qx2v-qp2m-jg93",
+    "api_cve_id": "CVE-2026-41305",
+    "package_name": "postcss",
+    "vulnerable_version": "8.4.31",
+    "severity": "medium",
+    "cvss": 6.1,
+    "epss": 0.00205,
+    "epss_timestamp": "2026-08-04T19:11:52.435221+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.5.10"
+    ]
+  },
+  {
+    "cve_id": "GHSA-79cf-xcqc-c78w",
+    "scanner_cve_id": "GHSA-79cf-xcqc-c78w",
+    "api_cve_id": "CVE-2026-6402",
+    "package_name": "webpack-dev-server",
+    "vulnerable_version": "4.11.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00216,
+    "epss_timestamp": "2026-08-04T19:11:52.467686+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.2.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-52v5-jr5w-gjxr",
+    "scanner_cve_id": "GHSA-52v5-jr5w-gjxr",
+    "api_cve_id": "CVE-2026-48815",
+    "package_name": "sigstore",
+    "vulnerable_version": "1.9.0",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00143,
+    "epss_timestamp": "2026-08-04T19:11:52.509050+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.1.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-52f5-9888-hmc6",
+    "scanner_cve_id": "GHSA-52f5-9888-hmc6",
+    "api_cve_id": "CVE-2025-54798",
+    "package_name": "tmp",
+    "vulnerable_version": "0.0.33",
+    "severity": "low",
+    "cvss": 2.5,
+    "epss": 0.00331,
+    "epss_timestamp": "2026-08-04T19:11:52.554621+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.2.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v422-hmwv-36x6",
+    "scanner_cve_id": "GHSA-v422-hmwv-36x6",
+    "api_cve_id": "CVE-2026-12590",
+    "package_name": "body-parser",
+    "vulnerable_version": "1.20.1",
+    "severity": "low",
+    "cvss": 3.7,
+    "epss": 0.0027,
+    "epss_timestamp": "2026-08-04T19:11:52.603533+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.20.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v422-hmwv-36x6",
+    "scanner_cve_id": "GHSA-v422-hmwv-36x6",
+    "api_cve_id": "CVE-2026-12590",
+    "package_name": "body-parser",
+    "vulnerable_version": "1.20.2",
+    "severity": "low",
+    "cvss": 3.7,
+    "epss": 0.0027,
+    "epss_timestamp": "2026-08-04T19:11:52.603552+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.20.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-mx8g-39q3-5c79",
+    "scanner_cve_id": "GHSA-mx8g-39q3-5c79",
+    "api_cve_id": "CVE-2026-9595",
+    "package_name": "webpack-dev-server",
+    "vulnerable_version": "4.11.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.00163,
+    "epss_timestamp": "2026-08-04T19:11:52.634649+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.2.5"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vmf3-w455-68vh",
+    "scanner_cve_id": "GHSA-vmf3-w455-68vh",
+    "api_cve_id": "CVE-2026-53655",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "medium",
+    "cvss": 6.9,
+    "epss": 0.00141,
+    "epss_timestamp": "2026-08-04T19:11:52.664384+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.16"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vmf3-w455-68vh",
+    "scanner_cve_id": "GHSA-vmf3-w455-68vh",
+    "api_cve_id": "CVE-2026-53655",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "medium",
+    "cvss": 6.9,
+    "epss": 0.00141,
+    "epss_timestamp": "2026-08-04T19:11:52.664399+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.16"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vmf3-w455-68vh",
+    "scanner_cve_id": "GHSA-vmf3-w455-68vh",
+    "api_cve_id": "CVE-2026-53655",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "medium",
+    "cvss": 6.9,
+    "epss": 0.00141,
+    "epss_timestamp": "2026-08-04T19:11:52.664406+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.16"
+    ]
+  },
+  {
+    "cve_id": "GHSA-f5vj-f2hx-8m93",
+    "scanner_cve_id": "GHSA-f5vj-f2hx-8m93",
+    "api_cve_id": "CVE-2026-14620",
+    "package_name": "webpack-dev-server",
+    "vulnerable_version": "4.11.1",
+    "severity": "medium",
+    "cvss": 4.7,
+    "epss": 0.00149,
+    "epss_timestamp": "2026-08-04T19:11:52.693347+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.2.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-38r7-794h-5758",
+    "scanner_cve_id": "GHSA-38r7-794h-5758",
+    "api_cve_id": "CVE-2025-68157",
+    "package_name": "webpack",
+    "vulnerable_version": "5.76.1",
+    "severity": "low",
+    "cvss": 3.7,
+    "epss": 0.002,
+    "epss_timestamp": "2026-08-04T19:11:52.720766+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.104.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-8fgc-7cc6-rx7x",
+    "scanner_cve_id": "GHSA-8fgc-7cc6-rx7x",
+    "api_cve_id": "CVE-2025-68458",
+    "package_name": "webpack",
+    "vulnerable_version": "5.76.1",
+    "severity": "low",
+    "cvss": 3.7,
+    "epss": 0.002,
+    "epss_timestamp": "2026-08-04T19:11:52.750318+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.104.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-76c9-3jph-rj3q",
+    "scanner_cve_id": "GHSA-76c9-3jph-rj3q",
+    "api_cve_id": "CVE-2025-7339",
+    "package_name": "on-headers",
+    "vulnerable_version": "1.0.2",
+    "severity": "low",
+    "cvss": 3.4,
+    "epss": 0.00174,
+    "epss_timestamp": "2026-08-04T19:11:52.791049+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.1.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-4x5r-pxfx-6jf8",
+    "scanner_cve_id": "GHSA-4x5r-pxfx-6jf8",
+    "api_cve_id": "CVE-2026-49356",
+    "package_name": "@babel/core",
+    "vulnerable_version": "7.19.3",
+    "severity": "low",
+    "cvss": 3.2,
+    "epss": 0.00126,
+    "epss_timestamp": "2026-08-04T19:11:52.839614+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.29.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-4x5r-pxfx-6jf8",
+    "scanner_cve_id": "GHSA-4x5r-pxfx-6jf8",
+    "api_cve_id": "CVE-2026-49356",
+    "package_name": "@babel/core",
+    "vulnerable_version": "7.20.12",
+    "severity": "low",
+    "cvss": 3.2,
+    "epss": 0.00126,
+    "epss_timestamp": "2026-08-04T19:11:52.839633+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.29.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vpq2-c234-7xj6",
+    "scanner_cve_id": "GHSA-vpq2-c234-7xj6",
+    "api_cve_id": "CVE-2026-3449",
+    "package_name": "@tootallnate/once",
+    "vulnerable_version": "1.1.2",
+    "severity": "low",
+    "cvss": 3.3,
+    "epss": 0.00112,
+    "epss_timestamp": "2026-08-04T19:11:52.870707+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-vpq2-c234-7xj6",
+    "scanner_cve_id": "GHSA-vpq2-c234-7xj6",
+    "api_cve_id": "CVE-2026-3449",
+    "package_name": "@tootallnate/once",
+    "vulnerable_version": "2.0.0",
+    "severity": "low",
+    "cvss": 3.3,
+    "epss": 0.00112,
+    "epss_timestamp": "2026-08-04T19:11:52.870725+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.0.1"
+    ]
+  },
+  {
+    "cve_id": "GHSA-v8fg-2rw7-q452",
+    "scanner_cve_id": "GHSA-v8fg-2rw7-q452",
+    "api_cve_id": "CVE-2026-69240",
+    "package_name": "sequelize",
+    "vulnerable_version": "6.34.0",
+    "severity": "critical",
+    "cvss": 9.8,
+    "epss": 0.0032,
+    "epss_timestamp": "2026-08-04T19:11:52.920560+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.37.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-rgw5-rvv9-x895",
+    "scanner_cve_id": "GHSA-rgw5-rvv9-x895",
+    "api_cve_id": "CVE-2026-69152",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "1.1.11",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00368,
+    "epss_timestamp": "2026-08-04T19:11:52.952047+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.1.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-rgw5-rvv9-x895",
+    "scanner_cve_id": "GHSA-rgw5-rvv9-x895",
+    "api_cve_id": "CVE-2026-69152",
+    "package_name": "brace-expansion",
+    "vulnerable_version": "2.0.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00368,
+    "epss_timestamp": "2026-08-04T19:11:52.952068+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.1.4"
+    ]
+  },
+  {
     "cve_id": "GHSA-gjcw-v447-2w7q",
+    "scanner_cve_id": "GHSA-gjcw-v447-2w7q",
     "api_cve_id": "CVE-2016-1000223",
     "package_name": "jws",
     "vulnerable_version": "0.2.6",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.0,
-    "epss_timestamp": "2026-07-31T09:05:32.781311+00:00",
+    "epss_timestamp": "2026-08-04T19:11:53.001859+00:00",
     "kev": false,
     "fixed_versions": [
       "3.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r28c-9q8g-f849",
+    "scanner_cve_id": "GHSA-r28c-9q8g-f849",
+    "api_cve_id": "GHSA-r28c-9q8g-f849",
+    "package_name": "postcss",
+    "vulnerable_version": "8.4.31",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.049818+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.5.18"
+    ]
+  },
+  {
+    "cve_id": "GHSA-5c6j-r48x-rmvq",
+    "scanner_cve_id": "GHSA-5c6j-r48x-rmvq",
+    "api_cve_id": "GHSA-5c6j-r48x-rmvq",
+    "package_name": "serialize-javascript",
+    "vulnerable_version": "6.0.2",
+    "severity": "high",
+    "cvss": 8.1,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.103133+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.0.3"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2m8v-j782-fhvr",
+    "scanner_cve_id": "GHSA-2m8v-j782-fhvr",
+    "api_cve_id": "CVE-2026-69185",
+    "package_name": "socket.io-parser",
+    "vulnerable_version": "4.0.5",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00346,
+    "epss_timestamp": "2026-08-04T19:11:53.136230+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.2.7"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2m8v-j782-fhvr",
+    "scanner_cve_id": "GHSA-2m8v-j782-fhvr",
+    "api_cve_id": "CVE-2026-69185",
+    "package_name": "socket.io-parser",
+    "vulnerable_version": "4.0.5",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00346,
+    "epss_timestamp": "2026-08-04T19:11:53.136248+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.2.7"
+    ]
+  },
+  {
+    "cve_id": "GHSA-rvg8-pwq2-xj7q",
+    "scanner_cve_id": "GHSA-rvg8-pwq2-xj7q",
+    "api_cve_id": "GHSA-rvg8-pwq2-xj7q",
+    "package_name": "base64url",
+    "vulnerable_version": "0.0.6",
+    "severity": "medium",
+    "cvss": 0.0,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.186923+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.0.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-67mh-4wv8-2f99",
+    "scanner_cve_id": "GHSA-67mh-4wv8-2f99",
+    "api_cve_id": "GHSA-67mh-4wv8-2f99",
+    "package_name": "esbuild",
+    "vulnerable_version": "0.17.8",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.226397+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.25.0"
+    ]
+  },
+  {
+    "cve_id": "GHSA-7rx3-28cr-v5wh",
+    "scanner_cve_id": "GHSA-7rx3-28cr-v5wh",
+    "api_cve_id": "GHSA-7rx3-28cr-v5wh",
+    "package_name": "handlebars",
+    "vulnerable_version": "4.7.7",
+    "severity": "medium",
+    "cvss": 4.8,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.283184+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.7.9"
+    ]
+  },
+  {
+    "cve_id": "GHSA-fxqj-rqcc-2cmp",
+    "scanner_cve_id": "GHSA-fxqj-rqcc-2cmp",
+    "api_cve_id": "CVE-2026-69153",
+    "package_name": "postcss",
+    "vulnerable_version": "8.4.31",
+    "severity": "medium",
+    "cvss": 6.3,
+    "epss": 0.00358,
+    "epss_timestamp": "2026-08-04T19:11:53.313315+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "8.5.23"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r292-9mhp-454m",
+    "scanner_cve_id": "GHSA-r292-9mhp-454m",
+    "api_cve_id": "GHSA-r292-9mhp-454m",
+    "package_name": "tar",
+    "vulnerable_version": "4.4.19",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.342720+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.21"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r292-9mhp-454m",
+    "scanner_cve_id": "GHSA-r292-9mhp-454m",
+    "api_cve_id": "GHSA-r292-9mhp-454m",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.0",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.342735+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.21"
+    ]
+  },
+  {
+    "cve_id": "GHSA-r292-9mhp-454m",
+    "scanner_cve_id": "GHSA-r292-9mhp-454m",
+    "api_cve_id": "GHSA-r292-9mhp-454m",
+    "package_name": "tar",
+    "vulnerable_version": "6.2.1",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.342742+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "7.5.21"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2cm2-m3w5-gp2f",
+    "scanner_cve_id": "GHSA-2cm2-m3w5-gp2f",
+    "api_cve_id": "GHSA-2cm2-m3w5-gp2f",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "medium",
+    "cvss": 5.3,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.394288+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-442j-39wm-28r2",
+    "scanner_cve_id": "GHSA-442j-39wm-28r2",
+    "api_cve_id": "GHSA-442j-39wm-28r2",
+    "package_name": "handlebars",
+    "vulnerable_version": "4.7.7",
+    "severity": "low",
+    "cvss": 3.7,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.434608+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "4.7.9"
+    ]
+  },
+  {
+    "cve_id": "GHSA-q3fm-4wcw-g57x",
+    "scanner_cve_id": "GHSA-q3fm-4wcw-g57x",
+    "api_cve_id": "GHSA-q3fm-4wcw-g57x",
+    "package_name": "vm2",
+    "vulnerable_version": "3.9.17",
+    "severity": "low",
+    "cvss": 2.1,
+    "epss": 0.0,
+    "epss_timestamp": "2026-08-04T19:11:53.480247+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.11.4"
     ]
   }
 ]

@@ -169,7 +169,7 @@
     "replace": "^1.2.0",
     "request": "^2.88.2",
     "sanitize-filename": "^1.6.3",
-    "sanitize-html": "^2.13.0",
+    "sanitize-html": "1.4.2",
     "semver": "^7.3.2",
     "sequelize": "^6.15.1",
     "serve-index": "^1.9.1",
@@ -285,6 +285,6 @@
     ]
   },
   "overrides": {
-    "lodash": "4.17.21"
+    "handlebars": "4.7.9"
   }
 }

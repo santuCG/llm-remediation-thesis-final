@@ -1,16 +1,16 @@
 {
-  "scenario_id": "UNKNOWN",
+  "scenario_id": "AF-07",
   "experiment_id": "2026-final",
   "application": "Apache Airflow",
   "ecosystem": "python",
-  "prompt_version": "v1.1",
+  "prompt_version": "v1.2",
   "api_payload": {
     "contents": [
       {
         "role": "user",
         "parts": [
           {
-            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: mysql-connector-python\n* Vulnerable Version: 8.4.0\n* CVE ID: GHSA-hgjp-83m4-h4fj\n* CVSS Score: 7.5\n* EPSS Probability: 0.00513\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['9.1.0']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: mysql-connector-python\\nVersion: 8.4.0\\nSummary: MySQL driver written in Python\\nHome-page: http://dev.mysql.com/doc/connector-python/en/index.html\\nAuthor: Oracle and/or its affiliates\\nAuthor-email: \\nLicense: GNU GPLv2 (with FOSS License Exception)\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: \\nRequired-by: apache-airflow-providers-mysql\\n\",\n  \"pip_freeze\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\",\n  \"requirements_txt\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+            "text": "Scenario ID: AF-07\nPrompt Version: v1.2\n\n### Vulnerability Intelligence\n* Target Package: mysql-connector-python\n* Vulnerable Version: 8.4.0\n* CVE ID: GHSA-hgjp-83m4-h4fj\n* CVSS Score: 7.5\n* EPSS Probability: 0.00513\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-08-04\n* Fixed Versions: ['9.1.0']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: mysql-connector-python\\nVersion: 8.4.0\\nSummary: MySQL driver written in Python\\nHome-page: http://dev.mysql.com/doc/connector-python/en/index.html\\nAuthor: Oracle and/or its affiliates\\nAuthor-email: \\nLicense: GNU GPLv2 (with FOSS License Exception)\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: \\nRequired-by: apache-airflow-providers-mysql\\n\",\n  \"pip_freeze\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\",\n  \"requirements_txt\": \"apache-airflow-providers-mysql==5.6.1\\nmysql-connector-python==8.4.0\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
           }
         ]
       }
@@ -18,7 +18,7 @@
     "systemInstruction": {
       "parts": [
         {
-          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, or Manual Review. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
         }
       ]
     },
@@ -37,11 +37,25 @@
           },
           "strategy": {
             "type": "STRING",
-            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+            "enum": [
+              "direct_upgrade",
+              "transitive_override",
+              "dependency_resolution",
+              "replacement",
+              "manual_review"
+            ],
+            "description": "The exact strategy chosen."
           },
           "remediation_type": {
             "type": "STRING",
-            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+            "enum": [
+              "Direct Upgrade",
+              "Transitive Override",
+              "Dependency Resolution",
+              "Replacement",
+              "Manual Review"
+            ],
+            "description": "The human-readable twin of strategy."
           },
           "recommended_package_version": {
             "type": "STRING",
@@ -53,7 +67,14 @@
             "properties": {
               "operation": {
                 "type": "STRING",
-                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+                "enum": [
+                  "add_override",
+                  "transitive_override",
+                  "replace",
+                  "bump",
+                  "direct_upgrade"
+                ],
+                "description": "The operation to perform."
               },
               "package": {
                 "type": "STRING",

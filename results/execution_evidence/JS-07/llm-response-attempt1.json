@@ -1,0 +1,11 @@
+{
+  "reasoning": "The vulnerable package `ws` (v7.4.6) is brought in as a transitive dependency by `socket.io` (via `engine.io@4.1.2`) and `socket.io-client` (via `engine.io-client@4.1.4`), both of which restrict `ws` version ranges with the spec `~7.4.2`. Because the fixed version is `7.5.10`, standard dependency resolution cannot update `ws` beyond `7.4.x` without breaking parent lockfile constraints. Applying a transitive override forcing `ws` to `7.5.10` (or `^7.5.10`) in package.json ensures the vulnerability GHSA-3h5v-q93c-6h6q is remediated while preserving API compatibility within the 7.x line.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "7.5.10",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "ws",
+    "constraint": "^7.5.10"
+  }
+}

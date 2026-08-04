@@ -363,7 +363,7 @@ Requirement already satisfied: zipp==3.19.2 in /home/runner/.local/lib/python3.1
 Requirement already satisfied: zope.event==5.0 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 361)) (5.0)
 Requirement already satisfied: zope.interface==6.4.post2 in /home/runner/.local/lib/python3.12/site-packages (from -r requirements.txt (line 362)) (6.4.post2)
 Downloading mysql_connector_python-9.1.0-cp312-cp312-manylinux_2_28_x86_64.whl (34.4 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.4/34.4 MB 104.3 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.4/34.4 MB 103.5 MB/s eta 0:00:00
 Installing collected packages: mysql-connector-python
   Attempting uninstall: mysql-connector-python
     Found existing installation: mysql-connector-python 8.4.0

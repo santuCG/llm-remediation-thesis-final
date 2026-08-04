@@ -244,25 +244,20 @@ tests/core/test_stats.py::TestStats::test_load_invalid_custom_stats_client PASSE
 tests/core/test_stats.py::TestStats::test_load_allow_list_validator PASSED [ 76%]
 tests/core/test_stats.py::TestStats::test_load_block_list_validator PASSED [ 77%]
 tests/core/test_stats.py::TestStats::test_load_allow_and_block_list_validator_loads_only_allow_list_validator PASSED [ 77%]
-tests/core/test_stats.py::TestDogStats::test_increment_counter_with_valid_name_with_dogstatsd SKIPPED [ 77%]
-tests/core/test_stats.py::TestDogStats::test_stat_name_must_be_a_string_with_dogstatsd SKIPPED [ 78%]
-tests/core/test_stats.py::TestDogStats::test_stat_name_must_not_exceed_max_length_with_dogstatsd SKIPPED [ 78%]
-tests/core/test_stats.py::TestDogStats::test_stat_name_must_only_include_allowed_characters_with_dogstatsd SKIPPED [ 78%]
-tests/core/test_stats.py::TestDogStats::test_does_send_stats_using_dogstatsd_when_dogstatsd_on SKIPPED [ 79%]
-tests/core/test_stats.py::TestDogStats::test_does_send_stats_using_dogstatsd_with_tags_without_enabled_metrics_tags SKIPPED [ 79%]
-tests/core/test_stats.py::TestDogStats::test_does_send_stats_using_dogstatsd_when_statsd_and_dogstatsd_both_on SKIPPED [ 79%]
-tests/core/test_stats.py::TestDogStats::test_timer SKIPPED (could not
-import 'datadog': No module named 'datadog')                             [ 80%]
-tests/core/test_stats.py::TestDogStats::test_empty_timer SKIPPED (could
-not import 'datadog': No module named 'datadog')                         [ 80%]
-tests/core/test_stats.py::TestDogStats::test_timing SKIPPED (could not
-import 'datadog': No module named 'datadog')                             [ 80%]
-tests/core/test_stats.py::TestDogStats::test_gauge SKIPPED (could not
-import 'datadog': No module named 'datadog')                             [ 81%]
-tests/core/test_stats.py::TestDogStats::test_decr SKIPPED (could not
-import 'datadog': No module named 'datadog')                             [ 81%]
-tests/core/test_stats.py::TestDogStats::test_enabled_by_config SKIPPED   [ 81%]
-tests/core/test_stats.py::TestDogStats::test_does_not_send_stats_using_statsd_when_statsd_and_dogstatsd_both_on SKIPPED [ 82%]
+tests/core/test_stats.py::TestDogStats::test_increment_counter_with_valid_name_with_dogstatsd PASSED [ 77%]
+tests/core/test_stats.py::TestDogStats::test_stat_name_must_be_a_string_with_dogstatsd PASSED [ 78%]
+tests/core/test_stats.py::TestDogStats::test_stat_name_must_not_exceed_max_length_with_dogstatsd PASSED [ 78%]
+tests/core/test_stats.py::TestDogStats::test_stat_name_must_only_include_allowed_characters_with_dogstatsd PASSED [ 78%]
+tests/core/test_stats.py::TestDogStats::test_does_send_stats_using_dogstatsd_when_dogstatsd_on PASSED [ 79%]
+tests/core/test_stats.py::TestDogStats::test_does_send_stats_using_dogstatsd_with_tags_without_enabled_metrics_tags PASSED [ 79%]
+tests/core/test_stats.py::TestDogStats::test_does_send_stats_using_dogstatsd_when_statsd_and_dogstatsd_both_on PASSED [ 79%]
+tests/core/test_stats.py::TestDogStats::test_timer PASSED                [ 80%]
+tests/core/test_stats.py::TestDogStats::test_empty_timer PASSED          [ 80%]
+tests/core/test_stats.py::TestDogStats::test_timing PASSED               [ 80%]
+tests/core/test_stats.py::TestDogStats::test_gauge PASSED                [ 81%]
+tests/core/test_stats.py::TestDogStats::test_decr PASSED                 [ 81%]
+tests/core/test_stats.py::TestDogStats::test_enabled_by_config PASSED    [ 81%]
+tests/core/test_stats.py::TestDogStats::test_does_not_send_stats_using_statsd_when_statsd_and_dogstatsd_both_on PASSED [ 82%]
 tests/core/test_stats.py::TestStatsAllowAndBlockLists::test_allow_and_block_list[PatternAllowListValidator-stats_one-True] PASSED [ 82%]
 tests/core/test_stats.py::TestStatsAllowAndBlockLists::test_allow_and_block_list[PatternAllowListValidator-stats_two.bla-True] PASSED [ 82%]
 tests/core/test_stats.py::TestStatsAllowAndBlockLists::test_allow_and_block_list[PatternAllowListValidator-stats_three.foo-True] PASSED [ 83%]
@@ -296,18 +291,18 @@ tests/core/test_stats.py::TestPatternOrBasicValidatorConfigOption::test_pattern_
 tests/core/test_stats.py::TestPatternOrBasicValidatorConfigOption::test_pattern_or_basic_picker[pattern_block_list_provided] PASSED [ 92%]
 tests/core/test_stats.py::TestPatternOrBasicValidatorConfigOption::test_pattern_or_basic_picker[basic_block_list_provided] PASSED [ 93%]
 tests/core/test_stats.py::TestPatternOrBasicValidatorConfigOption::test_setting_allow_and_block_logs_warning PASSED [ 93%]
-tests/core/test_stats.py::TestDogStatsWithAllowList::test_increment_counter_with_allowed_key SKIPPED [ 93%]
-tests/core/test_stats.py::TestDogStatsWithAllowList::test_increment_counter_with_allowed_prefix SKIPPED [ 94%]
-tests/core/test_stats.py::TestDogStatsWithAllowList::test_not_increment_counter_if_not_allowed SKIPPED [ 94%]
-tests/core/test_stats.py::TestDogStatsWithMetricsTags::test_does_send_stats_using_dogstatsd_with_tags SKIPPED [ 94%]
-tests/core/test_stats.py::TestDogStatsWithDisabledMetricsTags::test_does_send_stats_using_dogstatsd_with_tags SKIPPED [ 95%]
+tests/core/test_stats.py::TestDogStatsWithAllowList::test_increment_counter_with_allowed_key PASSED [ 93%]
+tests/core/test_stats.py::TestDogStatsWithAllowList::test_increment_counter_with_allowed_prefix PASSED [ 94%]
+tests/core/test_stats.py::TestDogStatsWithAllowList::test_not_increment_counter_if_not_allowed PASSED [ 94%]
+tests/core/test_stats.py::TestDogStatsWithMetricsTags::test_does_send_stats_using_dogstatsd_with_tags PASSED [ 94%]
+tests/core/test_stats.py::TestDogStatsWithDisabledMetricsTags::test_does_send_stats_using_dogstatsd_with_tags PASSED [ 95%]
 tests/core/test_stats.py::TestStatsWithInfluxDBEnabled::test_increment_counter PASSED [ 95%]
 tests/core/test_stats.py::TestStatsWithInfluxDBEnabled::test_increment_counter_with_tags PASSED [ 95%]
 tests/core/test_stats.py::TestStatsWithInfluxDBEnabled::test_does_not_increment_counter_drops_invalid_tags PASSED [ 96%]
 tests/core/test_stats.py::TestCustomStatsName::test_does_not_send_stats_using_statsd_when_the_name_is_not_valid PASSED [ 96%]
-tests/core/test_stats.py::TestCustomStatsName::test_does_not_send_stats_using_dogstatsd_when_the_name_is_not_valid FAILED [ 96%]
+tests/core/test_stats.py::TestCustomStatsName::test_does_not_send_stats_using_dogstatsd_when_the_name_is_not_valid PASSED [ 96%]
 tests/core/test_stats.py::TestCustomStatsName::test_does_send_stats_using_statsd_when_the_name_is_valid PASSED [ 97%]
-tests/core/test_stats.py::TestCustomStatsName::test_does_send_stats_using_dogstatsd_when_the_name_is_valid FAILED [ 97%]
+tests/core/test_stats.py::TestCustomStatsName::test_does_send_stats_using_dogstatsd_when_the_name_is_valid PASSED [ 97%]
 tests/core/test_templates.py::test_protected_access PASSED               [ 97%]
 tests/core/test_templates.py::test_private_access PASSED                 [ 98%]
 tests/core/test_templates.py::test_filters[ds-2012-07-24] PASSED         [ 98%]
@@ -315,106 +310,6 @@ tests/core/test_templates.py::test_filters[ds_nodash-20120724] PASSED    [ 98%]
 tests/core/test_templates.py::test_filters[ts-2012-07-24T03:04:52+00:00] PASSED [ 99%]
 tests/core/test_templates.py::test_filters[ts_nodash-20120724T030452] PASSED [ 99%]
 tests/core/test_templates.py::test_filters[ts_nodash_with_tz-20120724T030452+0000] PASSED [100%]
-
-=================================== FAILURES ===================================
-_ TestCustomStatsName.test_does_not_send_stats_using_dogstatsd_when_the_name_is_not_valid _
-
-args = (<tests.core.test_stats.TestCustomStatsName object at 0x7ff7824bd940>,)
-kwds = {}
-
-    @wraps(func)
-    def inner(*args, **kwds):
-        with self._recreate_cm():
->           return func(*args, **kwds)
-
-/usr/lib/python3.12/contextlib.py:81: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-/usr/lib/python3.12/unittest/mock.py:1387: in patched
-    with self.decoration_helper(patched,
-/usr/lib/python3.12/contextlib.py:137: in __enter__
-    return next(self.gen)
-/usr/lib/python3.12/unittest/mock.py:1369: in decoration_helper
-    arg = exit_stack.enter_context(patching)
-/usr/lib/python3.12/contextlib.py:526: in enter_context
-    result = _enter(cm)
-/usr/lib/python3.12/unittest/mock.py:1442: in __enter__
-    self.target = self.getter()
-/usr/lib/python3.12/pkgutil.py:513: in resolve_name
-    mod = importlib.import_module(modname)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-name = 'datadog', package = None
-
-    def import_module(name, package=None):
-        """Import a module.
-    
-        The 'package' argument is required when performing a relative import. It
-        specifies the package to use as the anchor point from which to resolve the
-        relative import to an absolute import.
-    
-        """
-        level = 0
-        if name.startswith('.'):
-            if not package:
-                raise TypeError("the 'package' argument is required to perform a "
-                                f"relative import for {name!r}")
-            for character in name:
-                if character != '.':
-                    break
-                level += 1
->       return _bootstrap._gcd_import(name[level:], package, level)
-E       ModuleNotFoundError: No module named 'datadog'
-
-/usr/lib/python3.12/importlib/__init__.py:90: ModuleNotFoundError
-_ TestCustomStatsName.test_does_send_stats_using_dogstatsd_when_the_name_is_valid _
-
-args = (<tests.core.test_stats.TestCustomStatsName object at 0x7ff7824bdf70>,)
-kwds = {}
-
-    @wraps(func)
-    def inner(*args, **kwds):
-        with self._recreate_cm():
->           return func(*args, **kwds)
-
-/usr/lib/python3.12/contextlib.py:81: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-/usr/lib/python3.12/unittest/mock.py:1387: in patched
-    with self.decoration_helper(patched,
-/usr/lib/python3.12/contextlib.py:137: in __enter__
-    return next(self.gen)
-/usr/lib/python3.12/unittest/mock.py:1369: in decoration_helper
-    arg = exit_stack.enter_context(patching)
-/usr/lib/python3.12/contextlib.py:526: in enter_context
-    result = _enter(cm)
-/usr/lib/python3.12/unittest/mock.py:1442: in __enter__
-    self.target = self.getter()
-/usr/lib/python3.12/pkgutil.py:513: in resolve_name
-    mod = importlib.import_module(modname)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-name = 'datadog', package = None
-
-    def import_module(name, package=None):
-        """Import a module.
-    
-        The 'package' argument is required when performing a relative import. It
-        specifies the package to use as the anchor point from which to resolve the
-        relative import to an absolute import.
-    
-        """
-        level = 0
-        if name.startswith('.'):
-            if not package:
-                raise TypeError("the 'package' argument is required to perform a "
-                                f"relative import for {name!r}")
-            for character in name:
-                if character != '.':
-                    break
-                level += 1
->       return _bootstrap._gcd_import(name[level:], package, level)
-E       ModuleNotFoundError: No module named 'datadog'
-
-/usr/lib/python3.12/importlib/__init__.py:90: ModuleNotFoundError
 
  ======================== Warning summary =============================
 
@@ -424,16 +319,11 @@ E       ModuleNotFoundError: No module named 'datadog'
 
  ======================================================================
 
+
 =========================== short test summary info ============================
 SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system marker. System tests are only run when --system flag with the right system (core) is passed to pytest. <Function test_dag_example[example_bash_operator]>
 SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system marker. System tests are only run when --system flag with the right system (core) is passed to pytest. <Function test_dag_example[example_branch_operator]>
 SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system marker. System tests are only run when --system flag with the right system (core) is passed to pytest. <Function test_dag_example[tutorial_dag]>
 SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system marker. System tests are only run when --system flag with the right system (core) is passed to pytest. <Function test_dag_example[example_dag_decorator]>
 SKIPPED [5] tests/conftest.py:450: Test expected to run into Airflow Breeze container. Maybe because it is to dangerous to run it outside.
-SKIPPED [14] tests/core/test_stats.py:180: could not import 'datadog': No module named 'datadog'
-SKIPPED [3] tests/core/test_stats.py:409: could not import 'datadog': No module named 'datadog'
-SKIPPED [1] tests/core/test_stats.py:434: could not import 'datadog': No module named 'datadog'
-SKIPPED [1] tests/core/test_stats.py:449: could not import 'datadog': No module named 'datadog'
-FAILED tests/core/test_stats.py::TestCustomStatsName::test_does_not_send_stats_using_dogstatsd_when_the_name_is_not_valid - ModuleNotFoundError: No module named 'datadog'
-FAILED tests/core/test_stats.py::TestCustomStatsName::test_does_send_stats_using_dogstatsd_when_the_name_is_valid - ModuleNotFoundError: No module named 'datadog'
-=========== 2 failed, 264 passed, 28 skipped, 28 warnings in 25.13s ============
+=============== 285 passed, 9 skipped, 41923 warnings in 24.41s ================

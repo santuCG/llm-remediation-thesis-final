@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package google-cloud-aiplatform version 1.53.0 is vulnerable to CVE GHSA-wh2j-26j7-9728 with a CVSS score of 7.7. The package is directly specified in requirements.txt. Performing a direct upgrade to fixed version 1.133.0 resolves the vulnerability directly at the manifest level. Transitive overrides and dependency replacements are unnecessary and rejected as google-cloud-aiplatform is a direct dependency.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"1.133.0\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"google-cloud-aiplatform\",\"constraint\":\"==1.133.0\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 878,
+    "candidatesTokenCount": 166,
+    "totalTokenCount": 1941,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 878
+      }
+    ],
+    "thoughtsTokenCount": 897,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "3kRyao-bBcjjz7IP7Z_oOA"
+}

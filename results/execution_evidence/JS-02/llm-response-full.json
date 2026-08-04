@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package handlebars@4.7.7 is affected by a critical vulnerability (GHSA-2w6w-674q-4c4q, CVSS 9.8). It is introduced as a transitive dependency through hbs@4.2.0. To eliminate the vulnerability safely without forcing a breaking update on hbs or modifying direct application dependencies, a transitive override forcing handlebars to version 4.7.9 is recommended. Direct upgrade of hbs is rejected as hbs does not explicitly require an upgrade and may not automatically resolve handlebars to >=4.7.9 without manifest-level overrides.\",\"strategy\":\"transitive_override\",\"remediation_type\":\"Transitive Override\",\"recommended_package_version\":\"4.7.9\",\"manifest_patch\":{\"operation\":\"add_override\",\"package\":\"handlebars\",\"constraint\":\"4.7.9\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 768,
+    "candidatesTokenCount": 183,
+    "totalTokenCount": 1824,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 768
+      }
+    ],
+    "thoughtsTokenCount": 873,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "BDFxau66GKfAqtsP2rXL-AY"
+}

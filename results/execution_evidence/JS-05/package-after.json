@@ -283,8 +283,5 @@
       "angular",
       "inject"
     ]
-  },
-  "overrides": {
-    "jsonwebtoken": "4.2.2"
   }
 }

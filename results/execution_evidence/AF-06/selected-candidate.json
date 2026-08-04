@@ -1,14 +1,15 @@
 {
-  "cve_id": "GHSA-2g68-c3qc-8985",
-  "api_cve_id": "CVE-2024-34069",
-  "package_name": "werkzeug",
-  "vulnerable_version": "2.2.3",
-  "severity": "high",
-  "cvss": 7.5,
-  "epss": 0.03397,
-  "epss_timestamp": "2026-07-31T09:02:13.506109+00:00",
+  "cve_id": "GHSA-q2x7-8rv6-6q7h",
+  "scanner_cve_id": "GHSA-q2x7-8rv6-6q7h",
+  "api_cve_id": "CVE-2024-56326",
+  "package_name": "jinja2",
+  "vulnerable_version": "3.1.4",
+  "severity": "medium",
+  "cvss": 7.8,
+  "epss": 0.00521,
+  "epss_timestamp": "2026-08-04T19:25:59.382130+00:00",
   "kev": false,
   "fixed_versions": [
-    "3.0.3"
+    "3.1.5"
   ]
 }

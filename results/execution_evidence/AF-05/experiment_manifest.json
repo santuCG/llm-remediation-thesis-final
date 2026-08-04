@@ -1,170 +1,51 @@
 {
-    "scenario": "AF-05",
-    "repository_commit": "796ba575b26a4038bd2393d9f09c6328f06661b1",
-    "workflow_commit": "30617428694",
-    "pipeline_version": "v2.0",
-    "runner": "ubuntu-24.04",
-    "python": "3.12.x",
-    "llm": {
-        "model": "gemini-2.5-flash",
-        "temperature": 0.0,
-        "seed": 42,
-        "topP": 1.0,
-        "topK": 1
+  "schema_version": "2.0",
+  "scenario": "AF-05-regen",
+  "repository_commit": "857af44680d7b983eac9414390243ded00d4047a",
+  "workflow_run_id": "30875173695",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30875173695",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-04T03:39:55.579858+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
     },
-    "snapshots": {
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": {
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": {
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "6e93faa2765919d346ef685f8af1508f52bbb804050b503b23f1f18079af2495",
-        "baseline-grype.json": "56dff38785a40377f7aa872c4fbd0f86d78137948be014ec14f45059a135cc01",
-        "candidate-ranking.json": "73b935ed69ebfb787a91d8c3e336b515d56fcf2ef1a5ce505276ecc530d3b648",
-        "build.log": "6194d1b34b7e98151a20466014061b825d8dc55b944f78932819574eb578c381",
-        "selected-candidate.json": "8e3bebe1c12caafd9461c5d81231919abea63dbed5023fab87903f5b25d69218",
-        "metrics.json": "c715dc1510b4dc90699511ad43457abc8a1f0e0dec0293699ea0b4917c664691",
-        "test.log": "1e0082c6940dd7450087a5abc8c76e5c6e451df3057400c7e2a5a3d523dd3df8",
-        "baseline-sbom.json": "8ad4b4a9342d81fa3020810b072b76b7f67ac8f29624d45ec71a190e32565bc0",
-        "package-after.json": "8a6bb1c40c836fe68aeb1a30e06c71d946cedbbc15b98b9d4a34f46a2dced81f",
-        "llm-response.json": "faabbb70f71a7085d48905ec3d8596edb81dd20c1b479fd35f56505e48d645a2",
-        "llm-request.json": "9160e049972b1e6cb47c3d9a008e8df97ff9bc66caa334f58ac830285f9997ef"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30617428694"
-}
-
-=== EMPIRICAL EVIDENCE ===
-NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
-
---- EXPERIMENT MANIFEST ---
-{
-    "scenario": "AF-05", // The unique identifier for this vulnerability scenario
-    "repository_commit": "796ba575b26a4038bd2393d9f09c6328f06661b1", // The Git commit hash of the repository during execution
-    "workflow_commit": "30617428694", // The GitHub Actions run ID that executed this pipeline
-    "pipeline_version": "v2.0", // The version of the remediation pipeline engine
-    "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
-    "python": "3.12.x", // The Python version used by the pipeline
-    "llm": { // LLM configuration settings
-        "model": "gemini-2.5-flash", // The exact LLM model used for reasoning
-        "temperature": 0.0, // Temperature setting (0.0 for deterministic output)
-        "seed": 42, // Seed for reproducibility
-        "topP": 1.0, // Top-P sampling setting
-        "topK": 1 // Top-K sampling setting
-    },
-    "snapshots": { // Hashes of vulnerability intelligence snapshots
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": { // Versions of security scanners used
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "6e93faa2765919d346ef685f8af1508f52bbb804050b503b23f1f18079af2495",
-        "baseline-grype.json": "56dff38785a40377f7aa872c4fbd0f86d78137948be014ec14f45059a135cc01",
-        "candidate-ranking.json": "73b935ed69ebfb787a91d8c3e336b515d56fcf2ef1a5ce505276ecc530d3b648",
-        "build.log": "6194d1b34b7e98151a20466014061b825d8dc55b944f78932819574eb578c381",
-        "selected-candidate.json": "8e3bebe1c12caafd9461c5d81231919abea63dbed5023fab87903f5b25d69218",
-        "metrics.json": "c715dc1510b4dc90699511ad43457abc8a1f0e0dec0293699ea0b4917c664691",
-        "test.log": "1e0082c6940dd7450087a5abc8c76e5c6e451df3057400c7e2a5a3d523dd3df8",
-        "baseline-sbom.json": "8ad4b4a9342d81fa3020810b072b76b7f67ac8f29624d45ec71a190e32565bc0",
-        "package-after.json": "8a6bb1c40c836fe68aeb1a30e06c71d946cedbbc15b98b9d4a34f46a2dced81f",
-        "llm-response.json": "faabbb70f71a7085d48905ec3d8596edb81dd20c1b479fd35f56505e48d645a2",
-        "llm-request.json": "9160e049972b1e6cb47c3d9a008e8df97ff9bc66caa334f58ac830285f9997ef"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30617428694" // Direct link to the successful GitHub Actions workflow run
-}
-
---- PIPELINE METRICS ---
-{
-  "application": "applications/airflow", // The target application being evaluated
-  "ecosystem": "python", // Package manager ecosystem (e.g., npm, python)
-  "candidate_count": 62, // Total number of vulnerabilities initially scanned
-  "selected_package": "protobuf", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-7gcm-g887-7qv7", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2026-0994", // The standard MITRE CVE ID
-  "severity": "high", // CVSS severity rating
-  "cvss": 8.2, // Common Vulnerability Scoring System score
-  "epss": 0.00662, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T08:49:20.704161+00:00", // Time the EPSS score was fetched
-  "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
-  "dependency_type": "direct", // Whether the dependency is direct or transitive
-  "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
-  "remediation_type": "Direct Upgrade", // The human-readable strategy category
-  "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
-  "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application's test suite passed
-  "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
-  "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
-  "runtime_success": false, // Runtime tests status
-  "lockfile_regenerated": false, // Whether a lockfile was regenerated
-  "execution_time_seconds": 33, // Total pipeline execution time in seconds
-  "retry_count": 0, // Number of LLM retries needed
-  "llm_iteration": 1, // The specific iteration of the LLM prompting
-  "validation_stage_reached": "validator", // The furthest pipeline stage reached
-  "failure_stage": "none" // The stage where the pipeline failed, if any
-}
-
---- LLM PROMPT ---
-Scenario ID: AF-05
-Prompt Version: v1.1
-
-Scenario ID: UNKNOWN
-Prompt Version: v1.1
-
-### Vulnerability Intelligence
-* Target Package: protobuf
-* Vulnerable Version: 4.25.3
-* CVE ID: GHSA-7gcm-g887-7qv7
-* CVSS Score: 8.2
-* EPSS Probability: 0.00662
-* CISA KEV Status: False
-* Intelligence Retrieved On: 2026-05-18
-* Fixed Versions: ['5.29.6']
-
-### Dependency Context
-```json
-{
-  "pip_show": "Name: protobuf\nVersion: 4.25.3\nSummary: \nHome-page: https://developers.google.com/protocol-buffers/\nAuthor: protobuf@googlegroups.com\nAuthor-email: protobuf@googlegroups.com\nLicense: 3-Clause BSD License\nLocation: /home/runner/.local/lib/python3.12/site-packages\nRequires: \nRequired-by: google-ads, google-analytics-admin, google-api-core, google-cloud-aiplatform, google-cloud-appengine-logging, google-cloud-audit-log, google-cloud-automl, google-cloud-batch, google-cloud-bigquery-datatransfer, google-cloud-bigtable, google-cloud-build, google-cloud-compute, google-cloud-container, google-cloud-datacatalog, google-cloud-dataflow-client, google-cloud-dataform, google-cloud-dataplex, google-cloud-dataproc, google-cloud-dataproc-metastore, google-cloud-dlp, google-cloud-kms, google-cloud-language, google-cloud-logging, google-cloud-memcache, google-cloud-monitoring, google-cloud-orchestration-airflow, google-cloud-os-login, google-cloud-pubsub, google-cloud-redis, google-cloud-resource-manager, google-cloud-run, google-cloud-secret-manager, google-cloud-spanner, google-cloud-speech, google-cloud-storage-transfer, google-cloud-tasks, google-cloud-texttospeech, google-cloud-translate, google-cloud-videointelligence, google-cloud-vision, google-cloud-workflows, googleapis-common-protos, grpc-google-iam-v1, grpcio-status, opentelemetry-proto, proto-plus\n",
-  "pip_freeze": "google-ads==24.0.0\ngoogle-analytics-admin==0.22.7\ngoogle-api-core==2.19.0\ngoogle-cloud-aiplatform==1.53.0\ngoogle-cloud-appengine-logging==1.4.3\ngoogle-cloud-audit-log==0.2.5\ngoogle-cloud-automl==2.13.3\ngoogle-cloud-batch==0.17.21\ngoogle-cloud-bigquery-datatransfer==3.15.3\ngoogle-cloud-bigtable==2.23.1\ngoogle-cloud-build==3.24.0\ngoogle-cloud-compute==1.19.0\ngoogle-cloud-container==2.46.0\ngoogle-cloud-datacatalog==3.19.0\ngoogle-cloud-dataflow-client==0.8.10\ngoogle-cloud-dataform==0.5.9\ngoogle-cloud-dataplex==2.0.0\ngoogle-cloud-dataproc==5.9.3\ngoogle-cloud-dataproc-metastore==1.15.3\ngoogle-cloud-dlp==3.18.0\ngoogle-cloud-kms==2.23.0\ngoogle-cloud-language==2.13.3\ngoogle-cloud-logging==3.10.0\ngoogle-cloud-memcache==1.9.3\ngoogle-cloud-monitoring==2.21.0\ngoogle-cloud-orchestration-airflow==1.12.1\ngoogle-cloud-os-login==2.14.3\ngoogle-cloud-pubsub==2.21.2\ngoogle-cloud-redis==2.15.3\ngoogle-cloud-resource-manager==1.12.3\ngoogle-cloud-run==0.10.5\ngoogle-cloud-secret-manager==2.20.0\ngoogle-cloud-spanner==3.47.0\ngoogle-cloud-speech==2.26.0\ngoogle-cloud-storage-transfer==1.11.3\ngoogle-cloud-tasks==2.16.3\ngoogle-cloud-texttospeech==2.16.3\ngoogle-cloud-translate==3.15.3\ngoogle-cloud-videointelligence==2.13.3\ngoogle-cloud-vision==3.7.2\ngoogle-cloud-workflows==1.14.3\ngoogleapis-common-protos==1.63.1\ngrpc-google-iam-v1==0.13.0\ngrpcio-status==1.62.2\nopentelemetry-proto==1.25.0\nproto-plus==1.23.0\nprotobuf==4.25.3",
-  "requirements_txt": "google-ads==24.0.0\ngoogle-analytics-admin==0.22.7\ngoogle-api-core==2.19.0\ngoogle-cloud-aiplatform==1.53.0\ngoogle-cloud-appengine-logging==1.4.3\ngoogle-cloud-audit-log==0.2.5\ngoogle-cloud-automl==2.13.3\ngoogle-cloud-batch==0.17.21\ngoogle-cloud-bigquery-datatransfer==3.15.3\ngoogle-cloud-bigtable==2.23.1\ngoogle-cloud-build==3.24.0\ngoogle-cloud-compute==1.19.0\ngoogle-cloud-container==2.46.0\ngoogle-cloud-datacatalog==3.19.0\ngoogle-cloud-dataflow-client==0.8.10\ngoogle-cloud-dataform==0.5.9\ngoogle-cloud-dataplex==2.0.0\ngoogle-cloud-dataproc==5.9.3\ngoogle-cloud-dataproc-metastore==1.15.3\ngoogle-cloud-dlp==3.18.0\ngoogle-cloud-kms==2.23.0\ngoogle-cloud-language==2.13.3\ngoogle-cloud-logging==3.10.0\ngoogle-cloud-memcache==1.9.3\ngoogle-cloud-monitoring==2.21.0\ngoogle-cloud-orchestration-airflow==1.12.1\ngoogle-cloud-os-login==2.14.3\ngoogle-cloud-pubsub==2.21.2\ngoogle-cloud-redis==2.15.3\ngoogle-cloud-resource-manager==1.12.3\ngoogle-cloud-run==0.10.5\ngoogle-cloud-secret-manager==2.20.0\ngoogle-cloud-spanner==3.47.0\ngoogle-cloud-speech==2.26.0\ngoogle-cloud-storage-transfer==1.11.3\ngoogle-cloud-tasks==2.16.3\ngoogle-cloud-texttospeech==2.16.3\ngoogle-cloud-translate==3.15.3\ngoogle-cloud-videointelligence==2.13.3\ngoogle-cloud-vision==3.7.2\ngoogle-cloud-workflows==1.14.3\ngoogleapis-common-protos==1.63.1\ngrpc-google-iam-v1==0.13.0\ngrpcio-status==1.62.2\nopentelemetry-proto==1.25.0\nproto-plus==1.23.0\nprotobuf==4.25.3"
-}
-```
-
-Based on the vulnerability intelligence and context:
-1. Recommend the safest strategy.
-2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
-
---- LLM OUTPUT ---
-{
-  "reasoning": "The package protobuf at version 4.25.3 is vulnerable to GHSA-7gcm-g887-7qv7 with a CVSS score of 8.2. Upgrading protobuf directly to the patched version 5.29.6 in requirements.txt resolves the vulnerability across the ecosystem while maintaining compatibility with dependent Google Cloud SDK components.",
-  "strategy": "direct_upgrade",
-  "remediation_type": "Direct Upgrade",
-  "recommended_package_version": "5.29.6",
-  "manifest_patch": {
-    "operation": "bump",
-    "package": "protobuf",
-    "constraint": "==5.29.6"
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "9d33049f5604adb786804a11844242dcb46db25ef04f5f6c1290f4e81f2b1a9d",
+    "baseline-sbom.json": "a68f1434725dfafbef20356c84c6e0ad7f5c818d2bdbcad52cb6add08c78038d",
+    "build.log": "92d7990c18b14b02aea2e53ab5feaf1d613dd1d2197d1310461a438d44c565d0",
+    "candidate-ranking.json": "29dc26239b33e6beb49bec1c86187779ce8b4e3a9a6e23211a16060908a9b86c",
+    "dependency-graph.log": "d8ba217c684d3853057e45b14ea08150d79b085b0a1c0be7fb62ec4382b2b9b3",
+    "grype-db-metadata.json": "bde7001c093200c50415aa4cd99cac571fbd4b42bcbdceacd8e51754dc20dee2",
+    "llm-request.json": "b0fc78ac4161532547decb2b80a8b2426a3b4cd2d7961cca72afe8c89a4d3f1a",
+    "llm-response-full.json": "f51b98578f3aa545f8014d6c4aa0326b7d70db06448347e0fcd15cd5ea0897ed",
+    "llm-response.json": "a1a2db04795cab3fbb692ffa3abbd464826ed2486701788f4f51986a88ebebc3",
+    "metrics.json": "3985501539405c0741f6c9f0477820cb9ea435359f785fd451de592dfdd4d5e2",
+    "package-after.json": "8a6bb1c40c836fe68aeb1a30e06c71d946cedbbc15b98b9d4a34f46a2dced81f",
+    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+    "rescan.json": "3844b5f6ff2d070d725ed0909f8e38c8c2ff9d4e6b9dcd87c97be71232f11415",
+    "selected-candidate.json": "64243bc7ba787badf76d297ee8bdd89c05879029b6b6ca8b84df6f2b8107bd2d",
+    "test.log": "aa25bcc177bc735b7f09defd821bbb82ec992b7b35ff6359c8c0211ef4088144"
   }
 }

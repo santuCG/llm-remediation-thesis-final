@@ -1,0 +1,23 @@
+=== SCAN TIMESTAMP ===
+2026-08-04T00:53:54Z
+=== GRYPE VERSION INFO ===
+{
+ "application": "grype",
+ "buildDate": "2026-05-01T18:57:12Z",
+ "compiler": "gc",
+ "gitCommit": "244f2a10a5668078fcf771454bbd832b3a5b9e8a",
+ "gitDescription": "v0.112.0",
+ "goVersion": "go1.26.2",
+ "platform": "linux/amd64",
+ "supportedDbSchema": 6,
+ "syftVersion": "v1.44.0",
+ "version": "0.112.0"
+}
+=== GRYPE DB STATUS ===
+{
+ "schemaVersion": "v6.1.9",
+ "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-08-03T00:38:44Z_1785741685.tar.zst?checksum=sha256%3Af262605b2343e2e6dd336f8def08eb60fc6f89932a14d3831c40e7b9ed7e9396",
+ "built": "2026-08-03T07:21:25Z",
+ "path": "/home/runner/.cache/grype/db/6/vulnerability.db",
+ "valid": true
+}

@@ -1,170 +1,51 @@
 {
-    "scenario": "AF-03",
-    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6",
-    "workflow_commit": "30593627903",
-    "pipeline_version": "v2.0",
-    "runner": "ubuntu-24.04",
-    "python": "3.12.x",
-    "llm": {
-        "model": "gemini-2.5-flash",
-        "temperature": 0.0,
-        "seed": 42,
-        "topP": 1.0,
-        "topK": 1
+  "schema_version": "2.0",
+  "scenario": "AF-03-regen",
+  "repository_commit": "bfd07488090b7c67b0d8599e9ab15ec8bbd1264b",
+  "workflow_run_id": "30866015290",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30866015290",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-04T00:39:30.496359+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
     },
-    "snapshots": {
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": {
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": {
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "41fab40639d06f49c2223d75b948b3cb3112d0e5ed891a7680b21fc4db16ca9d",
-        "baseline-grype.json": "583a081b65adc434dbf950157dc0df12613a5bbbc22045bb79855afca8c25a27",
-        "candidate-ranking.json": "a9572ca41b96025d427db4687964373be9055768ea283467db93d5df05a662d0",
-        "build.log": "3d0d9a0af63754aacb92fcfbdcb55e93599511ffe435d25ae35f62bf7eb071ae",
-        "selected-candidate.json": "c2140f1b848b8825389bf9cb17731921489d550a7ea4606522341e9ad92d0a30",
-        "metrics.json": "a61bd72ab5e2f0b07db7c433f0c75c1d9e573bda4baa21c55f7a1243f16144ba",
-        "test.log": "d939266221ff9b743b82934570659cb0175e4a2c100e31e51a98b02df430c3f5",
-        "baseline-sbom.json": "4e3747b784ab93d797139ff6c7834b17b1a1b8354ef9168c07b08b66c8241660",
-        "package-after.json": "06fdc2f4b9e97c5c0c2f7668c275704198ad4fbc46072c9ca61e545b8cb91fd0",
-        "llm-response.json": "89cca07c013f32d6b4eceb779e4f2e4ce25cc52664a4ee3dc6d7e47bd86a4e75",
-        "llm-request.json": "c913d8ffb603611ec244507368ccb70e90d6b085a494b1630b87d75e0abbc364"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30593627903"
-}
-
-=== EMPIRICAL EVIDENCE ===
-NOTE: The following pipeline metrics, LLM prompts, and exact outputs are appended here in plaintext to serve as verifiable, empirical proof of the LLM's reasoning and the pipeline's deterministic success for this scenario.
-
---- EXPERIMENT MANIFEST ---
-{
-    "scenario": "AF-03", // The unique identifier for this vulnerability scenario
-    "repository_commit": "241b549e07430f9520d1a116360ae194d1ba84f6", // The Git commit hash of the repository during execution
-    "workflow_commit": "30593627903", // The GitHub Actions run ID that executed this pipeline
-    "pipeline_version": "v2.0", // The version of the remediation pipeline engine
-    "runner": "ubuntu-24.04", // The OS environment where the pipeline ran
-    "python": "3.12.x", // The Python version used by the pipeline
-    "llm": { // LLM configuration settings
-        "model": "gemini-2.5-flash", // The exact LLM model used for reasoning
-        "temperature": 0.0, // Temperature setting (0.0 for deterministic output)
-        "seed": 42, // Seed for reproducibility
-        "topP": 1.0, // Top-P sampling setting
-        "topK": 1 // Top-K sampling setting
-    },
-    "snapshots": { // Hashes of vulnerability intelligence snapshots
-        "epss_snapshot": {
-            "file": "epss_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
-        },
-        "kev_snapshot": {
-            "file": "kev_snapshot.json",
-            "date": "2026-07-30",
-            "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
-        }
-    },
-    "tool_versions": { // Versions of security scanners used
-        "syft": "1.44.0",
-        "grype": "0.112.0"
-    },
-    "artifact_hashes": { // SHA256 hashes of all pipeline artifacts for integrity tracking
-        "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
-        "rescan.json": "41fab40639d06f49c2223d75b948b3cb3112d0e5ed891a7680b21fc4db16ca9d",
-        "baseline-grype.json": "583a081b65adc434dbf950157dc0df12613a5bbbc22045bb79855afca8c25a27",
-        "candidate-ranking.json": "a9572ca41b96025d427db4687964373be9055768ea283467db93d5df05a662d0",
-        "build.log": "3d0d9a0af63754aacb92fcfbdcb55e93599511ffe435d25ae35f62bf7eb071ae",
-        "selected-candidate.json": "c2140f1b848b8825389bf9cb17731921489d550a7ea4606522341e9ad92d0a30",
-        "metrics.json": "a61bd72ab5e2f0b07db7c433f0c75c1d9e573bda4baa21c55f7a1243f16144ba",
-        "test.log": "d939266221ff9b743b82934570659cb0175e4a2c100e31e51a98b02df430c3f5",
-        "baseline-sbom.json": "4e3747b784ab93d797139ff6c7834b17b1a1b8354ef9168c07b08b66c8241660",
-        "package-after.json": "06fdc2f4b9e97c5c0c2f7668c275704198ad4fbc46072c9ca61e545b8cb91fd0",
-        "llm-response.json": "89cca07c013f32d6b4eceb779e4f2e4ce25cc52664a4ee3dc6d7e47bd86a4e75",
-        "llm-request.json": "c913d8ffb603611ec244507368ccb70e90d6b085a494b1630b87d75e0abbc364"
-    },
-    "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30593627903" // Direct link to the successful GitHub Actions workflow run
-}
-
---- PIPELINE METRICS ---
-{
-  "application": "applications/airflow", // The target application being evaluated
-  "ecosystem": "python", // Package manager ecosystem (e.g., npm, python)
-  "candidate_count": 62, // Total number of vulnerabilities initially scanned
-  "selected_package": "cryptography", // The specific vulnerable dependency chosen for remediation
-  "selected_cve": "GHSA-3ww4-gg4f-jr7f", // The GitHub Security Advisory ID
-  "api_cve_id": "CVE-2023-50782", // The standard MITRE CVE ID
-  "severity": "high", // CVSS severity rating
-  "cvss": 7.5, // Common Vulnerability Scoring System score
-  "epss": 0.01118, // Exploit Prediction Scoring System probability
-  "epss_timestamp": "2026-07-31T00:32:06.710771+00:00", // Time the EPSS score was fetched
-  "kev_status": false, // CISA Known Exploited Vulnerabilities catalog status
-  "dependency_type": "direct", // Whether the dependency is direct or transitive
-  "strategy": "direct_upgrade", // The remediation strategy chosen by the LLM
-  "remediation_type": "Direct Upgrade", // The human-readable strategy category
-  "llm_response_valid": true, // Whether the LLM output matched the required JSON schema
-  "build_success": true, // Whether the application successfully built after remediation
-  "test_success": false, // Whether the application's test suite passed
-  "dependency_verified": true, // Whether the dependency tree correctly resolved the new version
-  "rescan_success": true, // Whether the scanner confirmed the vulnerability was eradicated
-  "runtime_success": false, // Runtime tests status
-  "lockfile_regenerated": false, // Whether a lockfile was regenerated
-  "execution_time_seconds": 15, // Total pipeline execution time in seconds
-  "retry_count": 0, // Number of LLM retries needed
-  "llm_iteration": 1, // The specific iteration of the LLM prompting
-  "validation_stage_reached": "validator", // The furthest pipeline stage reached
-  "failure_stage": "none" // The stage where the pipeline failed, if any
-}
-
---- LLM PROMPT ---
-Scenario ID: AF-03
-Prompt Version: v1.1
-
-Scenario ID: UNKNOWN
-Prompt Version: v1.1
-
-### Vulnerability Intelligence
-* Target Package: cryptography
-* Vulnerable Version: 41.0.7
-* CVE ID: GHSA-3ww4-gg4f-jr7f
-* CVSS Score: 7.5
-* EPSS Probability: 0.01118
-* CISA KEV Status: False
-* Intelligence Retrieved On: 2026-05-18
-* Fixed Versions: ['42.0.0']
-
-### Dependency Context
-```json
-{
-  "pip_show": "Name: cryptography\nVersion: 41.0.7\nSummary: cryptography is a package which provides cryptographic recipes and primitives to Python developers.\nHome-page: \nAuthor: \nAuthor-email: The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>\nLicense: Apache-2.0 OR BSD-3-Clause\nLocation: /usr/lib/python3/dist-packages\nRequires: \nRequired-by: adal, apache-airflow, apache-airflow-providers-cncf-kubernetes, asyncssh, Authlib, azure-identity, azure-storage-blob, azure-storage-file-share, gcloud-aio-auth, msal, paramiko, pyOpenSSL, service-identity, snowflake-connector-python\n",
-  "pip_freeze": "adal==1.2.7\napache-airflow==2.9.2\napache-airflow-providers-cncf-kubernetes==8.3.1\nasyncssh==2.14.2\nAuthlib==1.3.1\nazure-identity==1.16.0\nazure-storage-blob==12.20.0\nazure-storage-file-share==12.16.0\ncryptography==41.0.7\ngcloud-aio-auth==4.2.3\nmsal==1.28.0\nparamiko==3.4.0\npyOpenSSL==24.1.0\nservice-identity==24.1.0\nsnowflake-connector-python==3.10.1",
-  "requirements_txt": "adal==1.2.7\napache-airflow==2.9.2\napache-airflow-providers-amazon==8.24.0\napache-airflow-providers-celery==3.7.2\napache-airflow-providers-cncf-kubernetes==8.3.1\napache-airflow-providers-common-io==1.3.2\napache-airflow-providers-common-sql==1.14.0\napache-airflow-providers-docker==3.12.0\napache-airflow-providers-elasticsearch==5.4.1\napache-airflow-providers-fab==1.1.1\napache-airflow-providers-ftp==3.9.1\napache-airflow-providers-google==10.19.0\napache-airflow-providers-grpc==3.5.1\napache-airflow-providers-hashicorp==3.7.1\napache-airflow-providers-http==4.11.1\napache-airflow-providers-imap==3.6.1\napache-airflow-providers-microsoft-azure==10.1.1\napache-airflow-providers-mysql==5.6.1\napache-airflow-providers-odbc==4.6.1\napache-airflow-providers-openlineage==1.8.0\napache-airflow-providers-postgres==5.11.1\napache-airflow-providers-redis==3.7.1\napache-airflow-providers-sendgrid==3.5.1\napache-airflow-providers-sftp==4.10.1\napache-airflow-providers-slack==8.7.1\napache-airflow-providers-smtp==1.7.1\napache-airflow-providers-snowflake==5.5.1\napache-airflow-providers-sqlite==3.8.1\napache-airflow-providers-ssh==3.11.1\nasyncssh==2.14.2\nAuthlib==1.3.1\nazure-identity==1.16.0\nazure-storage-blob==12.20.0\nazure-storage-file-share==12.16.0\ncryptography==41.0.7\ngcloud-aio-auth==4.2.3\ngoogle-auth-oauthlib==1.2.0\nmsal==1.28.0\nmsal-extensions==1.1.0\noauthlib==3.2.2\nparamiko==3.4.0\npyOpenSSL==24.1.0\nrequests-oauthlib==1.3.1\nsnowflake-connector-python==3.10.1"
-}
-```
-
-Based on the vulnerability intelligence and context:
-1. Recommend the safest strategy.
-2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build.
-
---- LLM OUTPUT ---
-{
-  "reasoning": "The package cryptography is directly declared in requirements.txt as cryptography==41.0.7 and is affected by GHSA-3ww4-gg4f-jr7f. Upgrading cryptography directly to 42.0.0 resolves the vulnerability. Downstream dependencies in the manifest, such as pyOpenSSL 24.1.0, paramiko 3.4.0, and azure-identity 1.16.0, support cryptography 42.0.0. A direct upgrade is the standard and safest remediation strategy for direct requirements.txt entries.",
-  "strategy": "direct_upgrade",
-  "remediation_type": "Direct Upgrade",
-  "recommended_package_version": "42.0.0",
-  "manifest_patch": {
-    "operation": "bump",
-    "package": "cryptography",
-    "constraint": ">=42.0.0"
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "a8b13b4d94f498104c2e5552c32857ae048f1d8d825e827fabb20350b33ddf3d",
+    "baseline-sbom.json": "d8e146087abe1289b2bfbcbd92507df0051c11e9f647308c3755e64bf4fe217a",
+    "build.log": "5427a4dd057fd0a32f1f5c1c4cea5dd4063da8d8360d0bf8e13910c72ad19010",
+    "candidate-ranking.json": "f3fd64dd70d14ff6b427a8682f070632c225a2cd66fdfdfc52ce2ac0f027faa9",
+    "dependency-graph.log": "0cccdc2771a0bb38cfcdd923457f0c2575d2f30f023147578786fa90fd061038",
+    "grype-db-metadata.json": "6aa9c45ac7409efcad03e9b87b41c53b17583054b20a53f1912b95978ee3eaba",
+    "llm-request.json": "8460a1fa8c3ed48cfc7ff6303424ee7ad92462ef65414c54040483324d9a8fe8",
+    "llm-response-full.json": "0a9248d0b0246a8788ae874506b672d9f595196d04a0cca92a34d970a605ab5c",
+    "llm-response.json": "ced1932ae8ea9d68eccf1786dfd762bb99be22936b9acfff59456fe4948c2119",
+    "metrics.json": "bf541f1893b1660a9177d681e1da8a0311ba3606b4941b50c4f1607daa5ae3a9",
+    "package-after.json": "dfbe47af27d568201350a6dab0989bbd476e5106c5e97f9f3f0862b849cd05cb",
+    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+    "rescan.json": "f63cd5762742e8964ffed27281e5950cb3c84f8149a85591ebf12b1beb0b374d",
+    "selected-candidate.json": "8825a8fe1feab8e775e50add0b9dcb477388c3038c0dbcce01ab57beaecd8e69",
+    "test.log": "d353a199d2882e4a3b45e2ee595b0f7080ae8fca0d63013c31c7ed4f93f02ae7"
   }
 }
