@@ -7,7 +7,7 @@
   "severity": "critical",
   "cvss": 9.8,
   "epss": 0.02254,
-  "epss_timestamp": "2026-08-04T00:23:26.881022+00:00",
+  "epss_timestamp": "2026-08-04T21:01:01.153809+00:00",
   "kev": false,
   "fixed_versions": [
     "4.7.9"
