@@ -402,7 +402,7 @@ JS-05 is the clearest recorded example of the LLM adapting to a package-manager 
 |---|---|---|
 | pip scenarios (9) | Built and removed target (9/9) | Removed target (9/9); no added advantage |
 | npm scenarios (9) | Build did not complete (0/9) | Reached validated vulnerability-removed state (7/9); 1/9 no candidate found (JS-06); 1/9 attempted, blocked by manifest-editing scope (JS-07) |
-| Strategy variety | Fixed version bump | Direct upgrade, transitive override, or manual review |
+| Strategy variety | Fixed version bump | Direct upgrade or transitive override (`manual_review` was recommended in the historical, pre-Pipeline-v2.0 record of JS-01, superseded — see §4.4) |
 | npm application compiles | No | No (pre-existing toolchain failure) |
 
 ## 4.10 Chapter Summary
