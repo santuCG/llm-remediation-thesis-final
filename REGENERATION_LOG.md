@@ -89,3 +89,31 @@ caused by this or any other scenario's package choice). The job-level `failure` 
 already-documented, pre-existing quirk where a successful retry still reports job failure (tracked as
 GitHub issue #1, not investigated further per that earlier decision). No new anomaly. Continuing to
 batch 3.
+
+## Batch 3: AF-04, JS-04
+
+### AF-04 — CVE-2026-44307 (mako)
+Run: [30866826162](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30866826162) — success, first attempt, no retry.
+
+```json
+{
+  "selected_package": "mako", "strategy": "direct_upgrade", "remediation_type": "Direct Upgrade",
+  "llm_response_valid": true, "build_success": true, "test_success": true,
+  "dependency_verified": true, "rescan_success": true, "retry_count": 0, "failure_stage": "none"
+}
+```
+Clean. No anomalies.
+
+### JS-04 — CVE-2023-46233 (crypto-js)
+Run: [30866830764](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30866830764) — job conclusion `failure`, remediation actually succeeded.
+
+```json
+{
+  "selected_package": "crypto-js", "strategy": "transitive_override", "remediation_type": "Transitive Override",
+  "llm_response_valid": true, "build_success": false, "test_success": null,
+  "dependency_verified": true, "rescan_success": true, "retry_count": 1, "failure_stage": "none"
+}
+```
+Same pattern as JS-03: `rescan_success`/`dependency_verified` both true confirm the CVE was eradicated;
+retry triggered by the known pre-existing TS1005 build issue; job-level `failure` is the same
+pre-existing quirk. No new anomaly. Continuing to batch 4.
