@@ -54,3 +54,38 @@ issue. AF-02 — dispatched moments earlier in the same batch — succeeded clea
 model (gemini-3.6-flash), which argues against sustained exhaustion. Handled gracefully by Fix #8
 (`raise` instead of `sys.exit`): `metrics.json` was written correctly with `llm_response_valid: false`,
 no evidence lost. Continuing to batch 2, watching for a *repeated* 429 pattern as the real stop signal.
+
+## Batch 2: AF-03, JS-03
+
+### AF-03 — CVE-2023-50782 (cryptography)
+Run: [30866015290](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30866015290) — success, first attempt, no retry.
+
+```json
+{
+  "selected_package": "cryptography", "strategy": "direct_upgrade", "remediation_type": "Direct Upgrade",
+  "llm_response_valid": true, "build_success": true, "test_success": true,
+  "dependency_verified": true, "rescan_success": true, "retry_count": 0, "failure_stage": "none"
+}
+```
+Clean. No anomalies.
+
+### JS-03 — CVE-2025-7783 (form-data)
+Run: [30866019450](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30866019450) — job conclusion `failure`, but **remediation actually succeeded**.
+
+```json
+{
+  "selected_package": "form-data", "strategy": "transitive_override", "remediation_type": "Transitive Override",
+  "llm_response_valid": true, "build_success": false, "test_success": null,
+  "dependency_verified": true, "rescan_success": true, "retry_count": 1, "failure_stage": "none"
+}
+```
+
+`rescan_success: true` and `dependency_verified: true` confirm the CVE was eradicated. Attempt 1 hit
+the known pre-existing `TS1005` build failure (same class as JS-02, unrelated to `form-data` or this
+scenario's remediation choice) and triggered a retry; the retry's LLM call succeeded this time and the
+override worked. `build_success: false` correctly reflects that the pre-existing TS1005 issue persists
+regardless of remediation (it's a frontend `@types/babel__traverse`/`@types/lodash` incompatibility, not
+caused by this or any other scenario's package choice). The job-level `failure` conclusion is the
+already-documented, pre-existing quirk where a successful retry still reports job failure (tracked as
+GitHub issue #1, not investigated further per that earlier decision). No new anomaly. Continuing to
+batch 3.
