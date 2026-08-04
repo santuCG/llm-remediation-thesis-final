@@ -7,7 +7,7 @@
   "severity": "high",
   "cvss": 8.7,
   "epss": 0.00713,
-  "epss_timestamp": "2026-08-01T23:31:52.839391+00:00",
+  "epss_timestamp": "2026-08-04T20:37:55.615812+00:00",
   "kev": false,
   "fixed_versions": [
     "2.1.1"

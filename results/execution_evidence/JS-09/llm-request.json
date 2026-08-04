@@ -3,14 +3,14 @@
   "experiment_id": "2026-final",
   "application": "OWASP Juice Shop",
   "ecosystem": "npm",
-  "prompt_version": "v1.1",
+  "prompt_version": "v1.2",
   "api_payload": {
     "contents": [
       {
         "role": "user",
         "parts": [
           {
-            "text": "Scenario ID: JS-09\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: multer\n* Vulnerable Version: 1.4.5-lts.1\n* CVE ID: GHSA-5528-5vmv-3xc2\n* CVSS Score: 8.7\n* EPSS Probability: 0.00713\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-08-01\n* Fixed Versions: ['2.1.1']\n\n### Dependency Context\n```json\n{\n  \"npm_ls\": \"npm error code ELSPROBLEMS\\nnpm error invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\n{\\n  \\\"version\\\": \\\"15.3.0\\\",\\n  \\\"name\\\": \\\"juice-shop\\\",\\n  \\\"problems\\\": [\\n    \\\"invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\\"\\n  ],\\n  \\\"dependencies\\\": {\\n    \\\"multer\\\": {\\n      \\\"version\\\": \\\"2.2.0\\\",\\n      \\\"resolved\\\": \\\"https://registry.npmjs.org/multer/-/multer-2.2.0.tgz\\\",\\n      \\\"overridden\\\": false,\\n      \\\"invalid\\\": \\\"\\\\\\\"^1.4.5-lts.1\\\\\\\" from the root project\\\",\\n      \\\"problems\\\": [\\n        \\\"invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\\"\\n      ]\\n    }\\n  },\\n  \\\"error\\\": {\\n    \\\"code\\\": \\\"ELSPROBLEMS\\\",\\n    \\\"summary\\\": \\\"invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\\",\\n    \\\"detail\\\": \\\"\\\"\\n  }\\n}\\nnpm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-08-01T23_35_18_555Z-debug-0.log\\n\",\n  \"npm_explain\": [\n    {\n      \"name\": \"multer\",\n      \"version\": \"2.2.0\",\n      \"location\": \"node_modules/multer\",\n      \"isWorkspace\": false,\n      \"dependents\": [\n        {\n          \"type\": \"prod\",\n          \"name\": \"multer\",\n          \"spec\": \"^1.4.5-lts.1\",\n          \"error\": \"INVALID\",\n          \"from\": {\n            \"location\": \"/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop\"\n          }\n        }\n      ],\n      \"dev\": false,\n      \"optional\": false,\n      \"devOptional\": false,\n      \"peer\": false,\n      \"bundled\": false,\n      \"overridden\": false\n    }\n  ],\n  \"package_json\": {\n    \"name\": \"juice-shop\",\n    \"version\": \"15.3.0\",\n    \"dependencies\": {\n      \"multer\": \"^1.4.5-lts.1\"\n    }\n  }\n}\n```\n\n### Previous Attempt Failure Logs\nThe previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.\n```\n              17.16 kB\nruntime.js          | runtime                               |   3.22 kB |                 1.49 kB\n\n| Initial Total                         |   2.48 MB |               438.33 kB\n\nLazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size\n399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB\n202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB\n112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB\n103.js              | confetti                              |  10.86 kB |                 3.92 kB\n67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB\ncommon.js           | common                                |   9.04 kB |               861 bytes\n535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB\n745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB\n613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB\n859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB\n472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes\n\nBuild at: 2026-08-01T23:35:00.765Z - Hash: eec0da7fb4f70cee - Time: 47008ms\n\n> juice-shop@15.3.0 build:server\n> tsc\n\nnode_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.\nnode_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.\n\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+            "text": "Scenario ID: JS-09\nPrompt Version: v1.2\n\n### Vulnerability Intelligence\n* Target Package: multer\n* Vulnerable Version: 1.4.5-lts.1\n* CVE ID: GHSA-5528-5vmv-3xc2\n* CVSS Score: 8.7\n* EPSS Probability: 0.00713\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-08-04\n* Fixed Versions: ['2.1.1']\n\n### Dependency Context\n```json\n{\n  \"npm_ls\": \"npm error code ELSPROBLEMS\\nnpm error invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\n{\\n  \\\"version\\\": \\\"15.3.0\\\",\\n  \\\"name\\\": \\\"juice-shop\\\",\\n  \\\"problems\\\": [\\n    \\\"invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\\"\\n  ],\\n  \\\"dependencies\\\": {\\n    \\\"multer\\\": {\\n      \\\"version\\\": \\\"2.2.0\\\",\\n      \\\"resolved\\\": \\\"https://registry.npmjs.org/multer/-/multer-2.2.0.tgz\\\",\\n      \\\"overridden\\\": false,\\n      \\\"invalid\\\": \\\"\\\\\\\"^1.4.5-lts.1\\\\\\\" from the root project\\\",\\n      \\\"problems\\\": [\\n        \\\"invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\\"\\n      ]\\n    }\\n  },\\n  \\\"error\\\": {\\n    \\\"code\\\": \\\"ELSPROBLEMS\\\",\\n    \\\"summary\\\": \\\"invalid: multer@2.2.0 /home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop/node_modules/multer\\\",\\n    \\\"detail\\\": \\\"\\\"\\n  }\\n}\\nnpm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-08-04T20_44_34_002Z-debug-0.log\\n\",\n  \"npm_explain\": [\n    {\n      \"name\": \"multer\",\n      \"version\": \"2.2.0\",\n      \"location\": \"node_modules/multer\",\n      \"isWorkspace\": false,\n      \"dependents\": [\n        {\n          \"type\": \"prod\",\n          \"name\": \"multer\",\n          \"spec\": \"^1.4.5-lts.1\",\n          \"error\": \"INVALID\",\n          \"from\": {\n            \"location\": \"/home/runner/work/llm-remediation-thesis-final/llm-remediation-thesis-final/applications/juice-shop\"\n          }\n        }\n      ],\n      \"dev\": false,\n      \"optional\": false,\n      \"devOptional\": false,\n      \"peer\": false,\n      \"bundled\": false,\n      \"overridden\": false\n    }\n  ],\n  \"package_json\": {\n    \"name\": \"juice-shop\",\n    \"version\": \"15.3.0\",\n    \"dependencies\": {\n      \"multer\": \"^1.4.5-lts.1\"\n    }\n  }\n}\n```\n\n### Previous Attempt Failure Logs\nThe previous remediation attempt failed during validation/build. Please analyze these logs, refine your recommendation, and provide a new strategy.\n```\n[Build/compile output]\n\nBuild at: 2026-08-04T20:40:14.649Z - Hash: eec0da7fb4f70cee - Time: 41378ms\nnode_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.\nnode_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.\n\nadded 136 packages, removed 43 packages, changed 444 packages, and audited 2077 packages in 2m\n> tsc\n\nnode_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.\nnode_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.\nnode_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.\n\n[Post-remediation scan]\nPost-remediation rescan still detects GHSA-5528-5vmv-3xc2 (scanner ID: GHSA-5528-5vmv-3xc2) in package 'multer' version '1.4.5-lts.1'. Scanner-known fixed versions: ['2.1.1'].\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
           }
         ]
       }
@@ -18,7 +18,7 @@
     "systemInstruction": {
       "parts": [
         {
-          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, or Manual Review. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
         }
       ]
     },
@@ -37,11 +37,25 @@
           },
           "strategy": {
             "type": "STRING",
-            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+            "enum": [
+              "direct_upgrade",
+              "transitive_override",
+              "dependency_resolution",
+              "replacement",
+              "manual_review"
+            ],
+            "description": "The exact strategy chosen."
           },
           "remediation_type": {
             "type": "STRING",
-            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+            "enum": [
+              "Direct Upgrade",
+              "Transitive Override",
+              "Dependency Resolution",
+              "Replacement",
+              "Manual Review"
+            ],
+            "description": "The human-readable twin of strategy."
           },
           "recommended_package_version": {
             "type": "STRING",
@@ -53,7 +67,14 @@
             "properties": {
               "operation": {
                 "type": "STRING",
-                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+                "enum": [
+                  "add_override",
+                  "transitive_override",
+                  "replace",
+                  "bump",
+                  "direct_upgrade"
+                ],
+                "description": "The operation to perform."
               },
               "package": {
                 "type": "STRING",
