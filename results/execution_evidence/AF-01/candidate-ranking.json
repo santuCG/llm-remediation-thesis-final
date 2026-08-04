@@ -1,13 +1,14 @@
 [
   {
     "cve_id": "GHSA-2g68-c3qc-8985",
+    "scanner_cve_id": "GHSA-2g68-c3qc-8985",
     "api_cve_id": "CVE-2024-34069",
     "package_name": "werkzeug",
     "vulnerable_version": "2.2.3",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.03397,
-    "epss_timestamp": "2026-07-30T19:26:10.624796+00:00",
+    "epss_timestamp": "2026-08-04T20:40:01.660028+00:00",
     "kev": false,
     "fixed_versions": [
       "3.0.3"
@@ -15,13 +16,14 @@
   },
   {
     "cve_id": "GHSA-38jv-5279-wg99",
+    "scanner_cve_id": "GHSA-38jv-5279-wg99",
     "api_cve_id": "CVE-2026-21441",
     "package_name": "urllib3",
     "vulnerable_version": "2.2.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.02667,
-    "epss_timestamp": "2026-07-30T19:26:11.075567+00:00",
+    "epss_timestamp": "2026-08-04T20:40:01.951056+00:00",
     "kev": false,
     "fixed_versions": [
       "2.6.3"
@@ -29,13 +31,14 @@
   },
   {
     "cve_id": "GHSA-7c2f-r6gc-h92h",
+    "scanner_cve_id": "GHSA-7c2f-r6gc-h92h",
     "api_cve_id": "CVE-2025-68675",
     "package_name": "apache-airflow",
     "vulnerable_version": "2.9.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01979,
-    "epss_timestamp": "2026-07-30T19:26:12.083073+00:00",
+    "epss_timestamp": "2026-08-04T20:40:02.595063+00:00",
     "kev": false,
     "fixed_versions": [
       "2.11.1"
@@ -43,13 +46,14 @@
   },
   {
     "cve_id": "GHSA-cx63-2mw6-8hw5",
+    "scanner_cve_id": "GHSA-cx63-2mw6-8hw5",
     "api_cve_id": "CVE-2024-6345",
     "package_name": "setuptools",
     "vulnerable_version": "66.1.1",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.01939,
-    "epss_timestamp": "2026-07-30T19:26:11.551384+00:00",
+    "epss_timestamp": "2026-08-04T20:40:02.289258+00:00",
     "kev": false,
     "fixed_versions": [
       "70.0.0"
@@ -57,13 +61,14 @@
   },
   {
     "cve_id": "GHSA-g5hv-r743-v8pm",
+    "scanner_cve_id": "GHSA-g5hv-r743-v8pm",
     "api_cve_id": "CVE-2024-39877",
     "package_name": "apache-airflow",
     "vulnerable_version": "2.9.2",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.01726,
-    "epss_timestamp": "2026-07-30T19:26:12.584097+00:00",
+    "epss_timestamp": "2026-08-04T20:40:02.888579+00:00",
     "kev": false,
     "fixed_versions": [
       "2.9.3"
@@ -71,13 +76,14 @@
   },
   {
     "cve_id": "GHSA-92xg-gmrq-5c3w",
+    "scanner_cve_id": "GHSA-92xg-gmrq-5c3w",
     "api_cve_id": "CVE-2024-45034",
     "package_name": "apache-airflow",
     "vulnerable_version": "2.9.2",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.01688,
-    "epss_timestamp": "2026-07-30T19:26:13.202131+00:00",
+    "epss_timestamp": "2026-08-04T20:40:03.176559+00:00",
     "kev": false,
     "fixed_versions": [
       "2.10.1"
@@ -85,13 +91,14 @@
   },
   {
     "cve_id": "GHSA-rqc4-2hc7-8c8v",
+    "scanner_cve_id": "GHSA-rqc4-2hc7-8c8v",
     "api_cve_id": "CVE-2024-53899",
     "package_name": "virtualenv",
     "vulnerable_version": "20.26.2",
     "severity": "high",
     "cvss": 8.4,
     "epss": 0.0157,
-    "epss_timestamp": "2026-07-30T19:26:13.857791+00:00",
+    "epss_timestamp": "2026-08-04T20:40:03.471358+00:00",
     "kev": false,
     "fixed_versions": [
       "20.26.6"
@@ -99,13 +106,14 @@
   },
   {
     "cve_id": "GHSA-5rjg-fvgr-3xxf",
+    "scanner_cve_id": "GHSA-5rjg-fvgr-3xxf",
     "api_cve_id": "CVE-2025-47273",
     "package_name": "setuptools",
     "vulnerable_version": "66.1.1",
     "severity": "high",
     "cvss": 7.7,
     "epss": 0.01454,
-    "epss_timestamp": "2026-07-30T19:26:14.395074+00:00",
+    "epss_timestamp": "2026-08-04T20:40:03.519058+00:00",
     "kev": false,
     "fixed_versions": [
       "78.1.1"
@@ -113,13 +121,14 @@
   },
   {
     "cve_id": "GHSA-3ww4-gg4f-jr7f",
+    "scanner_cve_id": "GHSA-3ww4-gg4f-jr7f",
     "api_cve_id": "CVE-2023-50782",
     "package_name": "cryptography",
     "vulnerable_version": "41.0.7",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01118,
-    "epss_timestamp": "2026-07-30T19:26:14.976547+00:00",
+    "epss_timestamp": "2026-08-04T20:40:04.401924+00:00",
     "kev": false,
     "fixed_versions": [
       "42.0.0"
@@ -127,13 +136,14 @@
   },
   {
     "cve_id": "GHSA-8w49-h785-mj3c",
+    "scanner_cve_id": "GHSA-8w49-h785-mj3c",
     "api_cve_id": "CVE-2024-52804",
     "package_name": "tornado",
     "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.01051,
-    "epss_timestamp": "2026-07-30T19:26:15.977524+00:00",
+    "epss_timestamp": "2026-08-04T20:40:04.735114+00:00",
     "kev": false,
     "fixed_versions": [
       "6.4.2"
@@ -141,13 +151,14 @@
   },
   {
     "cve_id": "GHSA-r837-hpv7-pc2f",
+    "scanner_cve_id": "GHSA-r837-hpv7-pc2f",
     "api_cve_id": "CVE-2024-56373",
     "package_name": "apache-airflow",
     "vulnerable_version": "2.9.2",
     "severity": "high",
     "cvss": 8.4,
     "epss": 0.01043,
-    "epss_timestamp": "2026-07-30T19:26:15.464604+00:00",
+    "epss_timestamp": "2026-08-04T20:40:04.625563+00:00",
     "kev": false,
     "fixed_versions": [
       "2.11.1"
@@ -155,13 +166,14 @@
   },
   {
     "cve_id": "GHSA-5r62-mjf5-xwhj",
+    "scanner_cve_id": "GHSA-5r62-mjf5-xwhj",
     "api_cve_id": "CVE-2025-30473",
     "package_name": "apache-airflow-providers-common-sql",
     "vulnerable_version": "1.14.0",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.00833,
-    "epss_timestamp": "2026-07-30T19:26:17.064943+00:00",
+    "epss_timestamp": "2026-08-04T20:40:05.150561+00:00",
     "kev": false,
     "fixed_versions": [
       "1.24.1"
@@ -169,13 +181,14 @@
   },
   {
     "cve_id": "GHSA-6vqw-3v5j-54x4",
+    "scanner_cve_id": "GHSA-6vqw-3v5j-54x4",
     "api_cve_id": "CVE-2024-26130",
     "package_name": "cryptography",
     "vulnerable_version": "41.0.7",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00831,
-    "epss_timestamp": "2026-07-30T19:26:17.665601+00:00",
+    "epss_timestamp": "2026-08-04T20:40:05.752535+00:00",
     "kev": false,
     "fixed_versions": [
       "42.0.4"
@@ -183,13 +196,14 @@
   },
   {
     "cve_id": "GHSA-29h4-r29x-hchv",
+    "scanner_cve_id": "GHSA-29h4-r29x-hchv",
     "api_cve_id": "CVE-2026-8838",
     "package_name": "redshift-connector",
     "vulnerable_version": "2.1.1",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00808,
-    "epss_timestamp": "2026-07-30T19:26:16.554072+00:00",
+    "epss_timestamp": "2026-08-04T20:40:05.039215+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.14"
@@ -197,13 +211,14 @@
   },
   {
     "cve_id": "GHSA-rgxp-2hwp-jwgg",
+    "scanner_cve_id": "GHSA-rgxp-2hwp-jwgg",
     "api_cve_id": "CVE-2026-25087",
     "package_name": "pyarrow",
     "vulnerable_version": "16.1.0",
     "severity": "high",
     "cvss": 7,
     "epss": 0.00807,
-    "epss_timestamp": "2026-07-30T19:26:18.777237+00:00",
+    "epss_timestamp": "2026-08-04T20:40:06.348956+00:00",
     "kev": false,
     "fixed_versions": [
       "23.0.1"
@@ -211,13 +226,14 @@
   },
   {
     "cve_id": "GHSA-jr27-m4p2-rc6r",
+    "scanner_cve_id": "GHSA-jr27-m4p2-rc6r",
     "api_cve_id": "CVE-2026-30922",
     "package_name": "pyasn1",
     "vulnerable_version": "0.5.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00803,
-    "epss_timestamp": "2026-07-30T19:26:18.188556+00:00",
+    "epss_timestamp": "2026-08-04T20:40:06.050971+00:00",
     "kev": false,
     "fixed_versions": [
       "0.6.3"
@@ -225,13 +241,14 @@
   },
   {
     "cve_id": "GHSA-jm66-cg57-jjv5",
+    "scanner_cve_id": "GHSA-jm66-cg57-jjv5",
     "api_cve_id": "CVE-2026-21226",
     "package_name": "azure-core",
     "vulnerable_version": "1.30.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00776,
-    "epss_timestamp": "2026-07-30T19:26:19.585900+00:00",
+    "epss_timestamp": "2026-08-04T20:40:06.647997+00:00",
     "kev": false,
     "fixed_versions": [
       "1.38.0"
@@ -239,13 +256,14 @@
   },
   {
     "cve_id": "GHSA-5pwr-322w-8jr4",
+    "scanner_cve_id": "GHSA-5pwr-322w-8jr4",
     "api_cve_id": "CVE-2026-27459",
     "package_name": "pyopenssl",
     "vulnerable_version": "24.1.0",
     "severity": "high",
     "cvss": 7.2,
     "epss": 0.00704,
-    "epss_timestamp": "2026-07-30T19:26:23.472127+00:00",
+    "epss_timestamp": "2026-08-04T20:40:09.219972+00:00",
     "kev": false,
     "fixed_versions": [
       "26.0.0"
@@ -253,83 +271,29 @@
   },
   {
     "cve_id": "GHSA-9r5j-7r2x-rv4g",
+    "scanner_cve_id": "GHSA-9r5j-7r2x-rv4g",
     "api_cve_id": "CVE-2025-69219",
     "package_name": "apache-airflow-providers-http",
     "vulnerable_version": "4.11.1",
     "severity": "high",
     "cvss": 8.8,
     "epss": 0.00695,
-    "epss_timestamp": "2026-07-30T19:26:20.572598+00:00",
+    "epss_timestamp": "2026-08-04T20:40:07.931618+00:00",
     "kev": false,
     "fixed_versions": [
       "6.0.0"
     ]
   },
   {
-    "cve_id": "GHSA-2r5m-76wx-56gx",
-    "api_cve_id": "CVE-2026-45360",
-    "package_name": "apache-airflow",
-    "vulnerable_version": "2.9.2",
-    "severity": "high",
-    "cvss": 7.3,
-    "epss": 0.00676,
-    "epss_timestamp": "2026-07-30T19:26:24.629436+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.2.2"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7cx3-6m66-7c5m",
-    "api_cve_id": "CVE-2025-47287",
-    "package_name": "tornado",
-    "vulnerable_version": "6.4",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00672,
-    "epss_timestamp": "2026-07-30T19:26:24.095231+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "6.5"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7gcm-g887-7qv7",
-    "api_cve_id": "CVE-2026-0994",
-    "package_name": "protobuf",
-    "vulnerable_version": "4.25.3",
-    "severity": "high",
-    "cvss": 8.2,
-    "epss": 0.00662,
-    "epss_timestamp": "2026-07-30T19:26:22.964621+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "5.29.6"
-    ]
-  },
-  {
-    "cve_id": "GHSA-6hcw-qqr8-pjj8",
-    "api_cve_id": "CVE-2026-40961",
-    "package_name": "apache-airflow",
-    "vulnerable_version": "2.9.2",
-    "severity": "high",
-    "cvss": 7.2,
-    "epss": 0.00649,
-    "epss_timestamp": "2026-07-30T19:26:26.210131+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "3.2.2"
-    ]
-  },
-  {
     "cve_id": "GHSA-2xpw-w6gg-jr37",
+    "scanner_cve_id": "GHSA-2xpw-w6gg-jr37",
     "api_cve_id": "CVE-2025-66471",
     "package_name": "urllib3",
     "vulnerable_version": "2.2.1",
     "severity": "high",
     "cvss": 8.9,
-    "epss": 0.00647,
-    "epss_timestamp": "2026-07-30T19:26:21.560953+00:00",
+    "epss": 0.00692,
+    "epss_timestamp": "2026-08-04T20:40:07.042461+00:00",
     "kev": false,
     "fixed_versions": [
       "2.6.0"
@@ -337,27 +301,89 @@
   },
   {
     "cve_id": "GHSA-gm62-xv2j-4w53",
+    "scanner_cve_id": "GHSA-gm62-xv2j-4w53",
     "api_cve_id": "CVE-2025-66418",
     "package_name": "urllib3",
     "vulnerable_version": "2.2.1",
     "severity": "high",
     "cvss": 8.9,
-    "epss": 0.00647,
-    "epss_timestamp": "2026-07-30T19:26:21.909801+00:00",
+    "epss": 0.00692,
+    "epss_timestamp": "2026-08-04T20:40:07.337009+00:00",
     "kev": false,
     "fixed_versions": [
       "2.6.0"
     ]
   },
   {
+    "cve_id": "GHSA-2r5m-76wx-56gx",
+    "scanner_cve_id": "GHSA-2r5m-76wx-56gx",
+    "api_cve_id": "CVE-2026-45360",
+    "package_name": "apache-airflow",
+    "vulnerable_version": "2.9.2",
+    "severity": "high",
+    "cvss": 7.3,
+    "epss": 0.00676,
+    "epss_timestamp": "2026-08-04T20:40:09.911036+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.2.2"
+    ]
+  },
+  {
+    "cve_id": "GHSA-7cx3-6m66-7c5m",
+    "scanner_cve_id": "GHSA-7cx3-6m66-7c5m",
+    "api_cve_id": "CVE-2025-47287",
+    "package_name": "tornado",
+    "vulnerable_version": "6.4",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00672,
+    "epss_timestamp": "2026-08-04T20:40:09.623042+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "6.5"
+    ]
+  },
+  {
+    "cve_id": "GHSA-7gcm-g887-7qv7",
+    "scanner_cve_id": "GHSA-7gcm-g887-7qv7",
+    "api_cve_id": "CVE-2026-0994",
+    "package_name": "protobuf",
+    "vulnerable_version": "4.25.3",
+    "severity": "high",
+    "cvss": 8.2,
+    "epss": 0.00662,
+    "epss_timestamp": "2026-08-04T20:40:08.929228+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "5.29.6"
+    ]
+  },
+  {
+    "cve_id": "GHSA-6hcw-qqr8-pjj8",
+    "scanner_cve_id": "GHSA-6hcw-qqr8-pjj8",
+    "api_cve_id": "CVE-2026-40961",
+    "package_name": "apache-airflow",
+    "vulnerable_version": "2.9.2",
+    "severity": "high",
+    "cvss": 7.2,
+    "epss": 0.00649,
+    "epss_timestamp": "2026-08-04T20:40:10.545488+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.2.2"
+    ]
+  },
+  {
     "cve_id": "GHSA-qf38-jq28-3ccq",
+    "scanner_cve_id": "GHSA-qf38-jq28-3ccq",
     "api_cve_id": "CVE-2026-50203",
     "package_name": "apache-airflow-providers-sftp",
     "vulnerable_version": "4.10.1",
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.00626,
-    "epss_timestamp": "2026-07-30T19:26:20.119925+00:00",
+    "epss_timestamp": "2026-08-04T20:40:07.634943+00:00",
     "kev": false,
     "fixed_versions": [
       "5.8.1"
@@ -365,13 +391,14 @@
   },
   {
     "cve_id": "GHSA-2h4p-vjrc-8xpq",
+    "scanner_cve_id": "GHSA-2h4p-vjrc-8xpq",
     "api_cve_id": "CVE-2026-44307",
     "package_name": "mako",
     "vulnerable_version": "1.3.5",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00609,
-    "epss_timestamp": "2026-07-30T19:26:25.660820+00:00",
+    "epss_timestamp": "2026-08-04T20:40:10.435141+00:00",
     "kev": false,
     "fixed_versions": [
       "1.3.12"
@@ -379,13 +406,14 @@
   },
   {
     "cve_id": "GHSA-pq5p-34cr-23v9",
+    "scanner_cve_id": "GHSA-pq5p-34cr-23v9",
     "api_cve_id": "CVE-2025-61920",
     "package_name": "authlib",
     "vulnerable_version": "1.3.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00596,
-    "epss_timestamp": "2026-07-30T19:26:27.712805+00:00",
+    "epss_timestamp": "2026-08-04T20:40:11.628229+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.5"
@@ -393,13 +421,14 @@
   },
   {
     "cve_id": "GHSA-g9v5-gjwf-9rwx",
+    "scanner_cve_id": "GHSA-g9v5-gjwf-9rwx",
     "api_cve_id": "CVE-2026-45361",
     "package_name": "apache-airflow-providers-google",
     "vulnerable_version": "10.19.0",
     "severity": "high",
     "cvss": 8.1,
     "epss": 0.0059,
-    "epss_timestamp": "2026-07-30T19:26:26.688925+00:00",
+    "epss_timestamp": "2026-08-04T20:40:11.036811+00:00",
     "kev": false,
     "fixed_versions": [
       "22.0.0"
@@ -407,13 +436,14 @@
   },
   {
     "cve_id": "GHSA-vqfr-h8mv-ghfj",
+    "scanner_cve_id": "GHSA-vqfr-h8mv-ghfj",
     "api_cve_id": "CVE-2025-43859",
     "package_name": "h11",
     "vulnerable_version": "0.14.0",
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.00581,
-    "epss_timestamp": "2026-07-30T19:26:22.380759+00:00",
+    "epss_timestamp": "2026-08-04T20:40:08.816768+00:00",
     "kev": false,
     "fixed_versions": [
       "0.16.0"
@@ -421,13 +451,14 @@
   },
   {
     "cve_id": "GHSA-q2hg-643c-gw8h",
+    "scanner_cve_id": "GHSA-q2hg-643c-gw8h",
     "api_cve_id": "CVE-2025-54550",
     "package_name": "apache-airflow",
     "vulnerable_version": "2.9.2",
     "severity": "high",
     "cvss": 8.1,
     "epss": 0.00579,
-    "epss_timestamp": "2026-07-30T19:26:27.173665+00:00",
+    "epss_timestamp": "2026-08-04T20:40:11.330735+00:00",
     "kev": false,
     "fixed_versions": [
       "3.2.0"
@@ -435,13 +466,14 @@
   },
   {
     "cve_id": "GHSA-mgf9-4vpg-hj56",
+    "scanner_cve_id": "GHSA-mgf9-4vpg-hj56",
     "api_cve_id": "CVE-2026-49855",
     "package_name": "tornado",
     "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00572,
-    "epss_timestamp": "2026-07-30T19:26:28.202635+00:00",
+    "epss_timestamp": "2026-08-04T20:40:12.742603+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.6"
@@ -449,13 +481,14 @@
   },
   {
     "cve_id": "GHSA-9r64-3wmc-x8m8",
+    "scanner_cve_id": "GHSA-9r64-3wmc-x8m8",
     "api_cve_id": "CVE-2025-50213",
     "package_name": "apache-airflow-providers-snowflake",
     "vulnerable_version": "5.5.1",
     "severity": "critical",
     "cvss": 9.8,
     "epss": 0.00571,
-    "epss_timestamp": "2026-07-30T19:26:21.080252+00:00",
+    "epss_timestamp": "2026-08-04T20:40:08.219769+00:00",
     "kev": false,
     "fixed_versions": [
       "6.4.0"
@@ -463,41 +496,59 @@
   },
   {
     "cve_id": "GHSA-wvwj-cvrp-7pv5",
+    "scanner_cve_id": "GHSA-wvwj-cvrp-7pv5",
     "api_cve_id": "CVE-2026-27962",
     "package_name": "authlib",
     "vulnerable_version": "1.3.1",
     "severity": "critical",
     "cvss": 9.1,
     "epss": 0.00548,
-    "epss_timestamp": "2026-07-30T19:26:25.159593+00:00",
+    "epss_timestamp": "2026-08-04T20:40:10.202244+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.9"
     ]
   },
   {
-    "cve_id": "GHSA-2wc2-fm75-p42x",
-    "api_cve_id": "CVE-2026-49476",
-    "package_name": "soupsieve",
-    "vulnerable_version": "2.5",
+    "cve_id": "GHSA-c98p-7wgm-6p64",
+    "scanner_cve_id": "GHSA-c98p-7wgm-6p64",
+    "api_cve_id": "CVE-2025-67725",
+    "package_name": "tornado",
+    "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00522,
-    "epss_timestamp": "2026-07-30T19:26:28.814236+00:00",
+    "epss": 0.00523,
+    "epss_timestamp": "2026-08-04T20:40:13.433273+00:00",
     "kev": false,
     "fixed_versions": [
-      "2.8.4"
+      "6.5.3"
     ]
   },
   {
     "cve_id": "GHSA-836r-79rf-4m37",
+    "scanner_cve_id": "GHSA-836r-79rf-4m37",
     "api_cve_id": "CVE-2026-49477",
     "package_name": "soupsieve",
     "vulnerable_version": "2.5",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00522,
-    "epss_timestamp": "2026-07-30T19:26:29.334942+00:00",
+    "epss_timestamp": "2026-08-04T20:40:13.547158+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "2.8.4"
+    ]
+  },
+  {
+    "cve_id": "GHSA-2wc2-fm75-p42x",
+    "scanner_cve_id": "GHSA-2wc2-fm75-p42x",
+    "api_cve_id": "CVE-2026-49476",
+    "package_name": "soupsieve",
+    "vulnerable_version": "2.5",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00522,
+    "epss_timestamp": "2026-08-04T20:40:13.853310+00:00",
     "kev": false,
     "fixed_versions": [
       "2.8.4"
@@ -505,55 +556,29 @@
   },
   {
     "cve_id": "GHSA-hgjp-83m4-h4fj",
+    "scanner_cve_id": "GHSA-hgjp-83m4-h4fj",
     "api_cve_id": "CVE-2024-21272",
     "package_name": "mysql-connector-python",
     "vulnerable_version": "8.4.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00513,
-    "epss_timestamp": "2026-07-30T19:26:29.822496+00:00",
+    "epss_timestamp": "2026-08-04T20:40:14.153126+00:00",
     "kev": false,
     "fixed_versions": [
       "9.1.0"
     ]
   },
   {
-    "cve_id": "GHSA-c98p-7wgm-6p64",
-    "api_cve_id": "CVE-2025-67725",
-    "package_name": "tornado",
-    "vulnerable_version": "6.4",
-    "severity": "high",
-    "cvss": 7.5,
-    "epss": 0.00511,
-    "epss_timestamp": "2026-07-30T19:26:30.302272+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "6.5.3"
-    ]
-  },
-  {
-    "cve_id": "GHSA-7j59-v9qr-6fq9",
-    "api_cve_id": "CVE-2026-44503",
-    "package_name": "microsoft-kiota-http",
-    "vulnerable_version": "1.3.1",
-    "severity": "high",
-    "cvss": 7,
-    "epss": 0.00505,
-    "epss_timestamp": "2026-07-30T19:26:31.397136+00:00",
-    "kev": false,
-    "fixed_versions": [
-      "1.9.9"
-    ]
-  },
-  {
     "cve_id": "GHSA-jhmp-mqwm-3gq8",
+    "scanner_cve_id": "GHSA-jhmp-mqwm-3gq8",
     "api_cve_id": "CVE-2025-67726",
     "package_name": "tornado",
     "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00497,
-    "epss_timestamp": "2026-07-30T19:26:30.847865+00:00",
+    "epss": 0.00508,
+    "epss_timestamp": "2026-08-04T20:40:14.451887+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.3"
@@ -561,27 +586,44 @@
   },
   {
     "cve_id": "GHSA-6mq8-rvhq-8wgg",
+    "scanner_cve_id": "GHSA-6mq8-rvhq-8wgg",
     "api_cve_id": "CVE-2025-69223",
     "package_name": "aiohttp",
     "vulnerable_version": "3.9.5",
     "severity": "high",
     "cvss": 7.5,
-    "epss": 0.00487,
-    "epss_timestamp": "2026-07-30T19:26:32.023862+00:00",
+    "epss": 0.00505,
+    "epss_timestamp": "2026-08-04T20:40:15.067651+00:00",
     "kev": false,
     "fixed_versions": [
       "3.13.3"
     ]
   },
   {
+    "cve_id": "GHSA-7j59-v9qr-6fq9",
+    "scanner_cve_id": "GHSA-7j59-v9qr-6fq9",
+    "api_cve_id": "CVE-2026-44503",
+    "package_name": "microsoft-kiota-http",
+    "vulnerable_version": "1.3.1",
+    "severity": "high",
+    "cvss": 7,
+    "epss": 0.00505,
+    "epss_timestamp": "2026-08-04T20:40:14.752235+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "1.9.9"
+    ]
+  },
+  {
     "cve_id": "GHSA-wh2j-26j7-9728",
+    "scanner_cve_id": "GHSA-wh2j-26j7-9728",
     "api_cve_id": "CVE-2026-2473",
     "package_name": "google-cloud-aiplatform",
     "vulnerable_version": "1.53.0",
     "severity": "high",
     "cvss": 7.7,
     "epss": 0.00438,
-    "epss_timestamp": "2026-07-30T19:26:32.487810+00:00",
+    "epss_timestamp": "2026-08-04T20:40:15.363841+00:00",
     "kev": false,
     "fixed_versions": [
       "1.133.0"
@@ -589,13 +631,14 @@
   },
   {
     "cve_id": "GHSA-j5g9-f88f-gfj3",
+    "scanner_cve_id": "GHSA-j5g9-f88f-gfj3",
     "api_cve_id": "CVE-2026-59939",
     "package_name": "httplib2",
     "vulnerable_version": "0.22.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.0041,
-    "epss_timestamp": "2026-07-30T19:26:33.002497+00:00",
+    "epss_timestamp": "2026-08-04T20:40:16.476013+00:00",
     "kev": false,
     "fixed_versions": [
       "0.32.0"
@@ -603,13 +646,14 @@
   },
   {
     "cve_id": "GHSA-xgmm-8j9v-c9wx",
+    "scanner_cve_id": "GHSA-xgmm-8j9v-c9wx",
     "api_cve_id": "CVE-2026-48526",
     "package_name": "pyjwt",
     "vulnerable_version": "2.8.0",
     "severity": "high",
     "cvss": 7.4,
     "epss": 0.00395,
-    "epss_timestamp": "2026-07-30T19:26:33.586814+00:00",
+    "epss_timestamp": "2026-08-04T20:40:17.198937+00:00",
     "kev": false,
     "fixed_versions": [
       "2.13.0"
@@ -617,13 +661,14 @@
   },
   {
     "cve_id": "GHSA-qjxf-f2mg-c6mc",
+    "scanner_cve_id": "GHSA-qjxf-f2mg-c6mc",
     "api_cve_id": "CVE-2026-31958",
     "package_name": "tornado",
     "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00375,
-    "epss_timestamp": "2026-07-30T19:26:34.089881+00:00",
+    "epss_timestamp": "2026-08-04T20:40:17.799449+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.5"
@@ -631,13 +676,14 @@
   },
   {
     "cve_id": "GHSA-3x9g-8vmp-wqvf",
+    "scanner_cve_id": "GHSA-3x9g-8vmp-wqvf",
     "api_cve_id": "CVE-2026-49853",
     "package_name": "tornado",
     "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.7,
     "epss": 0.00365,
-    "epss_timestamp": "2026-07-30T19:26:34.696060+00:00",
+    "epss_timestamp": "2026-08-04T20:40:17.913199+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.6"
@@ -645,27 +691,44 @@
   },
   {
     "cve_id": "GHSA-v92g-xgxw-vvmm",
+    "scanner_cve_id": "GHSA-v92g-xgxw-vvmm",
     "api_cve_id": "CVE-2026-41205",
     "package_name": "mako",
     "vulnerable_version": "1.3.5",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00361,
-    "epss_timestamp": "2026-07-30T19:26:35.271202+00:00",
+    "epss_timestamp": "2026-08-04T20:40:18.200484+00:00",
     "kev": false,
     "fixed_versions": [
       "1.3.11"
     ]
   },
   {
+    "cve_id": "GHSA-m4p7-r5rc-7g4j",
+    "scanner_cve_id": "GHSA-m4p7-r5rc-7g4j",
+    "api_cve_id": "CVE-2026-59884",
+    "package_name": "pyasn1",
+    "vulnerable_version": "0.5.1",
+    "severity": "high",
+    "cvss": 7.5,
+    "epss": 0.00349,
+    "epss_timestamp": "2026-08-04T20:40:19.016563+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "0.6.4"
+    ]
+  },
+  {
     "cve_id": "GHSA-r6ph-v2qm-q3c2",
+    "scanner_cve_id": "GHSA-r6ph-v2qm-q3c2",
     "api_cve_id": "CVE-2026-26007",
     "package_name": "cryptography",
     "vulnerable_version": "41.0.7",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00341,
-    "epss_timestamp": "2026-07-30T19:26:35.815299+00:00",
+    "epss_timestamp": "2026-08-04T20:40:18.313171+00:00",
     "kev": false,
     "fixed_versions": [
       "46.0.5"
@@ -673,13 +736,14 @@
   },
   {
     "cve_id": "GHSA-8ppf-4f7h-5ppj",
+    "scanner_cve_id": "GHSA-8ppf-4f7h-5ppj",
     "api_cve_id": "CVE-2026-59885",
     "package_name": "pyasn1",
     "vulnerable_version": "0.5.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00335,
-    "epss_timestamp": "2026-07-30T19:26:36.322817+00:00",
+    "epss_timestamp": "2026-08-04T20:40:19.466308+00:00",
     "kev": false,
     "fixed_versions": [
       "0.6.4"
@@ -687,13 +751,14 @@
   },
   {
     "cve_id": "GHSA-hm4w-wwcw-mr6r",
+    "scanner_cve_id": "GHSA-hm4w-wwcw-mr6r",
     "api_cve_id": "CVE-2026-59886",
     "package_name": "pyasn1",
     "vulnerable_version": "0.5.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00335,
-    "epss_timestamp": "2026-07-30T19:26:36.852741+00:00",
+    "epss_timestamp": "2026-08-04T20:40:19.577191+00:00",
     "kev": false,
     "fixed_versions": [
       "0.6.4"
@@ -701,13 +766,14 @@
   },
   {
     "cve_id": "GHSA-qccp-gfcp-xxvc",
+    "scanner_cve_id": "GHSA-qccp-gfcp-xxvc",
     "api_cve_id": "CVE-2026-44431",
     "package_name": "urllib3",
     "vulnerable_version": "2.2.1",
     "severity": "high",
     "cvss": 5.3,
     "epss": 0.00331,
-    "epss_timestamp": "2026-07-30T19:26:38.070047+00:00",
+    "epss_timestamp": "2026-08-04T20:40:21.343759+00:00",
     "kev": false,
     "fixed_versions": [
       "2.7.0"
@@ -715,27 +781,44 @@
   },
   {
     "cve_id": "GHSA-vfmq-68hx-4jfw",
+    "scanner_cve_id": "GHSA-vfmq-68hx-4jfw",
     "api_cve_id": "CVE-2026-41066",
     "package_name": "lxml",
     "vulnerable_version": "5.2.2",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00324,
-    "epss_timestamp": "2026-07-30T19:26:37.449436+00:00",
+    "epss_timestamp": "2026-08-04T20:40:21.059271+00:00",
     "kev": false,
     "fixed_versions": [
       "6.1.0"
     ]
   },
   {
+    "cve_id": "GHSA-cq5v-8q36-5273",
+    "scanner_cve_id": "GHSA-cq5v-8q36-5273",
+    "api_cve_id": "CVE-2026-69244",
+    "package_name": "aiohttp",
+    "vulnerable_version": "3.9.5",
+    "severity": "high",
+    "cvss": 7.1,
+    "epss": 0.003,
+    "epss_timestamp": "2026-08-04T20:40:41.000812+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "3.14.3"
+    ]
+  },
+  {
     "cve_id": "GHSA-2vpq-fh52-j3wv",
+    "scanner_cve_id": "GHSA-2vpq-fh52-j3wv",
     "api_cve_id": "CVE-2025-24793",
     "package_name": "snowflake-connector-python",
     "vulnerable_version": "3.10.1",
     "severity": "high",
     "cvss": 7,
     "epss": 0.003,
-    "epss_timestamp": "2026-07-30T19:26:38.595151+00:00",
+    "epss_timestamp": "2026-08-04T20:40:23.764863+00:00",
     "kev": false,
     "fixed_versions": [
       "3.13.1"
@@ -743,13 +826,14 @@
   },
   {
     "cve_id": "GHSA-752w-5fwx-jx9f",
+    "scanner_cve_id": "GHSA-752w-5fwx-jx9f",
     "api_cve_id": "CVE-2026-32597",
     "package_name": "pyjwt",
     "vulnerable_version": "2.8.0",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00269,
-    "epss_timestamp": "2026-07-30T19:26:39.266018+00:00",
+    "epss_timestamp": "2026-08-04T20:40:25.186836+00:00",
     "kev": false,
     "fixed_versions": [
       "2.12.0"
@@ -757,13 +841,14 @@
   },
   {
     "cve_id": "GHSA-r244-wg5g-6w2r",
+    "scanner_cve_id": "GHSA-r244-wg5g-6w2r",
     "api_cve_id": "CVE-2025-5279",
     "package_name": "redshift-connector",
     "vulnerable_version": "2.1.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00261,
-    "epss_timestamp": "2026-07-30T19:26:40.234799+00:00",
+    "epss_timestamp": "2026-08-04T20:40:27.093141+00:00",
     "kev": false,
     "fixed_versions": [
       "2.1.7"
@@ -771,13 +856,14 @@
   },
   {
     "cve_id": "GHSA-8qvm-5x2c-j2w7",
+    "scanner_cve_id": "GHSA-8qvm-5x2c-j2w7",
     "api_cve_id": "CVE-2025-4565",
     "package_name": "protobuf",
     "vulnerable_version": "4.25.3",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00251,
-    "epss_timestamp": "2026-07-30T19:26:39.739938+00:00",
+    "epss_timestamp": "2026-08-04T20:40:26.200482+00:00",
     "kev": false,
     "fixed_versions": [
       "4.25.8"
@@ -785,13 +871,14 @@
   },
   {
     "cve_id": "GHSA-9ggr-2464-2j32",
+    "scanner_cve_id": "GHSA-9ggr-2464-2j32",
     "api_cve_id": "CVE-2025-59420",
     "package_name": "authlib",
     "vulnerable_version": "1.3.1",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.00244,
-    "epss_timestamp": "2026-07-30T19:26:40.704229+00:00",
+    "epss_timestamp": "2026-08-04T20:40:28.219917+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.4"
@@ -799,13 +886,14 @@
   },
   {
     "cve_id": "GHSA-fqwm-6jpj-5wxc",
+    "scanner_cve_id": "GHSA-fqwm-6jpj-5wxc",
     "api_cve_id": "CVE-2026-35536",
     "package_name": "tornado",
     "vulnerable_version": "6.4",
     "severity": "high",
     "cvss": 7.2,
     "epss": 0.00237,
-    "epss_timestamp": "2026-07-30T19:26:41.777571+00:00",
+    "epss_timestamp": "2026-08-04T20:40:29.070312+00:00",
     "kev": false,
     "fixed_versions": [
       "6.5.5"
@@ -813,27 +901,44 @@
   },
   {
     "cve_id": "GHSA-m344-f55w-2m6j",
+    "scanner_cve_id": "GHSA-m344-f55w-2m6j",
     "api_cve_id": "CVE-2026-28498",
     "package_name": "authlib",
     "vulnerable_version": "1.3.1",
     "severity": "high",
     "cvss": 8.2,
     "epss": 0.00226,
-    "epss_timestamp": "2026-07-30T19:26:41.252187+00:00",
+    "epss_timestamp": "2026-08-04T20:40:28.850760+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.9"
     ]
   },
   {
+    "cve_id": "GHSA-jwv3-5hgf-82ww",
+    "scanner_cve_id": "GHSA-jwv3-5hgf-82ww",
+    "api_cve_id": "CVE-2026-69249",
+    "package_name": "cryptography",
+    "vulnerable_version": "41.0.7",
+    "severity": "high",
+    "cvss": 8.7,
+    "epss": 0.00192,
+    "epss_timestamp": "2026-08-04T20:40:41.146096+00:00",
+    "kev": false,
+    "fixed_versions": [
+      "49.0.0"
+    ]
+  },
+  {
     "cve_id": "GHSA-524w-vq63-2xhf",
+    "scanner_cve_id": "GHSA-524w-vq63-2xhf",
     "api_cve_id": "CVE-2026-27173",
     "package_name": "apache-airflow-providers-cncf-kubernetes",
     "vulnerable_version": "8.3.1",
     "severity": "high",
     "cvss": 8.7,
     "epss": 0.00156,
-    "epss_timestamp": "2026-07-30T19:26:42.362033+00:00",
+    "epss_timestamp": "2026-08-04T20:40:32.011711+00:00",
     "kev": false,
     "fixed_versions": [
       "10.17.0"
@@ -841,13 +946,14 @@
   },
   {
     "cve_id": "GHSA-7432-952r-cw78",
+    "scanner_cve_id": "GHSA-7432-952r-cw78",
     "api_cve_id": "CVE-2026-28490",
     "package_name": "authlib",
     "vulnerable_version": "1.3.1",
     "severity": "high",
     "cvss": 8.3,
     "epss": 0.00142,
-    "epss_timestamp": "2026-07-30T19:26:42.821964+00:00",
+    "epss_timestamp": "2026-08-04T20:40:33.689175+00:00",
     "kev": false,
     "fixed_versions": [
       "1.6.9"
@@ -855,13 +961,14 @@
   },
   {
     "cve_id": "GHSA-537c-gmf6-5ccf",
+    "scanner_cve_id": "GHSA-537c-gmf6-5ccf",
     "api_cve_id": "GHSA-537c-gmf6-5ccf",
     "package_name": "cryptography",
     "vulnerable_version": "41.0.7",
     "severity": "high",
     "cvss": 7.5,
     "epss": 0.0,
-    "epss_timestamp": "2026-07-30T19:26:43.395950+00:00",
+    "epss_timestamp": "2026-08-04T20:40:41.039748+00:00",
     "kev": false,
     "fixed_versions": [
       "48.0.1"
