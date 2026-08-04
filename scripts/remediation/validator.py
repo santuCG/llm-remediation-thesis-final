@@ -8,9 +8,14 @@ import subprocess
 def _version_tuple(version):
     """Parse a dotted version string into a comparable tuple of ints, falling
     back to string comparison for any non-numeric component (e.g. pre-release
-    suffixes like '1.4.5-lts.1'). Best-effort, not a full semver/PEP440
-    parser -- sufficient for comparing two release versions of the same
-    package."""
+    suffixes like '1.4.5-lts.1'). Strips a leading range operator (^, ~, >=,
+    <=, >, <, =, v) first -- the LLM's recommended_package_version is
+    sometimes a bare version and sometimes a range constraint (observed:
+    '1.20.3' on one attempt, '^1.20.3' on a retry for the same scenario), and
+    both must compare against the same installed-version numbers. Best-effort,
+    not a full semver/PEP440 parser -- sufficient for comparing two release
+    versions of the same package."""
+    version = re.sub(r'^[\^~=<>vV]+\s*', '', version.strip())
     parts = re.split(r'[.\-+]', version)
     out = []
     for p in parts:
