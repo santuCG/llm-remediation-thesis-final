@@ -1,3 +1,164 @@
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated glob@7.1.6: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+npm warn deprecated multer@1.4.5-lts.2: Multer 1.x is impacted by a number of vulnerabilities, which have been patched in 2.x. You should upgrade to the latest 2.x version.
+npm warn deprecated dottie@2.0.7: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated @types/cypress@1.1.6: This is a stub types definition. cypress provides its own type definitions, so you do not need this installed.
+npm warn deprecated tar@6.2.1: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.1.7: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated vm2@3.9.18: The library contains critical security issues and should not be used for production! The maintenance of the project has been discontinued. Consider migrating your code to isolated-vm.
+npm warn deprecated @sinonjs/text-encoding@0.7.3: Deprecated: no longer maintained and no longer used by Sinon packages. See
+npm warn deprecated   https://github.com/sinonjs/nise/issues/243 for replacement details.
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+> juice-shop@15.3.0 postinstall
+> cd frontend && npm install --legacy-peer-deps && cd .. && npm run build:frontend && (npm run --silent build:server || cd .)
+
+
+> frontend@15.3.0 postinstall
+> ngcc --tsconfig "./src/tsconfig.app.json"
+
+Processing legacy "View Engine" libraries:
+- @angular/http [fesm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http/testing [fesm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http [fesm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http [esm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http [esm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http/testing [fesm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http [main/umd] (https://github.com/angular/angular.git)
+- @angular/http/testing [esm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http/testing [esm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http/testing [main/umd] (https://github.com/angular/angular.git)
+Encourage the library authors to publish an Ivy distribution.
+
+removed 1 package, changed 13 packages, and audited 1509 packages in 19s
+
+309 packages are looking for funding
+  run `npm fund` for details
+
+82 vulnerabilities (16 low, 28 moderate, 32 high, 6 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+
+> juice-shop@15.3.0 build:frontend
+> cd frontend && node ./node_modules/@angular/cli/bin/ng build --aot --configuration production --output-hashing=none --vendor-chunk=true --source-map=false
+
+- Generating browser application bundles (phase: setup)...
+    TypeScript compiler options "target" and "useDefineForClassFields" are set to "ES2022" and "false" respectively by the Angular CLI. To control ECMA version and features use the Browerslist configuration. For more information, see https://angular.io/guide/build#configuring-browser-compatibility
+    NOTE: You can set the "target" to "ES2022" in the project's tsconfig to remove this warning.
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size
+vendor.js           | vendor                                |   1.36 MB |               306.31 kB
+styles.css          | styles                                | 614.90 kB |                32.22 kB
+main.js             | main                                  | 479.20 kB |                81.16 kB
+polyfills.js        | polyfills                             |  53.67 kB |                17.16 kB
+runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
+
+| Initial Total                         |   2.48 MB |               438.33 kB
+
+Lazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size
+399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB
+202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB
+112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB
+103.js              | confetti                              |  10.86 kB |                 3.92 kB
+67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB
+common.js           | common                                |   9.04 kB |               861 bytes
+535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB
+745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB
+613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB
+859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
+472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
+
+Build at: 2026-08-04T20:45:11.617Z - Hash: eec0da7fb4f70cee - Time: 45983ms
+node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
+node_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.
+node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.
+
+added 135 packages, removed 42 packages, changed 444 packages, and audited 2077 packages in 2m
+
+232 packages are looking for funding
+  run `npm fund` for details
+
+90 vulnerabilities (5 low, 38 moderate, 32 high, 15 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+Validating application functionality...
+
+> juice-shop@15.3.0 build:frontend
+> cd frontend && node ./node_modules/@angular/cli/bin/ng build --aot --configuration production --output-hashing=none --vendor-chunk=true --source-map=false
+
+- Generating browser application bundles (phase: setup)...
+    TypeScript compiler options "target" and "useDefineForClassFields" are set to "ES2022" and "false" respectively by the Angular CLI. To control ECMA version and features use the Browerslist configuration. For more information, see https://angular.io/guide/build#configuring-browser-compatibility
+    NOTE: You can set the "target" to "ES2022" in the project's tsconfig to remove this warning.
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size
+vendor.js           | vendor                                |   1.36 MB |               306.31 kB
+styles.css          | styles                                | 614.90 kB |                32.22 kB
+main.js             | main                                  | 479.20 kB |                81.16 kB
+polyfills.js        | polyfills                             |  53.67 kB |                17.16 kB
+runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
+
+| Initial Total                         |   2.48 MB |               438.33 kB
+
+Lazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size
+399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB
+202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB
+112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB
+103.js              | confetti                              |  10.86 kB |                 3.92 kB
+67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB
+common.js           | common                                |   9.04 kB |               861 bytes
+535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB
+745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB
+613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB
+859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
+472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
+
+Build at: 2026-08-04T20:46:07.080Z - Hash: eec0da7fb4f70cee - Time: 45481ms
+
+> juice-shop@15.3.0 build:server
+> tsc
+
+node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
+node_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.
+node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.
 npm warn deprecated @types/cypress@1.1.6: This is a stub types definition. cypress provides its own type definitions, so you do not need this installed.
 npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
@@ -12,8 +173,8 @@ npm warn deprecated npmlog@5.0.1: This package is no longer supported.
 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
 npm warn deprecated npmlog@6.0.2: This package is no longer supported.
 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
-npm warn deprecated eivindfjeldstad-dot@0.0.1: Use @eivifj/dot instead
 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated eivindfjeldstad-dot@0.0.1: Use @eivifj/dot instead
 npm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
 npm warn deprecated har-validator@5.1.5: this library is no longer supported
 npm warn deprecated npmlog@4.1.2: This package is no longer supported.
@@ -70,13 +231,25 @@ npm warn deprecated eslint@8.57.1: This version is no longer supported. Please s
 > frontend@15.3.0 postinstall
 > ngcc --tsconfig "./src/tsconfig.app.json"
 
+Processing legacy "View Engine" libraries:
+- @angular/http [fesm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http/testing [fesm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http [fesm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http [esm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http [esm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http/testing [fesm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http [main/umd] (https://github.com/angular/angular.git)
+- @angular/http/testing [esm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http/testing [esm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http/testing [main/umd] (https://github.com/angular/angular.git)
+Encourage the library authors to publish an Ivy distribution.
 
-up to date, audited 1509 packages in 8s
+removed 1 package, changed 13 packages, and audited 1509 packages in 27s
 
 309 packages are looking for funding
   run `npm fund` for details
 
-99 vulnerabilities (16 low, 26 moderate, 51 high, 6 critical)
+82 vulnerabilities (16 low, 28 moderate, 32 high, 6 critical)
 
 To address issues that do not require attention, run:
   npm audit fix
@@ -124,7 +297,7 @@ common.js           | common                                |   9.04 kB |       
 859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
 472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
 
-Build at: 2026-07-30T23:16:31.631Z - Hash: eec0da7fb4f70cee - Time: 79348ms
+Build at: 2026-08-04T20:52:24.793Z - Hash: eec0da7fb4f70cee - Time: 46650ms
 node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
 node_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.
 node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
@@ -132,12 +305,12 @@ node_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expect
 node_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.
 node_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.
 
-added 2076 packages, and audited 2077 packages in 3m
+added 2076 packages, and audited 2077 packages in 2m
 
 232 packages are looking for funding
   run `npm fund` for details
 
-121 vulnerabilities (5 low, 28 moderate, 73 high, 15 critical)
+90 vulnerabilities (5 low, 38 moderate, 32 high, 15 critical)
 
 To address issues that do not require attention, run:
   npm audit fix
@@ -149,3 +322,50 @@ Some issues need review, and may require choosing
 a different dependency.
 
 Run `npm audit` for details.
+
+> juice-shop@15.3.0 build:frontend
+> cd frontend && node ./node_modules/@angular/cli/bin/ng build --aot --configuration production --output-hashing=none --vendor-chunk=true --source-map=false
+
+- Generating browser application bundles (phase: setup)...
+    TypeScript compiler options "target" and "useDefineForClassFields" are set to "ES2022" and "false" respectively by the Angular CLI. To control ECMA version and features use the Browerslist configuration. For more information, see https://angular.io/guide/build#configuring-browser-compatibility
+    NOTE: You can set the "target" to "ES2022" in the project's tsconfig to remove this warning.
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size
+vendor.js           | vendor                                |   1.36 MB |               306.31 kB
+styles.css          | styles                                | 614.90 kB |                32.22 kB
+main.js             | main                                  | 479.20 kB |                81.16 kB
+polyfills.js        | polyfills                             |  53.67 kB |                17.16 kB
+runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
+
+| Initial Total                         |   2.48 MB |               438.33 kB
+
+Lazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size
+399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB
+202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB
+112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB
+103.js              | confetti                              |  10.86 kB |                 3.92 kB
+67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB
+common.js           | common                                |   9.04 kB |               861 bytes
+535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB
+745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB
+613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB
+859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
+472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
+
+Build at: 2026-08-04T20:53:20.343Z - Hash: eec0da7fb4f70cee - Time: 45600ms
+
+> juice-shop@15.3.0 build:server
+> tsc
+
+node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
+node_modules/@types/babel__traverse/index.d.ts(1475,42): error TS1005: '?' expected.
+node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1026,46): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1031,46): error TS1005: '?' expected.
+node_modules/@types/lodash/common/object.d.ts(1041,46): error TS1005: '?' expected.
