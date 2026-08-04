@@ -1,3 +1,4 @@
+import sys
 import urllib.request
 import json
 import os
@@ -83,13 +84,14 @@ def get_kev_status(cve_id):
     return get_kev_status_live(cve_id)
 
 
-def prioritize_vulnerabilities(matches, ecosystem):
+def _build_structural_candidates(matches, ecosystem, kev_cache, epss_cache):
+    """Build candidates applying only the structural filters -- fixed version
+    exists, ecosystem matches -- NOT severity. Severity is a ranking/discovery
+    concern, not a validity concern: a match that fails these two checks
+    genuinely cannot be remediated in this run (no fix to apply, or wrong
+    ecosystem's package manager); a match that merely has low severity can
+    still be a legitimate, explicitly-requested target."""
     candidates = []
-
-    kev_cache = {}
-    epss_cache = {}
-
-    print("[ORCHESTRATOR] Picking from pre-registered scenario...")
     for match in matches:
         vuln = match.get('vulnerability', {})
         artifact = match.get('artifact', {})
@@ -97,23 +99,16 @@ def prioritize_vulnerabilities(matches, ecosystem):
         cve_id = vuln.get('id', '')
         severity = vuln.get('severity', 'Unknown').lower()
 
-        # 1. Severity >= High (High or Critical)
-        if severity not in ['high', 'critical']:
-            continue
-
-        # 2. Fixed Version Exists
         fix = vuln.get('fix', {})
         if not fix or fix.get('state') != 'fixed':
             continue
 
-        # 3. Supported Ecosystem
         pkg_type = artifact.get('type', '').lower()
         if ecosystem == 'npm' and pkg_type != 'npm':
             continue
         if ecosystem == 'python' and pkg_type != 'python':
             continue
 
-        # Extract CVSS
         cvss_metrics = vuln.get('cvss', [])
         cvss_score = 0.0
         if cvss_metrics:
@@ -147,6 +142,64 @@ def prioritize_vulnerabilities(matches, ecosystem):
             'kev': kev_cache[api_cve_id],
             'fixed_versions': fix.get('versions', [])
         })
+    return candidates
+
+
+def prioritize_vulnerabilities(matches, ecosystem):
+    kev_cache = {}
+    epss_cache = {}
+
+    print("[ORCHESTRATOR] Picking from pre-registered scenario...")
+
+    # Build the full structurally-valid pool ONCE (fix exists, ecosystem
+    # matches) -- this is the pool an explicit TARGET_CVE is matched against,
+    # and also the pool automatic discovery narrows with the severity filter.
+    # Severity is deliberately NOT applied here: for a preregistered
+    # experiment, TARGET_CVE is the ground truth, not a hint the severity
+    # filter should be allowed to override. This is what let AF-06 and JS-06
+    # silently drift to a different vulnerability -- their real, preregistered
+    # match existed in Grype's output the whole time but never reached the
+    # old severity-gated candidate list, so TARGET_CVE had nothing to find.
+    all_structural_candidates = _build_structural_candidates(matches, ecosystem, kev_cache, epss_cache)
+
+    target_cve = os.environ.get('TARGET_CVE')
+
+    if target_cve:
+        print(f"[PRIORITIZE] TARGET_CVE={target_cve} is set: performing an authoritative lookup "
+              f"against all {len(all_structural_candidates)} structurally-valid candidates "
+              f"(severity filter not applied to this lookup).")
+        for c in all_structural_candidates:
+            if c['cve_id'] == target_cve or c['api_cve_id'] == target_cve or c['package_name'] == target_cve:
+                if target_cve.startswith('CVE-') and c['api_cve_id'] != target_cve:
+                    print(f"[PRIORITIZE] TARGET_CVE override: api_cve_id updated "
+                          f"from {c['api_cve_id']} to {target_cve} "
+                          f"(scanner reported: {c['scanner_cve_id']})")
+                    c['api_cve_id'] = target_cve
+                    c['epss'] = get_epss_score(target_cve)
+                    c['kev'] = get_kev_status(target_cve)
+                with open('candidate-ranking.json', 'w') as f:
+                    json.dump([c], f, indent=2)
+                print(f"[PRIORITIZE] TARGET_CVE matched: {c['package_name']} ({c['cve_id']}, "
+                      f"severity={c['severity']}).")
+                return c, [c]
+
+        # No structurally-valid candidate matches the requested TARGET_CVE.
+        # Fail loudly instead of silently falling back to a different
+        # vulnerability -- this is the exact fix for the AF-06/JS-06 drift.
+        with open('candidate-ranking.json', 'w') as f:
+            json.dump(all_structural_candidates, f, indent=2)
+        available = ", ".join(sorted({c['api_cve_id'] or c['cve_id'] for c in all_structural_candidates})) or "(none)"
+        print(f"[ERROR] TARGET_CVE={target_cve} was not found among any structurally-valid "
+              f"candidate (fix exists, ecosystem={ecosystem}) in this scan.")
+        print(f"[ERROR] Structurally-valid CVE/GHSA IDs that WERE available: {available}")
+        print("[ERROR] Refusing to silently substitute a different vulnerability. Failing.")
+        sys.exit(1)
+
+    # No explicit target: automatic discovery mode. Severity filter applies
+    # here, and only here -- it exists to guide unattended candidate
+    # discovery, not to override an explicitly preregistered target.
+    print("[PRIORITIZE] No TARGET_CVE set: automatic discovery mode (severity >= high required).")
+    candidates = [c for c in all_structural_candidates if c['severity'] in ['high', 'critical']]
 
     if not candidates:
         print("[PRIORITIZE] No automatically remediable candidates found.")
@@ -158,25 +211,7 @@ def prioritize_vulnerabilities(matches, ecosystem):
     with open('candidate-ranking.json', 'w') as f:
         json.dump(candidates, f, indent=2)
 
-    target_cve = os.environ.get('TARGET_CVE')
     top_candidate = candidates[0]
-
-    if target_cve:
-        for c in candidates:
-            if c['cve_id'] == target_cve or c['api_cve_id'] == target_cve or c['package_name'] == target_cve:
-                # Preserve chain of custody: record the override without mutating scanner_cve_id
-                if target_cve.startswith('CVE-') and c['api_cve_id'] != target_cve:
-                    print(f"[PRIORITIZE] TARGET_CVE override: api_cve_id updated "
-                          f"from {c['api_cve_id']} to {target_cve} "
-                          f"(scanner reported: {c['scanner_cve_id']})")
-                    c['api_cve_id'] = target_cve
-                    # Re-fetch enrichment with correct CVE ID
-                    c['epss'] = get_epss_score(target_cve)
-                    c['kev'] = get_kev_status(target_cve)
-                top_candidate = c
-                print(f"[PRIORITIZE] Overriding selection with TARGET_CVE: {target_cve}")
-                break
-
     print(f"[PRIORITIZE] Selected Top Candidate: {top_candidate['package_name']} ({top_candidate['cve_id']})")
 
     return top_candidate, candidates
