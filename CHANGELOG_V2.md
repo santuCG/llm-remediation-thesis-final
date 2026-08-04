@@ -109,6 +109,147 @@ the remaining scenarios one at a time (not in parallel), given each is a real
 Gemini API call — this minimizes the chance of discovering a pipeline regression
 after already spending hours rerunning every scenario.
 
+## Fix #11: `verify_dependency_installed()` used exact version equality, producing false-negative `dependency_verified`
+
+**Discovered during JS-08 regeneration** (`body-parser`/`CVE-2024-45590`, run `30945593368`).
+`rescan_success: true` (Grype independently confirms the vulnerability is gone) but
+`dependency_verified: false` — an unusual combination, since these two fields are supposed to be
+independent signals that normally agree.
+
+**Root cause.** `validator.py`'s `verify_dependency_installed()` (`_npm_tree_contains_version`
+for npm, the `pip show` branch for Python) compared the installed version to the LLM's
+`recommended_package_version` using exact string equality. The LLM recommended `1.20.3`;
+`manifest_editor.py` wrote a caret-range constraint (`^1.20.3`), correctly reflecting the LLM's
+own `manifest_patch.constraint`; `npm install` then legitimately resolved that range to the
+newest compatible release, `1.20.6` (confirmed in `dependency-graph.log`) — safe, and newer than
+the fix version, but not string-identical to `"1.20.3"`, so the exact-match check reported
+"unverified" despite the dependency graph being correct.
+
+**Fix.** Added `_version_at_least(installed, expected)`: parses both strings into comparable
+tuples (splitting on `.`/`-`/`+`) and accepts the installed version if it is equal to or newer
+than the recommended fix version, falling back to exact-match behavior only when a component
+can't be meaningfully ordered (e.g. comparing an int position to a non-numeric one). Applied to
+both the npm (`_npm_tree_contains_version`) and Python (`pip show`) branches — the Python branch
+had the identical exact-match bug, though pip's typical `==`-pinned installs make it less likely
+to have been triggered in practice. Verified with a 9-case local test (exact match, newer patch,
+older/genuinely-unverified, newer major, older minor, and a `lts`-suffixed version string) — all
+pass, including the exact `1.20.6`-installed-vs-`1.20.3`-recommended case from JS-08's real run.
+
+| Change | Why | Affected scenarios | Requires rerun? | Methodology change? |
+|---|---|---|---|---|
+| `validator.py`: version-aware (not exact-string) comparison in `verify_dependency_installed()` | Exact-match comparison produced a false-negative `dependency_verified` whenever the package manager legitimately resolved a range to a newer, still-safe version than the LLM's specific recommendation | JS-08 confirmed affected; any already-completed scenario using a range-based strategy (`direct_upgrade`/`transitive_override` with a caret/tilde constraint) could theoretically be affected if the resolved version happened to differ from the recommendation | Yes, for JS-08 (re-dispatched under the fix). Other already-completed scenarios were spot-checked (see `docs/METRIC_FIELD_OWNERSHIP.md`/`REGENERATION_LOG.md`) rather than blanket-rerun, since this is a strictly-more-permissive check — nothing that previously verified `true` can flip to `false` | **No** — makes an already-independent check (Fix #2) correctly permissive for legitimately-newer resolutions; does not touch `rescan_success`, which was already correct and unaffected by this bug |
+
+## Fix #10: `TARGET_CVE` is authoritative in `prioritize.py` — no silent substitution
+
+**Discovered during regeneration, not the pre-regeneration gate review.** User
+noticed AF-06 (jinja2, CVE-2024-56326) and JS-06 (flatted, CVE-2026-33228) —
+both freshly regenerated with `candidate_count`/`selected_package` values that
+didn't match the pre-registered scenario — while cross-checking NVD/GitHub
+directly against the regenerated evidence.
+
+**Root cause.** `prioritize_vulnerabilities()` built its candidate list by
+applying the `severity in ['high','critical']` filter *before* `TARGET_CVE`
+matching ran, and `TARGET_CVE` was only ever searched against that
+already-filtered list. If the preregistered target's Grype-reported severity
+fell below `high` for any reason, it was invisible to the matching loop, and
+the code silently fell back to `candidates[0]` — a *different* CVE — with no
+warning, log line, or failure of any kind.
+
+- **AF-06**: `CVE-2024-56326`/jinja2 genuinely present in a fresh Grype scan,
+  but Grype reports `severity: "Medium"`. GitHub's own advisory record
+  (`GHSA-q2x7-8rv6-6q7h`) carries two different CVSS scores for the same
+  advisory — v3.1 = 7.8 ("High"), v4.0 = 5.4 ("Medium") — and Grype's
+  `severity` field derives from the v4.0 number. The preregistration itself
+  recorded the v3.1 score (7.8) paired with a v4.0 vector string, an internal
+  inconsistency predating this session.
+- **JS-06**: `CVE-2026-33228`/flatted never reached the candidate list at all
+  — confirmed absent from Syft's generated SBOM in both the live CI run and
+  an independent local reproduction (same Syft/Grype versions, full scan of
+  the real `node_modules`), while a hand-built SBOM containing only `flatted`
+  was correctly matched by Grype. Fault isolated to Syft's cataloging stage,
+  not severity filtering, matching, or a stale DB — see
+  `docs/FINDING_CVE_DETECTION_GAPS.md` for the full investigation. This
+  fix does not resolve JS-06's underlying detection gap; it only stops the
+  pipeline from silently substituting a different CVE when the intended one
+  can't be found.
+- **Historical scope**: cross-checked all 18 scenarios' preregistered CVE
+  against the *original* (pre-this-session) `results/execution_evidence/*/metrics.json`.
+  16 of 18 match exactly; AF-06 and JS-06 do not — the original historical
+  evidence already shows werkzeug/CVE-2024-34069 and lodash/CVE-2021-23337
+  respectively. This confirms the substitution bug has been present since the
+  original dataset generation, not introduced this session.
+
+**Fix.** Restructured `prioritize_vulnerabilities()`: build the full
+structurally-valid candidate pool once (fix exists, ecosystem matches — no
+severity filter). If `TARGET_CVE` is set, search that full pool; found → use
+it (bypassing severity), not found → print every structurally-valid CVE/GHSA
+ID that *was* available and `sys.exit(1)` — no fallback. If `TARGET_CVE` is
+not set, apply the severity filter exactly as before (unchanged automatic-
+discovery behavior). Commit `a7606850`.
+
+**Self-caught regression, same investigation.** The first version of this fix
+returned `(candidate, [candidate])` on a direct `TARGET_CVE` match, collapsing
+`candidate_count` to `1` for every one of the 18 scenarios (all pass
+`TARGET_CVE`) — a metric that previously reported the size of the
+severity-filtered pool (~60–130 depending on scenario). Caught by comparing
+AF-06's freshly-regenerated `metrics.json` (`candidate_count: 1`) against
+already-regenerated AF-02–JS-05 (`63`/`134`). Fixed by always computing the
+severity-filtered pool regardless of which branch selects the final
+candidate, and returning that pool (plus the matched candidate appended only
+if it fell outside it) — preserving `candidate_count`'s established meaning
+across all 18 scenarios. Verified with a 4-case local test harness, including
+a dedicated regression check for the common case (target already inside the
+severity-filtered pool — 16 of 18 real scenarios). Commit `36cc51fd`.
+
+| Change | Why | Affected scenarios | Requires rerun? | Methodology change? |
+|---|---|---|---|---|
+| `prioritize.py`: `TARGET_CVE` authoritative, fail loudly if not found | Silent fallback let AF-06/JS-06 drift to a different, unregistered CVE with zero signal | AF-06, JS-06 confirmed drifted; all 18 pass through the changed code path | Yes — AF-06, JS-06 (both re-dispatched under the fix: AF-06 succeeded against the correct target; JS-06 correctly failed loudly, confirming the Syft gap is untouched by this fix) | **No** — restores the preregistration's own authority over target selection; automatic-discovery behavior (no `TARGET_CVE`) is byte-for-byte unchanged |
+| `prioritize.py`: preserve `candidate_count` across the `TARGET_CVE` path | Self-caught regression in the fix above — direct-match branch was returning a 1-element list, corrupting the metric for all future scenarios | Would have affected AF-06 through JS-09 (12 scenarios not yet regenerated at time of discovery) had it shipped unfixed; already-completed AF-02–JS-05 evidence used the pre-Fix-#10 code and is unaffected | No — caught before any of AF-07–JS-09 were dispatched. AF-06's first re-run (pre-regression-fix) was superseded by a second re-run under the corrected code | **No** — pure evidence-fidelity fix, no change to which candidate is selected |
+
+## Finding: `manifest_editor.py` only patches the root `package.json` — invisible to Juice Shop's independently-installed `frontend/` tree
+
+**Discovered during JS-07 regeneration** (`ws`/`CVE-2024-37890`, run `30943524500`). Job
+completed with `build_success: false` (the known, pre-existing, unrelated `TS1005`
+`@types/babel__traverse`/`@types/lodash` issue — same as JS-03/04/05) but, unlike those three,
+also `dependency_verified: false` and `rescan_success: false` on **both** attempt 1 and the
+retry — i.e., the vulnerability was never actually eradicated, not just masked by the known
+build quirk.
+
+**Root cause, evidence-traced.** `applications/juice-shop` is a two-tree monorepo: the root
+`npm install` resolves root `package.json`/`package-lock.json`, and a `postinstall` script
+separately runs `cd frontend && npm install --legacy-peer-deps`, resolving `frontend/package.json`/
+`frontend/package-lock.json` completely independently. `manifest_editor.py:21-64`
+(`apply_remediation`) only ever reads/writes `package.json` in the scenario's `app_dir` — it has
+no code path that touches `frontend/package.json`. An `"overrides"` entry added to the root
+manifest is therefore invisible to whatever `npm install` resolves inside `frontend/`.
+
+Confirmed directly: `frontend/package-lock.json` contains its own independent copy of the
+vulnerable package (`node_modules/engine.io-client/node_modules/ws@7.4.6`, alongside
+`node_modules/ws@8.18.0`), with no `overrides` key of its own. Both attempts' LLM-recommended
+override (`ws@^7.5.10`, then `ws@7.5.13` on retry) was correctly written to the root
+`package.json` (confirmed in `package-after.json`) and did take effect in the root tree — but
+`frontend/`'s independently-resolved `ws@7.4.6` was structurally unreachable by either patch, so
+Grype's rescan (which scans the whole repository, both trees) continued to report
+`GHSA-3h5v-q93c-6h6q` unfixed. This is why the **retry produced a different version string but
+an identical outcome**: no override targeting only the root manifest can fix this class of
+vulnerability, so retrying was never going to help.
+
+**Scope check.** Confirmed this is not a universal problem: `form-data` (JS-03), `crypto-js`
+(JS-04), and `jsonwebtoken` (JS-05) — the three prior scenarios whose root-only override
+succeeded cleanly — are **absent** from `frontend/package-lock.json` entirely, which is exactly
+why those overrides worked. JS-07 is the first regenerated scenario whose vulnerable package
+happens to also be resolved independently inside `frontend/`.
+
+**Status: documented, not fixed.** Per the same disclose-rather-than-silently-patch approach
+applied to JS-06, no change has been made to `manifest_editor.py`. A fix (patching both
+manifests, or detecting and warning when a package is frontend-reachable) is a real design
+change with unclear blast radius across already-accepted evidence (JS-02–JS-05 were never
+checked against this specific failure mode because their target packages happened not to
+trigger it) and is out of scope for a same-session code change. JS-07 is being treated the same
+way as JS-06: a confirmed, evidence-backed remediation-completeness gap, not silently
+re-attempted or forced to a different outcome. See `REGENERATION_LOG.md`'s JS-07 entry for the
+full evidence trail.
+
 ## Phase 2 — Findings recorded, not yet actioned
 
 These are observations surfaced while verifying Phase 1 fixes. Per the approved

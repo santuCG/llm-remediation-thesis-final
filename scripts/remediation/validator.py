@@ -1,18 +1,55 @@
 import json
 import sys
 import os
+import re
 import subprocess
+
+
+def _version_tuple(version):
+    """Parse a dotted version string into a comparable tuple of ints, falling
+    back to string comparison for any non-numeric component (e.g. pre-release
+    suffixes like '1.4.5-lts.1'). Best-effort, not a full semver/PEP440
+    parser -- sufficient for comparing two release versions of the same
+    package."""
+    parts = re.split(r'[.\-+]', version)
+    out = []
+    for p in parts:
+        out.append(int(p) if p.isdigit() else p)
+    return tuple(out)
+
+
+def _version_at_least(installed, expected):
+    """True if installed >= expected as a version comparison, not a string
+    comparison -- an installed version can legitimately be a newer, still-safe
+    patch/minor release than the LLM's specific recommendation (e.g. a caret
+    range resolving to 1.20.6 when 1.20.3 was recommended), and that is a
+    correct outcome, not an unverified one."""
+    if installed == expected:
+        return True
+    try:
+        it, et = _version_tuple(installed), _version_tuple(expected)
+        # Compare element-wise; mismatched types (int vs str) at the same
+        # position can't be meaningfully ordered -- treat as not-comparable
+        # and fall through to the exact-match result already computed above.
+        for a, b in zip(it, et):
+            if type(a) is not type(b):
+                return False
+            if a != b:
+                return a > b
+        return len(it) >= len(et)
+    except (ValueError, TypeError):
+        return False
 
 
 def _npm_tree_contains_version(node, package_name, expected_version, _depth=0):
     """Recursively search an `npm ls --json` tree for package_name resolved to
-    exactly expected_version, at any depth (the vulnerable instance may be
+    expected_version or newer, at any depth (the vulnerable instance may be
     transitive)."""
     if _depth > 20 or not isinstance(node, dict):
         return False
     deps = node.get('dependencies', {})
     for name, info in deps.items():
-        if name == package_name and info.get('version') == expected_version:
+        if name == package_name and info.get('version') and _version_at_least(info['version'], expected_version):
             return True
         if _npm_tree_contains_version(info, package_name, expected_version, _depth + 1):
             return True
@@ -45,7 +82,7 @@ def verify_dependency_installed(ecosystem, package_name, expected_version):
             )
             for line in result.stdout.splitlines():
                 if line.startswith('Version:'):
-                    return line.split(':', 1)[1].strip() == expected_version
+                    return _version_at_least(line.split(':', 1)[1].strip(), expected_version)
             return False
     except Exception as e:
         print(f"[VALIDATOR] Dependency verification check failed: {e}")
