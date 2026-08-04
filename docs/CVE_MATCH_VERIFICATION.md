@@ -29,7 +29,7 @@ the field `prioritize.py` writes only after a successful, authoritative `TARGET_
 | AF-08 | CVE-2026-2473 | CVE-2026-2473 | ✅ | Clean success |
 | AF-09 | CVE-2024-34069 | CVE-2024-34069 | ✅ | Clean success (genuinely preregistered target — coincidentally shares AF-06's pre-fix wrong target, see `THESIS_DRAFT_V3.md` Table 1 footnote) |
 | JS-01 | CVE-2023-32314 | CVE-2023-32314 | ✅ | Clean signals (job `failure` is the known unrelated `TS1005` build issue) |
-| JS-02 | CVE-2026-33937 | *(pending final rerun — see note)* | — | — |
+| JS-02 | CVE-2026-33937 | CVE-2026-33937 | ✅ | Clean signals (batch-1's original attempt hit a genuine LLM API failure and was redispatched — see `REGENERATION_LOG.md`) |
 | JS-03 | CVE-2025-7783 | CVE-2025-7783 | ✅ | Clean signals |
 | JS-04 | CVE-2023-46233 | CVE-2023-46233 | ✅ | Clean signals |
 | JS-05 | CVE-2015-9235 | CVE-2015-9235 | ✅ | Clean signals |
@@ -38,12 +38,11 @@ the field `prioritize.py` writes only after a successful, authoritative `TARGET_
 | JS-08 | CVE-2024-45590 | CVE-2024-45590 | ✅ | Clean signals (after Fix #11 + follow-up) |
 | JS-09 | CVE-2026-3520 | CVE-2026-3520 | ✅ | Clean signals |
 
-*(Table updated once JS-02's rerun completes; see `REGENERATION_LOG.md` for its dispatch history.)*
-
 ## What this proves
 
 - **17 of 17 scenarios that produced any `api_cve_id` at all matched their preregistered CVE
-  exactly** — zero silent substitutions anywhere in the fully-regenerated dataset.
+  exactly** — zero silent substitutions anywhere in the fully-regenerated, final dataset (all 18
+  scenarios regenerated under Pipeline v2.0's complete fix set).
 - The two scenarios without a clean success (**JS-06**, **JS-07**) are not targeting failures —
   in both cases the pipeline correctly identified (or, for JS-06, correctly refused to
   substitute for) the intended CVE. Their failures are independently root-caused, evidence-backed,
