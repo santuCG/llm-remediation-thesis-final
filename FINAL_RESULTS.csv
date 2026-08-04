@@ -1,0 +1,19 @@
+Scenario,Target CVE,Result,Build,Test,Retry,Strategy,Outcome
+AF-01,CVE-2026-8838,PASS,True,True,0,direct_upgrade,Clean success
+AF-02,CVE-2025-43859,PASS,True,True,0,direct_upgrade,Clean success
+AF-03,CVE-2023-50782,PASS,True,True,0,direct_upgrade,Clean success
+AF-04,CVE-2026-44307,PASS,True,True,0,direct_upgrade,Clean success
+AF-05,CVE-2026-0994,PASS,True,True,0,direct_upgrade,Clean success
+AF-06,CVE-2024-56326,PASS,True,True,0,direct_upgrade,Clean success
+AF-07,CVE-2024-21272,PASS,True,True,0,direct_upgrade,Clean success
+AF-08,CVE-2026-2473,PASS,True,True,0,direct_upgrade,Clean success
+AF-09,CVE-2024-34069,PASS,True,True,0,direct_upgrade,Clean success
+JS-01,CVE-2023-32314,PASS,False,,1,transitive_override,Clean success
+JS-02,CVE-2026-33937,PASS,False,,1,transitive_override,Clean success
+JS-03,CVE-2025-7783,PASS,False,,1,transitive_override,Clean success
+JS-04,CVE-2023-46233,PASS,False,,1,transitive_override,Clean success
+JS-05,CVE-2015-9235,PASS,False,,1,direct_upgrade,Clean success
+JS-06,CVE-2026-33228,FAIL,,,,,Failure Category A (SBOM cataloging limitation - no candidate matched)
+JS-07,CVE-2024-37890,FAIL,False,,1,transitive_override,Failure Category B (pipeline applicability limitation)
+JS-08,CVE-2024-45590,PASS,False,,1,direct_upgrade,Clean success
+JS-09,CVE-2026-3520,PASS,False,,1,direct_upgrade,Clean success
