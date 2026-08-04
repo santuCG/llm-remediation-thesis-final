@@ -117,3 +117,34 @@ Run: [30866830764](https://github.com/santuCG/llm-remediation-thesis-final/actio
 Same pattern as JS-03: `rescan_success`/`dependency_verified` both true confirm the CVE was eradicated;
 retry triggered by the known pre-existing TS1005 build issue; job-level `failure` is the same
 pre-existing quirk. No new anomaly. Continuing to batch 4.
+
+## Batch 4: AF-05, JS-05
+
+### AF-05 — CVE-2026-0994 (protobuf)
+Run: [30875173695](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30875173695) — success, first attempt, no retry.
+
+```json
+{
+  "selected_package": "protobuf", "strategy": "direct_upgrade", "remediation_type": "Direct Upgrade",
+  "llm_response_valid": true, "build_success": true, "test_success": true,
+  "dependency_verified": true, "rescan_success": true, "retry_count": 0, "failure_stage": "none"
+}
+```
+Clean. No anomalies.
+
+### JS-05 — CVE-2015-9235 (jsonwebtoken)
+Run: [30875177735](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30875177735) — job conclusion `failure`, remediation actually succeeded.
+
+```json
+{
+  "selected_package": "jsonwebtoken", "strategy": "direct_upgrade", "remediation_type": "Direct Upgrade",
+  "llm_response_valid": true, "build_success": false, "test_success": null,
+  "dependency_verified": true, "rescan_success": true, "retry_count": 1,
+  "lockfile_regenerated": true, "failure_stage": "none"
+}
+```
+Slightly different path than JS-03/04: `lockfile_regenerated: true` indicates the "Fallback Lockfile
+Regeneration" step fired (i.e., `Apply Fix & Verify` itself failed on attempt 1, not just the later
+build-check), before the retry ran and succeeded — `rescan_success`/`dependency_verified` both true
+confirm the CVE was eradicated. Job-level `failure` conclusion is the same pre-existing quirk. No
+undocumented anomaly. Continuing to batch 5.
