@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package body-parser is specified as a direct dependency in package.json with version ^1.20.2. Vulnerability GHSA-qwcr-r2fm-qrc7 is fixed in version 1.20.3. Because body-parser is a direct dependency and 1.20.3 is a minor/patch increment within the 1.x release line, performing a Direct Upgrade to ^1.20.3 is the most effective and safe strategy. Transitive overrides or manual reviews are unnecessary since direct manifest updating resolves the vulnerability while preserving semver compatibility.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"1.20.3\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"body-parser\",\"constraint\":\"^1.20.3\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 448,
+    "candidatesTokenCount": 182,
+    "totalTokenCount": 1316,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 448
+      }
+    ],
+    "thoughtsTokenCount": 686,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "w01yaoLREKOD-8YP387lGQ"
+}
