@@ -1,12 +1,13 @@
 {
   "cve_id": "GHSA-2g68-c3qc-8985",
+  "scanner_cve_id": "GHSA-2g68-c3qc-8985",
   "api_cve_id": "CVE-2024-34069",
   "package_name": "werkzeug",
   "vulnerable_version": "2.2.3",
   "severity": "high",
   "cvss": 7.5,
   "epss": 0.03397,
-  "epss_timestamp": "2026-07-30T22:11:19.480974+00:00",
+  "epss_timestamp": "2026-08-04T20:36:19.438022+00:00",
   "kev": false,
   "fixed_versions": [
     "3.0.3"

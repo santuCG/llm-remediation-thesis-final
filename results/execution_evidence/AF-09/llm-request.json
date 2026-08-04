@@ -1,16 +1,16 @@
 {
-  "scenario_id": "UNKNOWN",
+  "scenario_id": "AF-09",
   "experiment_id": "2026-final",
   "application": "Apache Airflow",
   "ecosystem": "python",
-  "prompt_version": "v1.1",
+  "prompt_version": "v1.2",
   "api_payload": {
     "contents": [
       {
         "role": "user",
         "parts": [
           {
-            "text": "Scenario ID: UNKNOWN\nPrompt Version: v1.1\n\n### Vulnerability Intelligence\n* Target Package: werkzeug\n* Vulnerable Version: 2.2.3\n* CVE ID: GHSA-2g68-c3qc-8985\n* CVSS Score: 7.5\n* EPSS Probability: 0.03397\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-05-18\n* Fixed Versions: ['3.0.3']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: Werkzeug\\nVersion: 2.2.3\\nSummary: The comprehensive WSGI web application library.\\nHome-page: https://palletsprojects.com/p/werkzeug/\\nAuthor: Armin Ronacher\\nAuthor-email: armin.ronacher@active-4.com\\nLicense: BSD-3-Clause\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: MarkupSafe\\nRequired-by: apache-airflow, connexion, Flask, Flask-AppBuilder, Flask-JWT-Extended, Flask-Login\\n\",\n  \"pip_freeze\": \"apache-airflow==2.9.2\\nconnexion==2.14.2\\nFlask==2.2.5\\nFlask-AppBuilder==4.4.1\\nFlask-JWT-Extended==4.6.0\\nFlask-Login==0.6.3\\nMarkupSafe==2.1.5\\nWerkzeug==2.2.3\",\n  \"requirements_txt\": \"apache-airflow==2.9.2\\napache-airflow-providers-amazon==8.24.0\\napache-airflow-providers-celery==3.7.2\\napache-airflow-providers-cncf-kubernetes==8.3.1\\napache-airflow-providers-common-io==1.3.2\\napache-airflow-providers-common-sql==1.14.0\\napache-airflow-providers-docker==3.12.0\\napache-airflow-providers-elasticsearch==5.4.1\\napache-airflow-providers-fab==1.1.1\\napache-airflow-providers-ftp==3.9.1\\napache-airflow-providers-google==10.19.0\\napache-airflow-providers-grpc==3.5.1\\napache-airflow-providers-hashicorp==3.7.1\\napache-airflow-providers-http==4.11.1\\napache-airflow-providers-imap==3.6.1\\napache-airflow-providers-microsoft-azure==10.1.1\\napache-airflow-providers-mysql==5.6.1\\napache-airflow-providers-odbc==4.6.1\\napache-airflow-providers-openlineage==1.8.0\\napache-airflow-providers-postgres==5.11.1\\napache-airflow-providers-redis==3.7.1\\napache-airflow-providers-sendgrid==3.5.1\\napache-airflow-providers-sftp==4.10.1\\napache-airflow-providers-slack==8.7.1\\napache-airflow-providers-smtp==1.7.1\\napache-airflow-providers-snowflake==5.5.1\\napache-airflow-providers-sqlite==3.8.1\\napache-airflow-providers-ssh==3.11.1\\nconnexion==2.14.2\\nFlask==2.2.5\\nFlask-AppBuilder==4.4.1\\nFlask-Babel==2.0.0\\nFlask-Caching==2.3.0\\nFlask-JWT-Extended==4.6.0\\nFlask-Limiter==3.7.0\\nFlask-Login==0.6.3\\nFlask-Session==0.5.0\\nFlask-SQLAlchemy==2.5.1\\nFlask-WTF==1.2.1\\nMarkupSafe==2.1.5\\nWerkzeug==2.2.3\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
+            "text": "Scenario ID: AF-09\nPrompt Version: v1.2\n\n### Vulnerability Intelligence\n* Target Package: werkzeug\n* Vulnerable Version: 2.2.3\n* CVE ID: GHSA-2g68-c3qc-8985\n* CVSS Score: 7.5\n* EPSS Probability: 0.03397\n* CISA KEV Status: False\n* Intelligence Retrieved On: 2026-08-04\n* Fixed Versions: ['3.0.3']\n\n### Dependency Context\n```json\n{\n  \"pip_show\": \"Name: Werkzeug\\nVersion: 2.2.3\\nSummary: The comprehensive WSGI web application library.\\nHome-page: https://palletsprojects.com/p/werkzeug/\\nAuthor: Armin Ronacher\\nAuthor-email: armin.ronacher@active-4.com\\nLicense: BSD-3-Clause\\nLocation: /home/runner/.local/lib/python3.12/site-packages\\nRequires: MarkupSafe\\nRequired-by: apache-airflow, connexion, Flask, Flask-AppBuilder, Flask-JWT-Extended, Flask-Login\\n\",\n  \"pip_freeze\": \"apache-airflow==2.9.2\\nconnexion==2.14.2\\nFlask==2.2.5\\nFlask-AppBuilder==4.4.1\\nFlask-JWT-Extended==4.6.0\\nFlask-Login==0.6.3\\nMarkupSafe==2.1.5\\nWerkzeug==2.2.3\",\n  \"requirements_txt\": \"apache-airflow==2.9.2\\napache-airflow-providers-amazon==8.24.0\\napache-airflow-providers-celery==3.7.2\\napache-airflow-providers-cncf-kubernetes==8.3.1\\napache-airflow-providers-common-io==1.3.2\\napache-airflow-providers-common-sql==1.14.0\\napache-airflow-providers-docker==3.12.0\\napache-airflow-providers-elasticsearch==5.4.1\\napache-airflow-providers-fab==1.1.1\\napache-airflow-providers-ftp==3.9.1\\napache-airflow-providers-google==10.19.0\\napache-airflow-providers-grpc==3.5.1\\napache-airflow-providers-hashicorp==3.7.1\\napache-airflow-providers-http==4.11.1\\napache-airflow-providers-imap==3.6.1\\napache-airflow-providers-microsoft-azure==10.1.1\\napache-airflow-providers-mysql==5.6.1\\napache-airflow-providers-odbc==4.6.1\\napache-airflow-providers-openlineage==1.8.0\\napache-airflow-providers-postgres==5.11.1\\napache-airflow-providers-redis==3.7.1\\napache-airflow-providers-sendgrid==3.5.1\\napache-airflow-providers-sftp==4.10.1\\napache-airflow-providers-slack==8.7.1\\napache-airflow-providers-smtp==1.7.1\\napache-airflow-providers-snowflake==5.5.1\\napache-airflow-providers-sqlite==3.8.1\\napache-airflow-providers-ssh==3.11.1\\nconnexion==2.14.2\\nFlask==2.2.5\\nFlask-AppBuilder==4.4.1\\nFlask-Babel==2.0.0\\nFlask-Caching==2.3.0\\nFlask-JWT-Extended==4.6.0\\nFlask-Limiter==3.7.0\\nFlask-Login==0.6.3\\nFlask-Session==0.5.0\\nFlask-SQLAlchemy==2.5.1\\nFlask-WTF==1.2.1\\nMarkupSafe==2.1.5\\nWerkzeug==2.2.3\"\n}\n```\n\nBased on the vulnerability intelligence and context:\n1. Recommend the safest strategy.\n2. Provide the exact manifest configuration (e.g., overrides block for package.json, or line for requirements.txt) required to enforce this without breaking the build."
           }
         ]
       }
@@ -18,7 +18,7 @@
     "systemInstruction": {
       "parts": [
         {
-          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies, including native upgrades, dependency overrides, dependency resolutions, package replacement, or manual intervention. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
+          "text": "You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.\nYou must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.\nEvaluate all technically feasible remediation strategies: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, or Manual Review. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.\nDo not hallucinate package versions. Recommend versions that actually exist and solve the CVE."
         }
       ]
     },
@@ -37,11 +37,25 @@
           },
           "strategy": {
             "type": "STRING",
-            "description": "The exact strategy chosen (e.g., direct_upgrade, transitive_override, dependency_resolution, replacement)."
+            "enum": [
+              "direct_upgrade",
+              "transitive_override",
+              "dependency_resolution",
+              "replacement",
+              "manual_review"
+            ],
+            "description": "The exact strategy chosen."
           },
           "remediation_type": {
             "type": "STRING",
-            "description": "Must be one of: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, Manual Review."
+            "enum": [
+              "Direct Upgrade",
+              "Transitive Override",
+              "Dependency Resolution",
+              "Replacement",
+              "Manual Review"
+            ],
+            "description": "The human-readable twin of strategy."
           },
           "recommended_package_version": {
             "type": "STRING",
@@ -53,7 +67,14 @@
             "properties": {
               "operation": {
                 "type": "STRING",
-                "description": "The operation to perform (e.g., 'replace', 'add_override', 'bump')."
+                "enum": [
+                  "add_override",
+                  "transitive_override",
+                  "replace",
+                  "bump",
+                  "direct_upgrade"
+                ],
+                "description": "The operation to perform."
               },
               "package": {
                 "type": "STRING",

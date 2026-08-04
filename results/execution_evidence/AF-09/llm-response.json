@@ -1,1 +1,11 @@
-{"reasoning":"Werkzeug version 2.2.3 is vulnerable to GHSA-2g68-c3qc-8985 (CVSS 7.5). The issue is resolved in Werkzeug version 3.0.3. Because Werkzeug is directly pinned in requirements.txt as Werkzeug==2.2.3, upgrading the direct dependency to 3.0.3 is the safest and most effective strategy to eliminate the security risk while maintaining overall system compatibility.","strategy":"direct_upgrade","remediation_type":"Direct Upgrade","recommended_package_version":"3.0.3","manifest_patch":{"operation":"bump","package":"Werkzeug","constraint":"==3.0.3"}}
+{
+  "reasoning": "The target package Werkzeug (version 2.2.3) is vulnerable to GHSA-2g68-c3qc-8985, a high-severity vulnerability with a CVSS score of 7.5. The vulnerability is fixed in version 3.0.3. Since Werkzeug is explicitly pinned as a direct dependency in requirements.txt ('Werkzeug==2.2.3'), a direct upgrade of the constraint to '==3.0.3' is the simplest and safest strategy to remediate the vulnerability while ensuring deterministic dependency installation.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "3.0.3",
+  "manifest_patch": {
+    "operation": "direct_upgrade",
+    "package": "Werkzeug",
+    "constraint": "==3.0.3"
+  }
+}
