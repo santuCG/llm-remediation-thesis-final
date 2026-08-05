@@ -423,5 +423,7 @@ Continuing toward full 18-scenario reproducibility verification. Same protocol: 
 | JS-02 | [31041420199](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31041420199) | **Match** — all 10 fields identical (job-level `failure` is the known, unrelated `TS1005` masking, consistent with the committed evidence) |
 | AF-04 | [31042741199](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31042741199) | **Match** — all 10 fields identical |
 | JS-04 | [31042747524](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31042747524) | **Match** — all 10 fields identical (job-level `failure` is the known, unrelated `TS1005` masking, consistent with the committed evidence) |
+| AF-05 | [31043708540](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31043708540) | **Match** — all 10 fields identical |
+| JS-05 | [31043715272](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31043715272) | **Match** — all 10 fields identical (job-level `failure` is the known, unrelated `TS1005` masking, consistent with the committed evidence) |
 
-**Remaining unverified as of this entry:** AF-05, AF-07, AF-08, AF-09, JS-05, JS-08, JS-09 (7 scenarios).
+**Remaining unverified as of this entry:** AF-07, AF-08, AF-09, JS-08, JS-09 (5 scenarios).
