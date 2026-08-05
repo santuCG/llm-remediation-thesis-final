@@ -382,3 +382,26 @@ root-caused, documented reasons rather than pipeline defects:
   remediation-completeness gap, `CHANGELOG_V2.md`).
 
 See `docs/CVE_MATCH_VERIFICATION.md` for the full 18-scenario preregistered-vs-executed CVE table.
+
+## Reproducibility Verification
+
+Coverage-based reproducibility check: one independent re-dispatch per distinct execution path
+present in the final dataset (AF clean/first-attempt, AF severity-bypass, JS clean-with-retry,
+JS negative/no-candidate, JS negative/genuine-failure), each re-run under the identical, unchanged
+pipeline code and compared field-by-field against the corresponding committed evidence in
+`results/execution_evidence/<ID>/metrics.json`. No workflow, prompt, or evidence-generation code
+was modified for this check.
+
+**Fields compared:** `api_cve_id`, `selected_package`, `strategy`, `remediation_type`,
+`build_success`, `test_success`, `dependency_verified`, `rescan_success`, `retry_count`,
+`failure_stage`.
+
+| Scenario | Path | Repro run | Result |
+|---|---|---|---|
+| AF-02 | AF clean/first-attempt | [30951503294](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951503294) | **Match** — all 10 fields identical |
+| JS-03 | JS clean-with-retry | [30951515254](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951515254) | **Match** — all 10 fields identical |
+| JS-06 | JS negative/no-candidate | [30951521049](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951521049) | **Match** — no `metrics.json` produced in either the original or the repro run (Failure Category A, by design); `candidate-ranking.json` in the repro run independently confirms 245 structurally-valid candidates with `CVE-2026-33228` absent, matching the original |
+| JS-07 | JS negative/genuine-failure | [30951527616](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951527616) | **Match** — all 10 fields identical |
+| AF-06 | AF severity-bypass | *(pending — see below)* | — |
+
+**AF-06's first dispatch attempt** (run [30951509577](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951509577)) did not complete: `gemini-2.0-flash` returned `RESOURCE_EXHAUSTED` (free-tier per-minute input-token quota) and the fallback `gemini-1.5-flash` returned `404 Not Found` (model not available on this API version) — the same known fallback-list gap documented in Batch 1. This is a quota/availability outcome, not a reproducibility mismatch; AF-06's coverage path remains unverified pending a clean re-dispatch.
