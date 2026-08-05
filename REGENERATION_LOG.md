@@ -402,6 +402,22 @@ was modified for this check.
 | JS-03 | JS clean-with-retry | [30951515254](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951515254) | **Match** — all 10 fields identical |
 | JS-06 | JS negative/no-candidate | [30951521049](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951521049) | **Match** — no `metrics.json` produced in either the original or the repro run (Failure Category A, by design); `candidate-ranking.json` in the repro run independently confirms 245 structurally-valid candidates with `CVE-2026-33228` absent, matching the original |
 | JS-07 | JS negative/genuine-failure | [30951527616](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951527616) | **Match** — all 10 fields identical |
-| AF-06 | AF severity-bypass | *(pending — see below)* | — |
+| AF-06 | AF severity-bypass | [31039511358](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31039511358) | **Match** — all 10 fields identical |
 
-**AF-06's first dispatch attempt** (run [30951509577](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951509577)) did not complete: `gemini-2.0-flash` returned `RESOURCE_EXHAUSTED` (free-tier per-minute input-token quota) and the fallback `gemini-1.5-flash` returned `404 Not Found` (model not available on this API version) — the same known fallback-list gap documented in Batch 1. This is a quota/availability outcome, not a reproducibility mismatch; AF-06's coverage path remains unverified pending a clean re-dispatch.
+**AF-06 required two failed dispatch attempts before this match**, both for recorded API-layer reasons, not reproducibility mismatches:
+- Run [30951509577](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30951509577): `gemini-2.0-flash` returned `RESOURCE_EXHAUSTED` (free-tier per-minute input-token quota); fallback `gemini-1.5-flash` returned `404 Not Found`.
+- Run [31038822053](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31038822053), after the API key was rotated: all 4 fallback models failed — `gemini-3.6-flash` → `503 UNAVAILABLE`, `gemini-2.5-flash` → `404 NOT_FOUND`, `gemini-2.0-flash` → `429 RESOURCE_EXHAUSTED`, `gemini-1.5-flash` → `404 NOT_FOUND`.
+- Run 31039511358 (third attempt) completed and matched.
+
+This closes the original 5-path coverage sample: **5 of 5 paths verified, zero mismatches.**
+
+### Extended coverage (beyond the original 5-path sample)
+
+Continuing toward full 18-scenario reproducibility verification. Same protocol: independent re-dispatch under unchanged pipeline code, compared field-by-field against committed evidence.
+
+| Scenario | Repro run | Result |
+|---|---|---|
+| AF-01 | [31040242955](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31040242955) | **Match** — all 10 fields identical |
+| JS-01 | [31039892615](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31039892615) | **Match** — all 10 fields identical (job-level `failure` is the known, unrelated `TS1005` masking, consistent with the committed evidence) |
+
+**Remaining unverified as of this entry:** AF-03, AF-04, AF-05, AF-07, AF-08, AF-09, JS-02, JS-04, JS-05, JS-08, JS-09 (11 scenarios).
