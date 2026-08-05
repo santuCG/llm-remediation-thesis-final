@@ -428,4 +428,14 @@ Continuing toward full 18-scenario reproducibility verification. Same protocol: 
 | AF-07 | [31044626134](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31044626134) | **Match** — all 10 fields identical |
 | JS-08 | [31044632494](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31044632494) | **Match** — all 10 fields identical (`dependency_verified: true` confirms Fix #11's version-comparison logic reproduces correctly, not just in the original evidence) |
 
-**Remaining unverified as of this entry:** AF-08, AF-09, JS-09 (3 scenarios).
+| AF-08 | [31046031160](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31046031160) | **Match** — all 10 fields identical |
+
+**AF-08 required two dispatch attempts before this match**, both for recorded API-layer reasons, not reproducibility mismatches:
+- Run [31045518497](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31045518497): all 4 fallback models failed — `gemini-3.6-flash` → `503 UNAVAILABLE`, `gemini-2.5-flash` → `404 NOT_FOUND`, `gemini-2.0-flash` → `429 RESOURCE_EXHAUSTED`, `gemini-1.5-flash` → `404 NOT_FOUND`.
+- Run 31046031160 (second attempt) completed and matched.
+
+**JS-09 dispatch attempted twice, not yet verified — both failed for recorded API-layer reasons:**
+- Run [31045524772](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31045524772): cancelled before completion (superseded by the retry below).
+- Run [31046033901](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31046033901): all 4 fallback models failed — `gemini-3.6-flash` → `503 UNAVAILABLE`, `gemini-2.5-flash` → `404 NOT_FOUND`, `gemini-2.0-flash` → `429 RESOURCE_EXHAUSTED` (`generativelanguage.googleapis.com/generate_content_free_tier_requests` quota exceeded, limit 0), `gemini-1.5-flash` → `404 NOT_FOUND`.
+
+**Remaining unverified as of this entry:** AF-09, JS-09 (2 scenarios).
