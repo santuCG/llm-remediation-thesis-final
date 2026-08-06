@@ -57,7 +57,9 @@ This repository investigates whether structured contextual information—includi
 
 The primary research question addressed by this work is:
 
-> **Can an LLM generate context-aware dependency remediation strategies that successfully resolve selected transitive dependency vulnerabilities under controlled SBOM-driven workflows where basic deterministic package upgrade strategies do not achieve the intended remediation objective?**
+> **Does providing contextual information to a Large Language Model improve dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly?**
+
+This is the thesis's official research question; see `THESIS_DRAFT_V3.md` §1.3 for the Supporting Questions (SQ1–SQ4), the null hypothesis (§1.4), and the scope notes governing how the comparison is evaluated.
 
 This repository does **not** evaluate:
 
