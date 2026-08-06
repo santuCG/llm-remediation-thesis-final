@@ -69,25 +69,37 @@ Automated dependency-update tools such as Dependabot and Renovate have made rout
 
 ## 1.3 Research Question
 
-The primary research question is taken unchanged from the frozen documentation (`docs/01-overview.md`):
+> **RQ.** Does providing contextual information to a Large Language Model improve dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly?
 
-> **RQ.** Can an LLM generate context-aware dependency remediation strategies that successfully resolve selected transitive dependency vulnerabilities under controlled SBOM-driven workflows, where basic deterministic package upgrade strategies do not achieve the intended remediation objective?
+**Provenance note.** This RQ is the thesis's official, examiner-of-record research question. It differs from the RQ previously stated in the repository's engineering documentation (`docs/01-overview.md`), which conditioned the comparison on cases "where basic deterministic package upgrade strategies do not achieve the intended remediation objective." Reconciling `docs/01-overview.md` with this RQ is a separate, still-open item and is not resolved by this edit.
 
-The question is analysed in three parts, without introducing any new research question: **Generation** (does the LLM produce structurally valid, non-hallucinated strategies?), **Validation** (do they pass deterministic verification?), and **Comparison** (how do they compare with a deterministic baseline, especially for transitive cases?).
+**Scope note.** The RQ names two outcome variables — remediation success rate and CI build stability — and this thesis reports them separately rather than as one combined figure, because the evidence behaves differently on each axis (§4.7). The comparison itself is conducted using the deterministic-baseline workflow described in §3.1. §3.8 states the specific respect in which the two workflows' recorded outcomes, for the npm scenarios, reflect each workflow's own stopping point in addition to the underlying fix; the Comparison analysis in §4.7 is read subject to that scope, which this RQ does not override.
 
-**Scope note.** The RQ's clause "where basic deterministic package upgrade strategies do not achieve the intended remediation objective" is evaluated per scenario using the deterministic-baseline workflow described in §3.1 and §3.8. §3.8 states the specific respects in which that workflow's outcome, for the npm scenarios, reflects the workflow's own stopping point in addition to the underlying fix; the Comparison analysis in §4.7 is read subject to that scope.
+**Supporting Questions.**
+
+> **SQ1.** Does combining CVSS, EPSS, and KEV information change remediation prioritisation compared to CVSS-only approaches?
+>
+> **SQ2.** How often do deterministic dependency upgrades fail because of compatibility or dependency issues?
+>
+> **SQ3.** Can contextual LLM-assisted recommendations reduce build failures or dependency conflicts?
+>
+> **SQ4.** What reliability issues occur during LLM-assisted remediation, such as invalid package recommendations or inconsistent outputs?
+
+**SQ1 scope note.** CISA KEV status was checked for every candidate vulnerability in both applications during preregistration and returned `FALSE` in all cases — 14/14 Airflow candidates (`preregistration/AIRFLOW_PREREGISTRATION.md`) and all Juice Shop candidates (`preregistration/JUICESHOP_PREREGISTRATION.md`). KEV is therefore a constant, not a variable, across the entire dataset, and SQ1 cannot be answered empirically from this dataset; §4.7 reports this as a disclosed limitation rather than a finding.
+
+The RQ is analysed in three parts, corresponding to SQ2–SQ4 and the RQ's two named outcomes: **Generation** (does the LLM produce structurally valid, non-hallucinated strategies? — SQ4), **Validation** (do they pass deterministic verification, and does this reduce build failures? — SQ2, SQ3), and **Comparison** (how do success rates and build stability compare with a deterministic baseline?).
 
 ## 1.4 Hypothesis
 
-The documentation frames each LLM recommendation as an engineering hypothesis rather than a trusted answer (`docs/03-llm-configuration.md`, `docs/04-experimental-methodology.md`). The research hypothesis follows:
+The documentation frames each LLM recommendation as an engineering hypothesis rather than a trusted answer (`docs/03-llm-configuration.md`, `docs/04-experimental-methodology.md`). The thesis's formal null hypothesis follows:
 
-> **H.** For transitive dependency vulnerabilities where a deterministic direct upgrade does not achieve the remediation objective, an LLM supplied with structured vulnerability intelligence and dependency-graph context can generate remediation strategies that, after deterministic validation, remove the target vulnerability.
+> **H₀.** LLM-assisted version recommendations produce no measurable difference in build success rate or remediation success rate compared to deterministic Grype-based upgrade recommendations across the selected experimental scenarios.
 
-The wording is careful. It claims removal of the target vulnerability after validation. It does not claim that the resulting application is fully functional, and Chapter 4 shows why that distinction matters.
+H₀ is evaluated separately for each of its two named outcomes, because §4.7 reports that the data does not support the same conclusion on both: build success rate is identical between the two arms per ecosystem, while remediation success rate differs for the npm scenarios in a way that is attributable, per §3.8, to the two workflows' differing stopping points rather than to remediation capability in isolation. The wording is careful for the same reason the RQ's scope note is careful: it claims a measurable difference or its absence, evaluated per outcome, not an unqualified verdict of LLM superiority.
 
 ## 1.5 Objectives
 
-The general objective is to evaluate, under controlled and reproducible conditions, whether LLM-generated remediation strategies can resolve dependency vulnerabilities that deterministic upgrades do not. The specific objectives are: (1) to design an SBOM-driven CI pipeline that generates an SBOM, detects vulnerabilities, requests an LLM remediation strategy, applies it, and validates the result deterministically; (2) to define a deterministic baseline pipeline that applies the scanner-recommended version without an LLM; (3) to evaluate both pipelines on eighteen pre-registered scenarios across two ecosystems; (4) to record complete, verifiable evidence for every scenario; and (5) to compare the two pipelines and report findings honestly, with limitations.
+The general objective is to evaluate, under controlled and reproducible conditions, whether LLM-assisted remediation improves dependency remediation success rates and CI build stability compared to deterministic scanner-recommended upgrades, and to answer SQ1–SQ4 from the same evidence. The specific objectives are: (1) to design an SBOM-driven CI pipeline that generates an SBOM, detects vulnerabilities, requests an LLM remediation strategy, applies it, and validates the result deterministically; (2) to define a deterministic baseline pipeline that applies the scanner-recommended version without an LLM; (3) to evaluate both pipelines on eighteen pre-registered scenarios across two ecosystems; (4) to record complete, verifiable evidence for every scenario; and (5) to compare the two pipelines on both named outcome variables and report findings honestly, with limitations, including where SQ1 cannot be answered from the collected data.
 
 ## 1.6 Scope
 
@@ -395,6 +407,10 @@ JS-05 is the clearest recorded example of the LLM adapting to a package-manager 
 ## 4.7 Research Question Analysis
 
 **Generation.** **OBSERVATION.** Seventeen of eighteen candidate-selection attempts produced a structurally valid LLM response (`llm_response_valid = true`); the eighteenth (JS-06) never reached the LLM step at all, because no candidate matched the preregistered target (§4.3b). Across the case studies the model recommended the correct fixed version without inventing one — a meaningful result given the package-hallucination risk in the literature [†hallu]. **Validation.** **OBSERVATION.** Sixteen of eighteen scenarios reached `dependency_verified = true` and `rescan_success = true`. The two that did not — JS-06 (Failure Category A: no candidate found, an SBOM cataloging limitation) and JS-07 (Failure Category B: candidate found and remediation attempted, but the vulnerable copy lived in a package tree the manifest editor cannot reach — a pipeline applicability limitation) — are both independently root-caused, belong to different failure categories with different fixes, and neither reflects the LLM reasoning incorrectly; in both cases the model's own diagnosis of the dependency graph was accurate. **LIMITATION.** For npm this co-exists with a non-compiling application (§3.7), so validation holds for *vulnerability removal and graph verification*, not full compilation. **Comparison.** **OBSERVATION.** The deterministic baseline completed and removed the target for all nine pip scenarios; for the nine npm scenarios, it stopped before rescan in each case, for the reasons stated in §3.8. The LLM pipeline reached a validated vulnerability-removed state on seven of nine npm scenarios. **INTERPRETATION (answer to the RQ, within the scope stated in §1.3 and §3.8).** For the flat pip class the deterministic baseline reached a validated result, so no comparative advantage is claimed for the LLM pipeline there. For the transitive npm class, within the evaluated workflows, the LLM pipeline reached a validated dependency-level remediation on seven of nine scenarios; the deterministic baseline's workflow did not reach a rescan-based result on any npm scenario, for the reason given in §3.8; a direct end-to-end comparison is not possible because the workflows terminate at different evaluation points. The two npm scenarios that did not reach a validated result are bounded by two disclosed, independently-diagnosed limits of the LLM pipeline's own reach rather than of the model's reasoning: SBOM cataloging coverage (JS-06) and manifest-editing scope in multi-manifest applications (JS-07).
+
+**Build stability (SQ3, H₀).** **OBSERVATION.** Table 4 (§4.1) and Table 5 (§4.2) report `build_success` as identical between the two arms within each ecosystem: `false` for both the deterministic baseline and the LLM pipeline across all nine npm scenarios, and `true` for both across all nine pip scenarios. No scenario in either ecosystem shows a different `build_success` value between the two arms. This is the evidence against which H₀'s build-success-rate outcome (§1.4) is evaluated; the remediation-success-rate outcome is addressed separately above, subject to the scope stated in §3.8.
+
+**SQ1, SQ2, SQ4.** SQ1 is addressed in §1.3, where it is reported as not answerable from this dataset because KEV was constant across all 18 scenarios. SQ2 is addressed above in §4.2 (Table 5: 9/9 npm baselines and 0/9 pip baselines fail to build). SQ4 is addressed above in this section's Generation and Validation paragraphs.
 
 ## 4.8 Discussion
 
