@@ -427,15 +427,21 @@ Continuing toward full 18-scenario reproducibility verification. Same protocol: 
 | JS-05 | [31043715272](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31043715272) | **Match** — all 10 fields identical (job-level `failure` is the known, unrelated `TS1005` masking, consistent with the committed evidence) |
 | AF-07 | [31044626134](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31044626134) | **Match** — all 10 fields identical |
 | JS-08 | [31044632494](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31044632494) | **Match** — all 10 fields identical (`dependency_verified: true` confirms Fix #11's version-comparison logic reproduces correctly, not just in the original evidence) |
-
 | AF-08 | [31046031160](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31046031160) | **Match** — all 10 fields identical |
+| AF-09 | [31126656696](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31126656696) | **Match** — all 10 fields identical |
 
 **AF-08 required two dispatch attempts before this match**, both for recorded API-layer reasons, not reproducibility mismatches:
 - Run [31045518497](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31045518497): all 4 fallback models failed — `gemini-3.6-flash` → `503 UNAVAILABLE`, `gemini-2.5-flash` → `404 NOT_FOUND`, `gemini-2.0-flash` → `429 RESOURCE_EXHAUSTED`, `gemini-1.5-flash` → `404 NOT_FOUND`.
 - Run 31046031160 (second attempt) completed and matched.
 
-**JS-09 dispatch attempted twice, not yet verified — both failed for recorded API-layer reasons:**
-- Run [31045524772](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31045524772): cancelled before completion (superseded by the retry below).
-- Run [31046033901](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31046033901): all 4 fallback models failed — `gemini-3.6-flash` → `503 UNAVAILABLE`, `gemini-2.5-flash` → `404 NOT_FOUND`, `gemini-2.0-flash` → `429 RESOURCE_EXHAUSTED` (`generativelanguage.googleapis.com/generate_content_free_tier_requests` quota exceeded, limit 0), `gemini-1.5-flash` → `404 NOT_FOUND`.
+**AF-09 required two dispatch attempts before this match**, the first blocked by an infrastructure stall, not an API or reproducibility issue:
+- Run [31126453196](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31126453196): sat `queued` for ~15 minutes with no GitHub-hosted runner ever assigned, then auto-cancelled by GitHub (job never started, no logs produced). Repository Actions permissions confirmed enabled (`allowed_actions: all`); no concurrency block in the workflow; no cancel request issued by the operator. Treated as a transient GitHub Actions runner-allocation stall.
+- Run 31126656696 (second attempt) picked up a runner within 10 seconds, completed, and matched.
 
-**Remaining unverified as of this entry:** AF-09, JS-09 (2 scenarios).
+**JS-09 dispatch attempted four times, not yet verified:**
+- Run [31045524772](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31045524772): cancelled before completion (superseded by the retry below).
+- Run [31046033901](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31046033901): first-attempt LLM call — all 4 fallback models failed (`503`/`404`/`429 RESOURCE_EXHAUSTED, limit 0`/`404`).
+- Run [31126453454](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31126453454): same infrastructure stall as AF-09's first attempt above — queued ~15 minutes, auto-cancelled, no logs.
+- Run [31126657175](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31126657175): first-attempt LLM call succeeded and applied `direct_upgrade`, but validation failed (`npm ls` reported `multer@2.2.0` invalid against the root project's `^1.4.5-lts.1` constraint), triggering a retry; the retry's LLM call then hit the same 4-model quota exhaustion as above. Recorded fields: `strategy: ""`, `llm_response_valid: false`, `dependency_verified: false`, `rescan_success: false`, `failure_stage: "build"` — an API-layer failure on the retry call, not a reproducibility mismatch of the pipeline itself (the first-attempt LLM call and its validation logic behaved correctly).
+
+**Remaining unverified as of this entry:** JS-09 (1 scenario).
