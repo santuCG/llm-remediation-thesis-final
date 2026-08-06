@@ -444,4 +444,8 @@ Continuing toward full 18-scenario reproducibility verification. Same protocol: 
 - Run [31126453454](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31126453454): same infrastructure stall as AF-09's first attempt above — queued ~15 minutes, auto-cancelled, no logs.
 - Run [31126657175](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31126657175): first-attempt LLM call succeeded and applied `direct_upgrade`, but validation failed (`npm ls` reported `multer@2.2.0` invalid against the root project's `^1.4.5-lts.1` constraint), triggering a retry; the retry's LLM call then hit the same 4-model quota exhaustion as above. Recorded fields: `strategy: ""`, `llm_response_valid: false`, `dependency_verified: false`, `rescan_success: false`, `failure_stage: "build"` — an API-layer failure on the retry call, not a reproducibility mismatch of the pipeline itself (the first-attempt LLM call and its validation logic behaved correctly).
 
-**Remaining unverified as of this entry:** JS-09 (1 scenario).
+| JS-09 | [31127476510](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31127476510) | **Match** — all 10 fields identical |
+
+**JS-09 succeeded on the fifth dispatch attempt** (see attempt history above), manually re-dispatched by the operator directly on `pipeline-v2-phase1` after a prior manual attempt was cancelled for having targeted `main` (pre-Pipeline-v2.0 code, not comparable — see commit history for that cancellation). The first-attempt LLM call and its validation both completed cleanly this time (`llm_response_valid: true`, no quota exhaustion), and the retry that followed matched the committed evidence on all 10 tracked fields.
+
+**This closes full 18-scenario reproducibility verification: 18 of 18 scenarios verified reproducible, zero field mismatches**, across all attempts and both coverage phases (original 5-path sample and the extended full-dataset sweep).
