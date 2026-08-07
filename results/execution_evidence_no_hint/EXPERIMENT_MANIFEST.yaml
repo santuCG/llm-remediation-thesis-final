@@ -343,3 +343,32 @@ Further correction -- the real cause of JS-01 attempt 1's "still present" result
   dependency issue. It happens to also explain why JS-01 is the one scenario where the
   unhinted attempt 1 had fully correct diagnosis and strategy yet still failed: the failure
   mode is orthogonal to what the LLM recommends, triggered by lockfile staleness alone.
+
+Precise mechanism correction -- which step actually performs the fixing lockfile wipe:
+  There are two separate, independently-triggered lockfile-wipe blocks in this pipeline, not
+  one:
+    "Fallback Lockfile Regeneration" (if: failure(), positioned right after "Apply Fix &
+      Verify"): only fires if the initial install itself hard-fails (exit 1). Carries an
+      explicit code comment -- "Native package manager resolution retained stale dependency
+      metadata or failed" -- confirming the pipeline's own authors anticipated this exact
+      npm behavior.
+    "Retry Remediation Strategy" (if: failure(), positioned after "Validate Remediation &
+      Rescan"): the "dispatch an entirely new LLM call and restart" step. It ALSO contains
+      its own unconditional lockfile wipe, bundled in as part of restarting.
+  For JS-01, "Apply Fix & Verify" succeeds (the override installs without error), so the
+  dedicated fallback never triggers -- there is no failure yet for its if:failure() condition
+  to react to. The staleness only becomes visible later, when validator.py's rescan still
+  finds the CVE. That failure is what triggers "Retry Remediation Strategy" -- so it is THAT
+  step's embedded wipe, not the dedicated fallback, that actually resolves it.
+  Assessment: this is a genuine design gap, not just an unlucky default. The dedicated
+  fallback is wired to the wrong signal (install exit code), which cannot structurally detect
+  this failure mode -- a stale-but-installable lockfile exits 0 fine, and staleness only
+  surfaces at rescan, after the fallback's trigger point has already passed. The mechanism
+  that does eventually catch it is coupled to dispatching a brand new LLM call, which costs
+  far more (one full extra API round-trip and CI cycle) than the underlying problem
+  (a pure npm/lockfile mechanical issue) requires. A scoped fix -- wipe the lockfile whenever
+  a transitive_override/add_override operation is applied, before ever reaching rescan --
+  would resolve this without an extra LLM call. Not implemented here (out of scope for this
+  ablation, which intentionally does not modify pipeline mechanics beyond the hint removal
+  and the retry-leak fix), but worth flagging as a concrete, scoped improvement for future
+  pipeline work, separate from anything about LLM reasoning quality.
