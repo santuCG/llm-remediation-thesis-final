@@ -183,7 +183,7 @@ The study's credibility depends on reproducibility, which is a known challenge i
 
 ## 2.12 Research Gap
 
-The literature supports four observations. First, detection, prioritisation, and provenance are well served by tools and standards [4], [13]–[18], [26]. Second, dependency-update automation is mature for the direct-upgrade case but not for constrained transitive cases [9], [10], [21]. Third, LLMs are widely studied for detecting and repairing vulnerabilities in *code*, and recently for fixing *client code* broken by updates, but far less for choosing *dependency-level* remediation strategies verified by deterministic supply-chain checks [5]–[8], [28], [31], [32]. Fourth, evaluations of LLM security tools frequently lack a clean deterministic baseline and a reproducible evidence archive.
+The literature supports four observations. First, detection, prioritisation, and provenance are well served by tools and standards [4], [13]–[18], [26]. Second, dependency-update automation is mature for the direct-upgrade case [9], [10] but not for constrained transitive cases. Third, LLMs are widely studied for detecting and repairing vulnerabilities in *code*, and recently for fixing *client code* broken by updates, but far less for choosing *dependency-level* remediation strategies verified by deterministic supply-chain checks [5]–[8], [28], [31], [32]. Fourth, evaluations of LLM security tools frequently lack a clean deterministic baseline and a reproducible evidence archive.
 
 **The gap this thesis addresses:** an empirical, reproducible evaluation of whether LLM-generated dependency-remediation strategies, verified by deterministic gates, improve remediation success rate and CI build stability compared against a deterministic baseline (§1.3).
 
