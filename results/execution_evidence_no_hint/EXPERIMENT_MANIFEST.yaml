@@ -65,7 +65,8 @@ Evidence:
 
 Scenarios:
   Pilot: JS-05
-  Queued (post-pilot, pending Q1-Q4 pass): JS-01, JS-07, JS-09, AF-01
+  Dropped: JS-07 (excluded from this experiment by explicit decision)
+  Sequential order (one at a time, not parallel): JS-09 (dispatched), JS-01, AF-01
 
 Pilot Result (JS-05):
   Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31217244426
