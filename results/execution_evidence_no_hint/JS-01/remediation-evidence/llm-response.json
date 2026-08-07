@@ -1,0 +1,11 @@
+{
+  "reasoning": "The vulnerable package `vm2` is a transitive dependency brought in by `juicy-chat-bot`. Version 3.9.17 suffers from GHSA-whpj-8f3w-67p5, allowing sandbox escape. Previous attempts failed because `vm2` version 3.9.17 remained active or caused lockfile validation errors. Applying an explicit transitive override to package.json for `vm2` pointing to version `3.9.19` forces npm to resolve the non-vulnerable patch version across the dependency tree without breaking `juicy-chat-bot`.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "3.9.19",
+  "manifest_patch": {
+    "operation": "transitive_override",
+    "package": "vm2",
+    "constraint": "3.9.19"
+  }
+}
