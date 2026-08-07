@@ -4,9 +4,9 @@ Experiment:
   Workflow: Research - Hint Removal Ablation
   Prompt Configuration: HintRemoval-v1.0
   Base Commit: 3e1173860e0a9121a0d473f4c77f069cfee9adf5
-  Status: In progress -- JS-05, JS-09, and AF-01 done (JS-09's first dispatch was contaminated
-    by a retry-path leak, see "Known Issue" below; fixed and rerun clean). JS-01 in progress,
-    last scenario in the set.
+  Status: COMPLETE -- all four scenarios (JS-05, JS-09, JS-01, AF-01) run and verified.
+    JS-09's first dispatch was contaminated by a retry-path leak, see "Known Issue" below;
+    fixed and rerun clean.
 
 Independent Variable:
   Fixed version hint: removed (scripts/remediation/llm_reasoner.py, "Fixed Versions" line deleted from user_prompt)
@@ -197,3 +197,65 @@ Result (AF-01, single-attempt, no retry):
     Version published: Yes
     Rescan passed: Yes
     Manual review flag: No
+
+Result (JS-01, final scenario in the set):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31224096838
+  Attempt 1: strategy=transitive_override, version=3.9.18, dependency_verified=false,
+    rescan_success=false, failure_stage=build. Dependency-type diagnosis was CORRECT (vm2
+    correctly identified as transitive via juicy-chat-bot, matching the hinted baseline's own
+    diagnosis) and strategy was correct -- this is a different sub-type of "Incorrect" than
+    JS-05's attempt 1, which had wrong dependency-type reasoning. Here the failure is
+    pipeline/environment-level (build stage), not a reasoning error.
+  Retry (final): strategy=transitive_override, version=3.9.19, dependency_verified=true,
+    rescan_success=true, retry_count=1. Retry reasoning explicitly references "previous
+    attempts failed because vm2 version 3.9.17 remained active or caused lockfile validation
+    errors" -- consistent with the JS-09 finding that the model can infer prior-attempt
+    consequences from live re-fetched context even without an explicit restatement.
+  Rationale length: ~57 words (attempt 1, truncated in source), 62 words (final)
+  Q1 (semantically meaningful version?): Yes -- "3.9.19", well-formed, consistent with
+    strategy=transitive_override
+  Q2 (published on registry?): Yes -- verified directly against the npm registry
+    (registry.npmjs.org/vm2/3.9.19). Side note, not chased further: the registry response
+    itself carries a maintainer deprecation notice that vm2 "contains critical security
+    issues and should not be used for production" and has been discontinued in favor of
+    isolated-vm -- unrelated to whether this specific CVE fix is valid, but worth knowing.
+  Q3 (resolves the CVE?): Yes -- rescan_success=true
+  Q4 (reasoning materially different from hinted baseline?): Strategy and dependency-type
+    diagnosis identical to the hinted run (transitive via juicy-chat-bot, transitive_override).
+    Version differs only slightly (3.9.19 vs. hinted 3.9.18 -- adjacent patch releases, not a
+    large divergence like JS-05/JS-09/AF-01). This is the smallest version divergence of the
+    four scenarios, and the only one where the strategy AND dependency-graph diagnosis were
+    both unhinted-and-still-correct on the first attempt (the failure that triggered retry was
+    pipeline-level, not reasoning-level).
+  Outcome decomposition:
+    First attempt: Incorrect (pipeline/build-stage failure, not a reasoning error --
+      strategy and dependency-type diagnosis were both correct)
+    Retry used: Yes
+    Final outcome: Correct
+    Version published: Yes
+    Rescan passed: Yes
+    Manual review flag: No
+
+Comparison Table -- Hinted (frozen thesis) vs. Unhinted (this experiment), all four scenarios:
+  JS-05 (jsonwebtoken, CVE-2015-9235): hinted direct_upgrade->4.2.2 (1 retry) vs. unhinted
+    direct_upgrade->9.0.2 (1 retry). Different version (5 major versions apart). Both verified.
+  JS-09 (multer, CVE-2026-3520): hinted direct_upgrade->2.1.1 (1 retry) vs. unhinted
+    direct_upgrade->1.4.5-lts.1 (1 retry). Different version (different release line entirely).
+    Both verified.
+  AF-01 (redshift-connector, CVE-2026-8838): hinted direct_upgrade->2.1.14 (no retry) vs.
+    unhinted direct_upgrade->2.1.2 (no retry). Different version (unhinted chose a smaller
+    bump, the immediate next patch above the vulnerable version). Both verified.
+  JS-01 (vm2, CVE-2023-32314): hinted transitive_override->3.9.18 (1 retry) vs. unhinted
+    transitive_override->3.9.19 (1 retry). Nearly identical version (adjacent patch releases).
+    Both verified.
+  Summary across all four: strategy selection matched the hinted baseline in every scenario
+    (4/4). Recommended version differed from the hinted baseline in every scenario (4/4),
+    ranging from a one-patch-release difference (JS-01) to a different release line entirely
+    (JS-09). Every unhinted version independently verified against its registry and against
+    rescan_success. Two scenarios (JS-05, JS-09) needed a retry to recover from a first-attempt
+    reasoning error (wrong dependency-type diagnosis and wrong strategy for JS-05; manual_review
+    plus a broken caret-range resolution for JS-09). Two scenarios (JS-01, AF-01) had correct
+    strategy/diagnosis on the first attempt (JS-01's first attempt still failed, but for a
+    pipeline/build reason, not a reasoning error; AF-01 succeeded outright with no retry).
+
+Status: COMPLETE. All four scenarios (JS-05, JS-09, JS-01, AF-01) run, verified, and recorded.
