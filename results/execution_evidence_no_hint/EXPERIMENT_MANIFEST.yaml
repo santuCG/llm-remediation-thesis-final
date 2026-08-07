@@ -60,3 +60,34 @@ Evidence:
 Scenarios:
   Pilot: JS-05
   Queued (post-pilot, pending Q1-Q4 pass): JS-01, JS-07, JS-09, AF-01
+
+Pilot Result (JS-05):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31217244426
+  Job conclusion: failure (known job-level pattern -- Apply Fix & Verify fails on attempt 1,
+    Fallback Lockfile Regeneration + Retry Remediation Strategy succeed; matches the base
+    pipeline's own historical JS-05 job-level-failure/remediation-actually-succeeded pattern,
+    not a new anomaly)
+  Attempt 1: strategy=transitive_override, version=9.0.0, dependency_verified=false
+    (misdiagnosed jsonwebtoken as transitive via express-jwt@0.1.3; same misdiagnosis pattern
+    as the original hinted run's attempt 1, reproduced independently of the hint -- n=1, not
+    generalized)
+  Retry (final): strategy=direct_upgrade, version=9.0.2, dependency_verified=true,
+    rescan_success=true, retry_count=1
+  Rationale length: 83 words (attempt 1), 78 words (final) -- vs. 41 words for the hinted
+    baseline's equivalent reasoning
+  Q1 (semantically meaningful version?): Yes -- "9.0.2", well-formed, consistent with
+    strategy=direct_upgrade
+  Q2 (published on registry?): Yes -- verified directly against the npm registry
+    (registry.npmjs.org/jsonwebtoken/9.0.2), published 2023-08-29
+  Q3 (resolves the CVE?): Yes -- rescan_success=true
+  Q4 (reasoning materially different from hinted baseline?): Mixed. The strategy-selection
+    reasoning ("directly declared in package.json at version 0.4.0" -> direct_upgrade) is
+    nearly identical in form to the hinted baseline. The recommended version differs
+    substantially (9.0.2 vs. the hinted 4.2.2 -- five major versions apart), but neither the
+    hinted nor unhinted reasoning explains *how* the specific version number was derived --
+    both assert it rather than justify it. This is itself informative: removing the hint
+    changed the answer and lengthened the reasoning, but did not, on this one scenario,
+    produce an explicit justification for the version choice in either condition.
+  Outcome classification: Correct (published version, resolves CVE)
+  Verdict: Pilot passes all four gate questions. Proceeding to the remaining four scenarios
+    is warranted.
