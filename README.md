@@ -7,6 +7,8 @@ This repository serves as the empirical evidence archive and experimental framew
 
 > **Navigation Hub:** To prevent synchronisation drift, this README does not duplicate methodology, results, or scientific discussion. It serves strictly as a directory to the canonical, mathematically verified documentation and raw execution evidence contained within the repository.
 
+> **Repository status:** The thesis results, evidence, and analysis correspond to the `pipeline-v2-phase1` branch (tag `thesis-submission-v1.0`). Other branches (`test-js-09`, `feature/reproducible-platform`) are retained as historical development work and were not used to produce the experimental results reported in the thesis.
+
 ---
 
 ## 1. What is this repository?
