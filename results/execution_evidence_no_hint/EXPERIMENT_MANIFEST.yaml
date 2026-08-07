@@ -277,3 +277,41 @@ Clarification -- "Both resolve CVE" refers to final, post-retry outcome, not att
       already-correct plan. JS-01 is the exception -- unhinted attempt 1 got diagnosis and
       strategy right and still failed for the same kind of pipeline-level reason the hinted
       runs fail for.
+
+Correction and mechanical finding -- why the CVE persists on npm attempt 1:
+  Initial hypothesis (validator.py crashed/never ran for JS-01 attempt 1, based on
+  validation_stage_reached="build" not "validator") was WRONG. Verified against the actual
+  raw CI log (gh run view --log), not just the metrics field: validator.py genuinely ran and
+  genuinely found the target CVE still present ("Remaining Vulnerabilities: 466",
+  "[VALIDATOR] FAILED: GHSA-whpj-8f3w-67p5 is still present."). vm2@3.9.18 was installed
+  (confirmed via npm's own deprecation warning naming that exact version), but the advisory
+  was still detected in the rescan.
+  Pipeline quirk discovered in the process, worth knowing for any future field-level analysis:
+  "failure_stage"/"validation_stage_reached" get unconditionally overwritten to "build" by a
+  separate downstream step ("Update Metrics on Build Failure") whenever the overall step
+  fails, REGARDLESS of which stage actually failed. validator.py itself correctly sets these
+  fields to "validator" on both its success and failure paths, but that gets stomped by the
+  generic handler immediately after. The field name is not reliable evidence of where a
+  failure occurred for any scenario where the rescan/validator is the actual failure point.
+  Per-scenario mechanical explanation for why attempt 1 leaves the CVE detected:
+    JS-05: wrong dependency-type diagnosis (transitive via express-jwt when actually direct)
+      -> override never applied (conflict at apply_fix, before rescan ever ran). Reasoning error.
+    JS-09: manual_review + a caret range npm resolved to an unintended 2.2.0, breaking the
+      dependency tree. Reasoning/resolution error.
+    JS-01: diagnosis and strategy both correct, override genuinely applied (3.9.18 installed),
+      but the rescan genuinely still detected the CVE among 466 remaining matches -- not a
+      reasoning error, an insufficient-fix case. Retry's one-patch-higher version (3.9.19)
+      resolved it.
+
+Grype-baseline vs. LLM-first-attempt comparison (requested framing):
+  The deterministic Grype baseline has no first-attempt/retry distinction -- it is single-shot
+  by design. Per the base thesis's own Sec 3.8, the baseline workflow for npm scenarios stops
+  immediately on build failure and never reaches a rescan at all. This means there is no
+  "Grype scan still shows the CVE" data point to compare against for JS-05, JS-09, or JS-01 --
+  the baseline never gets far enough to produce one.
+  AF-01 (pip) is the only one of the four scenarios where a genuine single-shot,
+  apples-to-apples comparison exists: Grype baseline succeeds first-attempt with 2.1.14; LLM
+  succeeds first-attempt (no retry) with 2.1.2. For the three npm scenarios, the meaningful
+  comparison is LLM-first-attempt vs. LLM-final (already recorded per-scenario above), not
+  LLM-vs-Grype at the first-attempt level, since Grype's own workflow design removes it from
+  contention before that point for npm.
