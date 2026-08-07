@@ -363,7 +363,7 @@ AF-01 is the clean reference case; `redshift-connector` is a direct pip dependen
 
 **FACT.** `jinja2@3.1.4` is a direct pip dependency, pinned in `requirements.txt`. The LLM recommended a direct upgrade to `3.1.5`, reasoning: *"Because Jinja2 is explicitly pinned in requirements.txt as a direct dependency ('Jinja2==3.1.4'), the most effective and safest remediation strategy is a direct upgrade to version 3.1.5… while preserving full backwards compatibility across dependent framework packages like Apache Airflow and Flask"* (`results/execution_evidence/AF-06/llm-response.json`). The remediation succeeded cleanly on the first attempt (`build_success`, `test_success`, `dependency_verified`, `rescan_success` all `true`).
 
-**LIMITATION — severity labelling under competing scoring standards.** AF-06 is one of the two scenarios affected by the target-selection threat described in §3.7; the vulnerability recorded against it was `werkzeug`/CVE-2024-34069 rather than its preregistered target, `jinja2`/CVE-2024-56326 — see Table 1's footnote. Independent of the target-selection threat, this scenario illustrates a second methodological observation: **the advisory GHSA-q2x7-8rv6-6q7h carries two different CVSS scores under two different scoring standards for the same vulnerability** — 7.8 under CVSS v3.1 (conventionally "High," 7.0–8.9) and 5.4 under CVSS v4.0 (conventionally "Medium," 4.0–6.9). GitHub's own `severity` field — which the scanner ingests and which a threshold-gated discovery filter reads — is derived from the v4.0 score, not the v3.1 score. **INTERPRETATION.** This is a real, general phenomenon, not specific to this advisory: as NVD and GHSA increasingly publish both v3.1 and v4.0 scores for the same CVE, and the two standards weight metrics like attack complexity and scope differently, a pipeline that keys a severity threshold off a single scanner-reported label is exposed to whichever CVSS version the scanner's upstream data source treats as authoritative — which need not match the version a researcher used when the vulnerability was originally selected for study. This is also the mechanism, independent of the substitution defect, that produced the original filtering problem: `prioritize.py`'s automatic-discovery filter requires `severity in ["high","critical"]`, and Grype's v4.0-derived "Medium" label placed this advisory below that threshold. The evaluation reported in this thesis matched explicit preregistered `TARGET_CVE` requests against the full structurally-valid candidate pool irrespective of severity, since a discovery filter is not intended to override a deliberate experimental selection (§3.7).
+**LIMITATION — severity labelling under competing scoring standards.** AF-06 is one of the two scenarios affected by the target-selection threat described in §3.7; the vulnerability recorded against it was `werkzeug`/CVE-2024-34069 rather than its preregistered target, `jinja2`/CVE-2024-56326 — see Table 1's footnote. Independent of the target-selection threat, this scenario illustrates a second methodological observation: **the advisory GHSA-q2x7-8rv6-6q7h carries two different CVSS scores under two different scoring standards for the same vulnerability** — 7.8 under CVSS v3.1 (conventionally "High," 7.0–8.9) and 5.4 under CVSS v4.0 (conventionally "Medium," 4.0–6.9). GitHub's own `severity` field — which the scanner ingests and which a threshold-gated discovery filter reads — is derived from the v4.0 score, not the v3.1 score. **INTERPRETATION.** This is a real, general phenomenon, not specific to this advisory: as NVD and GHSA increasingly publish both v3.1 and v4.0 scores for the same CVE, and the two standards weight metrics like attack complexity and scope differently, a pipeline that keys a severity threshold off a single scanner-reported label is exposed to whichever CVSS version the scanner's upstream data source treats as authoritative — which need not match the version a researcher used when the vulnerability was originally selected for study. This is also the mechanism, independent of the target-selection limitation, that produced the original filtering problem: `prioritize.py`'s automatic-discovery filter requires `severity in ["high","critical"]`, and Grype's v4.0-derived "Medium" label placed this advisory below that threshold. The evaluation reported in this thesis matched explicit preregistered `TARGET_CVE` requests against the full structurally-valid candidate pool irrespective of severity, since a discovery filter is not intended to override a deliberate experimental selection (§3.7).
 
 ## 4.3b Case Study — JS-06 (flatted, CVE-2026-33228): Failure Category A — SBOM cataloging limitation
 
@@ -545,7 +545,7 @@ Per-scenario evidence `results/execution_evidence/<ID>/`; canonical per-scenario
 
 ## Appendix C — CVE match verification
 
-**Appendix C contains a complete verification showing every executed scenario matched its intended preregistered target CVE.** Full table, method, and interpretation: `docs/CVE_MATCH_VERIFICATION.md`. Summary: of the eighteen preregistered scenarios, seventeen produced an executed `api_cve_id` and every one matched its preregistered CVE exactly — zero silent substitutions in the final, regenerated dataset. The eighteenth (JS-06) produced no `api_cve_id` at all, by design (§4.3b, Failure Category A) — its own preregistered CVE, `CVE-2026-33228`, never had the opportunity to mismatch anything, since the corrected pipeline (Fix #10, `CHANGELOG_V2.md`) refuses to substitute a different vulnerability when the target cannot be found. This table is also the direct, dataset-wide confirmation that the AF-06/JS-06 substitution defect discussed in §3.7 and §4.3a–b was closed for every scenario, not just the two where it was first observed. See also `FINAL_DATASET.md` for the per-scenario run ID / commit / evidence-hash manifest this verification is built from.
+**Appendix C contains a complete verification showing every executed scenario matched its intended preregistered target CVE.** Full table, method, and interpretation: `docs/CVE_MATCH_VERIFICATION.md`. Summary: of the eighteen preregistered scenarios, seventeen produced an executed `api_cve_id` and every one matched its preregistered CVE exactly — zero silent substitutions in the final, regenerated dataset. The eighteenth (JS-06) produced no `api_cve_id` at all, by design (§4.3b, Failure Category A) — its own preregistered CVE, `CVE-2026-33228`, never had the opportunity to mismatch anything, since the corrected pipeline (Fix #10, `CHANGELOG_V2.md`) refuses to substitute a different vulnerability when the target cannot be found. This table is also the direct, dataset-wide confirmation that the AF-06/JS-06 target-selection limitation discussed in §3.7 and §4.3a–b was closed for every scenario, not just the two where it was first observed. See also `FINAL_DATASET.md` for the per-scenario run ID / commit / evidence-hash manifest this verification is built from.
 
 ## Appendix D — Suggested figures (author to render)
 F1 twelve-stage LLM pipeline (`.github/workflows/generic-remediation.yml`; Mermaid source: `PIPELINE_V2_RELEASE_NOTES.md`); F2 deterministic baseline (`.github/workflows/grype-baseline.yml`); F3 JS-01 transitive shadowing graph (`.../JS-01/llm-request.json`); F4 baseline vs LLM by ecosystem (Tables 5–6); F5 response-schema fields (`.../AF-01/llm-request.json`); F6 prioritisation order (`prioritize.py`); F7 baseline-vs-rescan counts for the case studies; F8 evidence-folder structure; F9 strategy distribution across 18 scenarios (Table 4); F10 npm nested vs pip flat resolution; F11 retry mechanism flow; F12 provenance/audit timeline; F13 CVSS/EPSS/KEV prioritisation concept; F14 SBOM generation-to-scan data flow; F15 comparison-to-existing-tools map (Table L1); F16 two-tree monorepo structure showing why JS-07's frontend-reachable package is outside manifest_editor.py's scope (§4.3c, Failure Category B).
@@ -575,36 +575,38 @@ F1 twelve-stage LLM pipeline (`.github/workflows/generic-remediation.yml`; Merma
 | 1 | Small World with High Risks (npm) | Zimmermann, Staicu, Tenny, Pradel | USENIX Sec 2019 | [1] | §1.1, §2.1, §2.4 |
 | 2 | Impact of vulns in npm/RubyGems networks | Decan, Mens, Constantinou | MSR'18/EMSE'22 | [2] | §2.4 |
 | 3 | Backstabber's Knife Collection | Ohm, Plate, Sykosch, Meier | DIMVA 2020 | [3] | §1.1, §2.1 |
-| 4 | EPSS | Jacobs, Romanosky, Edwards, Roytman, Adjerid | DTRAP 2021 | [4] | §2.5 |
-| 5 | LLMs for SE: SLR | Hou, Zhao, Liu, Yang, Wang, Li, Luo, Lo, Grundy, Wang | TOSEM 2024 | [5] | §2.7 |
+| 4 | EPSS | Jacobs, Romanosky, Edwards, Roytman, Adjerid | DTRAP 2021 | [4] | §2.5, §3.3 |
+| 5 | LLMs for SE: SLR | Hou, Zhao, Liu, Yang, Wang, Li, Luo, Lo, Grundy, Wang | TOSEM 2024 | [5] | §2.7, §3.3 |
 | 6 | LLM for Vuln Detection & Repair | Zhou, Cao, Sun, Lo | TOSEM 2024/25 | [6] | §2.8 |
-| 7 | SLR LLMs for APR | [to verify] | arXiv 2024 | [7] | §2.9 |
-| 8 | LLMs in Code Security SLR | [to verify] | arXiv 2024 | [8] | §2.8 |
-| 9 | Dependabot exploratory study | [to verify] | IEEE TSE 2023 | [9] | §1.2, §2.6, §2.10 |
-| 10 | Dependabot security PRs | [to verify] | EMSE 2024 | [10] | §1.2, §2.10 |
-| 11 | SBOM: Where We Stand | [to verify] | ICSE 2023 | [11] | §2.2 |
-| 12 | GitHub workflows & security policies | [to verify] | arXiv 2023 | [12] | §2.6 |
-| 13 | NIST SP 800-161 Rev 1 | NIST | 2022 | [13] | §1.1, §2.1 |
-| 14/31 | SCA tool comparison | Imtiaz, Thorn, Williams | ESEM 2021 | [14],[31] | §2.3, §4.8 |
-| 15 | Do developers update deps? | Kula, German, Ouni, Ishio, Inoue | EMSE 2018 | [15] | §1.2 |
-| 16 | Asleep at the Keyboard (Copilot) | Pearce, Ahmad, Tan, Dolan-Gavitt, Karri | IEEE S&P 2022 | [16] | §2.8 |
-| 17 | Zero-Shot Vulnerability Repair | Pearce, Tan, Ahmad, Karri, Dolan-Gavitt | IEEE S&P 2023 | [17] | §2.8 |
-| 18 | in-toto | Torres-Arias, Afzali, Kuppusamy, Curtmola, Cappos | USENIX Sec 2019 | [18] | §2.1 |
-| 19 | SoK Taxonomy of SSC attacks | Ladisa, Plate, Martinez, Barais | IEEE S&P 2023 | [19] | §2.1 |
-| 20 | Semantic versioning / breaking changes | Raemaekers, van Deursen, Visser | JSS 2017 / SCAM'14 | [20] | §1.2, §2.4 |
-| 21 | Technical lag in npm | Zerouali, Constantinou, Mens, Robles, González-Barahona | ICSR 2018 | [21] | §1.1, §2.4 |
-| 22 | Chain-of-Thought prompting | Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, Zhou | NeurIPS 2022 | [22] | §2.7 |
-| 23 | Vulns in Python (PyPI) | Alfadel, Costa, Shihab | EMSE 2023 | [23] | §2.4 |
-| 24 | Retrieval-Augmented Generation | Lewis, Perez, Piktus, et al. | NeurIPS 2020 | [24] | §2.7 |
-| 25 | Prompt engineering survey | Sahoo, Singh, Saha, Jain, Mondal, Chadha | arXiv 2024 | [25] | §2.7 |
-| 26 | DevSecOps challenges SLR | Rajapakse, Zahedi, Babar, Shen | IST 2022 | [26] | §2.6 |
-| 27 | Time to Change the CVSS? | Spring, Householder, Hatleback, Manion, Shick | IEEE S&P mag 2021 | [27] | §2.5 |
-| 28 | Typosquatting/combosquatting PyPI | Vu, Pashchenko, Massacci, Plate, Sabetta | EuroS&PW 2020 | [28] | §2.1 |
-| 29 | VulRepair | Fu, Tantithamthavorn, Le, Nguyen, Phung | ESEC/FSE 2022 | [29] | §2.9, §4.4 |
-| 30 | Foundation models | Bommasani, Hudson, … Liang | arXiv 2021 | [30] | §2.7 |
-| 32 | Byam (LLM breaking updates) | [to verify] | arXiv 2025 / EMSE | [32] | §2.10, §4.7 |
-| 33 | Automatically Fixing Dep. Breaking Changes | [to verify] | Proc. ACM SE 2025 | [33] | §2.10, §4.7 |
-| 34 | Reproducibility of MSR studies | [to verify] | EMSE | [34] | §2.11, §3.6 |
+| 7 | SLR LLMs for APR | Zhang, Fang, Xie, Ma, Sun, Yang, Chen | TOSEM (arXiv 2024) | [7] | §2.9 |
+| 8 | LLMs in Code Security SLR | Basic, Giaretta | arXiv 2024 | [8] | §2.8 |
+| 9 | Dependabot exploratory study | He, He, Zhang, Zhou | IEEE TSE 2023 | [9] | §1.2, §2.6, §2.10, §2.12 |
+| 10 | Dependabot security PRs | Rebatchi, Bissyandé, Moha | EMSE 2024 | [10] | §1.2, §2.10, §2.12 |
+| 11 | SBOM: Where We Stand | Xia, Bi, Xing, Lu, Zhu | ICSE 2023 | [11] | §2.2 |
+| 12 | GitHub workflows & security policies | Ayala, Garcia | arXiv 2023 | [12] | §2.6, §3.3 |
+| 13 | NIST SP 800-161 Rev 1 | NIST | 2022 | [13] | §1.1, §2.1, §2.12 |
+| 14 | Do developers update deps? | Kula, German, Ouni, Ishio, Inoue | EMSE 2018 | [14] | §1.2, §2.12 |
+| 15 | Asleep at the Keyboard (Copilot) | Pearce, Ahmad, Tan, Dolan-Gavitt, Karri | IEEE S&P 2022 | [15] | §2.8 |
+| 16 | Zero-Shot Vulnerability Repair | Pearce, Tan, Ahmad, Karri, Dolan-Gavitt | IEEE S&P 2023 | [16] | §2.8 |
+| 17 | in-toto | Torres-Arias, Afzali, Kuppusamy, Curtmola, Cappos | USENIX Sec 2019 | [17] | §1.1, §2.1, §2.12 |
+| 18 | SoK Taxonomy of SSC attacks | Ladisa, Plate, Martinez, Barais | IEEE S&P 2023 | [18] | §1.1, §2.1, §2.12 |
+| 19 | Semantic versioning / breaking changes | Raemaekers, van Deursen, Visser | JSS 2017 / SCAM'14 | [19] | §1.2, §2.4 |
+| 20 | Technical lag in npm | Zerouali, Constantinou, Mens, Robles, González-Barahona | ICSR 2018 | [20] | §1.1, §2.4 |
+| 21 | Chain-of-Thought prompting | Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, Zhou | NeurIPS 2022 | [21] | §2.7 |
+| 22 | Vulns in Python (PyPI) | Alfadel, Costa, Shihab | EMSE 2023 | [22] | §2.4 |
+| 23 | Retrieval-Augmented Generation | Lewis, Perez, Piktus, et al. | NeurIPS 2020 | [23] | §2.7 |
+| 24 | Prompt engineering survey | Sahoo, Singh, Saha, Jain, Mondal, Chadha | arXiv 2024 | [24] | §2.7 |
+| 25 | DevSecOps challenges SLR | Rajapakse, Zahedi, Babar, Shen | IST 2022 | [25] | §2.6 |
+| 26 | Time to Change the CVSS? | Spring, Hatleback, Householder, Manion, Shick | IEEE S&P mag 2021 | [26] | §2.5, §3.3 |
+| 27 | Typosquatting/combosquatting PyPI | Vu, Pashchenko, Massacci, Plate, Sabetta | EuroS&PW 2020 | [27] | §2.1 |
+| 28 | VulRepair | Fu, Tantithamthavorn, Le, Nguyen, Phung | ESEC/FSE 2022 | [28] | §2.9, §4.4 |
+| 29 | Foundation models | Bommasani, Hudson, … Liang | arXiv 2021 | [29] | §2.7, §3.3 |
+| 30 | SCA tool comparison | Imtiaz, Thorn, Williams | ESEM 2021 | [30] | §2.3, §2.10, §3.3, §4.8 |
+| 31 | Byam (LLM breaking updates) | Reyes, Mahmoud, Bono, Nadi, Baudry, Monperrus | arXiv 2025 / EMSE | [31] | §2.10, §4.7 |
+| 32 | Automatically Fixing Dep. Breaking Changes | Fruntke, Krinke | Proc. ACM SE 2025 | [32] | §2.10, §4.7 |
+| 33 | Reproducibility of MSR studies | González-Barahona, Robles | EMSE 2012 | [33] | §2.11, §3.6, §4.8 |
+| 34 | SCA for vulnerability detection (Java) | Zhao, Chen, Xu, Liu, Zhang, Wu, Sun, Liu | ESEC/FSE 2023 | [34] | §2.3 |
+| 35 | Package hallucinations (LLM code generation) | Spracklen, Wijewickrama, Sakib, Maiti, Viswanath, Jadliwala | USENIX Sec 2025 | [35] | §2.8, §3.3, §4.7 |
 | — | OSV database | Google | 2021 | [49] | §1.1 |
 
 *Consulted-but-not-cited (available to the author): "SoK: A Defense-Oriented Evaluation of Software Supply Chain Security" (arXiv:2405.14993); "Time for Actions: GitHub Actions Marketplace" (SecDev 2025); "BOMs Away!" (arXiv:2309.12206); "An Overview and Catalogue of Dependency Challenges…" (arXiv:2409.18884).*
