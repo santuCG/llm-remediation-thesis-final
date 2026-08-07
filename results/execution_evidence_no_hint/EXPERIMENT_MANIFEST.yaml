@@ -24,15 +24,21 @@ Dependent Variables:
   Reasoning category (manual coding, pending; starter taxonomy: cites external advisory (GHSA/NVD) /
     cites semver "first patched version" heuristic / cites changelog or release notes /
     generic-unspecified / hedged-uncertain)
-  Outcome classification (four-way, not three-way):
-    Correct: strategy != manual_review, version exists on registry, rescan_success = true
-    Incorrect published version: strategy != manual_review, version exists on registry, rescan_success = false
-    Hallucinated version: strategy != manual_review, version does not exist on registry
-    Manual review: strategy == manual_review (recommended_package_version is still populated per schema,
-      but is not to be read as a genuine recommendation in this case)
-  Retry needed
-  Dependency verified
-  Rescan success
+  Outcome decomposition (replaces a single flat outcome label -- separates reasoning quality from
+    pipeline/retry recovery, since these are two distinct mechanisms that a single "final outcome"
+    field confounds):
+    First attempt: Correct / Incorrect
+      (Incorrect = wrong dependency-type reasoning, wrong strategy, hallucinated version, or a
+      pipeline-level failure before reaching rescan -- read failure_stage/validation_stage_reached
+      on metrics-attempt1.json to distinguish these, don't infer from rescan_success alone since a
+      pipeline failure before rescan also reads rescan_success=false with no rescan having occurred)
+    Retry used: Yes / No
+    Final outcome: Correct / Incorrect
+    Version published: Yes / No (checked directly against the registry, not inferred from
+      dependency_verified alone)
+    Rescan passed: Yes / No
+    Manual review flag: Yes / No (tracked separately -- strategy == manual_review at either attempt;
+      not collapsible into Correct/Incorrect since refusal is not a version-correctness claim)
   Reasoning materially different from hinted baseline (Y/N, qualitative)
 
 Pilot Protocol (JS-05 only, gate before running remaining scenarios):
@@ -88,6 +94,16 @@ Pilot Result (JS-05):
     both assert it rather than justify it. This is itself informative: removing the hint
     changed the answer and lengthened the reasoning, but did not, on this one scenario,
     produce an explicit justification for the version choice in either condition.
-  Outcome classification: Correct (published version, resolves CVE)
-  Verdict: Pilot passes all four gate questions. Proceeding to the remaining four scenarios
-    is warranted.
+  Outcome decomposition:
+    First attempt: Incorrect (failure_stage=apply_fix, validation_stage_reached=apply_fix --
+      failed before reaching rescan; wrong dependency-type reasoning and wrong strategy, not
+      merely a late-stage failure)
+    Retry used: Yes
+    Final outcome: Correct
+    Version published: Yes
+    Rescan passed: Yes
+    Manual review flag: No
+  Verdict: Pilot passes all four gate questions. The first-attempt/retry decomposition shows
+    the final "Correct" result depends on the retry mechanism, not on one-shot unaided recall --
+    this is now tracked explicitly per scenario going forward so hint-removal and retry-recovery
+    are not read as a single combined effect.
