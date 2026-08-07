@@ -4,8 +4,8 @@ Experiment:
   Workflow: Research - Hint Removal Ablation
   Prompt Configuration: HintRemoval-v1.0
   Base Commit: 3e1173860e0a9121a0d473f4c77f069cfee9adf5
-  Status: In progress -- JS-05 verified clean; JS-09 contaminated (retry-path leak, see
-    "Known Issue" below), fix applied, rerun queued
+  Status: In progress -- JS-05 and JS-09 done (JS-09's first dispatch was contaminated by a
+    retry-path leak, see "Known Issue" below; fixed and rerun clean). JS-01 and AF-01 remaining.
 
 Independent Variable:
   Fixed version hint: removed (scripts/remediation/llm_reasoner.py, "Fixed Versions" line deleted from user_prompt)
@@ -91,8 +91,7 @@ Evidence:
 Scenarios:
   Pilot: JS-05
   Dropped: JS-07 (excluded from this experiment by explicit decision)
-  Sequential order (one at a time, not parallel): JS-09 (contaminated, queued for rerun
-    under fixed code), JS-01, AF-01
+  Sequential order (one at a time, not parallel): JS-09 (done, clean rerun), JS-01, AF-01
 
 Pilot Result (JS-05):
   Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31217244426
@@ -134,3 +133,36 @@ Pilot Result (JS-05):
     the final "Correct" result depends on the retry mechanism, not on one-shot unaided recall --
     this is now tracked explicitly per scenario going forward so hint-removal and retry-recovery
     are not read as a single combined effect.
+
+Result (JS-09, clean rerun under fixed retry code):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31220408024
+  Attempt 1: strategy=manual_review, recommended_package_version=2.0.0-rc.1 (a pre-release),
+    manifest_patch bumped multer to ^2.0.0-rc.1 despite the manual_review strategy label.
+    npm resolved that range up to a real published 2.2.0, which broke the dependency tree
+    (npm error invalid: multer@2.2.0 / ELSPROBLEMS). dependency_verified=false,
+    rescan_success=false, failure_stage=build.
+  Retry (final): strategy=direct_upgrade, recommended_package_version=1.4.5-lts.1 (the same
+    range originally in package.json, ^1.4.5-lts.1). dependency_verified=true,
+    rescan_success=true (confirmed directly against rescan.json -- no match for
+    GHSA-5528-5vmv-3xc2/CVE-2026-3520, and no other multer match either).
+  Retry-context finding (resolves the question raised about whether retry has any memory of
+    attempt 1): the retry prompt does NOT explicitly state attempt 1's recommendation, but the
+    model correctly inferred what happened from the live re-fetched dependency context, which
+    contained "npm error invalid: multer@2.2.0" -- direct evidence of the broken state left by
+    attempt 1's constraint. The retry reasoning's claim ("an invalid/non-existent package
+    version (multer@2.2.0)... was attempted") is grounded in this, not confabulated -- verified
+    by locating "2.2.0" in the actual retry prompt text. Revises the concern raised earlier in
+    this experiment: the retry mechanism has indirect but real access to prior-attempt
+    consequences via live context re-fetch, even without an explicit "you recommended X" field.
+  Open observation, not resolved further (deprioritized per explicit instruction to proceed):
+    the final accepted version (^1.4.5-lts.1) differs from the original hinted thesis run's
+    converged fix (2.1.1) for this same CVE. rescan_success=true is independently verified
+    against rescan.json, so the divergence is not a validation error, but the reason two
+    different concrete versions both clear the scanner is not traced further here.
+  Outcome decomposition:
+    First attempt: Incorrect
+    Retry used: Yes
+    Final outcome: Correct
+    Version published: Yes (1.4.5-lts.1 is the range already declared pre-experiment; real)
+    Rescan passed: Yes
+    Manual review flag: Yes (attempt 1 only; final attempt did not use manual_review)
