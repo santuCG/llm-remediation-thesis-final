@@ -13,7 +13,7 @@ Submission Date: **[to be provided]**
 
 ---
 
-> **Integrity and sourcing note.** Historical freeze tag: `thesis-freeze-2026-08-02`, commit `5a227c8f`. Final regenerated dataset: produced under Pipeline v2.0 (`CHANGELOG_V2.md`, `PIPELINE_V2_RELEASE_NOTES.md`) and reported in this thesis. Every experimental number is quoted from a file in the repository at the commit corresponding to the final regenerated dataset (`results/execution_evidence/`, `results/reproducibility_verification/`) and cited by path. External claims use IEEE citations to sources that were verified through web research for this thesis and are recorded in the *Research Sources Used* appendix; no reference, author, year, or DOI has been invented. Evidence labels keep claims traceable: **FACT** (repository evidence), **OBSERVATION** (measured result), **INTERPRETATION** (author's reasoning), **LIMITATION**, and **FUTURE WORK**.
+> **Integrity and sourcing note.** Historical freeze tag: `thesis-freeze-2026-08-02`, commit `5a227c8f`. Final regenerated dataset: produced under Pipeline v2.0 (`CHANGELOG_V2.md`, `PIPELINE_V2_RELEASE_NOTES.md`) and reported in this thesis. Unless otherwise stated, all quantitative results reported in the primary evaluation originate from the frozen evidence archive (`results/execution_evidence/`, `results/reproducibility_verification/`) at the tagged submission commit, cited by path. Results reported in the explanatory hint-removal ablation study (§4.10) originate from a separate archived evidence set (`results/execution_evidence_no_hint/`) generated on a dedicated research branch, isolated from the pipeline code that produced the primary evaluation; the two datasets are analysed independently and are not combined in any reported aggregate statistic. External claims use IEEE citations to sources that were verified through web research for this thesis and are recorded in the *Research Sources Used* appendix; no reference, author, year, or DOI has been invented. Evidence labels keep claims traceable: **FACT** (repository evidence), **OBSERVATION** (measured result), **INTERPRETATION** (author's reasoning), **LIMITATION**, and **FUTURE WORK**.
 
 ---
 
@@ -111,7 +111,7 @@ The study evaluates remediation after detection. Following the frozen scope (`do
 
 ## 1.8 Structure of the Thesis
 
-Chapter 2 reviews the tools, standards, and prior research the study depends on, and states the research gap. Chapter 3 describes and justifies the research design, scenarios, pipeline, and analysis method. Chapter 4 presents the findings through seven detailed case studies and a full-dataset comparison, and discusses them against the literature. Chapter 5 concludes with contributions, limitations, and future work.
+Chapter 2 reviews the tools, standards, and prior research the study depends on, and states the research gap. Chapter 3 describes and justifies the research design, scenarios, pipeline, and analysis method, and (§3.9) the method for a small supplementary ablation study. Chapter 4 presents the findings through seven detailed case studies and a full-dataset comparison, discusses them against the literature, and (§4.10) reports that ablation study, which explains rather than re-measures the primary findings. Chapter 5 concludes with contributions, limitations, and future work.
 
 ---
 
@@ -310,6 +310,22 @@ This section states what the pip/npm comparison in Chapter 4 does and does not e
 
 **Scope statement.** Within the evaluated workflows, a difference in recorded outcome between the two arms reflects, at minimum, the difference in stopping point described above. It should not be read as a general claim that an LLM-generated strategy is superior to a deterministic scanner-recommended one, independent of this thesis's specific workflow implementations. Conclusions in Chapter 4 and Chapter 5 are limited to the two pipelines as implemented in this repository. Accordingly, comparisons in the npm scenarios are interpreted as comparisons of end-to-end workflow behaviour rather than isolated remediation capability.
 
+## 3.9 Explanatory Ablation Study — Methodology
+
+**Motivation.** In the primary evaluation, every LLM prompt includes the vulnerability scanner's own recorded fixed version as an explicit field (`Fixed Versions: [...]`; `scripts/remediation/llm_reasoner.py`). A validated remediation in Chapter 4 therefore does not, on its own, distinguish between two different capabilities: the LLM correctly applying a version it was given, versus the LLM independently identifying a correct version. **INTERPRETATION.** This distinction bears on SQ4 (reliability issues such as invalid package recommendations) and on how much of the strategy-selection behaviour observed in Chapter 4 is attributable to the model's own knowledge rather than to information supplied by the deterministic scanner.
+
+**Research objective.** This study isolates one variable — presence or absence of the fixed-version hint — while holding the model, temperature, response schema, retry mechanism, and validation gate unchanged, in order to explain, not re-measure, the behaviour already observed in the primary evaluation. It does not replace or extend the primary eighteen-scenario evaluation and is reported as a supplementary explanatory analysis, not a second independent evaluation.
+
+**Experimental design.** **FACT.** The study was conducted on an isolated branch (`research/hint-removal-ablation`) that was never merged into the branch that produced the primary evaluation's evidence, so the primary dataset's provenance is unaffected by anything reported in this section. The only functional pipeline change was removal of the `Fixed Versions` line from the prompt template; Appendix F reproduces both prompt versions in full. Every other pipeline mechanic — model (`gemini-3.6-flash`), temperature (0.0), response schema, one-retry policy, and the deterministic validator — was held unchanged from the primary evaluation.
+
+**Scenario selection.** **LIMITATION.** Four scenarios (JS-01, JS-05, JS-09, AF-01) were selected using purposive sampling rather than random sampling. The objective was to maximise diversity across ecosystem, dependency type, and vulnerability recency while keeping the exploratory experiment small enough that each result could be analysed qualitatively against the primary evaluation. The set spans both ecosystems (one pip, three npm), both dependency types (direct and transitive), and a CVE-age range from 2015 to 2026. JS-07 was considered and excluded, since its primary-evaluation outcome is already dominated by a pipeline-scope limitation (§4.3c) unrelated to version knowledge.
+
+**Evaluation protocol.** **FACT.** Each scenario was dispatched independently, and evidence was captured with the same per-scenario archive structure as the primary evaluation (`results/execution_evidence_no_hint/<ID>/`). Outcomes are reported at two points per scenario — the first LLM attempt and, where a retry occurred, the final attempt — because the pipeline's retry mechanism can recover from an incorrect first attempt independently of whether the hint is present; collapsing these into a single final-outcome label would conflate unaided reasoning with pipeline-driven recovery. A recommended version is classified as correct only if it is independently verified to exist on the package registry (not inferred from the pipeline's own install-success signal alone) *and* confirmed by the deterministic rescan to resolve the target CVE; a version that exists but does not resolve the CVE is classified separately from a version that does not exist at all, since these are different failure modes.
+
+**Reasoning coding.** Each recommendation's reasoning text was manually coded by the author into one of five descriptive categories — vulnerability-specific, version-boundary reasoning, dependency-graph reasoning, generic upgrade recommendation, and uncertainty/manual review — to support qualitative comparison against the hinted baseline. **LIMITATION.** With four scenarios, this coding is descriptive rather than a statistically validated taxonomy, and the categories were defined from the patterns present in the collected reasoning texts rather than fixed before the texts were read.
+
+**Methodological correction during execution.** **LIMITATION.** An implementation defect was found and corrected during this study: the pipeline's retry-context construction independently reported the scanner's fixed version through a code path unrelated to the hint removed from the initial prompt, which would have reintroduced the independent variable on any retry that reached this path. This was detected before analysis by inspecting the affected scenario's actual retry prompt text, confirmed, and fixed; the one affected dispatch was discarded and the scenario re-run under the corrected code. Only the corrected results are reported in §4.10.
+
 ---
 
 # Chapter 4 — Findings and Discussion
@@ -437,9 +453,48 @@ JS-05 is the clearest recorded example of the LLM adapting to a package-manager 
 
 *\*The two workflows record their npm outcome at different points in the remediation sequence (§3.8); this row does not represent a matched comparison of remediation capability.*
 
-## 4.10 Chapter Summary
+## 4.10 Explanatory Ablation Study: Effect of Fixed-Version Hint Removal
 
-**OBSERVATION.** For the pip scenarios, the deterministic baseline reached a validated result; for the npm scenarios, its workflow stopped before rescan in every case (§3.8), and the LLM pipeline reached a validated vulnerability-removed state on seven of nine, with the remaining two independently diagnosed as limits of the pipeline's SBOM-cataloging and manifest-editing reach rather than of the model's reasoning. **LIMITATION.** For npm, "vulnerability removed" is not "application compiles." **INTERPRETATION.** Within the evaluated pipeline, the LLM's contribution is observable specifically where a fix must satisfy a dependency-graph constraint (§4.8), bounded by what the surrounding pipeline can actually observe (SBOM completeness) and reach (single- vs. multi-manifest applications); §3.8 states the scope within which this contribution is claimed relative to the deterministic baseline.
+### 4.10.1 Motivation
+
+The primary evaluation supplies the scanner's own recorded fixed version in every prompt (§3.9). A validated result therefore does not distinguish the model applying a version it was given from the model identifying one independently. This section reports a four-scenario ablation of that one variable, to explain the strategy-selection behaviour already observed above rather than to establish new performance figures.
+
+### 4.10.2 Method
+
+Four scenarios (JS-01, JS-05, JS-09, AF-01), selected by purposive sampling (§3.9), were re-run with the fixed-version hint removed from the prompt and every other pipeline mechanic unchanged. Outcomes are reported at the first attempt and, where a retry occurred, at the final attempt, and a recommended version is counted as correct only once independently verified against the package registry and confirmed by the deterministic rescan.
+
+### 4.10.3 Results
+
+**Table 7. Hinted baseline versus unhinted (fixed-version-hint-removed) recommendation, all four scenarios.**
+
+| Scenario | Hinted version | Unhinted version (final) | First attempt (unhinted) | Retry | Final reasoning code |
+|---|---|---|---|---|---|
+| JS-05 | 4.2.2 | 9.0.2 | Incorrect (wrong dependency-type diagnosis) | Yes | Vulnerability-specific |
+| JS-01 | 3.9.18 | 3.9.19 | Incorrect (pipeline-level, see §4.10.5) | Yes | Dependency-graph reasoning |
+| JS-09 | 2.1.1 | 1.4.5-lts.1 | Manual review (version-boundary reasoning) | Yes | Generic upgrade recommendation |
+| AF-01 | 2.1.14 | 2.1.2 | Correct | No | Dependency-graph reasoning |
+
+**OBSERVATION.** Strategy selection (direct upgrade or transitive override) matched the hinted baseline in all four scenarios. The specific recommended version differed from the hinted baseline in all four scenarios, from an adjacent patch release (JS-01: 3.9.19 vs. 3.9.18) to a different release line entirely (JS-09: 1.4.5-lts.1 vs. 2.1.1). Every unhinted version was independently confirmed to exist on its registry and to resolve the target CVE on rescan.
+
+### 4.10.4 Discussion
+
+**JS-05.** The unhinted first attempt misdiagnosed `jsonwebtoken` as a transitive dependency of `express-jwt`, when it is in fact direct — the identical misdiagnosis the hinted run's own first attempt made. **INTERPRETATION.** Because the same error appears with and without the hint, it reflects a pre-existing tendency in how this specific dependency structure is read, not something the hint removal introduced or masked.
+
+**JS-01.** The unhinted first attempt correctly identified `vm2` as transitive via `juicy-chat-bot` and correctly chose a transitive override — a diagnosis requiring no information the hint would have supplied. Its failure to validate on the first attempt is addressed separately in §4.10.5, since it is a pipeline mechanism, not a reasoning outcome. **INTERPRETATION.** This is the cleanest evidence in the set that hint removal does not, by itself, degrade dependency-graph reasoning: the correct diagnosis was reached without being told the fix version.
+
+**JS-09.** The unhinted first attempt identified `2.0.0-rc.1` as the version at which a fix becomes available, and explicitly recommended manual review rather than an automated bump, citing the risk of breaking changes in a major pre-release. **INTERPRETATION.** This is a version-boundary identification paired with an appropriately cautious strategy choice, not a failure to reason about the fix. The subsequent broken dependency state (§4.10.5) followed from applying that recommendation, not from the recommendation's content. The retry's reasoning referenced the resulting broken package state directly, despite the retry prompt never being told what the first attempt recommended — indicating the model can recover diagnostic context from the live dependency state it is shown, not only from an explicit restatement of its own prior output.
+
+**AF-01.** The unhinted attempt succeeded on the first try, recommending a smaller version increment (2.1.2, the release immediately above the vulnerable version) than the hinted run's 2.1.14. **INTERPRETATION.** Both are independently verified as valid fixes; the difference illustrates that "correct" does not mean "identical to the scanner's recorded value," and that the model's own selection, when confident, need not converge on the same specific release the scanner's advisory data names.
+
+**Across all four scenarios**, the pattern is consistent: hint removal changed *which* version was recommended in every case without changing *which strategy* was selected in any case, and every unhinted recommendation independently validated. Three of the four scenarios needed a retry, the same three that needed one in the hinted baseline; only AF-01 succeeded on the first attempt in both conditions. Within those three, the retry requirement is not uniformly attributable to hint removal: JS-05 and JS-01 fail via the identical mechanism in both conditions (a wrong dependency-type diagnosis for JS-05; a pipeline-level lockfile issue for JS-01, §4.10.5), but JS-09 fails differently in each — the hinted first attempt fails at the same generic build stage common to most npm scenarios in the primary evaluation (§4.1), while the unhinted first attempt fails specifically because the pre-release version it identified (`2.0.0-rc.1`, absent the hint) resolves to a different, broken installed version. JS-09 is therefore the one scenario in this set where the retry requirement itself, not just the recommended version, plausibly differs because of hint removal.
+
+### 4.10.5 Pipeline Observation
+
+**OBSERVATION.** In JS-01, both the hinted and unhinted first attempts recommended `vm2@3.9.18`, installed it without error, and were still reported vulnerable by the deterministic rescan; both retries recommended the identical version, with no change to the recommendation, and passed. **INTERPRETATION.** Since the identical version fails then succeeds with no change to what was recommended, the cause is not attributable to the version choice. Investigation traced it to the pipeline's lockfile handling: only the retry path performs a full dependency re-resolution, and a prior lockfile can retain a stale resolution despite a syntactically correct manifest change on the first attempt. **LIMITATION.** This is a property of the evaluation pipeline's retry mechanics, observed identically in both the hinted and unhinted conditions, and is outside the scope of the primary research question. It suggests that a clean dependency re-resolution after applying an override, performed before rescan rather than only after a full retry cycle, is worth investigating as a pipeline improvement; this is not evaluated further here (`KNOWN_PIPELINE_LIMITATIONS.md`).
+
+## 4.11 Chapter Summary
+
+**OBSERVATION.** For the pip scenarios, the deterministic baseline reached a validated result; for the npm scenarios, its workflow stopped before rescan in every case (§3.8), and the LLM pipeline reached a validated vulnerability-removed state on seven of nine, with the remaining two independently diagnosed as limits of the pipeline's SBOM-cataloging and manifest-editing reach rather than of the model's reasoning. **LIMITATION.** For npm, "vulnerability removed" is not "application compiles." **INTERPRETATION.** Within the evaluated pipeline, the LLM's contribution is observable specifically where a fix must satisfy a dependency-graph constraint (§4.8), bounded by what the surrounding pipeline can actually observe (SBOM completeness) and reach (single- vs. multi-manifest applications); §3.8 states the scope within which this contribution is claimed relative to the deterministic baseline. The explanatory ablation (§4.10) indicates this dependency-graph reasoning does not depend on being supplied the scanner's fixed version: strategy selection was unchanged by hint removal in all four scenarios examined, while the specific version recommended was not, suggesting the model's contribution lies more in identifying *how* to apply a fix than in reproducing the scanner's own recorded value for *which* version to apply.
 
 ---
 
@@ -448,6 +503,8 @@ JS-05 is the clearest recorded example of the LLM adapting to a package-manager 
 ## 5.1 Overall Conclusion
 
 This thesis evaluated whether providing contextual information to a Large Language Model improves dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly, across eighteen pre-registered scenarios on npm and pip, within the two pipelines implemented for this study (§3.8). **INTERPRETATION.** For flat pip dependencies, both the deterministic baseline and the LLM pipeline reached a validated result in which the target vulnerability was removed; no comparative advantage is claimed for the LLM pipeline on this class. For transitive npm dependencies, within the evaluated workflows, the LLM pipeline reached a validated state in which the target vulnerability was removed, using graph-aware strategies, in seven of nine scenarios; the deterministic baseline's workflow did not reach a rescan-based result on any npm scenario, for the reason given in §3.8, so this thesis does not claim a matched comparison for that class. On the second outcome named in the research question, no measurable difference in build success rate was observed between the two arms within either ecosystem (§4.7). The remaining two npm scenarios are disclosed, root-caused negative results for the LLM pipeline — one where the vulnerable package never reached the SBOM at all, one where it was reachable only through a package tree the manifest editor cannot edit — and both are diagnosed as limits of that pipeline, not of the LLM's own reasoning, which correctly characterized the dependency graph in both cases. Removing a vulnerability at the scanner level is not the same as producing a compiling application; the two properties are kept separate throughout, and both remediation failures are reported alongside the successes.
+
+**INTERPRETATION.** The explanatory ablation study (§4.10) strengthens this reading of the pipeline's contribution rather than changing it. Correct remediation strategies remained reachable in all four examined scenarios when the scanner's fixed version was withheld from the prompt, indicating that a validated result is not solely attributable to the model reproducing a version it was supplied. At the same time, the specific version recommended changed in every one of those four scenarios, indicating the hint is not redundant information the model would have arrived at identically on its own. Together, these point to the fixed-version hint acting on *which value* is proposed rather than on *whether* the underlying dependency-graph reasoning that selects a strategy succeeds.
 
 ## 5.2 Research Contributions
 
@@ -462,13 +519,15 @@ The full list is in `THESIS_LIMITATIONS.md`. The most important: the npm applica
 
 **LIMITATION — `is_direct_dependency` classification.** The preregistered scenario metadata (`results/scenarios/final_18_scenarios.json`) records an `is_direct_dependency` field for each scenario, determined at scenario-selection time (2026-07-08). Cross-checking this field against the pipeline's own current, live computation (`_get_dependency_type()`, evaluated directly against each application's `package.json`/`requirements.txt`) for all nine npm scenarios found that six — JS-01, JS-02, JS-03, JS-04, JS-06, JS-07 — are recorded as `"direct"` but are actually transitive under the current dependency tree; only JS-05, JS-08, and JS-09 match. For JS-02 (`handlebars`) specifically, the same "direct" classification appears in both the original and the current records, while the live computation (confirming `handlebars` is absent from both `dependencies` and `devDependencies` in the current `package.json`) is transitive, indicating a persistent discrepancy between the preregistered dependency-type metadata and the computed classification rather than drift introduced during the study. This is disclosed rather than silently corrected in the preregistration record: `dependency_type` as reported in each scenario's `metrics.json` (used throughout Chapter 4, e.g. JS-01's classification in §4.4) reflects the live, code-computed value; only the *preregistration* field `is_direct_dependency` is affected, and no case-study interpretation in this thesis relies on the preregistration field where the two disagree.
 
+**LIMITATION — explanatory ablation study (§4.10).** Four scenarios, selected by purposive rather than random sampling, is not a statistically powered sample; the study's findings are reported as descriptive and explanatory, not as a generalisable measurement of hint-removal effects across the full scenario population. The reasoning-category coding in §4.10 is a single-author qualitative coding over four scenarios, not a validated taxonomy.
+
 ## 5.4 Recommendations
 
 **INTERPRETATION.** For practitioners: apply deterministic upgrades first, and reserve LLM assistance for transitive or constrained cases where a direct upgrade cannot satisfy the graph; treat any LLM remediation as a hypothesis to be verified; and record installation, vulnerability removal, and compilation as separate signals so a partial success is not reported as a complete one.
 
 ## 5.5 Future Work
 
-Recorded in `THESIS_FUTURE_WORK.md`. **FUTURE WORK.** adding an LLM confidence score; a prompt-engineering ablation [24]; removing the fixed-version hint to test unaided reasoning; allowing multiple retries; adding semantic or functional compatibility checks beyond compilation; pinning the scanner database for exact reproducibility; retrieval-augmented generation grounded in advisories [23]; multi-agent proposer–critic designs; model comparison; and additional ecosystems. Each changes the experiment and requires re-running scenarios, so each is left to future study to preserve the comparability of the present dataset.
+Recorded in `THESIS_FUTURE_WORK.md`. **FUTURE WORK.** adding an LLM confidence score; a prompt-engineering ablation [24]; allowing multiple retries; adding semantic or functional compatibility checks beyond compilation; pinning the scanner database for exact reproducibility; retrieval-augmented generation grounded in advisories [23]; multi-agent proposer–critic designs; model comparison; and additional ecosystems. Each changes the experiment and requires re-running scenarios, so each is left to future study to preserve the comparability of the present dataset. Removing the fixed-version hint to test unaided reasoning, previously listed here, was conducted as an explanatory ablation study during this thesis and is reported in §4.10, not left open.
 
 ---
 
@@ -564,6 +623,61 @@ F1 twelve-stage LLM pipeline (`.github/workflows/generic-remediation.yml`; Merma
 | Constraint reasoning | Case studies | `.../JS-01/`, `.../JS-09/`, `.../JS-05/`, `.../AF-01/` | [5], [29] | §4.3–4.6 |
 | Pipeline-scope limitations (SBOM cataloging, multi-manifest editing, CVSS version disagreement) | Case studies | `.../AF-06/`, `.../JS-06/`, `.../JS-07/` | — | §4.3a–c |
 | Honesty of evidence | Internal audit | `docs/audit/`, `THESIS_LIMITATIONS.md` | [34] | §4.7 |
+
+## Appendix F — Prompt Versions
+
+Reproduced directly from `scripts/remediation/llm_reasoner.py`, the system prompt is identical between both versions; only the user prompt differs, in the single line marked below. `{...}` denotes a value filled in per scenario at dispatch time.
+
+**System prompt (both versions).**
+```
+You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.
+You must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.
+Evaluate all technically feasible remediation strategies: Direct Upgrade, Transitive Override, Dependency Resolution, Replacement, or Manual Review. Recommend the safest strategy that preserves compatibility and explain why alternative strategies were rejected.
+Do not hallucinate package versions. Recommend versions that actually exist and solve the CVE.
+```
+
+**User prompt, v1.2 (primary evaluation).**
+```
+Scenario ID: {scenario_id}
+Prompt Version: v1.2
+
+### Vulnerability Intelligence
+* Target Package: {package_name}
+* Vulnerable Version: {vulnerable_version}
+* CVE ID: {cve_id}
+* CVSS Score: {cvss}
+* EPSS Probability: {epss}
+* CISA KEV Status: {kev}
+* Intelligence Retrieved On: {intelligence_date}
+* Fixed Versions: {fixed_versions}
+
+### Dependency Context
+```json
+{dependency_context}
+```
+```
+
+**User prompt, HintRemoval-v1.0 (§4.10 ablation study).** Identical except the `Fixed Versions` line is removed entirely, not left blank:
+```
+Scenario ID: {scenario_id}
+Prompt Version: HintRemoval-v1.0
+
+### Vulnerability Intelligence
+* Target Package: {package_name}
+* Vulnerable Version: {vulnerable_version}
+* CVE ID: {cve_id}
+* CVSS Score: {cvss}
+* EPSS Probability: {epss}
+* CISA KEV Status: {kev}
+* Intelligence Retrieved On: {intelligence_date}
+
+### Dependency Context
+```json
+{dependency_context}
+```
+```
+
+Both versions append an identical closing instruction (*"Based on the vulnerability intelligence and context: 1. Recommend the safest strategy. 2. Provide the exact manifest configuration..."*) and, on a retry, an identical `### Previous Attempt Failure Logs` block populated from the build log and/or rescan summary (§3.9, methodological correction).
 
 ---
 
