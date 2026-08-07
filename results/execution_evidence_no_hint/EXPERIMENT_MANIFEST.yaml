@@ -360,15 +360,19 @@ Precise mechanism correction -- which step actually performs the fixing lockfile
   to react to. The staleness only becomes visible later, when validator.py's rescan still
   finds the CVE. That failure is what triggers "Retry Remediation Strategy" -- so it is THAT
   step's embedded wipe, not the dedicated fallback, that actually resolves it.
-  Assessment: this is a genuine design gap, not just an unlucky default. The dedicated
-  fallback is wired to the wrong signal (install exit code), which cannot structurally detect
-  this failure mode -- a stale-but-installable lockfile exits 0 fine, and staleness only
-  surfaces at rescan, after the fallback's trigger point has already passed. The mechanism
-  that does eventually catch it is coupled to dispatching a brand new LLM call, which costs
-  far more (one full extra API round-trip and CI cycle) than the underlying problem
-  (a pure npm/lockfile mechanical issue) requires. A scoped fix -- wipe the lockfile whenever
-  a transitive_override/add_override operation is applied, before ever reaching rescan --
-  would resolve this without an extra LLM call. Not implemented here (out of scope for this
-  ablation, which intentionally does not modify pipeline mechanics beyond the hint removal
-  and the retry-leak fix), but worth flagging as a concrete, scoped improvement for future
-  pipeline work, separate from anything about LLM reasoning quality.
+  Assessment, phrased to the level the evidence actually supports: the current trigger
+  condition (install exit code) is sufficient for installation failures but not for stale
+  dependency-resolution failures that only become visible during validation -- a
+  stale-but-installable lockfile exits 0 fine, and the staleness surfaces only at rescan,
+  after the dedicated fallback's trigger point has already passed. This is a description of
+  the trigger condition's behavior, not a claim about design intent; it remains possible the
+  original design intentionally traded this off for fewer clean reinstalls, faster CI, or
+  other considerations not evaluated here. The mechanism that does eventually catch the
+  failure is coupled to dispatching a brand new LLM call, which costs one full extra API
+  round-trip and CI cycle beyond what the underlying mechanical issue requires. A scoped
+  alternative -- wipe the lockfile whenever a transitive_override/add_override operation is
+  applied, before ever reaching rescan -- would resolve this without an extra LLM call. Not
+  implemented here (out of scope for this ablation, which intentionally does not modify
+  pipeline mechanics beyond the hint removal and the retry-leak fix); recorded separately in
+  KNOWN_PIPELINE_LIMITATIONS.md as a candidate for future pipeline work, kept apart from
+  anything about LLM reasoning quality.
