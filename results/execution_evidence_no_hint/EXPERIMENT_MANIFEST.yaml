@@ -259,3 +259,21 @@ Comparison Table -- Hinted (frozen thesis) vs. Unhinted (this experiment), all f
     pipeline/build reason, not a reasoning error; AF-01 succeeded outright with no retry).
 
 Status: COMPLETE. All four scenarios (JS-05, JS-09, JS-01, AF-01) run, verified, and recorded.
+
+Clarification -- "Both resolve CVE" refers to final, post-retry outcome, not attempt 1:
+  All three npm scenarios need exactly one retry in BOTH conditions (hinted and unhinted) --
+  verified directly: JS-05 hinted retry_count=1, JS-09 hinted retry_count=1, JS-01 hinted
+  retry_count=1 (AF-01/pip is the only one of the four that succeeds on attempt 1 in both
+  conditions). This is not introduced by hint removal -- it matches the base thesis's own
+  disclosed finding that "the eight npm scenarios that produced valid evidence each required
+  one retry" (THESIS_DRAFT_V3.md Sec 4.1). The comparison table's "both verified" column was
+  always the final, post-retry state, matching how the base thesis itself reports outcomes
+  (Table 4/5/6 report final fields, not attempt-1-only).
+  What actually differs between conditions is WHY attempt 1 fails, not WHETHER it fails:
+    Hinted: attempt 1 fails for mechanical/structural reasons (EOVERRIDE conflict, build
+      check) while already holding the correct target version.
+    Unhinted: JS-05 and JS-09's attempt-1 failures are reasoning errors (wrong dependency-type
+      diagnosis; a broken caret-range resolution), not just a mechanical retry of an
+      already-correct plan. JS-01 is the exception -- unhinted attempt 1 got diagnosis and
+      strategy right and still failed for the same kind of pipeline-level reason the hinted
+      runs fail for.
