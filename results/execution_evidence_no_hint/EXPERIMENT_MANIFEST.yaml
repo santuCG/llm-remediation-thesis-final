@@ -376,3 +376,35 @@ Precise mechanism correction -- which step actually performs the fixing lockfile
   pipeline mechanics beyond the hint removal and the retry-leak fix); recorded separately in
   KNOWN_PIPELINE_LIMITATIONS.md as a candidate for future pipeline work, kept apart from
   anything about LLM reasoning quality.
+
+Full hinted-vs-unhinted comparison table, with corrected timing semantics:
+  Metric scope note (verified against code, not assumed): `execution_time_seconds` is written
+  once by generic_remediation.py (Phase 1-5: discover, prioritize, build context, call the
+  LLM, apply the patch) and is NEVER updated by retry_remediation.py. Confirmed directly:
+  metrics-attempt1.json and the final metrics.json report the identical value for every
+  scenario that retried (JS-05, JS-09, JS-01). This column is attempt-1 orchestration time
+  only, dominated by the LLM API call itself -- it says nothing about the retry's own duration,
+  which is not captured anywhere in the recorded metrics.
+
+  | Scenario | Condition | Version | Strategy | Attempt-1 exec. time | Retries | Baseline matches | Post-remediation matches |
+  |---|---|---|---|---|---|---|---|
+  | JS-05 | Hinted   | 4.2.2       | direct_upgrade      | 16s | 1 | 450 | 254 |
+  | JS-05 | Unhinted | 9.0.2       | direct_upgrade      | 46s | 1 | 461 | 260 |
+  | JS-09 | Hinted   | 2.1.1       | direct_upgrade      | 31s | 1 | 459 | 259 |
+  | JS-09 | Unhinted | 1.4.5-lts.1 | direct_upgrade      | 40s | 1 | 461 | 260 |
+  | JS-01 | Hinted   | 3.9.18      | transitive_override | 48s | 1 | 459 | 259 |
+  | JS-01 | Unhinted | 3.9.19      | transitive_override | 10s | 1 | 461 | 260 |
+  | AF-01 | Hinted   | 2.1.14      | direct_upgrade      | 51s | 0 | 597 | 595 |
+  | AF-01 | Unhinted | 2.1.2       | direct_upgrade      | 55s | 0 | 600 | 598 |
+
+  Baseline-match-count drift within the same scenario (e.g. JS-05: 450 hinted vs. 461
+  unhinted) is expected, not a new finding -- hinted runs are from 2026-08-04, unhinted from
+  2026-08-07; Grype's vulnerability database is live and updates over time, matching the base
+  thesis's own already-disclosed reproducibility limitation. Not investigated further.
+
+  JS-01's attempt-1 timing (10s unhinted vs. 48s hinted) initially looked like an anomaly
+  running against the general direction (unhinted attempts otherwise took longer, consistent
+  with the model doing more reasoning work without the hint). Checked directly: unhinted
+  attempt 1's reasoning is 66 words vs. 105 for hinted attempt 1 -- shorter output, shorter
+  API response time. Resolves as ordinary generation-length variance, not a hint-removal
+  effect specific to JS-01.

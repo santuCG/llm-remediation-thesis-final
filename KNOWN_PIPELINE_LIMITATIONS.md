@@ -26,12 +26,11 @@ failures that only become visible during validation. Whether the original design
 traded this off against fewer clean reinstalls, faster CI, or other considerations is not
 evaluated here.
 
-**Candidate fix, not implemented.** Wipe the lockfile whenever a `transitive_override`/
-`add_override` operation is applied, before ever reaching rescan — this would resolve the
-JS-01 failure mode without requiring an extra LLM API call and CI cycle. Deliberately not
-implemented on any branch that reports experimental results, to avoid introducing an
-uncontrolled pipeline-mechanics variable into results already in progress. A reasonable target
-for a future "Pipeline v2.1" pass.
+**Open question, not investigated further here.** Investigate whether a clean dependency
+re-resolution should be performed after applying npm overrides but before invoking a second
+LLM reasoning cycle. Deliberately not investigated or implemented on any branch that reports
+experimental results, to avoid introducing an uncontrolled pipeline-mechanics variable into
+results already in progress. A reasonable target for a future "Pipeline v2.1" pass.
 
 **Full evidence trail:** `results/execution_evidence_no_hint/EXPERIMENT_MANIFEST.yaml`
 (Hint Removal Ablation experiment), sections on JS-01.
