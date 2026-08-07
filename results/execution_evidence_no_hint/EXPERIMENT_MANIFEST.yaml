@@ -315,3 +315,31 @@ Grype-baseline vs. LLM-first-attempt comparison (requested framing):
   comparison is LLM-first-attempt vs. LLM-final (already recorded per-scenario above), not
   LLM-vs-Grype at the first-attempt level, since Grype's own workflow design removes it from
   contention before that point for npm.
+
+Further correction -- the real cause of JS-01 attempt 1's "still present" result:
+  Earlier entry framed this as "not a reasoning error, an insufficient-fix case" (3.9.18
+  genuinely didn't eradicate it, 3.9.19 did). That framing is WRONG. Checked the original
+  hinted run's own raw logs directly (run 30948623108, 2026-08-04) for comparison:
+    Hinted attempt 1: vm2@3.9.18 -> "Remaining Vulnerabilities: 464" -> VALIDATOR FAILED
+    Hinted retry: vm2@3.9.18 (the SAME version) -> VALIDATOR SUCCESS
+  The identical version fails then succeeds in the hinted run too. This rules out a
+  version-boundary explanation entirely -- if 3.9.18 were genuinely insufficient, it could not
+  succeed on retry with no version change.
+  Ruled out directly against evidence:
+    Manifest-replacement issue: package.json's override block ({"vm2": "3.9.18"}) is
+      identical and correctly written in both attempts, both conditions.
+    Multiple dependency-graph copies: npm_explain (pre-patch context) shows exactly one vm2
+      location (node_modules/vm2, via juicy-chat-bot only) -- not a JS-07-style multi-manifest
+      situation.
+  Actual cause: the retry path runs "Fallback Lockfile Regeneration"
+    (rm -f package-lock.json && rm -rf node_modules && npm install) -- a full clean reinstall
+    that attempt 1 never gets (attempt 1 just runs npm install against the existing, already-
+    committed package-lock.json). Adding a new `overrides` entry to package.json does not
+    guarantee npm fully re-resolves an EXISTING lockfile against it; a stale pinned resolution
+    for the vulnerable version can survive the first install despite a syntactically correct
+    override. Only the full lockfile wipe forces complete re-resolution.
+  Conclusion: this is a pure pipeline/tooling artifact, identical in both hinted and unhinted
+  conditions -- not a reasoning error, not a version-choice error, not a multi-instance
+  dependency issue. It happens to also explain why JS-01 is the one scenario where the
+  unhinted attempt 1 had fully correct diagnosis and strategy yet still failed: the failure
+  mode is orthogonal to what the LLM recommends, triggered by lockfile staleness alone.
