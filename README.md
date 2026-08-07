@@ -47,3 +47,9 @@ The independent reproducibility and methodological verification reports conducte
 *   [docs/audit/](docs/audit/)
 
 These reports document the audit process itself and should be treated as a historical record of findings, not as evidence — the underlying claims are verified against the primary sources listed above.
+
+## 9. Local tool requirements
+This repository does not commit tool binaries (`tools/**/bin/`, `tools/**/*.exe` are gitignored). Both CI workflows (`.github/workflows/generic-remediation.yml`, `.github/workflows/grype-baseline.yml`) download these exact pinned versions at run time, and any local reproduction should use the same versions:
+*   **Syft v1.44.0** — [anchore/syft releases](https://github.com/anchore/syft/releases/tag/v1.44.0)
+*   **Grype v0.112.0** — [anchore/grype releases](https://github.com/anchore/grype/releases/tag/v0.112.0)
+*   **GitHub CLI (`gh`)** — used locally for workflow dispatch and log retrieval; any current release is compatible, no version pinning required for this role.

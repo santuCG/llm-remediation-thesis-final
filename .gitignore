@@ -6,3 +6,17 @@ __pycache__/
 .DS_Store
 archive/temp_files/
 archive/temp_scripts/
+
+# Local tools (large binaries; document versions in README instead)
+tools/**/bin/
+tools/**/*.exe
+
+# Legacy archives (superseded by the final regenerated dataset)
+archive/legacy_results_dir/
+archive/legacy_experiment_dir/
+archive/legacy_manual_scripts/
+archive/legacy_methodology_docs/
+
+# Superseded thesis drafts (THESIS_DRAFT_V3.md is authoritative)
+THESIS.md
+THESIS_DRAFT_V2.md
