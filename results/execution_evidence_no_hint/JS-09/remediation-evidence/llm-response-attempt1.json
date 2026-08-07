@@ -1,0 +1,11 @@
+{
+  "reasoning": "The target dependency 'multer' (version 1.4.5-lts.1) introduces vulnerability GHSA-5528-5vmv-3xc2 through its transitive dependency 'dicer' (via 'busboy'), which suffers from an unhandled exception crash in HeaderParser leading to Denial of Service. Upgrading 'multer' directly to 2.0.0-rc.1 would introduce breaking API changes as version 2.x is a major pre-release refactor. The safest and most compatible remediation strategy is to apply an npm transitive override targeting 'dicer' to force version '^0.3.0', resolving the DoS vulnerability without disrupting application code.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "0.3.0",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "dicer",
+    "constraint": "^0.3.0"
+  }
+}

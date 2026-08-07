@@ -4,7 +4,8 @@ Experiment:
   Workflow: Research - Hint Removal Ablation
   Prompt Configuration: HintRemoval-v1.0
   Base Commit: 3e1173860e0a9121a0d473f4c77f069cfee9adf5
-  Status: Pilot (JS-05 only)
+  Status: In progress -- JS-05 verified clean; JS-09 contaminated (retry-path leak, see
+    "Known Issue" below), fix applied, rerun queued
 
 Independent Variable:
   Fixed version hint: removed (scripts/remediation/llm_reasoner.py, "Fixed Versions" line deleted from user_prompt)
@@ -16,6 +17,30 @@ Controls (unchanged from base pipeline):
   Validator: unchanged (scripts/remediation/validator.py)
   Retry: unchanged (one retry, build-error feedback)
   Registry validation: unchanged
+
+Known Issue -- Fixed-Version Leak via Retry Path (found and fixed after JS-05, JS-09):
+  Cause: retry_remediation.py's _extract_rescan_summary() independently appended
+    "Scanner-known fixed versions: [...]" to the retry's failure-context block whenever
+    attempt 1's rescan ran and still detected the target CVE. This is a second,
+    separate prompt-construction path that llm_reasoner.py's hint removal never touched.
+  Trigger condition: only fires when attempt 1 gets far enough to run a rescan that still
+    detects the CVE (test installs but doesn't fix it) -- not when attempt 1 fails earlier
+    (e.g. at apply_fix, before rescan ever runs).
+  Scope, verified directly against each scenario's actual retry prompt text (not inferred):
+    JS-05: CLEAN. Attempt 1 failed at apply_fix, before rescan ever ran -- no rescan.json
+      entry existed for _extract_rescan_summary to find, confirmed by grepping the actual
+      llm-request.json retry prompt (no match).
+    JS-09: CONTAMINATED. Attempt 1 reached a rescan that still detected the CVE, so the
+      retry prompt received "Scanner-known fixed versions: ['2.1.1']" verbatim -- the same
+      fix version the base pipeline's hint would have given. JS-09's "Correct" final
+      outcome does not constitute evidence of unaided recovery and must be re-run before
+      being used in any analysis. Evidence retained under
+      results/execution_evidence_no_hint/JS-09/ for transparency, not deleted, but flagged
+      contaminated and excluded from findings until rerun.
+  Fix applied: retry_remediation.py's rescan-context message now reports only that the CVE
+    is still detected (package/version), with the fixed-versions clause removed. The
+    build-error-log retry path (_extract_build_errors) was not affected and needed no change.
+  Action: JS-09 queued for rerun under the fixed code before proceeding to JS-01/AF-01.
 
 Dependent Variables:
   Recommended version
@@ -66,7 +91,8 @@ Evidence:
 Scenarios:
   Pilot: JS-05
   Dropped: JS-07 (excluded from this experiment by explicit decision)
-  Sequential order (one at a time, not parallel): JS-09 (dispatched), JS-01, AF-01
+  Sequential order (one at a time, not parallel): JS-09 (contaminated, queued for rerun
+    under fixed code), JS-01, AF-01
 
 Pilot Result (JS-05):
   Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31217244426

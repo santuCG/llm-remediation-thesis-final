@@ -48,12 +48,10 @@ def _extract_rescan_summary(target_cve_id):
         related = [r.get('id', '') for r in match.get('relatedVulnerabilities', [])]
         if vuln_id == target_cve_id or target_cve_id in related:
             artifact = match.get('artifact', {})
-            fix = vuln.get('fix', {})
             return (
                 f"Post-remediation rescan still detects {target_cve_id} "
                 f"(scanner ID: {vuln_id}) in package '{artifact.get('name')}' "
-                f"version '{artifact.get('version')}'. "
-                f"Scanner-known fixed versions: {fix.get('versions', [])}."
+                f"version '{artifact.get('version')}'."
             )
     return ""
 
