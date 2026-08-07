@@ -518,7 +518,7 @@ Recorded in `THESIS_FUTURE_WORK.md`. **FUTURE WORK.** adding an LLM confidence s
 [40] CISA, "Known Exploited Vulnerabilities Catalog." https://www.cisa.gov/known-exploited-vulnerabilities-catalog
 [41] FIRST, "Common Vulnerability Scoring System (CVSS)." https://www.first.org/cvss/
 [42] FIRST, "Exploit Prediction Scoring System (EPSS)." https://www.first.org/epss/
-[43] npm, Inc., "npm `overrides` documentation." https://docs.npmjs.com/
+[43] npm, Inc., "overrides," in *package.json* documentation. https://docs.npmjs.com/cli/v10/configuring-npm/package-json#overrides
 [44] OWASP Foundation, "OWASP Juice Shop." https://owasp.org/www-project-juice-shop/
 [45] The Apache Software Foundation, "Apache Airflow." https://airflow.apache.org/
 [46] Google, "Gemini API documentation." https://ai.google.dev/
