@@ -31,7 +31,7 @@ Do not hallucinate package versions. Recommend versions that actually exist and 
         pass  # fallback to today
 
     user_prompt = f"""Scenario ID: {scenario_id}
-Prompt Version: v1.2
+Prompt Version: HintRemoval-v1.0
 
 ### Vulnerability Intelligence
 * Target Package: {candidate['package_name']}
@@ -41,7 +41,6 @@ Prompt Version: v1.2
 * EPSS Probability: {candidate['epss']}
 * CISA KEV Status: {candidate['kev']}
 * Intelligence Retrieved On: {intelligence_date}
-* Fixed Versions: {candidate['fixed_versions']}
 
 ### Dependency Context
 ```json

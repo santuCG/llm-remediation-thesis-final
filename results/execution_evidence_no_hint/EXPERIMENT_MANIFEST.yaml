@@ -1,0 +1,62 @@
+Experiment:
+  Name: Hint Removal Ablation
+  Branch: research/hint-removal-ablation
+  Workflow: Research - Hint Removal Ablation
+  Prompt Configuration: HintRemoval-v1.0
+  Base Commit: 3e1173860e0a9121a0d473f4c77f069cfee9adf5
+  Status: Pilot (JS-05 only)
+
+Independent Variable:
+  Fixed version hint: removed (scripts/remediation/llm_reasoner.py, "Fixed Versions" line deleted from user_prompt)
+
+Controls (unchanged from base pipeline):
+  Model: Gemini 3.6-flash, with documented fallback list
+  Temperature: 0.0
+  Schema: unchanged (recommended_package_version remains a required field)
+  Validator: unchanged (scripts/remediation/validator.py)
+  Retry: unchanged (one retry, build-error feedback)
+  Registry validation: unchanged
+
+Dependent Variables:
+  Recommended version
+  Strategy
+  Rationale length (word count of `reasoning`, objective proxy -- not a self-reported confidence score)
+  Reasoning category (manual coding, pending; starter taxonomy: cites external advisory (GHSA/NVD) /
+    cites semver "first patched version" heuristic / cites changelog or release notes /
+    generic-unspecified / hedged-uncertain)
+  Outcome classification (four-way, not three-way):
+    Correct: strategy != manual_review, version exists on registry, rescan_success = true
+    Incorrect published version: strategy != manual_review, version exists on registry, rescan_success = false
+    Hallucinated version: strategy != manual_review, version does not exist on registry
+    Manual review: strategy == manual_review (recommended_package_version is still populated per schema,
+      but is not to be read as a genuine recommendation in this case)
+  Retry needed
+  Dependency verified
+  Rescan success
+  Reasoning materially different from hinted baseline (Y/N, qualitative)
+
+Pilot Protocol (JS-05 only, gate before running remaining scenarios):
+  Q1: Is recommended_package_version semantically meaningful (not just present -- schema requires
+      the field regardless of strategy, so presence alone is not informative)?
+  Q2: Does the version exist on the registry?
+  Q3: Does rescan_success confirm the CVE is resolved?
+  Q4: Is the reasoning materially different from the hinted-run baseline below?
+
+Hinted Baseline (JS-05, for Q4 comparison):
+  Source: results/execution_evidence/JS-05/llm-response.json
+  Strategy: direct_upgrade
+  Version: 4.2.2
+  Reasoning: >
+    jsonwebtoken is declared as a direct dependency in package.json at version 0.4.0, which is
+    affected by GHSA-c7hr-j4mj-j2w6. Upgrading jsonwebtoken directly to version 4.2.2 resolves the
+    vulnerability. Direct Upgrade is the optimal strategy because the package is directly defined
+    in package.json dependencies.
+
+Evidence:
+  Full rendered prompt: captured in llm-request.json per scenario (same convention as base pipeline;
+    verified sufficient, no separate prompt.txt needed)
+  Output path: results/execution_evidence_no_hint/<SCENARIO_ID>/
+
+Scenarios:
+  Pilot: JS-05
+  Queued (post-pilot, pending Q1-Q4 pass): JS-01, JS-07, JS-09, AF-01

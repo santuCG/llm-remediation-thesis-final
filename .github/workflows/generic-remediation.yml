@@ -1,4 +1,4 @@
-name: Generic LLM Remediation Pipeline
+name: Research - Hint Removal Ablation
 
 on:
   workflow_dispatch:
