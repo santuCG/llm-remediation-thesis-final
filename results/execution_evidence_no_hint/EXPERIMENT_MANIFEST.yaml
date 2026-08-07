@@ -4,8 +4,9 @@ Experiment:
   Workflow: Research - Hint Removal Ablation
   Prompt Configuration: HintRemoval-v1.0
   Base Commit: 3e1173860e0a9121a0d473f4c77f069cfee9adf5
-  Status: In progress -- JS-05 and JS-09 done (JS-09's first dispatch was contaminated by a
-    retry-path leak, see "Known Issue" below; fixed and rerun clean). JS-01 and AF-01 remaining.
+  Status: In progress -- JS-05, JS-09, and AF-01 done (JS-09's first dispatch was contaminated
+    by a retry-path leak, see "Known Issue" below; fixed and rerun clean). JS-01 in progress,
+    last scenario in the set.
 
 Independent Variable:
   Fixed version hint: removed (scripts/remediation/llm_reasoner.py, "Fixed Versions" line deleted from user_prompt)
@@ -166,3 +167,33 @@ Result (JS-09, clean rerun under fixed retry code):
     Version published: Yes (1.4.5-lts.1 is the range already declared pre-experiment; real)
     Rescan passed: Yes
     Manual review flag: Yes (attempt 1 only; final attempt did not use manual_review)
+
+Result (AF-01, single-attempt, no retry):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31224264897
+  Job conclusion: success (clean pip result, no job-level failure quirk -- unlike the npm
+    scenarios, which all show job conclusion "failure" for the known TS1005/EOVERRIDE reasons)
+  Attempt 1 (also final, no retry triggered): strategy=direct_upgrade,
+    recommended_package_version=2.1.2, dependency_verified=true, rescan_success=true,
+    build_success=true, test_success=true (pytest tests/core passed -- though redshift-connector
+    is not itself exercised by that suite, per the earlier finding on test_success scope)
+  Rationale length: 71 words
+  Q1 (semantically meaningful version?): Yes -- "2.1.2", well-formed, consistent with
+    strategy=direct_upgrade
+  Q2 (published on registry?): Yes -- verified directly against PyPI
+    (pypi.org/pypi/redshift-connector/2.1.2/json), released 2024-06-19
+  Q3 (resolves the CVE?): Yes -- rescan_success=true
+  Q4 (reasoning materially different from hinted baseline?): The recommended version (2.1.2)
+    differs from the original hinted thesis run's recommendation (2.1.14) -- a much smaller
+    version bump than the hinted run made. Both are published, real versions; this run's
+    reasoning explicitly frames 2.1.2 as "a safe non-breaking patch release," a specific
+    justification the hinted run's equivalent reasoning did not include. Not traced further
+    here (same open-question pattern as JS-09's version divergence) -- worth a closer look
+    across the full scenario set once all four are in, since two of three completed scenarios
+    now show hint removal changing the specific version recommended.
+  Outcome decomposition:
+    First attempt: Correct
+    Retry used: No
+    Final outcome: Correct
+    Version published: Yes
+    Rescan passed: Yes
+    Manual review flag: No
