@@ -27,7 +27,19 @@ def _get_search_grounded_findings(candidate, api_key):
     (required for deterministic manifest_patch parsing) together with tools in
     the same request. This isolates search grounding to a freeform research
     step whose findings are then handed to the unchanged structured call as
-    additional prompt context."""
+    additional prompt context.
+
+    Uses the google-genai SDK's `client.interactions.create(...)` surface
+    (not the raw generateContent REST endpoint the structured call below
+    uses) -- direct generateContent calls with `tools: [{"google_search": {}}]`
+    consistently returned 429 RESOURCE_EXHAUSTED / "check your plan and
+    billing details" for every candidate model on this key, while the same
+    key's interactions.create() call with `tools: [{"type": "google_search"}]`
+    (confirmed working via AI Studio's own "Get Code" export) did not. The two
+    surfaces appear to route through different quota/entitlement checks for
+    this feature."""
+    from google import genai
+
     search_prompt = (
         f"Search the web for the fixed version(s) of the package "
         f"'{candidate['package_name']}' that resolve {candidate['cve_id']} "
@@ -35,54 +47,58 @@ def _get_search_grounded_findings(candidate, api_key):
         f"Report exactly what you find: the fixed version number(s), the source "
         f"(e.g. advisory, changelog, registry), and note if sources disagree."
     )
-    search_payload = {
-        "contents": [{"role": "user", "parts": [{"text": search_prompt}]}],
-        "tools": [{"google_search": {}}],
-        "generationConfig": {
-            "temperature": 0.0,
-            "topP": 1.0,
-            "topK": 1,
-            "seed": 42,
-        },
+    tools = [{'type': 'google_search'}, {'type': 'url_context'}]
+    generation_config = {
+        'max_output_tokens': 8192,
+        'top_p': 0.95,
     }
 
     with open('search-grounding-request.json', 'w') as f:
-        json.dump(search_payload, f, indent=2)
+        json.dump({
+            "input": search_prompt,
+            "tools": tools,
+            "generation_config": generation_config,
+            "models_tried": SEARCH_MODELS,
+        }, f, indent=2)
 
-    result = None
+    client = genai.Client(api_key=api_key)
+    result_text = None
+    raw_repr = None
     for model_name in SEARCH_MODELS:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
-        req = urllib.request.Request(
-            url,
-            data=json.dumps(search_payload).encode('utf-8'),
-            headers={'Content-Type': 'application/json', 'x-goog-api-key': api_key}
-        )
         print(f"[SEARCH] Attempting grounded search using model: {model_name}...")
         try:
-            with urllib.request.urlopen(req) as response:
-                result = json.loads(response.read().decode('utf-8'))
-                print(f"[SEARCH] Successfully retrieved grounded findings using model: {model_name}")
-                break
-        except urllib.error.HTTPError as e:
-            err_body = e.read().decode('utf-8')
-            print(f"[WARNING] Search model {model_name} failed with HTTP Error {e.code} {e.reason}: {err_body}. Attempting fallback model...")
-            continue
+            interaction = client.interactions.create(
+                model=f'models/{model_name}',
+                input=search_prompt,
+                tools=tools,
+                generation_config=generation_config,
+            )
+            last_step = interaction.steps[-1]
+            raw_repr = repr(last_step)
+            # Response-shape for interactions.create() isn't fully documented
+            # here -- try the plausible attribute names defensively and fall
+            # back to the raw repr (saved to evidence either way) if none hit.
+            for attr in ('content', 'text', 'output', 'output_text'):
+                val = getattr(last_step, attr, None)
+                if val:
+                    result_text = val if isinstance(val, str) else str(val)
+                    break
+            if result_text is None:
+                result_text = raw_repr
+            print(f"[SEARCH] Successfully retrieved grounded findings using model: {model_name}")
+            break
         except Exception as e:
             print(f"[WARNING] Search model {model_name} failed with error: {e}. Attempting fallback model...")
             continue
 
     with open('search-grounding-response-full.json', 'w') as f:
-        json.dump(result, f, indent=2)
+        json.dump({"raw_repr": raw_repr, "extracted_text": result_text}, f, indent=2)
 
-    if not result:
+    if not result_text:
         print("[WARNING] Grounded search failed on all candidate models; proceeding without search findings.")
         return "Web search grounding was attempted but returned no result; no external findings available."
 
-    try:
-        return result['candidates'][0]['content']['parts'][0]['text']
-    except (KeyError, IndexError):
-        print("[WARNING] Grounded search response had no usable text content; proceeding without search findings.")
-        return "Web search grounding was attempted but returned no usable text; no external findings available."
+    return result_text
 
 
 def get_llm_recommendation(candidate, context, ecosystem, is_retry=False, failure_logs=""):

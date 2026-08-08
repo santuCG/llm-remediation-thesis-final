@@ -88,6 +88,9 @@ jobs:
             GRYPE_DB_VALIDATE_AGE=false ./bin/grype db status -o json || true
           } > ../../grype-db-metadata.json
 
+      - name: Install Gemini SDK
+        run: pip install --quiet google-genai
+
       - name: Determine Remediation Strategy
         run: |
           python scripts/remediation/generic_remediation.py $ECOSYSTEM ${{ env.APP_DIR }}
