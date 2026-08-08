@@ -8,6 +8,14 @@ from datetime import datetime, timezone
 # NOTE: Only real, existing Gemini model identifiers are listed here.
 MODELS = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
 
+# Separate fallback list for the search-grounding call only. Tries the
+# "-latest" alias first: AI Studio's interactive grounding test used this
+# alias rather than the dated "gemini-3.6-flash" ID, and alias vs. dated-ID
+# requests can be routed against different quota/entitlement checks even on
+# the same API key. Kept separate from MODELS so this experiment doesn't
+# change the already-working structured call's model list.
+SEARCH_MODELS = ["gemini-flash-latest", "gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+
 
 def _get_search_grounded_findings(candidate, api_key):
     """Runs a separate, ungrounded-schema Gemini call with the google_search tool
@@ -42,7 +50,7 @@ def _get_search_grounded_findings(candidate, api_key):
         json.dump(search_payload, f, indent=2)
 
     result = None
-    for model_name in MODELS:
+    for model_name in SEARCH_MODELS:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
         req = urllib.request.Request(
             url,
