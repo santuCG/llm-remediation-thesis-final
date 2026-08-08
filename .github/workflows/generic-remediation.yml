@@ -206,7 +206,7 @@ jobs:
           # unrecoverable from the archived evidence for any scenario that
           # retries. Canonical (unprefixed) filenames continue to reflect
           # the latest/final attempt, unchanged.
-          for f in llm-request.json llm-response.json llm-response-full.json package-after.json metrics.json; do
+          for f in llm-request.json llm-response.json llm-response-full.json package-after.json metrics.json search-grounding-request.json search-grounding-response-full.json; do
             if [ -f "$f" ]; then
               cp "$f" "${f%.json}-attempt1.json"
             fi
@@ -276,6 +276,8 @@ jobs:
           mv llm-request.json evidence/ || true
           mv llm-response.json evidence/ || true
           mv llm-response-full.json evidence/ || true
+          mv search-grounding-request.json evidence/ || true
+          mv search-grounding-response-full.json evidence/ || true
           mv grype-db-metadata.json evidence/ || true
           mv dependency-graph.log evidence/ || true
           mv build.log evidence/ || true
@@ -289,6 +291,8 @@ jobs:
           mv llm-response-full-attempt1.json evidence/ || true
           mv package-after-attempt1.json evidence/ || true
           mv metrics-attempt1.json evidence/ || true
+          mv search-grounding-request-attempt1.json evidence/ || true
+          mv search-grounding-response-full-attempt1.json evidence/ || true
           
           python scripts/remediation/generate_manifest.py
 

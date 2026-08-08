@@ -4,12 +4,89 @@ import os
 import sys
 from datetime import datetime, timezone
 
+# Fallback model list: primary → stable fallback → legacy fallback
+# NOTE: Only real, existing Gemini model identifiers are listed here.
+MODELS = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+
+
+def _get_search_grounded_findings(candidate, api_key):
+    """Runs a separate, ungrounded-schema Gemini call with the google_search tool
+    enabled, to research the actual fixed version(s) for this CVE independent of
+    the scanner-supplied hint (which this branch's prompt no longer includes).
+
+    Kept as a distinct call rather than folded into the structured call below:
+    the Gemini API does not reliably support responseSchema/responseMimeType
+    (required for deterministic manifest_patch parsing) together with tools in
+    the same request. This isolates search grounding to a freeform research
+    step whose findings are then handed to the unchanged structured call as
+    additional prompt context."""
+    search_prompt = (
+        f"Search the web for the fixed version(s) of the package "
+        f"'{candidate['package_name']}' that resolve {candidate['cve_id']} "
+        f"(currently at vulnerable version {candidate['vulnerable_version']}). "
+        f"Report exactly what you find: the fixed version number(s), the source "
+        f"(e.g. advisory, changelog, registry), and note if sources disagree."
+    )
+    search_payload = {
+        "contents": [{"role": "user", "parts": [{"text": search_prompt}]}],
+        "tools": [{"google_search": {}}],
+        "generationConfig": {
+            "temperature": 0.0,
+            "topP": 1.0,
+            "topK": 1,
+            "seed": 42,
+        },
+    }
+
+    with open('search-grounding-request.json', 'w') as f:
+        json.dump(search_payload, f, indent=2)
+
+    result = None
+    for model_name in MODELS:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(search_payload).encode('utf-8'),
+            headers={'Content-Type': 'application/json', 'x-goog-api-key': api_key}
+        )
+        print(f"[SEARCH] Attempting grounded search using model: {model_name}...")
+        try:
+            with urllib.request.urlopen(req) as response:
+                result = json.loads(response.read().decode('utf-8'))
+                print(f"[SEARCH] Successfully retrieved grounded findings using model: {model_name}")
+                break
+        except urllib.error.HTTPError as e:
+            err_body = e.read().decode('utf-8')
+            print(f"[WARNING] Search model {model_name} failed with HTTP Error {e.code} {e.reason}: {err_body}. Attempting fallback model...")
+            continue
+        except Exception as e:
+            print(f"[WARNING] Search model {model_name} failed with error: {e}. Attempting fallback model...")
+            continue
+
+    with open('search-grounding-response-full.json', 'w') as f:
+        json.dump(result, f, indent=2)
+
+    if not result:
+        print("[WARNING] Grounded search failed on all candidate models; proceeding without search findings.")
+        return "Web search grounding was attempted but returned no result; no external findings available."
+
+    try:
+        return result['candidates'][0]['content']['parts'][0]['text']
+    except (KeyError, IndexError):
+        print("[WARNING] Grounded search response had no usable text content; proceeding without search findings.")
+        return "Web search grounding was attempted but returned no usable text; no external findings available."
+
 
 def get_llm_recommendation(candidate, context, ecosystem, is_retry=False, failure_logs=""):
     api_key = os.environ.get('GEMINI_API_KEY')
     if not api_key:
         print("[ERROR] GEMINI_API_KEY not found.")
         sys.exit(1)
+
+    print("\n=== Search Grounding: researching fixed version independently ===")
+    search_findings = _get_search_grounded_findings(candidate, api_key)
+    print(search_findings)
+    print("===================================================================\n")
 
     system_prompt = """You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems.
 You must critically evaluate the topological subgraph. Provide comprehensive reasoning on why the vulnerability exists.
@@ -31,7 +108,7 @@ Do not hallucinate package versions. Recommend versions that actually exist and 
         pass  # fallback to today
 
     user_prompt = f"""Scenario ID: {scenario_id}
-Prompt Version: HintRemoval-v1.0
+Prompt Version: HintRemoval-SearchGrounding-v1.0
 
 ### Vulnerability Intelligence
 * Target Package: {candidate['package_name']}
@@ -46,6 +123,9 @@ Prompt Version: HintRemoval-v1.0
 ```json
 {json.dumps(context, indent=2)}
 ```
+
+### Web Search Findings (live grounding, this call only -- not scanner-supplied)
+{search_findings}
 """
 
     if is_retry:
@@ -122,16 +202,14 @@ Based on the vulnerability intelligence and context:
     # Save the request for evidence, enriched with additional metadata for thesis audit trails
     evidence_payload = {
         "scenario_id": scenario_id,
-        "experiment_id": "2026-final",
+        "experiment_id": "2026-final-search-grounding",
         "application": application,
         "ecosystem": ecosystem,
-        "prompt_version": "v1.2",
+        "prompt_version": "HintRemoval-SearchGrounding-v1.0",
         "api_payload": api_payload
     }
 
-    # Fallback model list: primary → stable fallback → legacy fallback
-    # NOTE: Only real, existing Gemini model identifiers are listed here.
-    models = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    models = MODELS
     result = None
 
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
