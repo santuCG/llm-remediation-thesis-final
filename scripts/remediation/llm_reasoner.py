@@ -14,7 +14,7 @@ MODELS = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.
 # requests can be routed against different quota/entitlement checks even on
 # the same API key. Kept separate from MODELS so this experiment doesn't
 # change the already-working structured call's model list.
-SEARCH_MODELS = ["gemini-flash-latest", "gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+SEARCH_MODELS = ["gemini-pro-latest", "gemini-flash-latest", "gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
 
 
 def _get_search_grounded_findings(candidate, api_key):
