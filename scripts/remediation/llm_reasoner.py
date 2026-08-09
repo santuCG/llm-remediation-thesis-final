@@ -39,6 +39,7 @@ def _get_search_grounded_findings(candidate, api_key):
     surfaces appear to route through different quota/entitlement checks for
     this feature."""
     from google import genai
+    from google.genai import types
 
     search_prompt = (
         f"Search the web for the fixed version(s) of the package "
@@ -47,17 +48,11 @@ def _get_search_grounded_findings(candidate, api_key):
         f"Report exactly what you find: the fixed version number(s), the source "
         f"(e.g. advisory, changelog, registry), and note if sources disagree."
     )
-    tools = [{'type': 'google_search'}, {'type': 'url_context'}]
-    generation_config = {
-        'max_output_tokens': 8192,
-        'top_p': 0.95,
-    }
-
+    
     with open('search-grounding-request.json', 'w') as f:
         json.dump({
             "input": search_prompt,
-            "tools": tools,
-            "generation_config": generation_config,
+            "tools": [{"google_search": {}}],
             "models_tried": SEARCH_MODELS,
         }, f, indent=2)
 
@@ -67,26 +62,21 @@ def _get_search_grounded_findings(candidate, api_key):
     for model_name in SEARCH_MODELS:
         print(f"[SEARCH] Attempting grounded search using model: {model_name}...")
         try:
-            interaction = client.interactions.create(
-                model=f'models/{model_name}',
-                input=search_prompt,
-                tools=tools,
-                generation_config=generation_config,
+            response = client.models.generate_content(
+                model=model_name,
+                contents=search_prompt,
+                config=types.GenerateContentConfig(
+                    tools=[{"google_search": {}}],
+                    temperature=0.0
+                )
             )
-            last_step = interaction.steps[-1]
-            raw_repr = repr(last_step)
-            # Response-shape for interactions.create() isn't fully documented
-            # here -- try the plausible attribute names defensively and fall
-            # back to the raw repr (saved to evidence either way) if none hit.
-            for attr in ('content', 'text', 'output', 'output_text'):
-                val = getattr(last_step, attr, None)
-                if val:
-                    result_text = val if isinstance(val, str) else str(val)
-                    break
-            if result_text is None:
-                result_text = raw_repr
-            print(f"[SEARCH] Successfully retrieved grounded findings using model: {model_name}")
-            break
+            
+            result_text = response.text
+            raw_repr = repr(response)
+            
+            if result_text:
+                print(f"[SEARCH] Successfully retrieved grounded findings using model: {model_name}")
+                break
         except Exception as e:
             print(f"[WARNING] Search model {model_name} failed with error: {e}. Attempting fallback model...")
             continue
