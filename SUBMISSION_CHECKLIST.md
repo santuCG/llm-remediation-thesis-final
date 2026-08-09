@@ -2,7 +2,7 @@
 
 Practical, checkable list of what must be true before this thesis (`THESIS_DRAFT_V3.md`, "Empirical Evaluation of LLM-Assisted Dependency Remediation in SBOM-Driven CI/CD Pipelines", Santosh Nagaraj) can actually be submitted.
 
-Built from the repository's own self-reported gaps (THESIS_DRAFT_V3.md, "Quality Report" and "Items That Still Require Manual Completion By The Author", lines 617–644) plus a direct check of repo state on 2026-08-08/09. This file does not modify any evidence, the thesis file, or any docx/pdf — checklist only.
+Originally built from the thesis's own self-reported gaps; **revised 2026-08-09** after a thesis-wide quality and compliance pass. The "Quality Report" and "Items That Still Require Manual Completion By The Author" sections that this checklist was first derived from have since been removed from the thesis, because a submitted thesis must not carry its own internal TODO list. The authoritative requirements are now `Masters_Thesis/Thesis Template MSc New.docx` and `Masters_Thesis/BST_FAQ_Master Thesis_Computer Science.pdf`. This file does not modify any evidence, the thesis file, or any docx/pdf — checklist only.
 
 ---
 
@@ -24,12 +24,15 @@ Built from the repository's own self-reported gaps (THESIS_DRAFT_V3.md, "Quality
 - [ ] Acknowledgements section written (currently absent; listed as outstanding in the "Items That Still Require Manual Completion" list, item 1)
 - [ ] Final title confirmed as-is or revised (currently "Empirical Evaluation of LLM-Assisted Dependency Remediation in SBOM-Driven CI/CD Pipelines" — item 1 flags "final title" as still open)
 
-## 2. Length gap (self-reported: ≈11,000 words vs. 32,000–36,000 target)
+## 2. Length (RESOLVED — verify at submission time)
 
-- [ ] Decide how to close the length gap: expand the remaining ~15 non-deep-dived scenarios (currently only 7 of 18 have full case-study treatment: AF-01, AF-06, JS-01, JS-05, JS-06, JS-07, JS-09) into ~300–500-word analytical vignettes each, per the author's own proposed remediation in item 2
-- [ ] Deepen Chapter 2 literature sub-sections with additional verified sources (no fabrication) if pursuing the length target
-- [ ] If the length target is knowingly *not* met, get explicit sign-off from supervisor/examiner that ~11,000–16,000 words (raw file word count independently verified at ~15,986 including tables/references/appendices) is acceptable, rather than submitting silently under-length
-- [ ] No requirements document in this repo states the 32,000–36,000-word figure independently of THESIS_DRAFT_V3.md itself — confirm this number against the actual SRH program handbook/thesis guidelines (not found in repo; likely external to this repository)
+The 32,000–36,000-word figure previously recorded here had no source outside the thesis file itself. The **authoritative requirement**, from `Masters_Thesis/BST_FAQ_Master Thesis_Computer Science.pdf`, is:
+
+> "The recommended length of the document is 30,000 words with Times New Roman font size 12 with 1,5 spacing. This does not include table of contents, graphs, annexures etc. The length of the document can be discussed and agreed with the primary supervisor as this is subject to topic, methodology and other attributes."
+
+- [x] Chapter 2 deepened (§2.0 review method, §2.13 theoretical framework); Chapter 3 expanded with reproducibility detail; the eleven scenarios without individual case studies now covered in §4.6a; Chapter 5 expanded with threats to validity, literature comparison, and implications; Chapter 6 expanded with SQ answers, methodological reflection, and take-home messages.
+- **Current measured count:** ~24,800 words core (Chapters 1–6) raw, ~22,400 excluding tables and code blocks; ~28,500 whole-document raw. Re-measure before submission — the counting script is described in the QA report.
+- [ ] **Author decision required:** the count sits below the 30,000 recommendation. The FAQ explicitly permits the length to be "discussed and agreed with the primary supervisor." Either agree the current length with the primary supervisor, or extend further — but only with evidence-bearing material, not padding.
 
 ## 3. References (49 numbered entries + 18 scenario CVE records; ~67 sources; item 3)
 
@@ -38,26 +41,18 @@ Built from the repository's own self-reported gaps (THESIS_DRAFT_V3.md, "Quality
 - [ ] Fill in "Access dates to be finalised by the author" (References section header note, THESIS_DRAFT_V3.md line 477)
 - [ ] Confirm final IEEE citation formatting (the repo does not contain a separate style-guide document — IEEE format is asserted only within THESIS_DRAFT_V3.md itself; confirm this is the program's actual required citation style)
 
-## 4. Figures (F1–F16 described but not rendered — item 4)
+## 4. Figures (RESOLVED)
 
-- [ ] Render F1: twelve-stage LLM pipeline diagram (source: `.github/workflows/generic-remediation.yml`; Mermaid source in `PIPELINE_V2_RELEASE_NOTES.md`)
-- [ ] Render F2: deterministic baseline diagram (`.github/workflows/grype-baseline.yml`)
-- [ ] Render F3: JS-01 transitive shadowing graph (`results/execution_evidence/JS-01/llm-request.json`)
-- [ ] Render F4: baseline vs LLM by ecosystem (Tables 5–6)
-- [ ] Render F5: response-schema fields (`results/execution_evidence/AF-01/llm-request.json`)
-- [ ] Render F6: prioritisation order (`scripts/remediation/prioritize.py`)
-- [ ] Render F7: baseline-vs-rescan counts for the case studies
-- [ ] Render F8: evidence-folder structure
-- [ ] Render F9: strategy distribution across 18 scenarios (Table 4)
-- [ ] Render F10: npm nested vs pip flat resolution
-- [ ] Render F11: retry mechanism flow
-- [ ] Render F12: provenance/audit timeline
-- [ ] Render F13: CVSS/EPSS/KEV prioritisation concept
-- [ ] Render F14: SBOM generation-to-scan data flow
-- [ ] Render F15: comparison-to-existing-tools map (Table L1)
-- [ ] Render F16: two-tree monorepo structure for JS-07's manifest-editing-scope limitation (§4.3c)
-- [ ] **Note the count mismatch**: Appendix D (line 552) lists F1–**F16** (16 figures), but the Quality Report's "Approximate metrics" (line 629) states "Figures suggested: **15**." Reconcile this discrepancy — either the count needs correcting or one figure was added after the metrics line was last updated.
-- [ ] Insert rendered figures into the docx/PDF at their referenced locations, replacing "(author to render)" in Appendix D
+Five figures are now rendered and integrated, replacing the earlier list of sixteen *suggested* figures. All are generated programmatically from the frozen evidence archive by `scripts/figures/make_figures.py`; no value in any figure is hand-entered, and re-running that script from the repository root regenerates all five.
+
+- [x] Figure 1 — two-arm experimental design (§3.1)
+- [x] Figure 2 — recorded deterministic-gate outcomes, all eighteen scenarios (§4.1)
+- [x] Figure 3 — scanner match counts before and after remediation (§4.1)
+- [x] Figure 4 — JS-01 transitive shadowing and the override path (§4.4)
+- [x] Figure 5 — JS-07 two-tree resolution and manifest-editing scope (§4.3c)
+- [x] Each figure has a number, a caption, a source line, and an in-text reference; verified programmatically that no figure is defined-but-unreferenced or referenced-but-undefined.
+- [x] The earlier F1–F16 vs "15 figures" count mismatch is void — that list and the Quality Report that contradicted it have both been removed.
+- [ ] Confirm the figures render correctly in the generated docx/PDF at 300 dpi.
 
 ## 5. Evidence archive integrity (existence/count check only — not modified)
 
