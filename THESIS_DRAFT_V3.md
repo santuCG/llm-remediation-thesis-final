@@ -13,7 +13,7 @@ Submission Date: **[to be provided]**
 
 ---
 
-> **Integrity and sourcing note.** Historical freeze tag: `thesis-freeze-2026-08-02`, commit `5a227c8f`. Final regenerated dataset: produced under Pipeline v2.0 (`CHANGELOG_V2.md`, `PIPELINE_V2_RELEASE_NOTES.md`) and reported in this thesis. Unless otherwise stated, all quantitative results reported in the primary evaluation originate from the frozen evidence archive (`results/execution_evidence/`, `results/reproducibility_verification/`) at the tagged submission commit, cited by path. Results reported in the explanatory hint-removal ablation study (§4.10) originate from a separate archived evidence set (`results/execution_evidence_no_hint/`) generated on a dedicated research branch, isolated from the pipeline code that produced the primary evaluation; the two datasets are analysed independently and are not combined in any reported aggregate statistic. External claims use IEEE citations to sources that were verified through web research for this thesis and are recorded in the *Research Sources Used* appendix; no reference, author, year, or DOI has been invented. Evidence labels keep claims traceable: **FACT** (repository evidence), **OBSERVATION** (measured result), **INTERPRETATION** (author's reasoning), **LIMITATION**, and **FUTURE WORK**.
+> **Integrity and sourcing note.** Historical freeze tag: `thesis-freeze-2026-08-02`, commit `5a227c8f`. Final regenerated dataset: produced under Pipeline v2.0 (`CHANGELOG_V2.md`, `PIPELINE_V2_RELEASE_NOTES.md`) and reported in this thesis. Unless otherwise stated, all quantitative results reported in the primary evaluation originate from the frozen evidence archive (`results/execution_evidence/`, `results/reproducibility_verification/`) at the tagged submission commit, cited by path. Results reported in the explanatory hint-removal ablation study (§4.9) originate from a separate archived evidence set (`results/execution_evidence_no_hint/`) generated on a dedicated research branch, isolated from the pipeline code that produced the primary evaluation; the two datasets are analysed independently and are not combined in any reported aggregate statistic. External claims use numbered citations to sources that were verified individually for this thesis against their publisher of record; no reference, author, year, or DOI has been invented. Evidence labels keep claims traceable: **FACT** (repository evidence), **OBSERVATION** (measured result), **INTERPRETATION** (author's reasoning), **LIMITATION**, and **FUTURE WORK**.
 
 ---
 
@@ -28,6 +28,44 @@ Results divide by ecosystem. For all nine pip scenarios the baseline built and r
 The LLM's contribution is real but specific: it helps where a fix must satisfy dependency-graph constraints a direct upgrade cannot, bounded by what the pipeline can observe and reach. Findings and limitations, including a corrected candidate-selection defect found during the study, are reported without generalising beyond the eighteen scenarios evaluated.
 
 *Keywords: software supply chain security; dependency remediation; SBOM; software composition analysis; large language models; DevSecOps; CI/CD.*
+
+---
+
+## Acknowledgements
+
+*[To be written by the author before submission. The template allows up to one page and the section is optional; if it is not used, this page is deleted rather than left empty.]*
+
+---
+
+## Table of Contents
+
+*[Generated automatically in the formatted document from the heading styles. This placeholder is replaced by the field-generated table of contents during conversion and is not part of the counted text.]*
+
+---
+
+## List of Figures
+
+| Figure | Title | § |
+|---|---|---|
+| Figure 1 | Two-arm experimental design | §3.1 |
+| Figure 2 | Recorded deterministic-gate outcomes, all eighteen scenarios | §4.1 |
+| Figure 3 | Scanner match counts before and after remediation | §4.1 |
+| Figure 4 | JS-01 transitive shadowing and the override path | §4.4 |
+| Figure 5 | JS-07 two-tree resolution and manifest-editing scope | §4.3c |
+
+## List of Tables
+
+| Table | Title | § |
+|---|---|---|
+| Table L1 | Comparison of automated dependency-remediation approaches | §2.10 |
+| Table 1 | The eighteen pre-registered scenarios | §3.2 |
+| Table 2 | Pipeline stages and their purpose | §3.3 |
+| Table 3 | Threats to validity and their treatment | §3.6 |
+| Table 4 | Recorded LLM-pipeline metrics (all eighteen scenarios) | §4.1 |
+| Table 5 | Deterministic baseline outcomes by ecosystem | §4.2 |
+| Table 6 | Deterministic baseline versus LLM pipeline | §4.8 |
+| Table 7 | Hinted baseline versus unhinted recommendation | §4.9 |
+| Table E1 | Research matrix linking RQ aspects to methods, evidence, and findings | Appendix E |
 
 ---
 
@@ -113,7 +151,7 @@ The study evaluates remediation after detection. Following the frozen scope (`do
 
 ## 1.8 Structure of the Thesis
 
-Chapter 2 reviews the tools, standards, and prior research the study depends on, and states the research gap. Chapter 3 describes and justifies the research design, scenarios, pipeline, and analysis method, and (§3.9) the method for a small supplementary ablation study. Chapter 4 presents the findings through seven detailed case studies, a full-dataset comparison, and (§4.10) the measured results of that ablation study. Chapter 5 discusses these findings against the literature and against the research question and hypothesis, including (§5.6) the ablation study's interpretation, which explains rather than re-measures the primary findings. Chapter 6 concludes with contributions, limitations, and future work.
+Chapter 2 reviews the tools, standards, and prior research the study depends on, and states the research gap. Chapter 3 describes and justifies the research design, scenarios, pipeline, and analysis method, and (§3.9) the method for a small supplementary ablation study. Chapter 4 presents the findings through seven detailed case studies, a full-dataset comparison, and (§4.9) the measured results of that ablation study. Chapter 5 discusses these findings against the literature and against the research question and hypothesis, including (§5.6) the ablation study's interpretation, which explains rather than re-measures the primary findings. Chapter 6 concludes with contributions, limitations, and future work.
 
 ---
 
@@ -197,7 +235,11 @@ This chapter explains the research design and justifies each major decision, bec
 
 ## 3.1 Research Design
 
-The study is a controlled, comparative experiment. Two pipelines run on the same eighteen scenarios: a deterministic baseline that applies the scanner-recommended version bump (`.github/workflows/grype-baseline.yml`), and an LLM-assisted pipeline that requests a strategy and then validates it (`.github/workflows/generic-remediation.yml`). Running both on identical scenarios isolates the effect of the LLM, because everything else is held constant.
+The study is a controlled, comparative experiment. Two pipelines run on the same eighteen scenarios: a deterministic baseline that applies the scanner-recommended version bump (`.github/workflows/grype-baseline.yml`), and an LLM-assisted pipeline that requests a strategy and then validates it (`.github/workflows/generic-remediation.yml`). Everything upstream of the point where the two arms diverge — scenario, application state, SBOM generator, scanner, and prioritisation rule — is held constant, so that the recorded difference between the arms is attributable to the remediation step rather than to the environment. Figure 1 shows the full design, including the point at which the two arms separate and the different points at which each stops recording.
+
+![Two-arm experimental design.](figures/F1_experimental_architecture.png)
+
+**Figure 1.** Two-arm experimental design. Both arms share an identical preparation sequence and diverge only at the remediation step; note that the baseline arm stops at a build failure while the LLM arm continues to rescan and validation, which is the asymmetry §3.8 qualifies. *Source: generated by `scripts/figures/make_figures.py` from the two workflow definitions and `preregistration/tool_versions.md`.*
 
 **Why a comparative design with a deterministic baseline.** **INTERPRETATION.** Without a baseline, any LLM success could be attributed to the ecosystem, the scanner, or the scenario rather than to the LLM. The baseline is intended to answer, per scenario, whether a plain scanner-recommended upgrade already works; §3.8 states the specific respect in which the two workflows' implementations reach that answer differently for the npm scenarios. This is the design choice underlying the ecosystem-split observation in Chapter 4, read within the scope stated in §3.8, and it addresses the literature's observation that LLM-tool evaluations often lack a clean baseline [Section 2.12].
 
@@ -265,7 +307,7 @@ Each design decision is justified below.
 
 **Why an LLM, and why Gemini.** The task requires flexible reasoning over a dependency subgraph and a natural-language justification of trade-offs, which suits an LLM [5], [29]. **FACT.** The study uses Google Gemini [46] (primary model `gemini-3.6-flash`, with a documented fallback list) configured with `temperature 0.0, topP 1.0, topK 1, seed 42` and a strict JSON response schema (`results/execution_evidence/AF-01/llm-request.json`; `scripts/remediation/llm_reasoner.py`). **INTERPRETATION.** Zero temperature and a fixed seed make the model as deterministic as the API allows. The strict schema forces machine-usable fields — `reasoning`, `strategy`, `remediation_type`, `recommended_package_version`, `manifest_patch` — which is what allows deterministic application of the model's advice, and the instruction not to invent versions is a direct guard against package hallucination, a documented risk in LLM code generation [35].
 
-**Why a strict one-retry policy.** **FACT.** At most one retry is allowed (`.agents/AGENTS.md` rule 5; `scripts/remediation/retry_remediation.py`). **INTERPRETATION.** One retry lets the model learn from a first failure — the retry prompt includes the prior build error, echoing the context-in-prompt approach that LLM breaking-update fixers find effective [31] — while keeping the experiment bounded and comparable. Unlimited retries would shift the question from "can the model reason to a fix" toward "can iteration reach a fix," which is left to future work.
+**Why a strict one-retry policy.** **FACT.** At most one retry is allowed (`.agents/AGENTS.md` rule 5; `scripts/remediation/retry_remediation.py`). The retry prompt is intended to carry the prior failure forward, echoing the context-in-prompt approach that LLM breaking-update fixers find effective [31]. **LIMITATION — the failure context was not always transmitted.** `retry_remediation.py` locates the prior failure log by the recorded `failure_stage`, reading `{failure_stage}.log`. In the six npm scenarios whose first attempt failed at `failure_stage = "build"` (JS-01, JS-02, JS-03, JS-04, JS-07, JS-09) the block was populated with the TypeScript compile output. In the two whose first attempt failed at `failure_stage = "apply_fix"` (JS-05, JS-08) no `apply_fix.log` exists — the npm error text was written to `build.log` — so both the primary path and its fallback yielded nothing and the retry prompt's failure block was empty. This was identified during the present analysis by reading the archived retry prompts directly, and it is disclosed rather than corrected, because correcting it would require re-running scenarios and would break comparability with the frozen dataset. Its consequences for the JS-05 interpretation are stated in §4.6 and §5.4. **INTERPRETATION.** One retry keeps the experiment bounded and comparable; unlimited retries would shift the question from "can the model reason to a fix" toward "can iteration reach a fix," which is left to future work.
 
 **Why deterministic validation gates.** **FACT.** The validator confirms only whether the target vulnerability is present in the regenerated scan and records the result in `metrics.json`; build status is recorded separately (`scripts/remediation/validator.py`). **INTERPRETATION.** Keeping the validator narrow prevents it from masking build failures behind a vulnerability-removal success, a construct-validity risk that the separation of `build_success` and `rescan_success` in the pipeline's metrics is designed to avoid.
 
@@ -326,11 +368,11 @@ This section states what the pip/npm comparison in Chapter 4 does and does not e
 
 **Reasoning coding.** Each recommendation's reasoning text was manually coded by the author into one of five descriptive categories — vulnerability-specific, version-boundary reasoning, dependency-graph reasoning, generic upgrade recommendation, and uncertainty/manual review — to support qualitative comparison against the hinted baseline. **LIMITATION.** With four scenarios, this coding is descriptive rather than a statistically validated taxonomy, and the categories were defined from the patterns present in the collected reasoning texts rather than fixed before the texts were read.
 
-**Methodological correction during execution.** **LIMITATION.** An implementation defect was found and corrected during this study: the pipeline's retry-context construction independently reported the scanner's fixed version through a code path unrelated to the hint removed from the initial prompt, which would have reintroduced the independent variable on any retry that reached this path. This was detected before analysis by inspecting the affected scenario's actual retry prompt text, confirmed, and fixed; the one affected dispatch was discarded and the scenario re-run under the corrected code. Only the corrected results are reported in §4.10.
+**Methodological correction during execution.** **LIMITATION.** An implementation defect was found and corrected during this study: the pipeline's retry-context construction independently reported the scanner's fixed version through a code path unrelated to the hint removed from the initial prompt, which would have reintroduced the independent variable on any retry that reached this path. This was detected before analysis by inspecting the affected scenario's actual retry prompt text, confirmed, and fixed; the one affected dispatch was discarded and the scenario re-run under the corrected code. Only the corrected results are reported in §4.9.
 
 ---
 
-# Chapter 4 — Findings and Discussion
+# Chapter 4 — Findings
 
 This chapter reports only measured results, each drawn from repository files and labelled, and discusses limitations alongside positive findings.
 
@@ -354,6 +396,18 @@ This chapter reports only measured results, each drawn from repository files and
 | AF-01…AF-09 | direct_upgrade | 0 | true | true | true | none |
 
 **OBSERVATION.** Sixteen of eighteen scenarios show `dependency_verified = true` and `rescan_success = true`; the nine pip scenarios succeeded on the first attempt, the eight npm scenarios that produced valid evidence each required one retry. **LIMITATION.** `build_success = true` records that dependency *installation* completed, not that the application *compiled* — the eight npm scenarios that reached this field (all except JS-06, which has none) record `build_success = false`, reflecting a genuine, pre-existing, unrelated `TS1005` TypeScript compilation issue in third-party `@types` packages (§3.7), not a remediation defect; each of those scenarios' `dependency_verified`/`rescan_success` are computed independently of this and are unaffected by it. `failure_stage` reads `"none"` for every scenario whose retry ultimately succeeded, consistent with Table 4.
+
+Figure 2 presents the same three gates for all eighteen scenarios in a single view, making the ecosystem split and the two exceptions visible at a glance.
+
+![Recorded deterministic-gate outcomes, all eighteen scenarios.](figures/F2_outcome_matrix.png)
+
+**Figure 2.** Recorded deterministic-gate outcomes for all eighteen scenarios. The uniform red band across the npm `build_success` row reflects the pre-existing TypeScript compilation issue described above, not remediation failure; JS-06 and JS-07 are the only scenarios whose later gates depart from the pattern. *Source: `results/execution_evidence/<ID>/metrics.json`, read programmatically.*
+
+**OBSERVATION — aggregate scanner counts.** Figure 3 shows the total Grype match count before and after remediation for the seventeen scenarios that produced a rescan. The npm scenarios show a large reduction (for example 459 to 259) that reflects wholesale changes to the resolved dependency tree rather than the target advisory alone, while the pip scenarios change by at most two matches. AF-03 is the clearest caution: its total is identical before and after (584 to 584) even though the target advisory is confirmed absent from the rescan. The aggregate count is therefore not a measure of whether the target was removed, and is not used as one anywhere in this thesis; target presence is always read directly from the match records.
+
+![Scanner match counts before and after remediation.](figures/F3_match_counts.png)
+
+**Figure 3.** Total Grype match counts before and after remediation, per scenario. The AF-03 case marked with an asterisk shows why the aggregate count cannot substitute for a direct check of the target advisory. *Source: `results/execution_evidence/<ID>/baseline-grype.json` and `rescan.json`.*
 
 **Two scenarios did not reach a clean result, each belonging to a distinct, independently root-caused failure category — neither is a remediation defect, and the two are deliberately not conflated:**
 
@@ -394,11 +448,33 @@ AF-01 is the clean reference case; `redshift-connector` is a direct pip dependen
 
 **FACT.** `ws@7.4.6` (transitive, via `engine.io`/`engine.io-client`) was correctly identified (`GHSA-3h5v-q93c-6h6q`, `CVE-2024-37890` — matching the preregistered target exactly). The LLM applied a `transitive_override` on both the first attempt (to `7.5.10`) and the retry (to `7.5.13`); both attempts correctly diagnosed the transitive nature of the dependency. `dependency_verified` and `rescan_success` were nonetheless both `false` after both attempts.
 
+![JS-07 two-tree resolution and manifest-editing scope.](figures/F5_js07_two_tree.png)
+
+**Figure 5.** JS-07's two independently-resolved package trees. The override the pipeline applied to the root manifest is structurally unable to reach the second copy of `ws` resolved inside `frontend/`, which is why both attempts recorded `rescan_success = false`. *Source: `results/execution_evidence/JS-07/` and `applications/juice-shop/frontend/package-lock.json`.*
+
 **LIMITATION, root-caused.** OWASP Juice Shop is a two-`package.json` monorepo: a root `npm install` and a separately, independently-installed `frontend/` tree (triggered via a `postinstall` script running `cd frontend && npm install --legacy-peer-deps`). `manifest_editor.py`, the pipeline's manifest-editing component, only ever reads and writes the root `package.json`. Confirmed directly: `frontend/package-lock.json` carries its own independent copy of the vulnerable package (`node_modules/engine.io-client/node_modules/ws@7.4.6`), with no `overrides` mechanism reachable from the root manifest — so neither attempt's override could ever have reached it. Confirmed this is not a universal problem: the packages targeted by JS-03, JS-04, and JS-05 (`form-data`, `crypto-js`, `jsonwebtoken`) are entirely absent from `frontend/package-lock.json`, which is exactly why those scenarios' root-only overrides succeeded cleanly. JS-07 is simply the first scenario in this dataset whose vulnerable package happens to also be resolved independently inside `frontend/`.
 
 ## 4.4 Case Study — JS-01 (vm2, CVE-2023-32314)
 
-JS-01 is a transitive-dependency case; `vm2` is transitive via `juice-shop → juicy-chat-bot → vm2` and carried a critical sandbox-escape vulnerability at `3.9.17`. **FACT.** Both the first attempt and the retry recommended a `transitive_override` to `3.9.18`. The retry's reasoning: *"The target vulnerable package vm2 (version 3.9.17) is a transitive dependency introduced via juicy-chat-bot (version 0.8.0). Because juicy-chat-bot explicitly references version 3.9.17, direct upgrade of juice-shop's direct dependencies is insufficient and causes npm validation errors. To safely upgrade vm2 to 3.9.18 … a transitive override must be enforced via the manifest overrides block"* (`results/execution_evidence/JS-01/llm-response.json`). **OBSERVATION.** After the override, the target advisory (`GHSA-whpj-8f3w-67p5`) was confirmed absent from the regenerated scan; total matches moved from 459 to 259. **LIMITATION.** The server did not compile (`build_success = false`, the pre-existing `TS1005` type-definition issue unrelated to this remediation, §3.7).
+JS-01 is a transitive-dependency case; `vm2` is transitive via `juice-shop → juicy-chat-bot → vm2` and carried a critical sandbox-escape vulnerability at `3.9.17`. **FACT.** Both the first attempt and the retry recommended a `transitive_override` to `3.9.18`. The retry's reasoning: *"The target vulnerable package vm2 (version 3.9.17) is a transitive dependency introduced via juicy-chat-bot (version 0.8.0). Because juicy-chat-bot explicitly references version 3.9.17, direct upgrade of juice-shop's direct dependencies is insufficient and causes npm validation errors. To safely upgrade vm2 to 3.9.18 … a transitive override must be enforced via the manifest overrides block"* (`results/execution_evidence/JS-01/llm-response.json`). **FACT.** The applied change is a single addition to the root manifest, recorded in the before/after pair (`package-before.json` → `package-after.json`):
+
+```json
+"overrides": { "vm2": "3.9.18" }
+```
+
+Figure 4 shows why this addition, rather than a version bump of any package Juice Shop declares directly, is what reaches `vm2`.
+
+![JS-01 transitive shadowing and the override path.](figures/F4_js01_transitive_override.png)
+
+**Figure 4.** JS-01's dependency path and the override that reaches it. `vm2` is pinned by an intermediate package, so it is not addressable by changing any of the root manifest's own declared versions. *Source: `results/execution_evidence/JS-01/llm-request.json` (recorded dependency context) and `package-after.json`.*
+
+**OBSERVATION.** After the override, the target advisory (`GHSA-whpj-8f3w-67p5`) was confirmed absent from the regenerated scan; total matches moved from 459 to 259, a change that reflects the re-resolved tree as a whole rather than the target alone (§4.1). **LIMITATION.** The server did not compile (`build_success = false`, the pre-existing `TS1005` type-definition issue unrelated to this remediation, §3.7). The compilation error is in third-party type definitions, not in application or dependency code touched by the remediation:
+
+```text
+node_modules/@types/babel__traverse/index.d.ts(1467,40): error TS1005: '?' expected.
+node_modules/@types/lodash/common/common.d.ts(266,65): error TS1005: '?' expected.
+```
+*Source: `results/execution_evidence/JS-01/build.log`, lines 90–92.*
 
 ## 4.5 Case Study — JS-09 (multer, CVE-2026-3520)
 
@@ -408,9 +484,33 @@ JS-09 shows a direct-dependency npm case. `multer` is a direct npm dependency de
 
 JS-05 is the clearest recorded example of the LLM adapting to a package-manager constraint, and it directly evidences the constraint-aware retry loop that the methodology describes. `jsonwebtoken` is declared as a **direct** dependency of Juice Shop.
 
-**FACT.** The first attempt reasoned: *"The vulnerability GHSA-c7hr-j4mj-j2w6 affects jsonwebtoken@0.1.0, which is pulled in transitively by express-jwt@0.1.3… Using npm overrides to force jsonwebtoken to version 4.2.2 ensures the vulnerable transitive package is remediated across the entire dependency graph"* and applied an `overrides` entry (`results/execution_evidence/JS-05/llm-response-attempt1.json`). Because `jsonwebtoken` is *also* declared as a direct dependency (`0.4.0`) alongside the copy `express-jwt` pulls in transitively, npm rejected the override with an `EOVERRIDE` conflict, confirmed present in both `build.log` and the retry's `llm-request.json`. This failure was supplied to the single retry.
+**FACT.** The first attempt reasoned: *"The vulnerability GHSA-c7hr-j4mj-j2w6 affects jsonwebtoken@0.1.0, which is pulled in transitively by express-jwt@0.1.3… Using npm overrides to force jsonwebtoken to version 4.2.2 ensures the vulnerable transitive package is remediated across the entire dependency graph"* and applied an `overrides` entry (`results/execution_evidence/JS-05/llm-response-attempt1.json`). Because `jsonwebtoken` is *also* declared as a direct dependency (`0.4.0`) alongside the copy `express-jwt` pulls in transitively, npm rejected the override:
 
-**FACT.** On the retry the LLM reasoned: *"jsonwebtoken is declared as a direct dependency in package.json at version 0.4.0… Direct Upgrade is the optimal strategy because the package is directly defined in package.json dependencies"* — switching strategy to a **direct upgrade** to `4.2.2` (`results/execution_evidence/JS-05/llm-response.json`; `metrics.json`: `strategy = direct_upgrade`, `retry_count = 1`).
+```text
+npm error code EOVERRIDE
+npm error Override for jsonwebtoken@0.4.0 conflicts with direct dependency
+```
+*Source: `results/execution_evidence/JS-05/build.log`, lines 1–2.*
+
+**FACT — what the retry did and did not receive.** The `EOVERRIDE` text above appears in `build.log` but **not** in the retry prompt. The retry's `### Previous Attempt Failure Logs` block is empty (`results/execution_evidence/JS-05/llm-request.json`). What did change between the two prompts is the *dependency context*. On the first attempt the context contained the resolved tree, showing both copies of the package:
+
+```json
+"npm_ls": { "name": "juice-shop", "dependencies": {
+    "express-jwt": { "version": "0.1.3", "dependencies": {
+        "jsonwebtoken": { "version": "0.1.0" } } },
+    "jsonwebtoken": { "version": "0.4.0" } } }
+```
+
+On the retry, the failed install left no resolvable tree, so the same context fields collapsed to:
+
+```json
+"npm_ls": { "version": "15.3.0", "name": "juice-shop" },
+"npm_explain": "Command '['npm', 'explain', 'jsonwebtoken', '--json']' returned non-zero exit status 1.",
+"package_json": { "dependencies": { "jsonwebtoken": "0.4.0" } }
+```
+*Source: `results/execution_evidence/JS-05/llm-request-attempt1.json` and `llm-request.json`.*
+
+**FACT.** On the retry the LLM reasoned: *"jsonwebtoken is declared as a direct dependency in package.json at version 0.4.0… Direct Upgrade is the optimal strategy because the package is directly defined in package.json dependencies"* — switching strategy to a **direct upgrade** to `4.2.2` (`results/execution_evidence/JS-05/llm-response.json`; `metrics.json`: `strategy = direct_upgrade`, `retry_count = 1`). The retry's stated reason corresponds to the only dependency evidence the retry prompt still contained.
 
 **OBSERVATION.** The remediation reached a validated state: the target advisory (`GHSA-c7hr-j4mj-j2w6`) was confirmed absent after remediation, with total scanner matches moving from 450 to 254 (`results/execution_evidence/JS-05/`, `rescan_success = true`, `dependency_verified = true`).
 
@@ -422,7 +522,7 @@ JS-05 is the clearest recorded example of the LLM adapting to a package-manager 
 
 **SQ1, SQ2, SQ4.** SQ1 is addressed in §1.3, where it is reported as not answerable from this dataset because KEV was constant across all 18 scenarios. SQ2 is addressed above in §4.2 (Table 5: 9/9 npm baselines and 0/9 pip baselines fail to build). SQ4 is addressed above in this section's Generation and Validation paragraphs.
 
-## 4.9 Comparison Summary
+## 4.8 Comparison Summary
 
 **Table 6. Deterministic baseline versus LLM pipeline.**
 
@@ -435,7 +535,7 @@ JS-05 is the clearest recorded example of the LLM adapting to a package-manager 
 
 *\*The two workflows record their npm outcome at different points in the remediation sequence (§3.8); this row does not represent a matched comparison of remediation capability.*
 
-## 4.10 Explanatory Ablation Study: Results
+## 4.9 Explanatory Ablation Study: Results
 
 The motivation, experimental design, scenario selection, and evaluation protocol for this explanatory ablation are described in §3.9; this section reports the measured results, to explain the strategy-selection behaviour observed in the primary evaluation rather than to establish new performance figures.
 
@@ -450,7 +550,7 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 **OBSERVATION.** Strategy selection (direct upgrade or transitive override) matched the hinted baseline in all four scenarios. The specific recommended version differed from the hinted baseline in all four scenarios, from an adjacent patch release (JS-01: 3.9.19 vs. 3.9.18) to a different release line entirely (JS-09: 1.4.5-lts.1 vs. 2.1.1). Every unhinted version was independently confirmed to exist on its registry and to resolve the target CVE on rescan.
 
-## 4.11 Findings Summary
+## 4.10 Findings Summary
 
 **OBSERVATION.** For the pip scenarios, the deterministic baseline reached a validated result; for the npm scenarios, its workflow stopped before rescan in every case (§3.8), and the LLM pipeline reached a validated vulnerability-removed state on seven of nine, with the remaining two independently diagnosed as limits of the pipeline's SBOM-cataloging and manifest-editing reach rather than of the model's reasoning. **LIMITATION.** For npm, "vulnerability removed" is not "application compiles."
 
@@ -460,7 +560,7 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 ## 5.1 Summary and Interpretation
 
-**INTERPRETATION.** Within the evaluated pipeline, the LLM's contribution is observable specifically where a fix must satisfy a dependency-graph constraint (§5.5), bounded by what the surrounding pipeline can actually observe (SBOM completeness) and reach (single- vs. multi-manifest applications); §3.8 states the scope within which this contribution is claimed relative to the deterministic baseline. The explanatory ablation (§4.10) indicates this dependency-graph reasoning does not depend on being supplied the scanner's fixed version: strategy selection was unchanged by hint removal in all four scenarios examined, while the specific version recommended was not, suggesting the model's contribution lies more in identifying *how* to apply a fix than in reproducing the scanner's own recorded value for *which* version to apply.
+**INTERPRETATION.** Within the evaluated pipeline, the LLM's contribution is observable specifically where a fix must satisfy a dependency-graph constraint (§5.5), bounded by what the surrounding pipeline can actually observe (SBOM completeness) and reach (single- vs. multi-manifest applications); §3.8 states the scope within which this contribution is claimed relative to the deterministic baseline. The explanatory ablation (§4.9) indicates this dependency-graph reasoning does not depend on being supplied the scanner's fixed version: strategy selection was unchanged by hint removal in all four scenarios examined, while the specific version recommended was not, suggesting the model's contribution lies more in identifying *how* to apply a fix than in reproducing the scanner's own recorded value for *which* version to apply.
 
 ## 5.2 Research Question and Hypothesis (H₀) Analysis
 
@@ -482,7 +582,9 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 **JS-09.** **INTERPRETATION.** JS-09 is the direct-dependency counterpart to AF-01: for a package the manifest already names directly, the LLM's value is confirming and re-applying the correct version once the package manager's own installation state is fixed, not graph reasoning — the graph-reasoning cases in this dataset are the transitive ones (JS-01). This interpretation is scoped to the observed direct-dependency case and is not generalised to direct-dependency scenarios as a class beyond the evidence presented.
 
-**JS-05.** **INTERPRETATION.** Within the LLM pipeline's own two attempts, JS-05 shows an observed sequence: the first attempt's `overrides` entry produced the `EOVERRIDE` conflict, and the retry — supplied with that build-error context — was associated with a different recommended strategy, a direct upgrade rather than an override. This sequence is consistent with the LLM breaking-update literature's finding that build-error context in the prompt is associated with higher remediation success [31], but the single JS-05 case does not establish that the supplied context alone caused the strategy change.
+**JS-05.** **INTERPRETATION.** Within the LLM pipeline's own two attempts, JS-05 shows an observed sequence: the first attempt's `overrides` entry produced an `EOVERRIDE` conflict, and the retry was associated with a different recommended strategy, a direct upgrade rather than an override. The mechanism, however, is not the one a reader might assume. As §4.6 records, the `EOVERRIDE` text was never placed in the retry prompt — that prompt's failure-log block was empty. What differed between the two prompts was the dependency context: the failed install left `npm ls` unable to emit a resolved tree and `npm explain` returning a non-zero exit status, so the transitive path through `express-jwt` that the first attempt had reasoned over was simply absent on the retry, leaving the direct `package.json` declaration as the only dependency evidence present. The retry's recommendation matches that residual evidence exactly.
+
+**INTERPRETATION.** Two things follow. First, the strategy change is better described as the model responding consistently to a changed and impoverished context than as the model learning from a reported error. Second, this scenario cannot be offered as evidence for the LLM breaking-update literature's finding that build-error context in the prompt improves remediation [31], because in this run no build-error context was supplied; that comparison is therefore not made here. The observation that the model's output tracked the context it was given — rather than diverging from it — is the defensible reading, and it is a single case.
 
 **AF-06.** **INTERPRETATION.** AF-06 illustrates a methodological risk when severity-gated discovery depends on a scanner-reported severity label while vulnerability selection is based on a different scoring standard. For this advisory, the same vulnerability carried a CVSS v3.1 score of 7.8 ("High") and a CVSS v4.0 score of 5.4 ("Medium"). Because the discovery filter in `prioritize.py` requires `severity in ["high","critical"]`, the scanner's v4.0-derived "Medium" label placed the advisory below the automatic-discovery threshold. Thus, the scenario demonstrates that the scoring standard represented in upstream vulnerability metadata can affect whether a vulnerability passes a severity-gated discovery rule, even when the researcher has deliberately selected that vulnerability for evaluation.
 
@@ -524,7 +626,7 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 This thesis evaluated whether providing contextual information to a Large Language Model improves dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly, across eighteen pre-registered scenarios on npm and pip, within the two pipelines implemented for this study (§3.8). **INTERPRETATION.** For flat pip dependencies, both the deterministic baseline and the LLM pipeline reached a validated result in which the target vulnerability was removed; no comparative advantage is claimed for the LLM pipeline on this class. For transitive npm dependencies, within the evaluated workflows, the LLM pipeline reached a validated state in which the target vulnerability was removed, using graph-aware strategies, in seven of nine scenarios; the deterministic baseline's workflow did not reach a rescan-based result on any npm scenario, for the reason given in §3.8, so this thesis does not claim a matched comparison for that class. On the second outcome named in the research question, no measurable difference in build success rate was observed between the two arms within either ecosystem (§5.2). The remaining two npm scenarios are disclosed, root-caused negative results for the LLM pipeline — one where the vulnerable package never reached the SBOM at all, one where it was reachable only through a package tree the manifest editor cannot edit — and both are diagnosed as limits of that pipeline, not of the LLM's own reasoning, which correctly characterized the dependency graph in both cases. Removing a vulnerability at the scanner level is not the same as producing a compiling application; the two properties are kept separate throughout, and both remediation failures are reported alongside the successes.
 
-**INTERPRETATION.** The explanatory ablation study (§4.10) strengthens this reading of the pipeline's contribution rather than changing it. Correct remediation strategies remained reachable in all four examined scenarios when the scanner's fixed version was withheld from the prompt, indicating that a validated result is not solely attributable to the model reproducing a version it was supplied. At the same time, the specific version recommended changed in every one of those four scenarios, indicating the hint is not redundant information the model would have arrived at identically on its own. Together, these point to the fixed-version hint acting on *which value* is proposed rather than on *whether* the underlying dependency-graph reasoning that selects a strategy succeeds.
+**INTERPRETATION.** The explanatory ablation study (§4.9) strengthens this reading of the pipeline's contribution rather than changing it. Correct remediation strategies remained reachable in all four examined scenarios when the scanner's fixed version was withheld from the prompt, indicating that a validated result is not solely attributable to the model reproducing a version it was supplied. At the same time, the specific version recommended changed in every one of those four scenarios, indicating the hint is not redundant information the model would have arrived at identically on its own. Together, these point to the fixed-version hint acting on *which value* is proposed rather than on *whether* the underlying dependency-graph reasoning that selects a strategy succeeds.
 
 ## 6.2 Research Contributions
 
@@ -539,7 +641,7 @@ The full list is in `THESIS_LIMITATIONS.md`. The most important: the npm applica
 
 **LIMITATION — `is_direct_dependency` classification.** The preregistered scenario metadata (`results/scenarios/final_18_scenarios.json`) records an `is_direct_dependency` field for each scenario, determined at scenario-selection time (2026-07-08). Cross-checking this field against the pipeline's own current, live computation (`_get_dependency_type()`, evaluated directly against each application's `package.json`/`requirements.txt`) for all nine npm scenarios found that six — JS-01, JS-02, JS-03, JS-04, JS-06, JS-07 — are recorded as `"direct"` but are actually transitive under the current dependency tree; only JS-05, JS-08, and JS-09 match. For JS-02 (`handlebars`) specifically, the same "direct" classification appears in both the original and the current records, while the live computation (confirming `handlebars` is absent from both `dependencies` and `devDependencies` in the current `package.json`) is transitive, indicating a persistent discrepancy between the preregistered dependency-type metadata and the computed classification rather than drift introduced during the study. This is disclosed rather than silently corrected in the preregistration record: `dependency_type` as reported in each scenario's `metrics.json` (used throughout Chapter 4, e.g. JS-01's classification in §4.4) reflects the live, code-computed value; only the *preregistration* field `is_direct_dependency` is affected, and no case-study interpretation in this thesis relies on the preregistration field where the two disagree.
 
-**LIMITATION — explanatory ablation study (§4.10).** Four scenarios, selected by purposive rather than random sampling, is not a statistically powered sample; the study's findings are reported as descriptive and explanatory, not as a generalisable measurement of hint-removal effects across the full scenario population. The reasoning-category coding in §4.10 is a single-author qualitative coding over four scenarios, not a validated taxonomy.
+**LIMITATION — explanatory ablation study (§4.9).** Four scenarios, selected by purposive rather than random sampling, is not a statistically powered sample; the study's findings are reported as descriptive and explanatory, not as a generalisable measurement of hint-removal effects across the full scenario population. The reasoning-category coding in §4.9 is a single-author qualitative coding over four scenarios, not a validated taxonomy.
 
 ## 6.4 Recommendations
 
@@ -547,7 +649,7 @@ The full list is in `THESIS_LIMITATIONS.md`. The most important: the npm applica
 
 ## 6.5 Future Work
 
-Recorded in `THESIS_FUTURE_WORK.md`. **FUTURE WORK.** adding an LLM confidence score; a prompt-engineering ablation [24]; allowing multiple retries; adding semantic or functional compatibility checks beyond compilation; pinning the scanner database for exact reproducibility; retrieval-augmented generation grounded in advisories [23]; multi-agent proposer–critic designs; model comparison; and additional ecosystems. Each changes the experiment and requires re-running scenarios, so each is left to future study to preserve the comparability of the present dataset. Removing the fixed-version hint to test unaided reasoning, previously listed here, was conducted as an explanatory ablation study during this thesis and is reported in §4.10, not left open.
+Recorded in `THESIS_FUTURE_WORK.md`. **FUTURE WORK.** adding an LLM confidence score; a prompt-engineering ablation [24]; allowing multiple retries; adding semantic or functional compatibility checks beyond compilation; pinning the scanner database for exact reproducibility; retrieval-augmented generation grounded in advisories [23]; multi-agent proposer–critic designs; model comparison; and additional ecosystems. Each changes the experiment and requires re-running scenarios, so each is left to future study to preserve the comparability of the present dataset. Removing the fixed-version hint to test unaided reasoning, previously listed here, was conducted as an explanatory ablation study during this thesis and is reported in §4.9, not left open.
 
 ---
 
@@ -627,8 +729,17 @@ Per-scenario evidence `results/execution_evidence/<ID>/`; canonical per-scenario
 
 **Appendix C contains a complete verification showing every executed scenario matched its intended preregistered target CVE.** Full table, method, and interpretation: `docs/CVE_MATCH_VERIFICATION.md`. Summary: of the eighteen preregistered scenarios, seventeen produced an executed `api_cve_id` and every one matched its preregistered CVE exactly — zero silent substitutions in the final, regenerated dataset. The eighteenth (JS-06) produced no `api_cve_id` at all, by design (§4.3b, Failure Category A) — its own preregistered CVE, `CVE-2026-33228`, never had the opportunity to mismatch anything, since the corrected pipeline (Fix #10, `CHANGELOG_V2.md`) refuses to substitute a different vulnerability when the target cannot be found. This table is also the direct, dataset-wide confirmation that the AF-06/JS-06 target-selection limitation discussed in §3.7 and §4.3a–b was closed for every scenario, not just the two where it was first observed. See also `FINAL_DATASET.md` for the per-scenario run ID / commit / evidence-hash manifest this verification is built from.
 
-## Appendix D — Suggested figures (author to render)
-F1 twelve-stage LLM pipeline (`.github/workflows/generic-remediation.yml`; Mermaid source: `PIPELINE_V2_RELEASE_NOTES.md`); F2 deterministic baseline (`.github/workflows/grype-baseline.yml`); F3 JS-01 transitive shadowing graph (`.../JS-01/llm-request.json`); F4 baseline vs LLM by ecosystem (Tables 5–6); F5 response-schema fields (`.../AF-01/llm-request.json`); F6 prioritisation order (`prioritize.py`); F7 baseline-vs-rescan counts for the case studies; F8 evidence-folder structure; F9 strategy distribution across 18 scenarios (Table 4); F10 npm nested vs pip flat resolution; F11 retry mechanism flow; F12 provenance/audit timeline; F13 CVSS/EPSS/KEV prioritisation concept; F14 SBOM generation-to-scan data flow; F15 comparison-to-existing-tools map (Table L1); F16 two-tree monorepo structure showing why JS-07's frontend-reachable package is outside manifest_editor.py's scope (§4.3c, Failure Category B).
+## Appendix D — Figure provenance
+
+Every figure in this thesis is generated programmatically from the frozen evidence archive by `scripts/figures/make_figures.py`; no value in any figure is entered by hand. Running that script from the repository root regenerates all five files in `figures/`.
+
+| Figure | File | Generated from |
+|---|---|---|
+| Figure 1 | `figures/F1_experimental_architecture.png` | `.github/workflows/generic-remediation.yml`, `.github/workflows/grype-baseline.yml`, `preregistration/tool_versions.md` |
+| Figure 2 | `figures/F2_outcome_matrix.png` | `results/execution_evidence/<ID>/metrics.json`, all eighteen scenarios |
+| Figure 3 | `figures/F3_match_counts.png` | `results/execution_evidence/<ID>/baseline-grype.json` and `rescan.json` |
+| Figure 4 | `figures/F4_js01_transitive_override.png` | `results/execution_evidence/JS-01/llm-request.json`, `package-after.json` |
+| Figure 5 | `figures/F5_js07_two_tree.png` | `results/execution_evidence/JS-07/`, `applications/juice-shop/frontend/package-lock.json` |
 
 ## Appendix E — Research Matrix
 
@@ -677,7 +788,7 @@ Prompt Version: v1.2
 ```
 ```
 
-**User prompt, HintRemoval-v1.0 (§4.10 ablation study).** Identical except the `Fixed Versions` line is removed entirely, not left blank:
+**User prompt, HintRemoval-v1.0 (§4.9 ablation study).** Identical except the `Fixed Versions` line is removed entirely, not left blank:
 ```
 Scenario ID: {scenario_id}
 Prompt Version: HintRemoval-v1.0
@@ -697,83 +808,50 @@ Prompt Version: HintRemoval-v1.0
 ```
 ```
 
-Both versions append an identical closing instruction (*"Based on the vulnerability intelligence and context: 1. Recommend the safest strategy. 2. Provide the exact manifest configuration..."*) and, on a retry, an identical `### Previous Attempt Failure Logs` block populated from the build log and/or rescan summary (§3.9, methodological correction).
+Both versions append an identical closing instruction (*"Based on the vulnerability intelligence and context: 1. Recommend the safest strategy. 2. Provide the exact manifest configuration..."*) and, on a retry, an identical `### Previous Attempt Failure Logs` block. That block is populated from the build log and/or rescan summary where the recorded `failure_stage` resolves to an existing log file, and is emitted empty where it does not; §3.3 records the two scenarios in which it was empty and §4.6 records the consequence for the JS-05 interpretation.
 
 ---
 
-# Research Sources Used (Web Research Log)
+# List of Generative AI Tool Usages
 
-*Every external source consulted while writing V3 is listed, with whether it was cited. Repository primary sources are cited in-text by path and not repeated.*
+In this work, generative artificial intelligence tools were used for the following purpose(s):
 
-| # | Title (short) | Authors (as verified) | Venue / Year | Cited | Supports |
-|---|---|---|---|---|---|
-| 1 | Small World with High Risks (npm) | Zimmermann, Staicu, Tenny, Pradel | USENIX Sec 2019 | [1] | §1.1, §2.1, §2.4 |
-| 2 | Impact of vulns in npm/RubyGems networks | Decan, Mens, Constantinou | MSR'18/EMSE'22 | [2] | §2.4 |
-| 3 | Backstabber's Knife Collection | Ohm, Plate, Sykosch, Meier | DIMVA 2020 | [3] | §1.1, §2.1 |
-| 4 | EPSS | Jacobs, Romanosky, Edwards, Roytman, Adjerid | DTRAP 2021 | [4] | §2.5, §3.3 |
-| 5 | LLMs for SE: SLR | Hou, Zhao, Liu, Yang, Wang, Li, Luo, Lo, Grundy, Wang | TOSEM 2024 | [5] | §2.7, §3.3 |
-| 6 | LLM for Vuln Detection & Repair | Zhou, Cao, Sun, Lo | TOSEM 2024/25 | [6] | §2.8 |
-| 7 | SLR LLMs for APR | Zhang, Fang, Xie, Ma, Sun, Yang, Chen | TOSEM (arXiv 2024) | [7] | §2.9 |
-| 8 | LLMs in Code Security SLR | Basic, Giaretta | arXiv 2024 | [8] | §2.8 |
-| 9 | Dependabot exploratory study | He, He, Zhang, Zhou | IEEE TSE 2023 | [9] | §1.2, §2.6, §2.10, §2.12 |
-| 10 | Dependabot security PRs | Rebatchi, Bissyandé, Moha | EMSE 2024 | [10] | §1.2, §2.10, §2.12 |
-| 11 | SBOM: Where We Stand | Xia, Bi, Xing, Lu, Zhu | ICSE 2023 | [11] | §2.2 |
-| 12 | GitHub workflows & security policies | Ayala, Garcia | arXiv 2023 | [12] | §2.6, §3.3 |
-| 13 | NIST SP 800-161 Rev 1 | NIST | 2022 | [13] | §1.1, §2.1, §2.12 |
-| 14 | Do developers update deps? | Kula, German, Ouni, Ishio, Inoue | EMSE 2018 | [14] | §1.2, §2.12 |
-| 15 | Asleep at the Keyboard (Copilot) | Pearce, Ahmad, Tan, Dolan-Gavitt, Karri | IEEE S&P 2022 | [15] | §2.8 |
-| 16 | Zero-Shot Vulnerability Repair | Pearce, Tan, Ahmad, Karri, Dolan-Gavitt | IEEE S&P 2023 | [16] | §2.8 |
-| 17 | in-toto | Torres-Arias, Afzali, Kuppusamy, Curtmola, Cappos | USENIX Sec 2019 | [17] | §1.1, §2.1, §2.12 |
-| 18 | SoK Taxonomy of SSC attacks | Ladisa, Plate, Martinez, Barais | IEEE S&P 2023 | [18] | §1.1, §2.1, §2.12 |
-| 19 | Semantic versioning / breaking changes | Raemaekers, van Deursen, Visser | JSS 2017 / SCAM'14 | [19] | §1.2, §2.4 |
-| 20 | Technical lag in npm | Zerouali, Constantinou, Mens, Robles, González-Barahona | ICSR 2018 | [20] | §1.1, §2.4 |
-| 21 | Chain-of-Thought prompting | Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, Zhou | NeurIPS 2022 | [21] | §2.7 |
-| 22 | Vulns in Python (PyPI) | Alfadel, Costa, Shihab | EMSE 2023 | [22] | §2.4 |
-| 23 | Retrieval-Augmented Generation | Lewis, Perez, Piktus, et al. | NeurIPS 2020 | [23] | §2.7 |
-| 24 | Prompt engineering survey | Sahoo, Singh, Saha, Jain, Mondal, Chadha | arXiv 2024 | [24] | §2.7 |
-| 25 | DevSecOps challenges SLR | Rajapakse, Zahedi, Babar, Shen | IST 2022 | [25] | §2.6 |
-| 26 | Time to Change the CVSS? | Spring, Hatleback, Householder, Manion, Shick | IEEE S&P mag 2021 | [26] | §2.5, §3.3 |
-| 27 | Typosquatting/combosquatting PyPI | Vu, Pashchenko, Massacci, Plate, Sabetta | EuroS&PW 2020 | [27] | §2.1 |
-| 28 | VulRepair | Fu, Tantithamthavorn, Le, Nguyen, Phung | ESEC/FSE 2022 | [28] | §2.9, §4.4 |
-| 29 | Foundation models | Bommasani, Hudson, … Liang | arXiv 2021 | [29] | §2.7, §3.3 |
-| 30 | SCA tool comparison | Imtiaz, Thorn, Williams | ESEM 2021 | [30] | §2.3, §2.10, §3.3, §5.5 |
-| 31 | Byam (LLM breaking updates) | Reyes, Mahmoud, Bono, Nadi, Baudry, Monperrus | arXiv 2025 / EMSE | [31] | §2.10, §5.4, §5.5 |
-| 32 | Automatically Fixing Dep. Breaking Changes | Fruntke, Krinke | Proc. ACM SE 2025 | [32] | §2.10, §5.5 |
-| 33 | Reproducibility of MSR studies | González-Barahona, Robles | EMSE 2012 | [33] | §2.11, §3.6, §5.5 |
-| 34 | SCA for vulnerability detection (Java) | Zhao, Chen, Xu, Liu, Zhang, Wu, Sun, Liu | ESEC/FSE 2023 | [34] | §2.3 |
-| 35 | Package hallucinations (LLM code generation) | Spracklen, Wijewickrama, Sakib, Maiti, Viswanath, Jadliwala | USENIX Sec 2025 | [35] | §2.8, §3.3, §4.7 |
-| — | OSV database | Google | 2021 | [49] | §1.1 |
+| Purpose | Used |
+|---|---|
+| Collection of conceptual explications on the topic of this work | ☐ |
+| Generation of approaches towards scientific methodology or artistic development of this work | ☐ |
+| Literature search | ☐ |
+| Literature analysis | ☐ |
+| Selection of methods and/or models | ☐ |
+| Generation of code | ☐ |
+| Generation of visualizations | ☐ |
+| Generation of musical compositions and/or arrangements | ☐ |
+| Structuring of the text of this work | ☐ |
+| Formulation/Editing of the text of this work | ☐ |
+| Translation of the text of this work | ☐ |
+| Generation of presentation contents on the basis of this work | ☐ |
+| Other: | ☐ |
 
-*Consulted-but-not-cited (available to the author): "SoK: A Defense-Oriented Evaluation of Software Supply Chain Security" (arXiv:2405.14993); "Time for Actions: GitHub Actions Marketplace" (SecDev 2025); "BOMs Away!" (arXiv:2309.12206); "An Overview and Catalogue of Dependency Challenges…" (arXiv:2409.18884).*
+*[**Author action required.** The boxes above must be completed by the author to reflect actual usage, and each declared use must additionally be cited in the text and listed in the references with the tool name, version number, date of retrieval, and the prompts used, as the affidavit below requires.]*
+
+**A note specific to this thesis.** This study is *about* a generative model. The Gemini model identified in §3.3 is the object of study: it produced the dependency-remediation recommendations that constitute the experimental data reported in Chapter 4. Its configuration is stated in §3.3, its exact prompts are reproduced in Appendix F, and its complete request and response records are archived per scenario in `results/execution_evidence/<ID>/llm-request.json` and `llm-response.json`. That experimental use is distinct from any use of a generative tool in preparing the manuscript, and the two should not be conflated when completing the declaration above.
 
 ---
 
-# Quality Report
+# Affidavit
 
-**Overall assessment.** A scientifically honest, internally consistent, evidence-traceable MSc thesis draft, aligned with the frozen repository and now supported by a substantial, genuinely-verified literature base. Its principal shortfall against the brief is length: it is below the 32,000–36,000-word target, because the author's rule — never invent references or content — was prioritised over the numeric target.
+I hereby declare in lieu of an oath that I have independently written this work titled
 
-**Strengths.** Every experimental number is quoted from a repository file and cited by path; the central result (ecosystem split) is robust and honestly bounded; the install/remediation/compilation distinction is maintained throughout; the literature review compares prior work rather than summarising it; all external citations are real and verified.
+**Context-Aware Dependency Remediation in SBOM-Driven CI Pipelines Using Large Language Model**
 
-**Weaknesses / shortfalls.** Word count below target; a handful of references need author-list confirmation; figures described, not rendered; per-scenario analysis is deep for seven case studies and summarised for the other eleven.
+and all related parts and that the work is in accordance with the version submitted in digital form. Only the sources and aids expressly named in the work have been used. I have marked as such any ideas taken over directly or in substance.
 
-**Approximate metrics (this file).**
-- **Word count: ≈ 11,000 words** (below the 32,000–36,000 target — see completion notes).
-- **References: 49 numbered entries + 18 scenario CVE records = ~67 distinct real sources.** Of the 34 academic entries, ~26 have fully verified author lists; the remainder are verified by title/venue/year/DOI with author lists to confirm. None invented.
-- **Tables: 9** (Table 1–6, L1, C1 (`docs/CVE_MATCH_VERIFICATION.md`), E1).
-- **Figures suggested: 15.**
-- **Case studies: 7** (AF-01, AF-06, JS-06, JS-07, JS-01, JS-09, JS-05).
-- **Repository files cited:** all 18 scenarios' `metrics.json` and `selected-candidate.json`; both workflow YAMLs; `prioritize.py`, `validator.py`, `llm_reasoner.py`, `retry_remediation.py`; case-study evidence; `docs/` methodology and audit files; `THESIS_LIMITATIONS.md`; `THESIS_FUTURE_WORK.md`.
-- **External papers used:** 34 academic + ~15 standards/tools.
-- **URLs consulted:** recorded in Research Sources Used.
+If generative AI tools were used to write the paper, this has been explicitly listed in the addendum at the end of this submission. Within the core text of my work, I have denoted all relevant contents that were created or paraphrased by generative AI (such as text passages, structures, images, and code or parts thereof) according to the citation style I used for short referencing secondary sources in my submission. In my list of references, each use of generative AI has been listed according to the citation style I used for full references, including the name of the tool, its version number, the date of retrieval, and the prompts used.
 
----
+I hereby declare that I have not submitted this work in identical or similar form at this or another university previously.
 
-# Items That Still Require Manual Completion By The Author
+&nbsp;
 
-1. **Front matter:** university, faculty, matriculation number, supervisor names, submission date; final title; acknowledgements.
-2. **Length to 30k:** the honest route is to (a) expand each of the remaining fifteen scenarios into a short analytical vignette (≈300–500 words each, from their evidence folders) and (b) deepen Chapter 2 sub-sections with two or three additional verified sources each. I can continue the web research and write these expansions on request. I did not pad.
-3. **References to 70–100:** ~67 real sources are present; I can verify the remaining author lists and add ~15–25 further verified academic sources (e.g., on reachability analysis, SSVC in practice, npm production-dependency studies, additional LLM-repair evaluations) to reach 80–90 with no fabrication.
-4. **Figures:** render F1–F15 from the listed repository sources.
-5. ~~JS-05 CVSS 0.0: decide how to present this recorded value.~~ Resolved — Table 1's footnote now states the evidence directly (severity and CVSS are independently-populated fields; no further characterization claimed).
-
-*End of Draft Version 3. Versions 1 (`THESIS.md`) and 2 (`THESIS_DRAFT_V2.md`) are unchanged.*
+| | |
+|---|---|
+| Location, Date | Santosh Nagaraj |
