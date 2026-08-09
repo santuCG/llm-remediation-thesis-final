@@ -87,7 +87,7 @@ This is the key experimental design element: the LLM is **told** the naive fix b
 
 ## 6. LLM response
 
-*(Source: `results/execution_evidence/JS-01/llm-response.json`, verbatim reasoning)*
+*(Source: `results/scenarios/JS-01.json`, verbatim reasoning from an earlier, Prompt Version v1.1 run of this scenario. The current regenerated dataset's `results/execution_evidence/JS-01/llm-response.json` records a different run, under Prompt Version v1.2, that recommends `transitive_override` rather than `manual_review` — see §4.4 of the thesis. This quote is retained here because it is the source for the "sensitivity of strategy selection to prompt formulation" limitation discussed in the thesis at §5.4.)*
 
 > **reasoning:** "The vulnerability GHSA-whpj-8f3w-67p5 affects vm2 at version 3.9.17. Although vm2 3.9.18 contains the vulnerability fix, attempting to force this update via dependency overrides triggers transitive updates to @types packages (@types/babel__traverse, @types/lodash) containing modern TypeScript syntax unsupported by the project's legacy TypeScript compiler (causing TS1005 errors), alongside nullability errors (TS2531) in lib/insecurity.ts. Because a single package override cannot resolve these multi-package compiler incompatibilities without upgrading the project TypeScript version or refactoring application code, automated remediation is unsafe and manual review is required."
 >
