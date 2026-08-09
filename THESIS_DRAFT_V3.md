@@ -75,7 +75,7 @@ Automated dependency-update tools such as Dependabot and Renovate have made rout
 
 **Provenance note.** This RQ is the thesis's official, examiner-of-record research question. `docs/01-overview.md`'s "Research Question" section previously stated a differently-scoped RQ, conditioned on cases "where basic deterministic package upgrade strategies do not achieve the intended remediation objective"; that section has been updated to state this RQ verbatim and point to this section for the Supporting Questions and null hypothesis, so the two documents are consistent.
 
-**Scope note.** The RQ names two outcome variables — remediation success rate and CI build stability — and this thesis reports them separately rather than as one combined figure, because the evidence behaves differently on each axis (§4.7). The comparison itself is conducted using the deterministic-baseline workflow described in §3.1. §3.8 states the specific respect in which the two workflows' recorded outcomes, for the npm scenarios, reflect each workflow's own stopping point in addition to the underlying fix; the Comparison analysis in §4.7 is read subject to that scope, which this RQ does not override.
+**Scope note.** The RQ names two outcome variables — remediation success rate and CI build stability — and this thesis reports them separately rather than as one combined figure, because the evidence behaves differently on each axis (§5.2). The comparison itself is conducted using the deterministic-baseline workflow described in §3.1. §3.8 states the specific respect in which the two workflows' recorded outcomes, for the npm scenarios, reflect each workflow's own stopping point in addition to the underlying fix; the Comparison analysis in §5.2 is read subject to that scope, which this RQ does not override.
 
 **Supporting Questions.**
 
@@ -97,7 +97,7 @@ The documentation frames each LLM recommendation as an engineering hypothesis ra
 
 > **H₀.** LLM-assisted version recommendations produce no measurable difference in build success rate or remediation success rate compared to deterministic Grype-based upgrade recommendations across the selected experimental scenarios.
 
-H₀ is evaluated separately for each of its two named outcomes, because §4.7 reports that the data does not support the same conclusion on both: build success rate is identical between the two arms per ecosystem, while remediation success rate differs for the npm scenarios in a way that is attributable, per §3.8, to the two workflows' differing stopping points rather than to remediation capability in isolation. The wording is careful for the same reason the RQ's scope note is careful: it claims a measurable difference or its absence, evaluated per outcome, not an unqualified verdict of LLM superiority.
+H₀ is evaluated separately for each of its two named outcomes, because §5.2 reports that the data does not support the same conclusion on both: build success rate is identical between the two arms per ecosystem, while remediation success rate differs for the npm scenarios in a way that is attributable, per §3.8, to the two workflows' differing stopping points rather than to remediation capability in isolation. The wording is careful for the same reason the RQ's scope note is careful: it claims a measurable difference or its absence, evaluated per outcome, not an unqualified verdict of LLM superiority.
 
 ## 1.5 Objectives
 
@@ -113,7 +113,7 @@ The study evaluates remediation after detection. Following the frozen scope (`do
 
 ## 1.8 Structure of the Thesis
 
-Chapter 2 reviews the tools, standards, and prior research the study depends on, and states the research gap. Chapter 3 describes and justifies the research design, scenarios, pipeline, and analysis method, and (§3.9) the method for a small supplementary ablation study. Chapter 4 presents the findings through seven detailed case studies and a full-dataset comparison, discusses them against the literature, and (§4.10) reports that ablation study, which explains rather than re-measures the primary findings. Chapter 5 concludes with contributions, limitations, and future work.
+Chapter 2 reviews the tools, standards, and prior research the study depends on, and states the research gap. Chapter 3 describes and justifies the research design, scenarios, pipeline, and analysis method, and (§3.9) the method for a small supplementary ablation study. Chapter 4 presents the findings through seven detailed case studies, a full-dataset comparison, and (§4.10) the measured results of that ablation study. Chapter 5 discusses these findings against the literature and against the research question and hypothesis, including (§5.6) the ablation study's interpretation, which explains rather than re-measures the primary findings. Chapter 6 concludes with contributions, limitations, and future work.
 
 ---
 
@@ -296,13 +296,13 @@ The analysis uses the deterministic outcomes in each `metrics.json`: `build_succ
 
 ## 3.7 Methodology Limitations
 
-**LIMITATION.** A single LLM configuration; two applications and two ecosystems; a strict one-retry policy; a live scanner database preventing exact count reproduction; and a pre-existing npm compilation failure that constrains what "success" can mean for the npm scenarios. These are carried into Chapter 4 rather than set aside.
+**LIMITATION.** A single LLM configuration; two applications and two ecosystems; a strict one-retry policy; a live scanner database preventing exact count reproduction; and a pre-existing npm compilation failure that constrains what "success" can mean for the npm scenarios. These are carried into Chapters 4 and 5 rather than set aside.
 
 **LIMITATION — target-selection integrity.** Candidate selection applies a severity threshold intended to guide *automatic* discovery when no target is specified. Applying that same threshold to explicit, preregistered `TARGET_CVE` requests introduces a failure mode observed in two scenarios of this study: where a preregistered target's scanner-reported severity fell below the threshold (AF-06), or the target was absent from the generated SBOM entirely (JS-06), selection fell through to a different, unrelated vulnerability and the run proceeded without warning. The substitution produced internally consistent evidence and was therefore not detectable from the pipeline's own outputs; it was identified only through independent verification against authoritative external vulnerability records. This illustrates a construct-validity threat that can arise when threshold-gated discovery logic is combined with preregistered target selection: a filter designed for discovery can override a deliberate experimental choice, and the resulting evidence carries no indication that it has done so. The evaluation reported in this thesis was conducted using a configuration in which an explicit `TARGET_CVE` is matched against the full structurally-valid candidate pool irrespective of severity, and a target that cannot be found terminates the run rather than being substituted; the dataset analysed in this thesis reflects this target-selection policy. §4.3a–c report the outcomes for AF-06, JS-06 and JS-07, together with the further independent findings each case exposed.
 
 ## 3.8 Scope of Comparative Claims
 
-This section states what the pip/npm comparison in Chapter 4 does and does not establish, so that the individual **INTERPRETATION** statements in Chapter 4 are read within a stated scope rather than as an unqualified claim of LLM superiority.
+This section states what the pip/npm comparison in Chapter 4 does and does not establish, so that the individual **INTERPRETATION** statements in Chapter 5 are read within a stated scope rather than as an unqualified claim of LLM superiority.
 
 **The two workflows record their outcome at different points in the remediation sequence.** `.github/workflows/grype-baseline.yml` applies its patch and, on a build failure, records the outcome and stops; `.github/workflows/generic-remediation.yml` applies its patch and, on a build failure, continues to SBOM regeneration, rescan, and validation regardless. This difference is stated directly in the repository's own engineering record: *"both workflows' genuinely different designs (baseline aborts immediately on build failure and never runs tests; LLM-remediation continues to gather evidence)"* (`CHANGELOG_V2.md`, Fix #1a). Table 5's npm row — *"not validated (build halted before rescan)"* — reports this stopping point as a fact about the workflow, not as a statement that the underlying fix would or would not have passed a rescan.
 
@@ -310,7 +310,7 @@ This section states what the pip/npm comparison in Chapter 4 does and does not e
 
 **In seven of the nine comparable npm scenarios, the deterministic baseline and the LLM pipeline recorded the same final target version.** JS-06 is excluded from this count because the LLM pipeline produced no candidate to compare (§4.3b); the comparable set is therefore the remaining 8, of which 7 (JS-01, JS-02, JS-03, JS-04, JS-05, JS-08, JS-09) match exactly between `results/reproducibility_verification/*/baseline-patch.json` and `results/execution_evidence/*/llm-response.json`, and 1 (JS-07) uses the same `override`/`transitive_override` mechanism but a different specific version (`7.5.10` vs. `7.5.13`, both above the recorded fix threshold). The mechanism recorded for the baseline (`application_method` in `baseline-patch.json`: `override_added` or `direct_replacement`) matches the strategy category recorded for the LLM pipeline (`transitive_override` or `direct_upgrade` respectively) in each of the 7 matching scenarios.
 
-**Scope statement.** Within the evaluated workflows, a difference in recorded outcome between the two arms reflects, at minimum, the difference in stopping point described above. It should not be read as a general claim that an LLM-generated strategy is superior to a deterministic scanner-recommended one, independent of this thesis's specific workflow implementations. Conclusions in Chapter 4 and Chapter 5 are limited to the two pipelines as implemented in this repository. Accordingly, comparisons in the npm scenarios are interpreted as comparisons of end-to-end workflow behaviour rather than isolated remediation capability.
+**Scope statement.** Within the evaluated workflows, a difference in recorded outcome between the two arms reflects, at minimum, the difference in stopping point described above. It should not be read as a general claim that an LLM-generated strategy is superior to a deterministic scanner-recommended one, independent of this thesis's specific workflow implementations. Conclusions in Chapter 5 and Chapter 6 are limited to the two pipelines as implemented in this repository. Accordingly, comparisons in the npm scenarios are interpreted as comparisons of end-to-end workflow behaviour rather than isolated remediation capability.
 
 ## 3.9 Explanatory Ablation Study — Methodology
 
@@ -444,7 +444,7 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 | Scenario | Hinted version | Unhinted version (final) | First attempt (unhinted) | Retry | Final reasoning code |
 |---|---|---|---|---|---|
 | JS-05 | 4.2.2 | 9.0.2 | Incorrect (wrong dependency-type diagnosis) | Yes | Vulnerability-specific |
-| JS-01 | 3.9.18 | 3.9.19 | Incorrect (pipeline-level, see §4.10.5) | Yes | Dependency-graph reasoning |
+| JS-01 | 3.9.18 | 3.9.19 | Incorrect (pipeline-level, see §5.6) | Yes | Dependency-graph reasoning |
 | JS-09 | 2.1.1 | 1.4.5-lts.1 | Manual review (version-boundary reasoning) | Yes | Generic upgrade recommendation |
 | AF-01 | 2.1.14 | 2.1.2 | Correct | No | Dependency-graph reasoning |
 
@@ -460,7 +460,7 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 ## 5.1 Summary and Interpretation
 
-**INTERPRETATION.** Within the evaluated pipeline, the LLM's contribution is observable specifically where a fix must satisfy a dependency-graph constraint (§4.8), bounded by what the surrounding pipeline can actually observe (SBOM completeness) and reach (single- vs. multi-manifest applications); §3.8 states the scope within which this contribution is claimed relative to the deterministic baseline. The explanatory ablation (§4.10) indicates this dependency-graph reasoning does not depend on being supplied the scanner's fixed version: strategy selection was unchanged by hint removal in all four scenarios examined, while the specific version recommended was not, suggesting the model's contribution lies more in identifying *how* to apply a fix than in reproducing the scanner's own recorded value for *which* version to apply.
+**INTERPRETATION.** Within the evaluated pipeline, the LLM's contribution is observable specifically where a fix must satisfy a dependency-graph constraint (§5.5), bounded by what the surrounding pipeline can actually observe (SBOM completeness) and reach (single- vs. multi-manifest applications); §3.8 states the scope within which this contribution is claimed relative to the deterministic baseline. The explanatory ablation (§4.10) indicates this dependency-graph reasoning does not depend on being supplied the scanner's fixed version: strategy selection was unchanged by hint removal in all four scenarios examined, while the specific version recommended was not, suggesting the model's contribution lies more in identifying *how* to apply a fix than in reproducing the scanner's own recorded value for *which* version to apply.
 
 ## 5.2 Research Question and Hypothesis (H₀) Analysis
 
@@ -520,20 +520,20 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 # Chapter 6 — Conclusion
 
-## 5.1 Overall Conclusion
+## 6.1 Overall Conclusion
 
-This thesis evaluated whether providing contextual information to a Large Language Model improves dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly, across eighteen pre-registered scenarios on npm and pip, within the two pipelines implemented for this study (§3.8). **INTERPRETATION.** For flat pip dependencies, both the deterministic baseline and the LLM pipeline reached a validated result in which the target vulnerability was removed; no comparative advantage is claimed for the LLM pipeline on this class. For transitive npm dependencies, within the evaluated workflows, the LLM pipeline reached a validated state in which the target vulnerability was removed, using graph-aware strategies, in seven of nine scenarios; the deterministic baseline's workflow did not reach a rescan-based result on any npm scenario, for the reason given in §3.8, so this thesis does not claim a matched comparison for that class. On the second outcome named in the research question, no measurable difference in build success rate was observed between the two arms within either ecosystem (§4.7). The remaining two npm scenarios are disclosed, root-caused negative results for the LLM pipeline — one where the vulnerable package never reached the SBOM at all, one where it was reachable only through a package tree the manifest editor cannot edit — and both are diagnosed as limits of that pipeline, not of the LLM's own reasoning, which correctly characterized the dependency graph in both cases. Removing a vulnerability at the scanner level is not the same as producing a compiling application; the two properties are kept separate throughout, and both remediation failures are reported alongside the successes.
+This thesis evaluated whether providing contextual information to a Large Language Model improves dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly, across eighteen pre-registered scenarios on npm and pip, within the two pipelines implemented for this study (§3.8). **INTERPRETATION.** For flat pip dependencies, both the deterministic baseline and the LLM pipeline reached a validated result in which the target vulnerability was removed; no comparative advantage is claimed for the LLM pipeline on this class. For transitive npm dependencies, within the evaluated workflows, the LLM pipeline reached a validated state in which the target vulnerability was removed, using graph-aware strategies, in seven of nine scenarios; the deterministic baseline's workflow did not reach a rescan-based result on any npm scenario, for the reason given in §3.8, so this thesis does not claim a matched comparison for that class. On the second outcome named in the research question, no measurable difference in build success rate was observed between the two arms within either ecosystem (§5.2). The remaining two npm scenarios are disclosed, root-caused negative results for the LLM pipeline — one where the vulnerable package never reached the SBOM at all, one where it was reachable only through a package tree the manifest editor cannot edit — and both are diagnosed as limits of that pipeline, not of the LLM's own reasoning, which correctly characterized the dependency graph in both cases. Removing a vulnerability at the scanner level is not the same as producing a compiling application; the two properties are kept separate throughout, and both remediation failures are reported alongside the successes.
 
 **INTERPRETATION.** The explanatory ablation study (§4.10) strengthens this reading of the pipeline's contribution rather than changing it. Correct remediation strategies remained reachable in all four examined scenarios when the scanner's fixed version was withheld from the prompt, indicating that a validated result is not solely attributable to the model reproducing a version it was supplied. At the same time, the specific version recommended changed in every one of those four scenarios, indicating the hint is not redundant information the model would have arrived at identically on its own. Together, these point to the fixed-version hint acting on *which value* is proposed rather than on *whether* the underlying dependency-graph reasoning that selects a strategy succeeds.
 
-## 5.2 Research Contributions
+## 6.2 Research Contributions
 
 1. A reproducible SBOM-driven pipeline that treats each LLM remediation as a hypothesis and verifies it with deterministic supply-chain checks, relocating the generate-and-validate idea of automated program repair from code to dependency manifests.
 2. A controlled, two-ecosystem comparison against a clean deterministic baseline that identifies precisely where an LLM adds value (transitive npm) and where it does not (flat pip).
 3. A disciplined separation of installation, vulnerability removal, and compilation that prevents over-claiming and answers the construct-validity threat.
 4. A complete, verified evidence archive for all eighteen scenarios, with open disclosure of the evidence's imperfections.
 
-## 5.3 Limitations
+## 6.3 Limitations
 
 The full list is in `THESIS_LIMITATIONS.md`. The most important: the npm application does not compile under its pinned toolchain (pre-existing, unrelated to remediation); exact scanner counts are not bit-for-bit reproducible; the study uses one LLM configuration, two applications, and a one-retry policy; two npm scenarios (JS-06, JS-07) did not produce a validated remediation, for independently root-caused reasons disclosed in §4.3b–c; and for nine scenarios the corrected provenance hash is a verified real commit associated with the evidence's origin rather than a per-file cryptographic proof.
 
@@ -541,11 +541,11 @@ The full list is in `THESIS_LIMITATIONS.md`. The most important: the npm applica
 
 **LIMITATION — explanatory ablation study (§4.10).** Four scenarios, selected by purposive rather than random sampling, is not a statistically powered sample; the study's findings are reported as descriptive and explanatory, not as a generalisable measurement of hint-removal effects across the full scenario population. The reasoning-category coding in §4.10 is a single-author qualitative coding over four scenarios, not a validated taxonomy.
 
-## 5.4 Recommendations
+## 6.4 Recommendations
 
 **INTERPRETATION.** For practitioners: apply deterministic upgrades first, and reserve LLM assistance for transitive or constrained cases where a direct upgrade cannot satisfy the graph; treat any LLM remediation as a hypothesis to be verified; and record installation, vulnerability removal, and compilation as separate signals so a partial success is not reported as a complete one.
 
-## 5.5 Future Work
+## 6.5 Future Work
 
 Recorded in `THESIS_FUTURE_WORK.md`. **FUTURE WORK.** adding an LLM confidence score; a prompt-engineering ablation [24]; allowing multiple retries; adding semantic or functional compatibility checks beyond compilation; pinning the scanner database for exact reproducibility; retrieval-augmented generation grounded in advisories [23]; multi-agent proposer–critic designs; model comparison; and additional ecosystems. Each changes the experiment and requires re-running scenarios, so each is left to future study to preserve the comparability of the present dataset. Removing the fixed-version hint to test unaided reasoning, previously listed here, was conducted as an explanatory ablation study during this thesis and is reported in §4.10, not left open.
 
@@ -638,11 +638,11 @@ F1 twelve-stage LLM pipeline (`.github/workflows/generic-remediation.yml`; Merma
 |---|---|---|---|---|
 | Generation (valid, non-hallucinated) | Structured prompt + strict schema | `llm-request.json`, `llm-response.json`, `metrics.json` (`llm_response_valid`) | [35], [25], [30] | §4.7 (17/18 valid; JS-06 never reached the LLM step, §4.3b) |
 | Validation (deterministic) | Install + graph verify + rescan + validator | `metrics.json`, `rescan.json`, `validator.py` | [7], [29], [34] | §4.1, §4.6 |
-| Comparison (vs deterministic) | Baseline workflow on same scenarios | `reproducibility_verification/` | [9], [10], [31] | §4.2, §4.8 |
+| Comparison (vs deterministic) | Baseline workflow on same scenarios | `reproducibility_verification/` | [9], [10], [31] | §4.2, §5.5 |
 | Ecosystem dependence | npm vs pip scenarios | Tables 4–5 | [2], [22], [23] | §4.2 |
-| Constraint reasoning | Case studies | `.../JS-01/`, `.../JS-09/`, `.../JS-05/`, `.../AF-01/` | [5], [29] | §4.3–4.6 |
-| Pipeline-scope limitations (SBOM cataloging, multi-manifest editing, CVSS version disagreement) | Case studies | `.../AF-06/`, `.../JS-06/`, `.../JS-07/` | — | §4.3a–c |
-| Honesty of evidence | Internal audit | `docs/audit/`, `THESIS_LIMITATIONS.md` | [34] | §4.7 |
+| Constraint reasoning | Case studies | `.../JS-01/`, `.../JS-09/`, `.../JS-05/`, `.../AF-01/` | [5], [29] | §4.3–4.6, §5.4 |
+| Pipeline-scope limitations (SBOM cataloging, multi-manifest editing, CVSS version disagreement) | Case studies | `.../AF-06/`, `.../JS-06/`, `.../JS-07/` | — | §4.3a–c, §5.4 |
+| Honesty of evidence | Internal audit | `docs/audit/`, `THESIS_LIMITATIONS.md` | [34] | §5.5 |
 
 ## Appendix F — Prompt Versions
 
@@ -736,10 +736,10 @@ Both versions append an identical closing instruction (*"Based on the vulnerabil
 | 27 | Typosquatting/combosquatting PyPI | Vu, Pashchenko, Massacci, Plate, Sabetta | EuroS&PW 2020 | [27] | §2.1 |
 | 28 | VulRepair | Fu, Tantithamthavorn, Le, Nguyen, Phung | ESEC/FSE 2022 | [28] | §2.9, §4.4 |
 | 29 | Foundation models | Bommasani, Hudson, … Liang | arXiv 2021 | [29] | §2.7, §3.3 |
-| 30 | SCA tool comparison | Imtiaz, Thorn, Williams | ESEM 2021 | [30] | §2.3, §2.10, §3.3, §4.8 |
-| 31 | Byam (LLM breaking updates) | Reyes, Mahmoud, Bono, Nadi, Baudry, Monperrus | arXiv 2025 / EMSE | [31] | §2.10, §4.7 |
-| 32 | Automatically Fixing Dep. Breaking Changes | Fruntke, Krinke | Proc. ACM SE 2025 | [32] | §2.10, §4.7 |
-| 33 | Reproducibility of MSR studies | González-Barahona, Robles | EMSE 2012 | [33] | §2.11, §3.6, §4.8 |
+| 30 | SCA tool comparison | Imtiaz, Thorn, Williams | ESEM 2021 | [30] | §2.3, §2.10, §3.3, §5.5 |
+| 31 | Byam (LLM breaking updates) | Reyes, Mahmoud, Bono, Nadi, Baudry, Monperrus | arXiv 2025 / EMSE | [31] | §2.10, §5.4, §5.5 |
+| 32 | Automatically Fixing Dep. Breaking Changes | Fruntke, Krinke | Proc. ACM SE 2025 | [32] | §2.10, §5.5 |
+| 33 | Reproducibility of MSR studies | González-Barahona, Robles | EMSE 2012 | [33] | §2.11, §3.6, §5.5 |
 | 34 | SCA for vulnerability detection (Java) | Zhao, Chen, Xu, Liu, Zhang, Wu, Sun, Liu | ESEC/FSE 2023 | [34] | §2.3 |
 | 35 | Package hallucinations (LLM code generation) | Spracklen, Wijewickrama, Sakib, Maiti, Viswanath, Jadliwala | USENIX Sec 2025 | [35] | §2.8, §3.3, §4.7 |
 | — | OSV database | Google | 2021 | [49] | §1.1 |
