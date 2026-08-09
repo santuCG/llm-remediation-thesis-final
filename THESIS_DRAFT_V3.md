@@ -552,21 +552,55 @@ Figure 2 presents the same three gates for all eighteen scenarios in a single vi
 
 AF-01 is the clean reference case; `redshift-connector` is a direct pip dependency of `apache-airflow-providers-amazon`. **FACT.** The LLM recommended a direct upgrade from `2.1.1` to `2.1.14`, reasoning: *"redshift-connector is explicitly declared as a direct dependency in requirements.txt, performing a Direct Upgrade to version 2.1.14 directly resolves the security vulnerability while preserving compatibility with apache-airflow-providers-amazon. Alternative strategies such as manual review, replacement, or transitive override are unnecessary"* (`results/execution_evidence/AF-01/llm-response.json`). The before/after manifests show a clean one-line delta (`redshift-connector==2.1.1` → `2.1.14`). **OBSERVATION.** The target advisory (`GHSA-29h4-r29x-hchv`) was present in the baseline scan and confirmed absent from the regenerated scan; total matches moved from 597 to 595; the scenario succeeded on the first attempt with an internally consistent metrics record. These aggregate scanner-count changes reflect the overall dependency graph after remediation and should not be interpreted as measuring the effect of the target vulnerability alone — the same caveat applies to the aggregate counts reported in the remaining case studies.
 
+**FACT — the deterministic baseline's own record for the same scenario.** The comparison this thesis draws throughout Chapter 4 depends on the baseline arm as much as the LLM arm, so its own evidence artefact is shown here once, in full:
+
+```json
+{"package": "redshift-connector", "original_version": "2.1.1", "new_version": "2.1.14",
+ "manifest_file": "requirements.txt", "application_method": "direct_replacement"}
+```
+*Source: `results/reproducibility_verification/AF-01/baseline-patch.json`.*
+
+The baseline reaches the identical target version by a fixed, non-adaptive rule (§4.9's Table 6 reports this pattern holds for 7 of 8 comparable npm scenarios as well), which is precisely why AF-01 shows no LLM advantage: a rule-based bump already reaches the same answer here.
+
+**FACT — what "confirmed absent from the regenerated scan" means as a raw artefact.** This phrase recurs throughout this chapter, and §4.1's OBSERVATION and §4.6a's vignette both discuss AF-03 as the clearest case where the aggregate match count cannot substitute for it; shown here once, concretely, is the underlying artefact those observations rest on — the target advisory's full match entry as it appears in AF-03's baseline scan:
+
+```json
+{"vulnerability": {"id": "GHSA-3ww4-gg4f-jr7f", "severity": "High",
+  "description": "Python Cryptography package vulnerable to Bleichenbacher timing oracle attack",
+  "cvss": [{"version": "3.1", "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"}]}}
+```
+*Source: `results/execution_evidence/AF-03/baseline-grype.json`.* The identical `id` was independently confirmed absent from `results/execution_evidence/AF-03/rescan.json`'s `matches` array — not merely inferred from the aggregate count, which (§4.1, §4.6a) is unchanged for this specific scenario.
+
 ## 4.3a Case Study — AF-06 (jinja2, CVE-2024-56326): CVSS version disagreement
 
 **FACT.** `jinja2@3.1.4` is a direct pip dependency, pinned in `requirements.txt`. The LLM recommended a direct upgrade to `3.1.5`, reasoning: *"Because Jinja2 is explicitly pinned in requirements.txt as a direct dependency ('Jinja2==3.1.4'), the most effective and safest remediation strategy is a direct upgrade to version 3.1.5… while preserving full backwards compatibility across dependent framework packages like Apache Airflow and Flask"* (`results/execution_evidence/AF-06/llm-response.json`). The remediation succeeded cleanly on the first attempt (`build_success`, `test_success`, `dependency_verified`, `rescan_success` all `true`).
 
-**LIMITATION — severity labelling under competing scoring standards.** AF-06 is one of the two scenarios affected by the target-selection threat described in §3.7; the vulnerability recorded against it was `werkzeug`/CVE-2024-34069 rather than its preregistered target, `jinja2`/CVE-2024-56326 — see Table 1's footnote. Independent of the target-selection threat, this scenario illustrates a second methodological observation: **the advisory GHSA-q2x7-8rv6-6q7h carries two different CVSS scores under two different scoring standards for the same vulnerability** — 7.8 under CVSS v3.1 (conventionally "High," 7.0–8.9) and 5.4 under CVSS v4.0 (conventionally "Medium," 4.0–6.9). GitHub's own `severity` field — which the scanner ingests and which a threshold-gated discovery filter reads — is derived from the v4.0 score, not the v3.1 score. The evaluation reported in this thesis matched explicit preregistered `TARGET_CVE` requests against the full structurally-valid candidate pool irrespective of severity, since a discovery filter is not intended to override a deliberate experimental selection (§3.7).
+**LIMITATION — severity labelling under competing scoring standards.** AF-06 is one of the two scenarios affected by the target-selection threat described in §3.7; the vulnerability recorded against it was `werkzeug`/CVE-2024-34069 rather than its preregistered target, `jinja2`/CVE-2024-56326 — see Table 1's footnote. Independent of the target-selection threat, this scenario illustrates a second methodological observation: **the advisory GHSA-q2x7-8rv6-6q7h carries two different CVSS scores under two different scoring standards for the same vulnerability**:
+
+```text
+severity: medium
+cvss_v3: {vector: 'CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H', score: 7.8}
+cvss_v4: {vector: 'CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N', score: 5.4}
+```
+*Source: GitHub's advisory API record for `GHSA-q2x7-8rv6-6q7h`, captured in `docs/FINDING_CVE_DETECTION_GAPS.md`; the v3.1 figure independently matches `results/execution_evidence/AF-06/selected-candidate.json`'s recorded `cvss: 7.8`.*
+
+7.8 under CVSS v3.1 is conventionally "High" (7.0–8.9); 5.4 under CVSS v4.0 is conventionally "Medium" (4.0–6.9). GitHub's own `severity` field — which the scanner ingests and which a threshold-gated discovery filter reads — is derived from the v4.0 score, not the v3.1 score. The evaluation reported in this thesis matched explicit preregistered `TARGET_CVE` requests against the full structurally-valid candidate pool irrespective of severity, since a discovery filter is not intended to override a deliberate experimental selection (§3.7).
 
 ## 4.3b Case Study — JS-06 (flatted, CVE-2026-33228): Failure Category A — SBOM cataloging limitation
 
-**LIMITATION.** JS-06 produced no remediation evidence. The preregistered target, `flatted@3.2.9` (`CVE-2026-33228`, `GHSA-rf6f-7fwh-wjgh`), is a real, current, GitHub-reviewed advisory (published 2026-03-19, NVD-indexed 2026-03-20, not withdrawn) — but `flatted` never appears in the SBOM Syft generates for this project, in either the live CI run or an independent local reproduction using the identical Syft/Grype binary versions. A hand-constructed SBOM containing only `flatted@3.2.9` was, by contrast, correctly matched by Grype (`GHSA-rf6f-7fwh-wjgh`, High). This isolates the fault to Syft's package-cataloging stage — before Grype, and before the remediation pipeline itself, are ever involved.
+**LIMITATION.** JS-06 produced no remediation evidence. The preregistered target, `flatted@3.2.9` (`CVE-2026-33228`, `GHSA-rf6f-7fwh-wjgh`), is a real, current, GitHub-reviewed advisory (published 2026-03-19, NVD-indexed 2026-03-20, not withdrawn) — but `flatted` never appears in the SBOM Syft generates for this project, in either the live CI run or an independent local reproduction using the identical Syft/Grype binary versions. A hand-constructed SBOM containing only `flatted@3.2.9` was, by contrast, correctly matched by Grype:
+
+```text
+$ grype sbom:minimal-flatted-sbom.json
+GHSA-rf6f-7fwh-wjgh | severity: High | related: [CVE-2026-33228] | fix: 3.4.2  (MATCH)
+```
+*Source: `docs/FINDING_CVE_DETECTION_GAPS.md`, checklist item 5.* This isolates the fault to Syft's package-cataloging stage — before Grype, and before the remediation pipeline itself, are ever involved.
 
 **LIMITATION — the precise mechanism is not fully characterized.** `flatted` is pulled in only via `flat-cache` (itself only used internally by ESLint's cache, `"dev": true` in the lockfile), which is directionally consistent with Syft's own documented default of excluding npm dev-only dependencies from its SBOM output ([anchore/syft PR #5065](https://github.com/anchore/syft/pull/5065)). However, this default does not, by itself, fully explain the observed behavior: of 373 top-level `"dev": true` packages in this project's `node_modules`, Syft's SBOM includes 131 and omits 242, and neither a production-dependency-reachability graph nor a comparison of lockfile `dev`/`optional`/`peer`/`bin` flags cleanly separates the included group from the excluded one. Syft v1.44.0 consistently omitted `flatted` from the generated SBOM under the evaluated project configuration. Since a manually-constructed SBOM containing the identical package was correctly matched by Grype, the detection gap originates during package cataloguing rather than vulnerability matching. No general rule predicting which dev-only packages are catalogued or omitted could be established from this evidence.
 
 ## 4.3c Case Study — JS-07 (ws, CVE-2024-37890): Failure Category B — pipeline applicability limitation
 
-**FACT.** `ws@7.4.6` (transitive, via `engine.io`/`engine.io-client`) was correctly identified (`GHSA-3h5v-q93c-6h6q`, `CVE-2024-37890` — matching the preregistered target exactly). The LLM applied a `transitive_override` on both the first attempt (to `7.5.10`) and the retry (to `7.5.13`); both attempts correctly diagnosed the transitive nature of the dependency. `dependency_verified` and `rescan_success` were nonetheless both `false` after both attempts.
+**FACT.** `ws@7.4.6` (transitive, via `engine.io`/`engine.io-client`) was correctly identified (`GHSA-3h5v-q93c-6h6q`, `CVE-2024-37890` — matching the preregistered target exactly). The LLM applied a `transitive_override` on both the first attempt (to `7.5.10`) and the retry (to `7.5.13`); both attempts correctly diagnosed the transitive nature of the dependency, reasoning on the retry: *"The target package 'ws' is a transitive dependency introduced through multiple chains including 'jest' (via 'jsdom'), 'socket.io-client', 'socket.io', 'web3', and 'ethers'… The safest strategy to eliminate the vulnerability while preserving 7.x API compatibility for engine.io and jsdom is a targeted transitive override forcing 'ws' to version 7.5.13"* (`results/execution_evidence/JS-07/llm-response.json`). `dependency_verified` and `rescan_success` were nonetheless both `false` after both attempts.
 
 ![JS-07 two-tree resolution and manifest-editing scope.](figures/F5_js07_two_tree.png)
 
