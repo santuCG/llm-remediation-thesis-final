@@ -69,7 +69,7 @@ Built from the repository's own self-reported gaps (THESIS_DRAFT_V3.md, "Quality
 
 ## 6. Repository-state consistency
 
-- [ ] `git status` is clean on the branch used for submission (`research/no-hint-search-grounding` at time of this check — confirm this is the intended branch, given README.md states results correspond to branch `pipeline-v2-phase1` / tag `thesis-submission-v1.0`, not the currently checked-out branch)
+- [x] **Branch confirmed.** The submission branch is `pipeline-v2-phase1` — the branch README.md identifies as having produced the reported experimental results. (An earlier revision of this checklist was written while `research/no-hint-search-grounding` was checked out and flagged a mismatch; that flag is resolved and no longer applies.) Confirm `git status` is clean on `pipeline-v2-phase1` immediately before generating the final output file.
 - [ ] Confirm which branch/tag the final docx/PDF should be generated from — README.md explicitly says other branches (including `test-js-09`, `feature/reproducible-platform`) were "not used to produce the experimental results reported in the thesis"; verify the current branch matches `pipeline-v2-phase1` / `thesis-submission-v1.0` in substance, or reconcile the discrepancy before generating the final output file
 - [ ] No separate top-level formatting-requirements document (page limits, font, margins, spacing) was found anywhere in this repository — README.md and CLAUDE.md (repo root) do not specify these. Confirm formatting requirements directly against the SRH program handbook (external to this repo) before final layout.
 
