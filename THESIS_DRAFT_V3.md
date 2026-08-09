@@ -107,6 +107,12 @@ For a direct dependency in a flat-resolution ecosystem such as Python's pip, a v
 
 Automated dependency-update tools such as Dependabot and Renovate have made routine updates far easier and are widely adopted; empirical work shows developers merge most Dependabot security updates and do so much faster than manual fixing [9], [10]. **INTERPRETATION.** These tools are strong at the common case — a direct dependency with a compatible newer version — but they apply fixed rules and do not reason about graph-level constraints when a simple bump cannot be satisfied. This leaves a decision-support gap: given a detected vulnerability and its dependency context, what remediation strategy both removes the vulnerability and respects the constraints of the whole graph? This thesis asks whether an LLM can help with that judgement, and whether its suggestions survive deterministic verification.
 
+## 1.2a Research Gap
+
+The gap this thesis addresses can be stated in one sentence: **there is no reproducible, baseline-controlled empirical evidence on whether an LLM, given dependency-graph context, chooses better *dependency-level* remediation strategies than a deterministic scanner recommendation, when every recommendation must pass the same deterministic verification.** Chapter 2 establishes each of the four observations that together constitute this gap and returns to it in §2.12 once the supporting literature has been reviewed; the summary here is intended only to make the motivation for the research question legible before that review.
+
+The gap has four components. Detection, prioritisation and provenance are mature and well served by standards and tooling, so the unsolved part of the problem lies after detection rather than within it. Dependency-update automation is mature for the direct-upgrade case but applies fixed rules where a direct upgrade cannot satisfy the graph. LLMs have been studied extensively for detecting and repairing vulnerabilities in *source code*, and recently for repairing *client code* broken by an update, but far less for selecting a *manifest-level* remediation strategy. And evaluations of LLM-based security tooling frequently lack both a clean deterministic baseline and a published, per-scenario evidence archive, which makes their results difficult to reproduce or to bound.
+
 ## 1.3 Research Question
 
 > **RQ.** Does providing contextual information to a Large Language Model improve dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly?
@@ -141,9 +147,13 @@ H₀ is evaluated separately for each of its two named outcomes, because §5.2 r
 
 The general objective is to evaluate, under controlled and reproducible conditions, whether LLM-assisted remediation improves dependency remediation success rates and CI build stability compared to deterministic scanner-recommended upgrades, and to answer SQ1–SQ4 from the same evidence. The specific objectives are: (1) to design an SBOM-driven CI pipeline that generates an SBOM, detects vulnerabilities, requests an LLM remediation strategy, applies it, and validates the result deterministically; (2) to define a deterministic baseline pipeline that applies the scanner-recommended version without an LLM; (3) to evaluate both pipelines on eighteen pre-registered scenarios across two ecosystems; (4) to record complete, verifiable evidence for every scenario; and (5) to compare the two pipelines on both named outcome variables and report findings honestly, with limitations, including where SQ1 cannot be answered from the collected data.
 
-## 1.6 Scope
+## 1.6 Scope and Delimitations
 
 The study evaluates remediation after detection. Following the frozen scope (`docs/01-overview.md`), it does not evaluate detection accuracy, CVSS prediction, exploit prediction, scanner performance, or the replacement of scanners. It treats the LLM as a decision-support component that operates after deterministic detection.
+
+Four delimitations were chosen deliberately at design time and bound every claim the thesis makes. **Ecosystems:** two package managers, npm and pip, selected because they differ on the one structural variable the dependency literature identifies as decisive — nested versus flat resolution [2], [22]. Maven, Go modules, NuGet and Cargo are out of scope. **Applications:** one application per ecosystem, so application-specific properties such as Juice Shop's two-tree build layout cannot be separated from ecosystem properties by this design alone. **Model configuration:** a single model at a single fixed configuration, so the results characterise this configuration rather than LLMs in general. **Remediation target:** the dependency manifest only. The pipeline never edits application source code, so vulnerabilities whose only fix requires a code change are outside what any arm of this study could resolve.
+
+These are delimitations — boundaries chosen by the author — and should be read separately from the limitations in §3.7, which are constraints the study encountered rather than chose. Both are carried forward into §5.6 and §6.3 rather than being set aside.
 
 ## 1.7 Significance
 
@@ -287,7 +297,7 @@ The LLM pipeline follows a fixed twelve-stage sequence (`docs/04-experimental-me
 | Stage | Action | Why it is needed |
 |---|---|---|
 | Baseline install | Install pinned dependencies | Create a known vulnerable starting point |
-| SBOM generation | Run Syft (SPDX-JSON) | Produce a reliable component inventory [36], [38] |
+| SBOM generation | Run Syft (SPDX-JSON) | Produce a standards-conformant component inventory [36], [38]; its completeness is itself a finding (§4.3b) |
 | Vulnerability scan | Run Grype | Detect vulnerabilities against known data [39] |
 | Prioritisation | Rank by KEV → EPSS → CVSS | Select the pre-registered target objectively [4], [26] |
 | Context building | Collect the dependency subgraph | Give the LLM the graph facts it needs |
@@ -576,7 +586,7 @@ The motivation, experimental design, scenario selection, and evaluation protocol
 
 ## 5.4 Interpretation of Case-Level Findings and Failure Modes
 
-**JS-01.** **INTERPRETATION.** JS-01 demonstrates correct graph reasoning: the model located the transitive path and selected an appropriate remediation strategy, a transitive override, because `vm2` was not a direct dependency, reaching a validated vulnerability-removed state.
+**JS-01.** **INTERPRETATION.** JS-01 is the clearest recorded instance of graph-dependent strategy selection in the dataset. The response trace states the transitive path through `juicy-chat-bot` explicitly and gives the non-direct status of `vm2` as its stated reason for preferring an override to a direct upgrade, and the applied override reached a validated vulnerability-removed state. What is observable here is the correspondence between the recorded dependency context, the stated reason, and the strategy chosen; the model's internal reasoning process is not observable from this evidence, and no claim is made about it.
 
 **LIMITATION — sensitivity of strategy selection to prompt formulation.** Under an earlier prompt formulation, the same model on this same scenario recommended `manual_review` on its retry, reasoning that the override would "trigger transitive updates to `@types` packages… unsupported by the project's legacy TypeScript compiler… automated remediation is unsafe." That hedged reasoning does not appear in either attempt reported in §4.4; both attempts selected `transitive_override` with no mention of `@types` conflicts. The formulation used in the evaluation reported in this thesis constrains `strategy` and `remediation_type` through schema `enum` values and uses aligned system-prompt wording, which differs from the earlier formulation. This difference in prompt formulation is the most likely explanation for the divergence, though it was not isolated as a controlled ablation and is not claimed as proven. The observation bears on the reliability of single-configuration evaluations rather than on remediation capability. Within this study, strategy selection — not merely explanatory wording — changed between prompt formulations.
 
