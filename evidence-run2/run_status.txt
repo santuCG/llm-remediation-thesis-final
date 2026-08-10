@@ -1,0 +1,10 @@
+dependency_graph_before=PASS
+leakage_check=PASS
+llm_call=PASS
+manifest_patch=PASS
+npm_install=PASS
+dependency_graph_after=PASS
+sbom=PASS
+rescan=PASS
+build=PASS
+test=PASS

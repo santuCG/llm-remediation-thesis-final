@@ -1,0 +1,8 @@
+{
+  "reasoning": "vm2 at version 3.9.17 is introduced into the dependency tree transitively via the direct dependency juicy-chat-bot (~0.8.0). Since juicy-chat-bot does not have a direct release that resolves this without breaking changes, adding an override constraint for vm2 to version ^3.9.19 in package.json ensures that npm resolves vm2 to a safe version while preserving compatibility with juicy-chat-bot.",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "vm2",
+    "constraint": "^3.9.19"
+  }
+}
