@@ -13,7 +13,7 @@ Submission Date: **[to be provided]**
 
 ---
 
-> **Integrity and sourcing note.** Historical freeze tag: `thesis-freeze-2026-08-02`, commit `5a227c8f`. Final regenerated dataset: produced under Pipeline v2.0 (`CHANGELOG_V2.md`, `PIPELINE_V2_RELEASE_NOTES.md`) and reported in this thesis. Unless otherwise stated, all quantitative results reported in the primary evaluation originate from the frozen evidence archive (`results/execution_evidence/`, `results/reproducibility_verification/`) at the tagged submission commit, cited by path. Results reported in the explanatory hint-removal ablation study (§4.9) originate from a separate archived evidence set (`results/execution_evidence_no_hint/`) generated on a dedicated research branch, isolated from the pipeline code that produced the primary evaluation; the two datasets are analysed independently and are not combined in any reported aggregate statistic. External claims use numbered citations to sources that were verified individually for this thesis against their publisher of record; no reference, author, year, or DOI has been invented. Evidence labels keep claims traceable: **FACT** (repository evidence), **OBSERVATION** (measured result), **INTERPRETATION** (author's reasoning), **LIMITATION**, and **FUTURE WORK**.
+> **Integrity and sourcing note.** Historical freeze tag: `thesis-freeze-2026-08-02`, commit `5a227c8f`. Final regenerated dataset: produced under Pipeline v2.0, with the final per-scenario provenance recorded in `FINAL_DATASET.md`. Unless otherwise stated, all quantitative results reported in the primary evaluation originate from the frozen evidence archive (`results/execution_evidence/`, `results/reproducibility_verification/`) at the tagged submission commit, cited by path. Results reported in the explanatory hint-removal ablation study (§4.9) originate from a separate archived evidence set (`results/execution_evidence_no_hint/`) generated on a dedicated research branch, isolated from the pipeline code that produced the primary evaluation; the two datasets are analysed independently and are not combined in any reported aggregate statistic. External claims use numbered citations to sources that were verified individually for this thesis against their publisher of record; no reference, author, year, or DOI has been invented. Evidence labels keep claims traceable: **FACT** (repository evidence), **OBSERVATION** (measured result), **INTERPRETATION** (author's reasoning), **LIMITATION**, and **FUTURE WORK**.
 
 ---
 
@@ -120,8 +120,6 @@ The gap has four components. Detection, prioritisation and provenance are mature
 
 > **RQ.** Does providing contextual information to a Large Language Model improve dependency remediation success rates and CI build stability compared to applying deterministic scanner-recommended upgrades directly?
 
-**Provenance note.** This RQ is the thesis's official, examiner-of-record research question. `docs/01-overview.md`'s "Research Question" section previously stated a differently-scoped RQ, conditioned on cases "where basic deterministic package upgrade strategies do not achieve the intended remediation objective"; that section has been updated to state this RQ verbatim and point to this section for the Supporting Questions and null hypothesis, so the two documents are consistent.
-
 **Scope note.** The RQ names two outcome variables — remediation success rate and CI build stability — and this thesis reports them separately rather than as one combined figure, because the evidence behaves differently on each axis (§5.2). The comparison itself is conducted using the deterministic-baseline workflow described in §3.1. §3.8 states the specific respect in which the two workflows' recorded outcomes, for the npm scenarios, reflect each workflow's own stopping point in addition to the underlying fix; the Comparison analysis in §5.2 is read subject to that scope, which this RQ does not override.
 
 **Supporting Questions.**
@@ -180,7 +178,7 @@ Literature was identified by keyword search across IEEE Xplore, ACM Digital Libr
 
 A source was included if peer-reviewed (conference or journal), or, for standards, tools, and vulnerability records, authoritative as the maintaining organisation's own documentation — npm's `overrides` specification [43], NIST SP 800-161 [13] — or an official database entry (NVD, GHSA). arXiv preprints were included only where the work had not yet appeared in a peer-reviewed venue, or where the preprint was the most current version of an otherwise peer-reviewed line; this is disclosed rather than treated as equivalent to peer review. Vendor marketing material, unverifiable blog content, and sources judged only tangentially related to dependency-level remediation were excluded.
 
-The reference list reflects this scope rather than exhaustive coverage of any one field: 35 academic or authoritative research entries ([1]–[35]), 14 standards/tool/organisation entries ([36]–[49]), and 18 vulnerability records for the study's eighteen scenarios plus two background incidents ([50]–[67]). The roughly two-to-one ratio of research to standards/tooling citations reflects where the study sits — at the intersection of an active research literature (LLMs, automated program repair, supply-chain security) and a small number of stable, authoritative technical references that do not themselves require broad citation.
+The reference list reflects this scope rather than exhaustive coverage of any one field: 35 academic or authoritative research entries ([1]–[35]), 14 standards/tool/organisation entries ([36]–[49]), and two background incidents ([50]–[51]) and 18 vulnerability records for the study's eighteen scenarios ([52]–[69]). The roughly two-to-one ratio of research to standards/tooling citations reflects where the study sits — at the intersection of an active research literature (LLMs, automated program repair, supply-chain security) and a small number of stable, authoritative technical references that do not themselves require broad citation.
 
 ## 2.1 Software Supply Chain Security
 
@@ -472,7 +470,7 @@ The analysis uses the deterministic outcomes in each `metrics.json`: `build_succ
 
 This section states what the pip/npm comparison in Chapter 4 does and does not establish, so that the individual **INTERPRETATION** statements in Chapter 5 are read within a stated scope rather than as an unqualified claim of LLM superiority.
 
-**The two workflows record their outcome at different points in the remediation sequence.** `.github/workflows/grype-baseline.yml` applies its patch and, on a build failure, records the outcome and stops; `.github/workflows/generic-remediation.yml` applies its patch and, on a build failure, continues to SBOM regeneration, rescan, and validation regardless. This difference is stated directly in the repository's own engineering record: *"both workflows' genuinely different designs (baseline aborts immediately on build failure and never runs tests; LLM-remediation continues to gather evidence)"* (`CHANGELOG_V2.md`, Fix #1a). Table 5's npm row — *"not validated (build halted before rescan)"* — reports this stopping point as a fact about the workflow, not as a statement that the underlying fix would or would not have passed a rescan.
+**The two workflows record their outcome at different points in the remediation sequence.** `.github/workflows/grype-baseline.yml` applies its patch and, on a build failure, records the outcome and stops; `.github/workflows/generic-remediation.yml` applies its patch and, on a build failure, continues to SBOM regeneration, rescan, and validation regardless. Table 5's npm row — *"not validated (build halted before rescan)"* — reports this stopping point as a fact about the workflow, not as a statement that the underlying fix would or would not have passed a rescan.
 
 **Both workflows install Python dependencies with `pip install --no-deps`.** This flag is present in `grype-baseline.yml` and in both the first-attempt and retry paths of `generic-remediation.yml`. `--no-deps` instructs pip to install the named package without resolving its dependency tree. Any claim in this thesis about pip's dependency-resolution behaviour applies to installation performed with this flag, not to an unconstrained `pip install`.
 
@@ -999,7 +997,7 @@ The research design's stated strengths and weaknesses (§3.1, §3.7, §3.8) most
 [48] Mend.io, "Renovate." https://github.com/renovatebot/renovate
 [49] OWASP Foundation, "OWASP Dependency-Check." https://owasp.org/www-project-dependency-check/ ; Google, "OSV — Open Source Vulnerabilities." https://osv.dev/
 
-[50]–[67] Vulnerability records (NVD / GitHub Security Advisory) for the eighteen preregistered scenarios, cited in Table 1: CVE-2023-32314 (JS-01); CVE-2026-33937 (JS-02); CVE-2025-7783 (JS-03); CVE-2023-46233 (JS-04); CVE-2015-9235 (JS-05); CVE-2026-33228 (JS-06); CVE-2024-37890 (JS-07); CVE-2024-45590 (JS-08); CVE-2026-3520 (JS-09); CVE-2026-8838 (AF-01); CVE-2025-43859 (AF-02); CVE-2023-50782 (AF-03); CVE-2026-44307 (AF-04); CVE-2026-0994 (AF-05); CVE-2024-56326 (AF-06); CVE-2024-21272 (AF-07); CVE-2026-2473 (AF-08); CVE-2024-34069 (AF-09); and CVE-2024-3094 (XZ Utils) and CVE-2021-44228 (Log4Shell) as background incidents. Each is available at https://nvd.nist.gov/vuln/detail/<CVE-ID>. **Note**: CVE-2021-23337 (lodash) and CVE-2024-34069 as an AF-06 target no longer appear here — both were the *silently substituted* CVEs a pipeline defect produced for JS-06 and AF-06 respectively, prior to correction (§3.7, §4.3a–b); CVE-2024-34069 remains listed once, as AF-09's own genuine, unrelated preregistered target.
+[50] CVE-2021-44228 (Log4Shell) and [51] CVE-2024-3094 (XZ Utils), the two background incidents cited in §1.1. [52]–[69] Vulnerability records (NVD / GitHub Security Advisory) for the eighteen preregistered scenarios, cited in Table 1: CVE-2023-32314 (JS-01); CVE-2026-33937 (JS-02); CVE-2025-7783 (JS-03); CVE-2023-46233 (JS-04); CVE-2015-9235 (JS-05); CVE-2026-33228 (JS-06); CVE-2024-37890 (JS-07); CVE-2024-45590 (JS-08); CVE-2026-3520 (JS-09); CVE-2026-8838 (AF-01); CVE-2025-43859 (AF-02); CVE-2023-50782 (AF-03); CVE-2026-44307 (AF-04); CVE-2026-0994 (AF-05); CVE-2024-56326 (AF-06); CVE-2024-21272 (AF-07); CVE-2026-2473 (AF-08); CVE-2024-34069 (AF-09). Each is available at https://nvd.nist.gov/vuln/detail/<CVE-ID>. **Note**: CVE-2021-23337 (lodash) and CVE-2024-34069 as an AF-06 target no longer appear here — both were the *silently substituted* CVEs a pipeline defect produced for JS-06 and AF-06 respectively, prior to correction (§3.7, §4.3a–b); CVE-2024-34069 remains listed once, as AF-09's own genuine, unrelated preregistered target.
 
 
 
@@ -1008,16 +1006,16 @@ The research design's stated strengths and weaknesses (§3.1, §3.7, §3.8) most
 # Appendices
 
 ## Appendix A — Repository provenance
-**Historical freeze tag:** `thesis-freeze-2026-08-02`, commit `5a227c8f`. Examiner verdict recorded against this state: Accept with minor revisions (revisions applied). *Source: `FINAL_VERDICT.md`, `FREEZE_REPORT.md`.*
+**Historical freeze tag:** `thesis-freeze-2026-08-02`, commit `5a227c8f`, dated 2026-08-02. This tag marks an internal repository checkpoint preceding the final regenerated dataset described below; it is cited here for provenance only. *Source: `FREEZE_REPORT.md`.*
 
-**Final regenerated dataset (this thesis):** produced under Pipeline v2.0 (`PIPELINE_V2_RELEASE_NOTES.md`, `CHANGELOG_V2.md`). A tag corresponding to this dataset is recorded when the repository is next frozen (`FINAL_DATASET.md` §Notes).
+**Final regenerated dataset (this thesis):** produced under Pipeline v2.0. The per-scenario run ID, commit, and evidence-hash provenance for this dataset are recorded in `FINAL_DATASET.md`.
 
 ## Appendix B — Evidence map
-Per-scenario evidence `results/execution_evidence/<ID>/`; canonical per-scenario manifest (pipeline version, prompt version, run ID, commit, evidence hash, result) `FINAL_DATASET.md`; deterministic baseline `results/reproducibility_verification/<ID>/`; scope of the pip/npm comparison §3.8; case studies `docs/case_studies/`; methodology `docs/04-experimental-methodology.md`; reproducibility `docs/06-reproducibility.md`; audit `docs/audit/`; limitations `THESIS_LIMITATIONS.md`; future work `THESIS_FUTURE_WORK.md`.
+Per-scenario evidence `results/execution_evidence/<ID>/`; canonical per-scenario manifest (pipeline version, prompt version, run ID, commit, evidence hash, result) `FINAL_DATASET.md`; deterministic baseline `results/reproducibility_verification/<ID>/`; scope of the pip/npm comparison §3.8; case studies `docs/case_studies/`; methodology `docs/04-experimental-methodology.md`; reproducibility `docs/06-reproducibility.md`; limitations `THESIS_LIMITATIONS.md`; future work `THESIS_FUTURE_WORK.md`.
 
 ## Appendix C — CVE match verification
 
-**Appendix C contains a complete verification showing every executed scenario matched its intended preregistered target CVE.** Full table, method, and interpretation: `docs/CVE_MATCH_VERIFICATION.md`. Summary: of the eighteen preregistered scenarios, seventeen produced an executed `api_cve_id` and every one matched its preregistered CVE exactly — zero silent substitutions in the final, regenerated dataset. The eighteenth (JS-06) produced no `api_cve_id` at all, by design (§4.3b, Failure Category A) — its own preregistered CVE, `CVE-2026-33228`, never had the opportunity to mismatch anything, since the corrected pipeline (Fix #10, `CHANGELOG_V2.md`) refuses to substitute a different vulnerability when the target cannot be found. This table is also the direct, dataset-wide confirmation that the AF-06/JS-06 target-selection limitation discussed in §3.7 and §4.3a–b was closed for every scenario, not just the two where it was first observed. See also `FINAL_DATASET.md` for the per-scenario run ID / commit / evidence-hash manifest this verification is built from.
+**Appendix C contains a complete verification showing every executed scenario matched its intended preregistered target CVE.** Full table, method, and interpretation: `docs/CVE_MATCH_VERIFICATION.md`. Summary: of the eighteen preregistered scenarios, seventeen produced an executed `api_cve_id` and every one matched its preregistered CVE exactly — zero silent substitutions in the final, regenerated dataset. The eighteenth (JS-06) produced no `api_cve_id` at all, by design (§4.3b, Failure Category A) — its own preregistered CVE, `CVE-2026-33228`, never had the opportunity to mismatch anything, since the corrected pipeline's target-selection policy (§3.7) refuses to substitute a different vulnerability when the target cannot be found. This table is also the direct, dataset-wide confirmation that the AF-06/JS-06 target-selection limitation discussed in §3.7 and §4.3a–b was closed for every scenario, not just the two where it was first observed. See also `FINAL_DATASET.md` for the per-scenario run ID / commit / evidence-hash manifest this verification is built from.
 
 ## Appendix D — Figure provenance
 
@@ -1043,7 +1041,7 @@ All five figures are produced by `scripts/figures/make_figures.py`, but by two d
 | Ecosystem dependence | npm vs pip scenarios | Tables 4–5 | [2], [22], [43] | §4.2 |
 | Constraint reasoning | Case studies | `.../JS-01/`, `.../JS-09/`, `.../JS-05/`, `.../AF-01/` | [5], [29] | §4.3–4.6, §5.4 |
 | Pipeline-scope limitations (SBOM cataloging, multi-manifest editing, CVSS version disagreement) | Case studies | `.../AF-06/`, `.../JS-06/`, `.../JS-07/` | — | §4.3a–c, §5.4 |
-| Honesty of evidence | Internal audit | `docs/audit/`, `THESIS_LIMITATIONS.md` | [33] | §5.5 |
+| Honesty of evidence | Internal audit | `THESIS_LIMITATIONS.md` | [33] | §5.5 |
 
 ## Appendix F — Prompt Versions
 
@@ -1145,3 +1143,24 @@ I hereby declare that I have not submitted this work in identical or similar for
 | | |
 |---|---|
 | Location, Date | Santosh Nagaraj |
+
+# Legal Caution
+
+SRH Universities require an affidavit of independent authenticity of submitted scientific works in order to be assured that the signatory has generated the latter by him- or herself.
+
+Since the law attributes a special relevance to affidavits and arising consequences thereof, submission of a false affidavit entails criminal punishment. Deliberately (and therefore knowingly) submitting a false affidavit may be punishable by up to three years imprisonment or a fine. Negligently submitting an affidavit (i.e. submitting despite having been able to recognize that the affidavit does not match factual truths) may be punishable by up to one year imprisonment or a fine.
+
+The punitive frameworks are set forth in Section 156 of the German Penal Code (falsche Versicherungen an Eides Statt), as well as in Section 161 of the German Penal Code (fahrlässiger Falscheid, fahrlässige falsche Versicherung an Eides Statt).
+
+**Section 156 StGB: False declaration in lieu of oath**
+Whoever falsely makes a declaration in lieu of an oath before an authority which is competent to administer such declarations or falsely testifies whilst referring to such a declaration incurs a penalty of imprisonment for a term not exceeding three years or a fine.
+
+**Section 161 StGB: Negligent false oath; negligent false declaration in lieu of oath**
+(1) Whoever commits one of the offences referred to in sections 154 to 156 by negligence incurs a penalty of imprisonment for a term not exceeding one year or a fine.
+(2) No penalty is incurred if the offender corrects the false statement in time. The provisions of section 158 (2) and (3) apply accordingly.
+
+I hereby acknowledge the above
+
+| | |
+|---|---|
+| Location, Date | Name Signature |
