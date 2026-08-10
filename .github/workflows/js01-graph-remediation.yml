@@ -1,6 +1,9 @@
 name: Exploratory JS-01 Graph-Aware Remediation
 
 on:
+  push:
+    branches:
+      - research/js01-graph-reasoning
   workflow_dispatch:
 
 jobs:
