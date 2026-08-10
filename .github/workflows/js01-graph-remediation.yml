@@ -37,8 +37,12 @@ jobs:
           fi
           npm ci 2>&1 | tee ../../evidence/baseline_dependency_install.log
           cp package.json ../../evidence/package-before.json
-          cp package-lock.json ../../evidence/package-lock-before.json
-          npm ls --json > ../../evidence/dependency-graph-before.json || true
+          cp package-lock.json ../../evidence/package-lock-before.json || true
+          if npm ls --all --json > ../../evidence/dependency-graph-before.json; then
+              echo "dependency_graph_before=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "dependency_graph_before=FAIL" >> ../../evidence/run_status.txt
+          fi
 
       - name: Phase 2 - Generate Baseline SBOM & Scan
         run: |
@@ -55,35 +59,73 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python scripts/remediation/graph_orchestrate.py ${{ env.APP_DIR }} evidence
+          if python scripts/remediation/graph_orchestrate.py ${{ env.APP_DIR }} evidence; then
+              echo "llm_call=PASS" >> evidence/run_status.txt
+          else
+              echo "llm_call=FAIL" >> evidence/run_status.txt
+              exit 1
+          fi
 
       - name: Phase 4 - Apply Fix & Resolve Dependencies
         run: |
           set -o pipefail
           cd ${{ env.APP_DIR }}
-          python ../../scripts/remediation/apply_graph_patch.py package.json ../../evidence/llm-response.json
+          if python ../../scripts/remediation/apply_graph_patch.py package.json ../../evidence/llm-response.json; then
+              echo "manifest_patch=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "manifest_patch=FAIL" >> ../../evidence/run_status.txt
+              exit 1
+          fi
           cp package.json ../../evidence/package-after.json
-          rm -rf node_modules package-lock.json
-          npm install 2>&1 | tee ../../evidence/npm-install.log || echo "NPM INSTALL FAILED" > ../../evidence/npm-install.log
+          
+          if npm install --package-lock=true 2>&1 | tee ../../evidence/npm-install.log; then
+              echo "npm_install=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "npm_install=FAIL" >> ../../evidence/run_status.txt
+          fi
           cp package-lock.json ../../evidence/package-lock-after.json || true
-          npm ls --json > ../../evidence/dependency-graph-after.json || true
+          diff -u ../../evidence/package-lock-before.json package-lock.json > ../../evidence/lockfile-diff.txt || true
+          if npm ls --all --json > ../../evidence/dependency-graph-after.json; then
+              echo "dependency_graph_after=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "dependency_graph_after=FAIL" >> ../../evidence/run_status.txt
+          fi
 
       - name: Phase 5 - Post-Remediation SBOM & Scan
         run: |
           cd ${{ env.APP_DIR }}
-          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" -o spdx-json > ../../evidence/post-sbom.json
-          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../evidence/post-sbom.json -o json > ../../evidence/rescan.json
+          if ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" -o spdx-json > ../../evidence/post-sbom.json; then
+              echo "sbom=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "sbom=FAIL" >> ../../evidence/run_status.txt
+          fi
+          
+          if GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../evidence/post-sbom.json -o json > ../../evidence/rescan.json; then
+              echo "rescan=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "rescan=FAIL" >> ../../evidence/run_status.txt
+          fi
 
       - name: Phase 6 - Build & Test Validation
         run: |
           REPO_ROOT="$(pwd)"
           cd ${{ env.APP_DIR }}
           # Run build but do not exit on failure, capture to build.log
-          bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/evidence/metrics.json" "$REPO_ROOT/evidence/build.log" || true
+          if bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/evidence/metrics.json" "$REPO_ROOT/evidence/build.log"; then
+              echo "build=PASS" >> ../../evidence/run_status.txt
+          else
+              echo "build=FAIL" >> ../../evidence/run_status.txt
+          fi
           
           if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
             npm install -g @angular/cli@15.0.4 --silent || true
-            npm test 2>&1 | tee ../../evidence/test.log || true
+            if npm test 2>&1 | tee ../../evidence/test.log; then
+                echo "test=PASS" >> ../../evidence/run_status.txt
+            else
+                echo "test=FAIL" >> ../../evidence/run_status.txt
+            fi
+          else
+            echo "test=SKIPPED" >> ../../evidence/run_status.txt
           fi
 
       - name: Phase 7 - Evidence Preparation

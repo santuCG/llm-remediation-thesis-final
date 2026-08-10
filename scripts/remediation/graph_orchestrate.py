@@ -33,16 +33,61 @@ def main():
         print("[ERROR] Could not find vm2 GHSA-whpj-8f3w-67p5 in baseline-grype.json")
         sys.exit(1)
         
-    vuln_info = target_match.get('vulnerability', {})
+    import copy
+    import re
+    
+    with open(os.path.join(evidence_dir, 'raw_vulnerability_metadata.json'), 'w') as f:
+        json.dump(target_match, f, indent=2)
+
+    vuln_info = copy.deepcopy(target_match.get('vulnerability', {}))
     pkg_info = target_match.get('artifact', {})
+    
+    for field in ['fix', 'fixed_version', 'fix_versions', 'versions', 'fixedInVersion']:
+        if field in vuln_info:
+            del vuln_info[field]
+            
+    desc = vuln_info.get('description', '')
+    if desc:
+        desc = re.sub(r'(?i)fixed\s+in\s+[v]?\d+(?:\.\d+)*', 'fixed in [REDACTED]', desc)
+        desc = re.sub(r'3\.9\.18', '[REDACTED]', desc)
+        vuln_info['description'] = desc
+
+    with open(os.path.join(evidence_dir, 'sanitized_vulnerability_metadata.json'), 'w') as f:
+        json.dump(vuln_info, f, indent=2)
     
     # 2. Load manifest (package.json)
     with open(os.path.join(evidence_dir, 'package-before.json'), 'r') as f:
         manifest_data = json.load(f)
         
     # 3. Load dependency graph
-    with open(os.path.join(evidence_dir, 'dependency-graph-before.json'), 'r') as f:
+    with open(os.path.join(evidence_dir, 'dependency-graph-before.json'), 'r', encoding='utf-8') as f:
         graph_data = json.load(f)
+
+    def count_nodes(node):
+        count = 1
+        for pkg, info in node.get('dependencies', {}).items():
+            count += count_nodes(info)
+        return count
+    
+    total_nodes = count_nodes(graph_data) - 1 # subtract root
+    print(f"[INFO] Total dependency nodes in graph: {total_nodes}")
+
+    def find_target(node, target, current_path="root"):
+        if target in node.get('dependencies', {}):
+            return node['dependencies'][target], f"{current_path} -> {target}"
+        for pkg, info in node.get('dependencies', {}).items():
+            found, path = find_target(info, target, f"{current_path} -> {pkg}")
+            if found:
+                return found, path
+        return None, None
+
+    target_pkg_name = pkg_info.get('name')
+    target_node, target_path = find_target(graph_data, target_pkg_name)
+    if not target_node:
+        print(f"[ERROR] Target package '{target_pkg_name}' not found in the complete dependency graph. Failing before LLM call.")
+        sys.exit(1)
+    
+    print(f"[INFO] Target package '{target_pkg_name}' found in graph at version: {target_node.get('version')} via path: {target_path}")
 
     system_prompt = """You are a Senior DevSecOps AI Agent. Your objective is to eradicate software supply chain vulnerabilities within dependency ecosystems by analyzing the full dependency graph.
 You must critically evaluate how the vulnerable package enters the dependency tree. Determine whether it can be safely upgraded or if its parent/introducer needs to change.
@@ -114,9 +159,19 @@ Based on your analysis:
             "responseSchema": response_schema
         }
     }
-    
+
+    request_str = json.dumps(api_payload, indent=2)
     with open(os.path.join(evidence_dir, 'llm-request.json'), 'w') as f:
-        json.dump(api_payload, f, indent=2)
+        f.write(request_str)
+
+    if "3.9.18" in request_str or "3.9.19" in request_str:
+        print("[ERROR] Leakage assertion failed! Fixed version detected in LLM payload.")
+        with open(os.path.join(evidence_dir, 'run_status.txt'), 'a') as f:
+            f.write("leakage_check=FAIL\n")
+        sys.exit(1)
+        
+    with open(os.path.join(evidence_dir, 'run_status.txt'), 'a') as f:
+        f.write("leakage_check=PASS\n")
 
     models = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
     result = None
@@ -142,26 +197,29 @@ Based on your analysis:
             print(f"[WARN] API call failed for {model_name}: {e}")
 
     if not result:
-        print("[WARN] All API calls failed. Generating simulated response for thesis exploratory evaluation.")
-        parsed_response = {
-            "reasoning": "The vulnerable package vm2 enters the dependency tree via the juicy-chat-bot package. According to the dependency graph, juicy-chat-bot explicitly requires vm2. Because vm2 is deprecated and known to have unfixable sandbox escapes, a long-term architectural fix would replace juicy-chat-bot entirely. However, the objective requires the minimum necessary manifest modification to remove CVE-2023-32314 (fixed in 3.9.18) without breaking the application's constraints. Therefore, the most stable graph-aware remediation is to add an npm override forcing vm2 to resolve to 3.9.18, which resolves the CVE while maintaining juicy-chat-bot's API contract.",
-            "manifest_patch": {
-                "operation": "add_override",
-                "package": "vm2",
-                "constraint": "3.9.18"
-            }
-        }
-        with open(os.path.join(evidence_dir, 'llm-response.json'), 'w') as f:
-            json.dump(parsed_response, f, indent=2)
-        sys.exit(0)
+        print("[ERROR] All API calls failed. No simulated response will be generated.")
+        sys.exit(1)
 
     try:
         content_text = result['candidates'][0]['content']['parts'][0]['text']
         parsed_response = json.loads(content_text)
-    except Exception as e:
-        print(f"[ERROR] Failed to parse LLM response: {e}")
-        parsed_response = {"error": str(e), "raw_response": result}
         
+        # 8. OUTPUT VALIDATION
+        if "manifest_patch" not in parsed_response:
+            raise ValueError("Missing 'manifest_patch' in LLM response.")
+        patch = parsed_response["manifest_patch"]
+        if patch.get("operation") not in ["add_override", "replace_dependency", "add_resolution", "bump_dependency"]:
+            raise ValueError(f"Unsupported operation: {patch.get('operation')}")
+        if not patch.get("package") or not patch.get("constraint"):
+            raise ValueError("Manifest patch is missing package or constraint.")
+            
+    except Exception as e:
+        print(f"[ERROR] Failed to parse or validate LLM response: {e}")
+        parsed_response = {"error": str(e), "raw_response": result}
+        with open(os.path.join(evidence_dir, 'llm-response.json'), 'w') as f:
+            json.dump(parsed_response, f, indent=2)
+        sys.exit(1)
+
     with open(os.path.join(evidence_dir, 'llm-response.json'), 'w') as f:
         json.dump(parsed_response, f, indent=2)
 
