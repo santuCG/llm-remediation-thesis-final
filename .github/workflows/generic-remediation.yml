@@ -69,6 +69,22 @@ jobs:
             pip install -r requirements.txt 2>&1 | tee ../../dependency_install.log
           fi
 
+      - name: Capture Environment Diagnostics (lockfile-controlled pilot)
+        if: env.ECOSYSTEM == 'npm'
+        run: |
+          cd ${{ env.APP_DIR }}
+          {
+            echo "=== node --version ==="
+            node --version
+            echo "=== npm --version ==="
+            npm --version
+            echo "=== npm config get package-lock ==="
+            npm config get package-lock
+            echo "=== .npmrc (if present) ==="
+            cat .npmrc 2>/dev/null || echo "(no .npmrc in $(pwd))"
+          } > ../../environment-diagnostics.txt
+          cp package-lock.json ../../package-lock-before.json || true
+
       - name: Generate SBOM & Run Grype
         run: |
           cd ${{ env.APP_DIR }}
@@ -98,7 +114,8 @@ jobs:
           set -o pipefail
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
-            npm install 2>&1 | tee -a ../../build.log || (echo "NPM Install Failed" && exit 1)
+            echo "attempt1_started $(date -u +%FT%TZ)" >> ../../resolution-path.log
+            npm install --package-lock=true 2>&1 | tee -a ../../build.log || (echo "NPM Install Failed" && exit 1)
             echo "=== Phase 4 Log: Package Installation Status ==="
             npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
@@ -121,11 +138,10 @@ jobs:
         if: failure()
         run: |
           cd ${{ env.APP_DIR }}
-          echo "Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration."
+          echo "Native package manager resolution failed on the first attempt. Re-attempting with the existing lockfile preserved (lockfile-controlled pilot: no deletion of package-lock.json or node_modules)."
           if [ "$ECOSYSTEM" == "npm" ]; then
-            rm -f package-lock.json
-            rm -rf node_modules
-            npm install 2>&1 | tee -a ../../build.log
+            echo "fallback_started $(date -u +%FT%TZ)" >> ../../resolution-path.log
+            npm install --package-lock=true 2>&1 | tee -a ../../build.log
           elif [ "$ECOSYSTEM" == "python" ]; then
             rm -f requirements.txt
             pip install -e . 2>&1 | tee -a ../../build.log
@@ -225,10 +241,10 @@ jobs:
           
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
-            rm -f package-lock.json
-            rm -rf node_modules
-            npm install 2>&1 | tee -a ../../build.log
+            echo "retry_started $(date -u +%FT%TZ)" >> ../../resolution-path.log
+            npm install --package-lock=true 2>&1 | tee -a ../../build.log
             INSTALL_EXIT=${PIPESTATUS[0]}
+            echo "retry_install_exit=$INSTALL_EXIT" >> ../../resolution-path.log
             # Refresh the dependency-graph evidence for the retry's own install --
             # otherwise this file stays frozen at attempt 1's (superseded) graph
             # even though dependency_verified checks the live, post-retry state.
@@ -265,6 +281,20 @@ jobs:
             python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json "$ECOSYSTEM" "$(jq -r '.selected_package' ../../metrics.json)" "$(jq -r '.recommended_package_version // empty' ../../llm-response.json)"
           fi
 
+      - name: Capture Post-Resolution Lockfile State (lockfile-controlled pilot)
+        if: always() && env.ECOSYSTEM == 'npm'
+        run: |
+          cd ${{ env.APP_DIR }}
+          cp package-lock.json ../../package-lock-after.json || true
+          diff -u ../../package-lock-before.json ../../package-lock-after.json > ../../lockfile-diff.txt || true
+          cd ../..
+          if [ -f metrics.json ]; then
+            echo "final_metrics build_success=$(jq -r '.build_success' metrics.json) dependency_verified=$(jq -r '.dependency_verified' metrics.json) rescan_success=$(jq -r '.rescan_success' metrics.json) retry_count=$(jq -r '.retry_count' metrics.json) failure_stage=$(jq -r '.failure_stage' metrics.json)" >> resolution-path.log
+          else
+            echo "final_metrics metrics.json_not_found" >> resolution-path.log
+          fi
+          echo "lockfile_diff_package_count=$(grep -c '^-.*\"version\"' lockfile-diff.txt 2>/dev/null || echo 0)" >> resolution-path.log
+
       - name: Gather Evidence
         if: always()
         run: |
@@ -281,6 +311,11 @@ jobs:
           mv build.log evidence/ || true
           mv test.log evidence/ || true
           mv rescan.json evidence/ || true
+          mv environment-diagnostics.txt evidence/ || true
+          mv package-lock-before.json evidence/ || true
+          mv package-lock-after.json evidence/ || true
+          mv lockfile-diff.txt evidence/ || true
+          mv resolution-path.log evidence/ || true
           mv metrics.json evidence/ || true
           mv package-before.json evidence/ || true
           mv package-after.json evidence/ || true
