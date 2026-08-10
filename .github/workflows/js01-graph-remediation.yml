@@ -1,0 +1,97 @@
+name: Exploratory JS-01 Graph-Aware Remediation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  graph-remediation:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+      TARGET_CVE: GHSA-whpj-8f3w-67p5
+      PACKAGE_NAME: vm2
+      APP_DIR: applications/juice-shop
+      ECOSYSTEM: npm
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Setup Environment (Node)
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: '18.x'
+
+      - name: Prepare Evidence Directory
+        run: mkdir -p evidence
+
+      - name: Phase 1 - Establish Baseline & Install Dependencies
+        run: |
+          cd ${{ env.APP_DIR }}
+          cp ../evidence/juice_shop_package-lock.json package-lock.json || true
+          if [ -f ../evidence/juice_shop_frontend_package-lock.json ] && [ -d frontend ]; then
+            cp ../evidence/juice_shop_frontend_package-lock.json frontend/package-lock.json
+            (cd frontend && npm ci --legacy-peer-deps)
+          fi
+          npm ci 2>&1 | tee ../../evidence/baseline_dependency_install.log
+          cp package.json ../../evidence/package-before.json
+          cp package-lock.json ../../evidence/package-lock-before.json
+          npm ls --json > ../../evidence/dependency-graph-before.json || true
+
+      - name: Phase 2 - Generate Baseline SBOM & Scan
+        run: |
+          cd ${{ env.APP_DIR }}
+          mkdir -p ./bin
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
+          tar -xzf syft.tar.gz -C ./bin syft
+          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" -o spdx-json > ../../evidence/baseline-sbom.json
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
+          tar -xzf grype.tar.gz -C ./bin grype
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../evidence/baseline-sbom.json -o json > ../../evidence/baseline-grype.json
+
+      - name: Phase 3 - Graph-Aware LLM Remediation
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/remediation/graph_orchestrate.py ${{ env.APP_DIR }} evidence
+
+      - name: Phase 4 - Apply Fix & Resolve Dependencies
+        run: |
+          set -o pipefail
+          cd ${{ env.APP_DIR }}
+          python ../../scripts/remediation/apply_graph_patch.py package.json ../../evidence/llm-response.json
+          cp package.json ../../evidence/package-after.json
+          rm -rf node_modules package-lock.json
+          npm install 2>&1 | tee ../../evidence/npm-install.log || echo "NPM INSTALL FAILED" > ../../evidence/npm-install.log
+          cp package-lock.json ../../evidence/package-lock-after.json || true
+          npm ls --json > ../../evidence/dependency-graph-after.json || true
+
+      - name: Phase 5 - Post-Remediation SBOM & Scan
+        run: |
+          cd ${{ env.APP_DIR }}
+          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" -o spdx-json > ../../evidence/post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../evidence/post-sbom.json -o json > ../../evidence/rescan.json
+
+      - name: Phase 6 - Build & Test Validation
+        run: |
+          REPO_ROOT="$(pwd)"
+          cd ${{ env.APP_DIR }}
+          # Run build but do not exit on failure, capture to build.log
+          bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/evidence/metrics.json" "$REPO_ROOT/evidence/build.log" || true
+          
+          if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
+            npm install -g @angular/cli@15.0.4 --silent || true
+            npm test 2>&1 | tee ../../evidence/test.log || true
+          fi
+
+      - name: Phase 7 - Evidence Preparation
+        if: always()
+        run: |
+          mkdir -p results/exploratory_experiments/JS-01-graph-reasoning/
+          cp -r evidence/* results/exploratory_experiments/JS-01-graph-reasoning/ || true
+
+      - name: Upload Evidence Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: JS-01-graph-reasoning-evidence
+          path: results/exploratory_experiments/JS-01-graph-reasoning/
