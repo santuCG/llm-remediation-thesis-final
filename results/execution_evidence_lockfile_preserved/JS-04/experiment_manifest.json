@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0",
+  "scenario": "JS-04",
+  "repository_commit": "5390bf676de23b382b1b52b0cec1959912b9037d",
+  "workflow_run_id": "31447199456",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31447199456",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-11T00:56:32.922451+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-11",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-11",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "daa74b1feada2261f6e4aef041d1052e01365a3fbcda6d808ab33fa71d7bb7da",
+    "baseline-sbom.json": "47194b27f7b8032994acf85dc13963a00e66813a7d13bbe5d6897122b1d17a60",
+    "build.log": "1ab818fe37f1535efdba1e6fa95bffdfa19285c1dc3ce4ec5f34d523d7ee5fbb",
+    "candidate-ranking.json": "654046e5ff4d9292e19df1c60f1b0e3de5c420f8cb29bae711179f32d8e6799f",
+    "dependency-graph.log": "3f3e48c529f9b23638e0e603acb7ab3599db094efadbf5cd5ede50c596d361e2",
+    "environment-diagnostics.txt": "4f64cb3b2b1b50652cbaeae6d8d6023a84debc3c997100062fb72b3b232b1e44",
+    "grype-db-metadata.json": "0625f0e283653bca50156ca192aa74e664cc908c99e6829709312d863e58eb55",
+    "llm-request.json": "54d5f8e1870093847e441726a10db475c87d6d7b588621e5cb7b8ac25ab21e1d",
+    "llm-response-full.json": "ea84c069b58c6baf630978fa552fefb4ce072a51a195af5a7b7752da1bd79bec",
+    "llm-response.json": "d6c81ae3baa7c7fcb049149ceab22aa347f6a13640cc3a8466f187ab638f3cab",
+    "lockfile-diff.txt": "f7e0b94b958116b5c38228bbe8eaf47d3fbd10a4f4c5a5991101cddd644e1af2",
+    "metrics.json": "852d3aa41b6e91bf6f6594c53df9e42dc69b365328e9c152cb671c501a885cdb",
+    "package-after.json": "25e0882ddb39ac6d5010105f3e9909c95d7c169fd1e8144f581bafd8b6da321c",
+    "package-before.json": "896b949983c177cc1aff96e9c90d53ebb219025817b3f6ce25913cc5511ceab5",
+    "package-lock-after.json": "4f7958e3e2b06b66e179e9b53f1de9898dd3b0b6e8523c76273f0b86d5a87973",
+    "package-lock-before.json": "3b71210c6285011854a1d516012e90674e0e66a4467da880595d3a2176d58dae",
+    "rescan.json": "82df8c8b3aa2879c79bc41040295a6d5f4cbc53143974f4b1783e92e47cafa60",
+    "resolution-path.log": "06a10eb3b549dd462289da07e80bb433421e6c34fedb5bccea88bdd5033e8994",
+    "selected-candidate.json": "97f99c3654a1902612341ab033365b47e5e219c57c510ea69ce1a274c56f8edb",
+    "test.log": "22117e63e09f906bb41b8bcba28783ed4e26daf2491b75aaef6d6bfb8e562568"
+  }
+}

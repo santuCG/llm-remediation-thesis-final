@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package `crypto-js` at version 3.3.0 is vulnerable to CVE GHSA-xwcq-pm8m-c4vf (CVSS 9.1). It is pulled in as a transitive dependency by `pdfkit@0.11.0` (which specifies `^3.1.9-1`). Because `crypto-js` is not listed as a direct dependency in the root `package.json`, a direct upgrade cannot be performed. The safest and most precise remediation is to apply a transitive override via npm's `overrides` field targeting `crypto-js` with fixed version `4.2.0`.\",\"strategy\":\"transitive_override\",\"remediation_type\":\"Transitive Override\",\"recommended_package_version\":\"4.2.0\",\"manifest_patch\":{\"operation\":\"add_override\",\"package\":\"crypto-js\",\"constraint\":\"4.2.0\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 789,
+    "candidatesTokenCount": 196,
+    "totalTokenCount": 1774,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 789
+      }
+    ],
+    "thoughtsTokenCount": 789,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "cnJ6aty7MuOc_uMPyKqQkQ0"
+}

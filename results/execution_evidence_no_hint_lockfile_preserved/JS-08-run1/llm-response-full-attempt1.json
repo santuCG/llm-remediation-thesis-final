@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"reasoning\": \"The vulnerable package `body-parser` version 1.20.1 is introduced as a transitive dependency pinned strictly (`1.20.1`) by `express@4.18.2`. Although the root project lists `body-parser` version `^1.20.2`, `express` forces its own nested copy of version 1.20.1 in `node_modules/express/node_modules/body-parser`. A direct upgrade of the root dependency does not eliminate the vulnerable nested copy. Using an `overrides` block in `package.json` forces npm to resolve all instances of `body-parser` across the graph to safe version `1.20.3` without requiring a major breaking change to Express.\",\n  \"strategy\": \"transitive_override\",\n  \"remediation_type\": \"Transitive Override\",\n  \"recommended_package_version\": \"1.20.3\",\n  \"manifest_patch\": {\n    \"operation\": \"transitive_override\",\n    \"package\": \"body-parser\",\n    \"constraint\": \"^1.20.3\"\n  }\n}",
+            "thoughtSignature": "EqcYCqQYARFNMg+y1Kp6nrXuFcMl/91CurC6Q7035wUUYqWo4W46OQg9+c3hiCd0Op3d8vCtCFr1FuY2/RxarrW1JbHJzAo0xzZ1sDgNqn+GHeUjtcxV+YwTgAm8+gu7AUVExs/qg5414neV11+hiitd3C3qj6uXFlfiyD3/VN0Z9l2yHwTDZRTJXcKUHxe6VlgGvgsuJXeBO1EkEP/swtf1xmXq8QqqTFhFMshBIv2GRBWsrgmEjjbv+JEuv9g8wGJ6v5Sy1jL+L00mlrw9WVLtKbKrxsFQWgKZ1mA7GVhnvUGh12W2NQ2iLMTSLSO3aoxiW+hGtkNJmCuRuDUMe/ybVJcCEVdco0957qYE3l+qzM9J78fkDMNL9Ih4awA1p3AEQYHxOowFfeLs1SfjlWqOv82fs75IeJqdIAYbHjIiidWD2+MNj55/DOFcXegR5FCgEbx/1mgzNL8Gvr61SftPaEggj2bYczph/ILyBUiXEp+U8yRxDwPRzhtSCHznDl4OWX0MvS1e24DwPSs7rwzf1hf9szul+ug2wtnTmplvTYGaNcKvPsLyPq6G39IXmEs3S4MELS4UFrikbWkhdK9j+sSAd1CujVvKqCZyl1twRB0GQIKX5CbApO7KOk2APPesaMziZaug5DlhKaaApwAVtm9R8qUUg/mWdh6Wg14kk0FuPovTLLT2RtDZfeRlYz7NZz2RNB1F+OZN5sR60DDwbFEfOApsU3su7rjwhEVr92UeFz17WiGzyd++U1fAwoRNr0+N6/czB/Dz82qLs0b7k2rKrjKYzqXqdWfIIapqID6hsp/cfXEJUjoM/TCXWw48Ci5HegyF4jK2WiwObwUWZjF8fpNDXk69QbnaFrYC83NTE9FkZ6G8xwhdychRyw1qpqMmKG8BAG+lTPHx883Gwye3xmS1O+EDilLM38dpGS5+G7TWp8dE/MRojmV7jFLnRSH9HllSOesWLORzNmWvcn/r4EO82r0EpVu8oI7kOwSSGy5eJ0s2NKS3grMbppnEpajP8CmfXgxLoZsL4no58ambTzuqMDn+/rPL7hoRuLOR6z3bafMs6XIMnyGjT0lZ8Utz89P77vOIF+oQe0PK+vkR/z+eZVn3hvpM7Igegk8R8dPIY6VRsJM1UOrPF+X2lGRoDv69UiK0H5O1GnGoRs5TXxqO/TXrQmdb+iy2YAF9bBrFguyzs7D9WwXt1bDGUAJp2Rv9/tL1IvqSt16ZcJP4hsZEAxHh8iCq5Onuked5pEJyU71/Mq/C0egwAgRv7vyiaozjM5tErbPMgNkR6O5mu5F2YwsB/U+zs0XaD2WVmMyDJngxvkF6v6RmS5ZckD27UVVG0GMI9x1MMULvAVYIYON+b+sZHsPSRQeQDIVPa8+aHYYt8Rpp4F1jtRpbKOk7ptE4YHxozPBaju+XjZRDG3fclkh4JA7EhL4WW0CQHqOIGNbbZAFsk0Lz+JtL0dPGkBUMMq+ZbaOm7F2ifhF09jeV0Z9Fn5fG6n1F6JIJcCqraTcLuglS4MxRHI+fgsYgtSw2o6GAKbymrMFLJnvngI22CyuEuAUq5E9AAg4alsu7O2NHr/Ixq3M1s3JRQQsiLE0wZrj6hmXS4LpMXPr3q2wQzXc2uTLIaeooeEn/5+U+panhVT20kkOo/QUXcHThQhdns/gG/1pQLjPshMq6L3egyuVmQXdc8GXXhnA7vqo7rc7rTMU8eP9EjqFnQO9F8N0Dqs8s0jARa1fvC3MG0ASL1zJGszWzklyJ31mUxIQh1ZjMN0dGFSqm2EsO8VUQ/UPRrpaH22/bmmyiNsxvN3REd/jkNzdrRFsbs34p5Kjm9Log5GtWsVT3q7vVTWBdNBUN6f0sNXTGz3R9+5Z4iVxC7s5LafwLfzBqQHa8sNlg7v/q61vl5bgI50EjgbQKYIdfLMsAbrIvKVFdjIMrY3nzKm1dj2S+n70sK92LksR2nktVvmN9RILqO2PfwWId8zKcVZnQnDEkfD7FIOr7iNEoZsnLt4J6kqoN3ER62hJ/5M9jDkvtQGaDftg9jyBEv9+QyLctaD///fAx10l8doSPD6izhir6fHIzopU/rZRwREO+qHNn5dJtCIcQPQW1xSOHxq7Eb2WS7M7Lkdo3D10fQnVz1/vbRu6wpFbkWKkg6M8ubw0E33QeZ6mGqZdmn5Y72u749/efH1BpLQGuRz8lFCvJ+NveVOfLkTDSsTHw7k69jV0LMX4Rjj5J4aDNFQYuPqHXgvAx4Lm9zJBzHrx4HxL2t09LHfoO0tuTMtrNl8ahrphqu3Y475FSsGZ6Lcro/3bCrxLCiY+638OKGuyeYJEigWdA/EptHNLOYuGqwmWiuzy7Kgpgp9Gpm+kGTj93xOMRvUfrYcTFAwqiBkyeva6XaaMkt8MPEOKmHc8L5NivHjiyg7rtYRQQlhqf2a8jU6R4Fm9cNos33HUn9+QrWMw/1UelprHf6S019yR7atMwDIUZAQglEsRutzwvUCFHvDAso/XlYMWYzUJs7pHUbnUWwGbMSxN7MhUj2GzDeKRDzPcDO6n5kwRampXHXxyJrhxT3oFvPvP26R0DNFIE/rWE0RPsHFdo24v6qO7ZhLjx34asPik+zo3QMk1kFQ9GSG3s63r/6X1CHly7lgWxJMM/3A41Z9e92SoZlc9s6yghcy6QQo3KX+n2RrzmdEjsHf2L7LlnLNIaq1OmuhihApoiU4jeTdbGkumPHQU2P0n60cYGedColxVmO/D3urCb2Jpqkf2n2WFwgs2GthJPDB8aNmKrtSlKuO0vb6Z6ChHb+8fcoz78koMGoCLewyVx5m0rbSnNzlfzVKDAtX0vdRg4rJytxkLeHjdBukNIEfjAhJ9B4Qnfnn+btT8HufoVt34XaFsBfERagXM/yEazEQXKdQu5Cse17lM80npRtOd/IJFHwqIn/beBnqEy/FvPLo4SpqK/Fv3KMF7CzTmo0OtmAHzK3xIlVI+MPDltNzhumj/zXkZBffUpQ7vmz+y5YVO1A2bb00+HR+b5qDR0PpvGnsvV+gmczPjK+2F3hWS/ix29HnWmmnJtFe83nDELyUypURHomFnGIAgHS3hVuOKajByhQ5r1Ph9tRZTFxzU1rXbfmCxLWlFEBG3Re1QrYcyn90SzjGSmLbmYQKkhTOe+qvz7Z/pRbLJk4970hJVmJZHJPqa7I1UbEqkbQxJynuSNSiytrAXtv0s7akFKg/91fPu4NrwBWjXwazGYCIlETiPzNID3hPJgESvrHzez09+JNt0lpbU0XdzOw3zy7bw797OOnpG3JJbxiKyOvTYYuNoB5WRG2h5PrZScH42ONdjqYfC9ShMlLbyJtbOoKV5xwr6AAXsQVWGFmeRQcNEU5gZ66q010F5EpnyRt3Kwql1/Zhay6e4SQgrOi6uuK64fea0eyn9/bkCoT0hUaJ5G6xaaL9/c2N4emEON60uxgOqMBitEwZC9nqIUxYddEDqnnfRZHrqi0rMTGuJqXCeWbQVbGfFH1JqHkWTjYjemBBhp8psK2yoAYD1HZ8+8k74DRp1YeI0YCduh5dFz8F4DM0q53+cdr5yR+3hQ9wX6oqdUb567SJfmMA8czp89uWv31DTNLMSivqBSE4uuKvjGwuEnu3gWO9tk4bhLlasaesGIVNr0XhrqKG+i6OLN+JCdGoHHTWNszoYj9Y9HmwjXVBTi9n35CBoAt0Rkru6T9syAKTrlprwcd3T2LNAfbQb38I2IFanfv4QUjHLqjYwOByslD+ivxjIdTA1lT+EqO2x+AFrpph9BlbpW2BaTnHTGUIvjHbDRJVOTx7xlZPBVcgNn2unuheYd2aOxJ1oGtIJj0gqQIW6HpJhwN4xP+2pRzTUpUMV2pi0N7nJpS+HwtJsdJzTwt1qn/VGsAIA3kkI7mNiqMln+iTh8lO180ZaoRdP4klmPRHuGzyaCaWB0E1Aj9Wb5JXyMdPsSGk2p9iqZIH4ZQzFBly16v815NLsV+AkWWA4HVOLRON/230t5npecf5qlgVDXwtC2Q/fwKJCltDa8kpgo9isdxw2LK72q1FtA+uYn1gcRfudOZa/6Jbe4ayDwD36sSi6i8XD3YeHGsvuk7BDmZpB9dfKSGPs/sfGMr5l9PA0yu4uoXWS8"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1439,
+    "candidatesTokenCount": 255,
+    "totalTokenCount": 2660,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1439
+      }
+    ],
+    "thoughtsTokenCount": 966,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "XnZ6atfgBO2T-8YPzrXSyQY"
+}

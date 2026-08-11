@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"reasoning\": \"GHSA-qwcr-r2fm-qrc7 affects body-parser prior to version 1.20.3 due to denial of service vulnerabilities when handling requests. Since body-parser is declared as a direct dependency in package.json as '^1.20.2', upgrading the direct version constraint to '^1.20.3' enforces the installation of a non-vulnerable release while preserving semver compatibility.\",\n  \"strategy\": \"direct_upgrade\",\n  \"remediation_type\": \"Direct Upgrade\",\n  \"recommended_package_version\": \"1.20.3\",\n  \"manifest_patch\": {\n    \"operation\": \"direct_upgrade\",\n    \"package\": \"body-parser\",\n    \"constraint\": \"^1.20.3\"\n  }\n}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 438,
+    "candidatesTokenCount": 183,
+    "totalTokenCount": 1690,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 438
+      }
+    ],
+    "thoughtsTokenCount": 1069,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "aHZ6aqbKGeeX-8YP5cHyqAY"
+}

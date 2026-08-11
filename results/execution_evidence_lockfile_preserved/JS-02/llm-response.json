@@ -1,0 +1,11 @@
+{
+  "reasoning": "The target package handlebars version 4.7.7 contains a critical security vulnerability (GHSA-2w6w-674q-4c4q, CVSS 9.8). In this project, handlebars is a transitive dependency brought in by hbs version 4.2.0. Because handlebars is not directly specified in package.json, a direct dependency upgrade cannot be performed on handlebars itself without modifying the dependency tree. The safest strategy that mitigates the security risk while maintaining full backward compatibility is a transitive override, enforcing handlebars version 4.7.9 in package.json via the overrides field.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "4.7.9",
+  "manifest_patch": {
+    "operation": "transitive_override",
+    "package": "handlebars",
+    "constraint": "4.7.9"
+  }
+}
