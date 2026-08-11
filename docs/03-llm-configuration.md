@@ -1,5 +1,7 @@
 # LLM Configuration and Prompt Engineering
 
+> **Supporting implementation documentation.** This document is engineering-reference material, not the canonical methodology account — the university-submitted thesis is authoritative (see especially thesis §3.3.1–3.3.2 and Appendix F for the current, verified model/prompt configuration). In particular, the per-scenario model-attribution table below and the `v1.1` prompt text predate a later fallback-list and schema update; every scenario's `experiment_manifest.json` and `llm-request.json` are the authoritative record of what model and prompt version actually ran for that scenario.
+
 A central objective of this research is to evaluate whether a **Large Language Model (LLM)** can generate dependency remediation strategies when supplied with structured software supply chain evidence.
 
 To maximise reproducibility, the LLM configuration, prompt structure, and expected output format were standardised across all experimental scenarios.
@@ -69,14 +71,7 @@ The pipeline attempts a sequence of models in order, moving to the next entry on
 gemini-3.6-flash → gemini-2.5-flash → gemini-2.0-flash → gemini-1.5-flash
 ```
 
-**Model actually used per scenario (recorded in each `experiment_manifest.json`):**
-
-| Model recorded | Scenarios | Reason |
-| :--- | :--- | :--- |
-| `gemini-2.5-flash` | 17 of 18 (all except JS-09) | `gemini-3.6-flash` was added to the fallback list on 2026-08-01, after these scenarios' CI runs had already executed; the request fell to the next entry in the list available at that time. |
-| `gemini-3.6-flash` | JS-09 only | JS-09 was regenerated after the fallback list was updated (see `docs/audit/js09_rerun_summary.md`), and the primary model responded successfully on that run. |
-
-The model that actually responded for a given run is recorded via the `LLM_MODEL_USED` environment variable and persisted into that scenario's `experiment_manifest.json`; it should not be assumed to be the first entry in the fallback list.
+**Model actually used per scenario.** The model that actually responded for a given run is recorded via the `LLM_MODEL_USED` environment variable and persisted into that scenario's `experiment_manifest.json`; it should not be assumed to be the first entry in the fallback list without checking, since a fallback can occur on any individual run. For the current, final regenerated dataset (Pipeline v2.0, prompt v1.2), every one of the 18 primary scenarios' `experiment_manifest.json` records `gemini-3.6-flash` as the responding model — verify directly against `results/execution_evidence/<ID>/experiment_manifest.json` for any specific scenario rather than relying on a static table here, since this is exactly the kind of per-run fact that can change between dataset regenerations.
 
 ### Generation Parameters
 
@@ -142,7 +137,7 @@ Based on the vulnerability intelligence and context:
 
 ## Retry Prompt Augmentation
 
-When the first remediation attempt does not survive deterministic validation (see `docs/04-experimental-methodology.md`, Stage 6, and the single-retry policy in `.agents/AGENTS.md`), the pipeline invokes the LLM a second time with the same template plus one additional section inserted before the closing instructions:
+When the first remediation attempt does not survive deterministic validation (see `docs/04-experimental-methodology.md`, Stage 6, and the single-retry policy in `scripts/remediation/retry_remediation.py`), the pipeline invokes the LLM a second time with the same template plus one additional section inserted before the closing instructions:
 
 ```text
 ### Previous Attempt Failure Logs

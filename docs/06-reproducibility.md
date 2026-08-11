@@ -1,5 +1,7 @@
 # Reproducing the Experimental Workflow
 
+> **Supporting implementation documentation.** This document is a practical reproduction guide (commands, steps). The thesis (Chapter 3, §5.6) is the authoritative account of reproducibility scope, method, and results.
+
 This repository accompanies the Master's thesis as a **reproducible research artifact**.
 
 Its primary objective is to document the experimental methodology used to evaluate LLM-assisted dependency remediation rather than to reproduce a single numerical result.
@@ -176,9 +178,7 @@ The repository layout is shown below.
 │
 ├── .github/workflows/               # generic-remediation.yml (LLM pipeline) + grype-baseline.yml (deterministic)
 │
-├── docs/                            # Canonical methodology, results, reproducibility, and audit/ trail
-│
-├── archive/                         # Superseded drafts and legacy artifacts (not part of the active dataset)
+├── docs/                            # Supporting implementation documentation (see README.md for the authoritative navigation)
 │
 └── README.md                        # Navigation hub
 ```

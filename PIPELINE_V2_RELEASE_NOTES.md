@@ -2,8 +2,7 @@
 
 Formal release notes for the transition from the frozen Pipeline v1 state (tag
 `thesis-freeze-2026-08-02`, commit `5a227c8f`) to Pipeline v2.0, the state all 18 scenarios in
-`FINAL_DATASET.md` were generated under. This document formalizes `CHANGELOG_V2.md`'s working log
-into a single release summary; `CHANGELOG_V2.md` remains the authoritative, evidence-linked
+`FINAL_DATASET.md` were generated under. This is the authoritative, evidence-linked
 record of how each fix was found and verified.
 
 ## Pipeline v1 → Pipeline v2.0
@@ -71,5 +70,4 @@ flowchart TD
 - **Zero silent CVE substitutions** remain in the final dataset (`docs/CVE_MATCH_VERIFICATION.md`).
 - No fix in this release changes the LLM's own reasoning, prompting, or decision logic — Fixes #1–#9 and #11 are evidence-integrity and independent-verification corrections; Fix #10 is the sole *target-selection* logic change, and it restores the preregistration's own authority rather than introducing new discretion.
 
-See `CHANGELOG_V2.md` for the full evidence trail behind each fix, and `REGENERATION_LOG.md` for
-the per-scenario dispatch history this release was validated against.
+See `REGENERATION_LOG.md` for the per-scenario dispatch history this release was validated against.

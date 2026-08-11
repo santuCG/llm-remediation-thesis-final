@@ -1,5 +1,7 @@
 # Experimental Methodology
 
+> **Supporting implementation documentation.** This document is engineering-reference material describing the pipeline's stage-by-stage mechanics. It is not the thesis and is not the canonical methodology account — the university-submitted thesis (Chapter 3) is authoritative; this document supports and elaborates the pipeline implementation the thesis describes.
+
 This section describes the complete experimental workflow used throughout the evaluation.
 
 Every experimental scenario follows an identical sequence of operations.

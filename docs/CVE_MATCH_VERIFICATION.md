@@ -34,7 +34,7 @@ the field `prioritize.py` writes only after a successful, authoritative `TARGET_
 | JS-04 | CVE-2023-46233 | CVE-2023-46233 | ✅ | Clean signals |
 | JS-05 | CVE-2015-9235 | CVE-2015-9235 | ✅ | Clean signals |
 | JS-06 | CVE-2026-33228 | *N/A — no candidate matched* | N/A | **Confirmed detection gap, not a substitution.** `flatted` absent from Syft's SBOM; pipeline correctly refused to substitute a different CVE (`docs/FINDING_CVE_DETECTION_GAPS.md`). This is itself proof the anti-substitution fix works: the pre-Fix-#10 pipeline silently produced `lodash`/`CVE-2021-23337` here instead. |
-| JS-07 | CVE-2024-37890 | CVE-2024-37890 | ✅ | Target correctly identified; remediation genuinely failed for a different, root-caused reason (`manifest_editor.py` frontend-tree gap, `CHANGELOG_V2.md`) — not a targeting problem |
+| JS-07 | CVE-2024-37890 | CVE-2024-37890 | ✅ | Target correctly identified; remediation genuinely failed for a different, root-caused reason (`manifest_editor.py` frontend-tree gap, `PIPELINE_V2_RELEASE_NOTES.md`) — not a targeting problem |
 | JS-08 | CVE-2024-45590 | CVE-2024-45590 | ✅ | Clean signals (after Fix #11 + follow-up) |
 | JS-09 | CVE-2026-3520 | CVE-2026-3520 | ✅ | Clean signals |
 

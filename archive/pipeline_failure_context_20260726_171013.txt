@@ -1,1 +1,0 @@
-The naive scanner update was applied and exited with code 0, but Grype rescanned the lockfile and the nested CVE is still active.

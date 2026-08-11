@@ -1,61 +1,75 @@
-# Empirical Evaluation of LLM-Assisted Dependency Remediation in SBOM-Driven CI/CD Pipelines
+# Context-Aware Dependency Remediation in SBOM-Driven CI Pipelines Using a Large Language Model
 
-**Master's Thesis — Santosh Nagaraj**  
-**SRH University Berlin — MSc Computer Science (Cybersecurity)**  
+This repository is the reproducibility, implementation, and evidence artifact accompanying a Master's thesis. It contains the pipeline that was evaluated, the scenarios it was run against, and the complete recorded evidence for every run.
 
-This repository serves as the empirical evidence archive and experimental framework for the Master's thesis investigating context-aware dependency remediation.
+> **The university-submitted thesis is the authoritative academic document.** This repository supports and substantiates the thesis's claims with runnable code and verifiable evidence; it is not itself a second copy of the thesis narrative, and where any supporting document in `docs/` differs from the thesis, the thesis governs.
 
-> **Navigation Hub:** To prevent synchronisation drift, this README does not duplicate methodology, results, or scientific discussion. It serves strictly as a directory to the canonical, mathematically verified documentation and raw execution evidence contained within the repository.
-
-> **Repository status:** The thesis results, evidence, and analysis correspond to the `pipeline-v2-phase1` branch. Two supplementary research branches were used to produce evidence now also copied into this branch for self-containment (§3.9a/§4.9/§4.11/§4.12 of the thesis, Section 5 below): `research/pipeline-v2-lockfile-controlled` (controlled lockfile-preservation validation) and `research/hint-removal-ablation` (no-hint ablation study, including its JS-08 extension); both remain on the remote for full CI-run-level provenance. All other branches (`research/js01-graph-reasoning`, `research/no-hint-search-grounding`, `test-js-09`, `feature/reproducible-platform`, and this fork's own `main`) are historical or exploratory development work, not part of the evaluated pipeline, and were not used to produce any result reported in the thesis; `research/js01-graph-reasoning` specifically is discussed in §5.9 of the thesis precisely because its results are excluded.
+> **Repository status.** All results, evidence, and analysis correspond to the `pipeline-v2-phase1` branch. Two supplementary research branches were used to produce evidence that is also copied into this branch, so every citation resolves locally without checking out another branch: `research/pipeline-v2-lockfile-controlled` (controlled lockfile-preservation validation) and `research/hint-removal-ablation` (no-hint ablation study). All other branches (`research/js01-graph-reasoning`, `research/no-hint-search-grounding`, `test-js-09`, `feature/reproducible-platform`, this fork's own `main`) are earlier or exploratory development work, not part of the evaluated pipeline, and were not used to produce any reported result.
 
 ---
 
-## 1. What is this repository?
-This repository contains the complete, reproducible experimental pipeline and the recorded execution artifacts used to evaluate Large Language Model (LLM) reasoning within Software Bill of Materials (SBOM) driven CI/CD workflows. It includes the automation scripts, the vulnerability intelligence pipelines, and the empirical evidence proving execution integrity.
+## 1. What this research is
 
-## 2. What was researched?
-This research evaluated whether an LLM—supplied with structured vulnerability intelligence, threat signals (CVSS, EPSS, KEV), and dependency graph constraints—can generate dependency remediation strategies that resolve software supply chain vulnerabilities where applying a deterministic vulnerability scanner's direct upgrade recommendation fails.
+This work evaluates whether a Large Language Model (LLM), supplied with structured vulnerability intelligence (CVSS, EPSS, KEV) and dependency-graph context, can generate dependency remediation strategies that succeed where a deterministic vulnerability scanner's direct-upgrade recommendation does not — specifically for vulnerabilities in transitive (nested) dependencies. The comparison is against a deterministic baseline workflow running on the same preregistered targets.
 
-## 3. Where is the final methodology?
-The canonical methodology, describing the strict 12-stage experimental pipeline and constraint-aware remediation workflow, is located in:
-*   [docs/04-experimental-methodology.md](docs/04-experimental-methodology.md)
+## 2. The evaluated system
 
-*(For an overview of the platform and toolchains, see [docs/02-experimental-environment.md](docs/02-experimental-environment.md).)*
+The evaluated pipeline generates a Software Bill of Materials (SBOM), scans it for vulnerabilities, selects a target, builds a structured prompt from vulnerability and dependency-graph evidence, sends it to an LLM under a fixed schema and generation configuration, applies the returned recommendation to the manifest, and independently re-verifies the result (install, dependency-graph check, SBOM regeneration, rescan) before recording an outcome. Every recommendation is treated as a hypothesis, never as evidence, until it passes deterministic validation.
 
-## 4. Where are the results?
-The aggregated results, statistical findings, and scientific discussion are located in:
-*   [docs/05-results-and-discussion.md](docs/05-results-and-discussion.md)
+## 3. Pre-registration
 
-## 5. Where is the execution evidence?
-The raw, tier-1 empirical evidence—including `build.log`, `test.log`, generated SBOMs, and the exact input/output of the LLM for every scenario—is located in:
-*   [results/execution_evidence/](results/execution_evidence/)
+The 18 vulnerability scenarios were locked before execution:
+* [preregistration/MASTER_METHODOLOGY_RECORD.md](preregistration/MASTER_METHODOLOGY_RECORD.md)
+* [preregistration/JUICESHOP_PREREGISTRATION.md](preregistration/JUICESHOP_PREREGISTRATION.md)
+* [preregistration/AIRFLOW_PREREGISTRATION.md](preregistration/AIRFLOW_PREREGISTRATION.md)
+* [preregistration/PRE_REGISTRATION_AMENDMENT.md](preregistration/PRE_REGISTRATION_AMENDMENT.md)
+* [preregistration/tool_versions.md](preregistration/tool_versions.md)
 
-This directory is the ultimate source of truth for the repository, and is the sole basis for the thesis's primary eighteen-scenario dataset and research-question conclusion.
+## 4. Active workflows
 
-Supplementary evidence, explaining rather than replacing the primary dataset (see the thesis's §3.9a and §5.9a for what is, and is not, claimed from it):
-*   [results/execution_evidence_lockfile_preserved/](results/execution_evidence_lockfile_preserved/) — controlled lockfile-preservation validation
-*   [results/execution_evidence_no_hint/](results/execution_evidence_no_hint/) and [results/execution_evidence_no_hint_lockfile_preserved/](results/execution_evidence_no_hint_lockfile_preserved/) — no-hint ablation study and its JS-08 extension
+The two evaluated GitHub Actions pipelines:
+* [.github/workflows/generic-remediation.yml](.github/workflows/generic-remediation.yml) — the LLM-assisted remediation pipeline
+* [.github/workflows/grype-baseline.yml](.github/workflows/grype-baseline.yml) — the deterministic baseline comparison pipeline
 
-## 6. Where is the pre-registration?
-The pre-registration documents locking the 18 specific vulnerability scenarios before the experiments commenced are located in:
-*   [preregistration/MASTER_METHODOLOGY_RECORD.md](preregistration/MASTER_METHODOLOGY_RECORD.md)
-*   [preregistration/PRE_REGISTRATION_AMENDMENT.md](preregistration/PRE_REGISTRATION_AMENDMENT.md)
+## 5. Remediation logic and prompts
 
-## 7. Where are the historical/evolution docs?
-Early-stage methodologies, proof-of-concept workflows, and manual testing protocols are preserved for historical completeness in:
-*   [docs/07-manual-validation-protocol.md](docs/07-manual-validation-protocol.md)
-*   [docs/08-cicd-pipeline-poc.md](docs/08-cicd-pipeline-poc.md)
-*   [docs/methodology_evolution_record.md](docs/methodology_evolution_record.md)
+* [scripts/remediation/llm_reasoner.py](scripts/remediation/llm_reasoner.py) — prompt construction, model call, generation configuration
+* [scripts/remediation/retry_remediation.py](scripts/remediation/retry_remediation.py) — the single-retry mechanism
+* [scripts/remediation/generic_remediation.py](scripts/remediation/generic_remediation.py), [prioritize.py](scripts/remediation/prioritize.py), [validator.py](scripts/remediation/validator.py) — candidate selection, prioritisation, and deterministic post-remediation validation
+* [scripts/remediation/prompts/PROMPT_CHANGELOG.md](scripts/remediation/prompts/PROMPT_CHANGELOG.md) — prompt/schema version history
+* Exact prompt and response schema, per run: `results/execution_evidence/<ID>/llm-request.json` / `llm-response.json`
 
-## 8. Where are the independent audit reports?
-The independent reproducibility and methodological verification reports conducted prior to academic submission are located in:
-*   [docs/audit/](docs/audit/)
+## 6. Primary evidence
 
-These reports document the audit process itself and should be treated as a historical record of findings, not as evidence — the underlying claims are verified against the primary sources listed above.
+The complete recorded evidence for all 18 preregistered scenarios — SBOMs, scans, LLM request/response, manifest before/after, build/test logs, rescans, and metrics — is the sole basis for the thesis's primary dataset and research-question conclusion:
+* [results/execution_evidence/](results/execution_evidence/)
+* [results/reproducibility_verification/](results/reproducibility_verification/) — the deterministic baseline's own evidence
+* [results/scenarios/](results/scenarios/) — the scenario manifest
 
-## 9. Local tool requirements
-This repository does not commit tool binaries (`tools/**/bin/`, `tools/**/*.exe` are gitignored). Both CI workflows (`.github/workflows/generic-remediation.yml`, `.github/workflows/grype-baseline.yml`) download these exact pinned versions at run time, and any local reproduction should use the same versions:
+## 7. Supplementary evidence
+
+Additional evidence explaining, not replacing, the primary dataset:
+* [results/execution_evidence_lockfile_preserved/](results/execution_evidence_lockfile_preserved/) — controlled lockfile-preservation validation
+* [results/execution_evidence_no_hint/](results/execution_evidence_no_hint/) and [results/execution_evidence_no_hint_lockfile_preserved/](results/execution_evidence_no_hint_lockfile_preserved/) — no-hint ablation study and its extension
+
+## 8. Scenarios and target applications
+
+18 scenarios across two applications: OWASP Juice Shop ([applications/juice-shop/](applications/juice-shop/), npm) and Apache Airflow ([applications/airflow/](applications/airflow/), pip). Raw vulnerability-intelligence snapshots (EPSS, MITRE, baseline SBOM/scan) used for scenario selection are in [applications/evidence/](applications/evidence/). The canonical per-scenario manifest (pipeline version, prompt version, CI run ID, commit, evidence hash, result) is [FINAL_DATASET.md](FINAL_DATASET.md).
+
+## 9. Reproducibility
+
+* [docs/06-reproducibility.md](docs/06-reproducibility.md) — step-by-step reproduction commands
+* [REGENERATION_LOG.md](REGENERATION_LOG.md) — record of the field-by-field reproducibility re-dispatch (all 18 scenarios, zero mismatches) that the thesis cites
+* [docs/CVE_MATCH_VERIFICATION.md](docs/CVE_MATCH_VERIFICATION.md) — confirms every executed scenario matched its preregistered target CVE
+* [docs/METRIC_FIELD_OWNERSHIP.md](docs/METRIC_FIELD_OWNERSHIP.md) — definitions and write-sites for every recorded outcome field
+* [PIPELINE_V2_RELEASE_NOTES.md](PIPELINE_V2_RELEASE_NOTES.md) — the engineering-fix history behind the frozen dataset, with scientific impact stated per fix
+* [CHANGELOG.md](CHANGELOG.md) — earlier repository changes, including the prompt-schema fix cited in the thesis
+
+Supporting implementation documentation elaborates specific aspects of the pipeline: [docs/02-experimental-environment.md](docs/02-experimental-environment.md) (platform and tool choices), [docs/03-llm-configuration.md](docs/03-llm-configuration.md) (LLM mechanics — system prompt, schema, retry augmentation), and [docs/04-experimental-methodology.md](docs/04-experimental-methodology.md) (the 12-stage pipeline walkthrough). These describe the implementation; they are not the thesis and are not the canonical methodology/results account (§ note at the top of this document) — where a specific number, version, or model identifier matters, the authoritative source is always the thesis or the evidence in `results/execution_evidence/<ID>/`, never these documents.
+
+## 10. Local tool requirements
+
+This repository does not commit tool binaries (`tools/**/bin/`, `tools/**/*.exe` are gitignored). Both CI workflows download these exact pinned versions at run time; any local reproduction should use the same versions:
 *   **Syft v1.44.0** — [anchore/syft releases](https://github.com/anchore/syft/releases/tag/v1.44.0)
 *   **Grype v0.112.0** — [anchore/grype releases](https://github.com/anchore/grype/releases/tag/v0.112.0)
-*   **GitHub CLI (`gh`)** — used locally for workflow dispatch and log retrieval; any current release is compatible, no version pinning required for this role.
+*   **GitHub CLI (`gh`)** — used locally for workflow dispatch and log retrieval; any current release is compatible.

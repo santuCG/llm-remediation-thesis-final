@@ -5,7 +5,7 @@ for JS-06 (root-caused to Syft's SBOM cataloging stage, deterministic and reprod
 the exact per-package inclusion/exclusion rule is **not** fully characterized despite an
 extended investigation — see "Extended investigation" below). The pipeline defect that let
 both scenarios select the wrong CVE **silently** has been fixed (`prioritize.py`, Fix #10 in
-`CHANGELOG_V2.md`; commits `a7606850`/`36cc51fd`) and both scenarios re-dispatched: AF-06 now
+`PIPELINE_V2_RELEASE_NOTES.md`; commits `a7606850`/`36cc51fd`) and both scenarios re-dispatched: AF-06 now
 correctly targets its preregistered CVE end-to-end; JS-06 correctly fails loudly rather than
 substituting a different CVE, since the underlying Syft gap is a separate, unresolved problem
 — see "Decisions needed" at the end.
@@ -92,7 +92,7 @@ pre-registration.
 
 ## Scenario 2: JS-06 (flatted, CVE-2026-33228) — Failure Category A: SBOM cataloging limitation
 
-Syft omitted `flatted` during SBOM cataloging. Classified here as **Failure Category A** to distinguish it explicitly from JS-07's failure, discovered later during regeneration (`CHANGELOG_V2.md`, "Finding: `manifest_editor.py` only patches the root `package.json`"): Category A is about what the pipeline can *see* (the vulnerability never reaches the SBOM); JS-07 is **Failure Category B** — what the pipeline can *reach* (the vulnerability is seen and a fix attempted, but a copy of the package sits outside the manifest editor's scope). Different failure category, different underlying fix, not conflated.
+Syft omitted `flatted` during SBOM cataloging. Classified here as **Failure Category A** to distinguish it explicitly from JS-07's failure, discovered later during regeneration (`PIPELINE_V2_RELEASE_NOTES.md`, "Finding: `manifest_editor.py` only patches the root `package.json`"): Category A is about what the pipeline can *see* (the vulnerability never reaches the SBOM); JS-07 is **Failure Category B** — what the pipeline can *reach* (the vulnerability is seen and a fix attempted, but a copy of the package sits outside the manifest editor's scope). Different failure category, different underlying fix, not conflated.
 
 ### What was pre-registered
 `applications/juice-shop`, `flatted@3.2.9`, `CVE-2026-33228` (`GHSA-rf6f-7fwh-wjgh`),
@@ -301,7 +301,7 @@ implemented.** `prioritize.py`'s severity filter (`high`/`critical` only) ran *b
 could be silently defeated by Grype's current severity label — even when the researcher had
 already decided, at pre-registration time, that this specific CVE is the one being studied.
 Fixed: an explicit `TARGET_CVE` match now bypasses the severity filter (`prioritize.py`
-restructure, `CHANGELOG_V2.md` Fix #10, commits `a7606850`/`36cc51fd`). Re-dispatched AF-06
+restructure, `PIPELINE_V2_RELEASE_NOTES.md` Fix #10, commits `a7606850`/`36cc51fd`). Re-dispatched AF-06
 under the fix: succeeded end-to-end against `jinja2`/`CVE-2024-56326` as originally
 preregistered (`build_success`/`test_success`/`dependency_verified`/`rescan_success` all
 `true`).
@@ -334,7 +334,7 @@ proceed" — the intended outcome given the underlying Syft gap remains unresolv
    is unchanged.
 3. AF-06 and JS-06 as *originally* regenerated (before Fix #10): superseded by the re-runs
    above — the original wrong-CVE evidence for both should not be used. Per the agreed
-   disclosure language (see `CHANGELOG_V2.md`/thesis integration task), state explicitly
+   disclosure language (see `PIPELINE_V2_RELEASE_NOTES.md`/thesis integration task), state explicitly
    that both were found to have been silently substituted in the original dataset and were
    regenerated against their intended preregistered targets after the pipeline was
    corrected.
@@ -351,6 +351,6 @@ proceed" — the intended outcome given the underlying Syft gap remains unresolv
    / Findings chapters), including fixing its References section, which currently cites the
    substituted CVEs (`CVE-2021-23337`, `CVE-2024-34069`) rather than the preregistered ones.
 
-Pipeline code has been changed as a result of this investigation — see `CHANGELOG_V2.md`
+Pipeline code has been changed as a result of this investigation — see `PIPELINE_V2_RELEASE_NOTES.md`
 Fix #10. No changes have been made to the Syft invocation, the severity/fix-state filter's
 role in automatic discovery, or any thesis document.

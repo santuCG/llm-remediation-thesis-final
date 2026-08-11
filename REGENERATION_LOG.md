@@ -36,7 +36,7 @@ Run: [30865161354](https://github.com/santuCG/llm-remediation-thesis-final/actio
 ```
 
 Attempt 1 hit the known pre-existing `TS1005` build failure (`@types/babel__traverse`/`@types/lodash`,
-documented in `CHANGELOG_V2.md`'s Phase 2 finding — unrelated to this scenario's remediation choice)
+documented in `PIPELINE_V2_RELEASE_NOTES.md`'s Phase 2 finding — unrelated to this scenario's remediation choice)
 and triggered a retry. **The retry's own LLM call then failed on all 4 fallback models**, each for a
 different reason (confirmed from raw log text, not inferred):
 
@@ -155,7 +155,7 @@ Before this batch was dispatched, the user cross-checked the *preregistered* AF-
 (CVE-2024-56326/jinja2, CVE-2026-33228/flatted) directly against NVD/GitHub and noticed both still
 carry high CVSS scores there — inconsistent with what the pipeline had been about to produce. This
 triggered investigation rather than a normal regeneration; see `docs/FINDING_CVE_DETECTION_GAPS.md`
-and `CHANGELOG_V2.md`'s Fix #10 entry for the full root-cause writeup. Summary: `prioritize.py`'s
+and `PIPELINE_V2_RELEASE_NOTES.md`'s Fix #10 entry for the full root-cause writeup. Summary: `prioritize.py`'s
 severity filter ran before `TARGET_CVE` matching, so a preregistered target with the "wrong" reported
 severity (AF-06) or absent from the SBOM entirely (JS-06) was invisible to the matching loop, and the
 code silently substituted `candidates[0]` — a different CVE — with no warning. Confirmed via historical
@@ -250,7 +250,7 @@ pending` suite ran regardless, matching JS-03/04/05's pattern) — but `dependen
 `GHSA-3h5v-q93c-6h6q` unfixed after **both** the first attempt (override to `^7.5.10`) and the retry
 (override to `7.5.13`).
 
-**Root-caused, not just observed** (full writeup: `CHANGELOG_V2.md`, "Finding: `manifest_editor.py`
+**Root-caused, not just observed** (full writeup: `PIPELINE_V2_RELEASE_NOTES.md`, "Finding: `manifest_editor.py`
 only patches the root `package.json`"): Juice Shop is a two-tree monorepo — root `npm install` and a
 `postinstall`-triggered, fully independent `cd frontend && npm install --legacy-peer-deps`.
 `manifest_editor.py` only ever writes the root `package.json`. Confirmed `frontend/package-lock.json`
@@ -299,7 +299,7 @@ known, unrelated, pre-existing `TS1005` build issue as JS-02–05/07 (confirmed 
 `rescan_success: true` confirms the vulnerability is genuinely gone. But `dependency_verified:
 false` alongside `rescan_success: true` is a new, previously-unseen combination — these two
 signals are supposed to be independent but normally agree. **Root-caused, not just observed** (see
-`CHANGELOG_V2.md` Fix #11): `manifest_editor.py` wrote the LLM's own recommended constraint
+`PIPELINE_V2_RELEASE_NOTES.md` Fix #11): `manifest_editor.py` wrote the LLM's own recommended constraint
 (`^1.20.3`) correctly, `npm install` legitimately resolved it to `1.20.6` (confirmed in
 `dependency-graph.log`) — safe, newer than the fix, but not string-identical to the LLM's specific
 `recommended_package_version` of `1.20.3`, which `validator.py`'s exact-equality check flagged as
@@ -313,7 +313,7 @@ Run: [30946746060](https://github.com/santuCG/llm-remediation-thesis-final/actio
 still `dependency_verified: false`. Root-caused immediately (not left unresolved): the retry's
 `recommended_package_version` was `"^1.20.3"` (range-prefixed), not the bare `"1.20.3"` attempt 1
 used — `_version_tuple()`'s naive `.`/`-`/`+` split parsed `^1` as a string, not the int `1`,
-tripping the type-mismatch guard. Fixed (`CHANGELOG_V2.md` Fix #11 follow-up, commit `febf62e0`):
+tripping the type-mismatch guard. Fixed (`PIPELINE_V2_RELEASE_NOTES.md` Fix #11 follow-up, commit `febf62e0`):
 strip a leading `^`/`~`/`>=`/`<=`/`>`/`<`/`=`/`v` before parsing. Verified with 5 additional cases
 covering exactly this shape. **Third dispatch, under the fully-fixed validator:**
 
@@ -366,7 +366,7 @@ scenarios reflect identical pipeline code.
 Run: [30948616416](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948616416) — success, first attempt, no retry. Clean, matches historical outcome.
 
 ### JS-01 — CVE-2023-32314 (vm2)
-Run: [30948623108](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948623108) — job `failure` (known unrelated `TS1005` issue), signals clean (`dependency_verified`/`rescan_success` both `true`). **Notable difference from the historical run**: `strategy` is now `transitive_override`, not the original `manual_review` — a real behavioral difference between prompt v1.2 and the original prompt, not a data error. `dependency_type` is now correctly `transitive` (the historical evidence's `dependency_type: "direct"` was already flagged as a defect in `docs/case_studies/JS-01_vm2_case_study.md` before this session).
+Run: [30948623108](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948623108) — job `failure` (known unrelated `TS1005` issue), signals clean (`dependency_verified`/`rescan_success` both `true`). **Notable difference from the historical run**: `strategy` is now `transitive_override`, not the original `manual_review` — a real behavioral difference between prompt v1.2 and the original prompt, not a data error. `dependency_type` is now correctly `transitive` (the historical evidence's `dependency_type: "direct"` was already known to be a defect before this session).
 
 ## All 18 scenarios: final regeneration status
 
@@ -379,7 +379,7 @@ root-caused, documented reasons rather than pipeline defects:
   to substitute a different CVE.
 - **JS-07**: remediation was attempted and failed — `ws`'s vulnerable copy lives in Juice Shop's
   independently-installed `frontend/` tree, which `manifest_editor.py` cannot reach (confirmed
-  remediation-completeness gap, `CHANGELOG_V2.md`).
+  remediation-completeness gap, `PIPELINE_V2_RELEASE_NOTES.md`).
 
 See `docs/CVE_MATCH_VERIFICATION.md` for the full 18-scenario preregistered-vs-executed CVE table.
 
