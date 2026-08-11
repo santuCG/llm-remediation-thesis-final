@@ -7,7 +7,7 @@ This repository serves as the empirical evidence archive and experimental framew
 
 > **Navigation Hub:** To prevent synchronisation drift, this README does not duplicate methodology, results, or scientific discussion. It serves strictly as a directory to the canonical, mathematically verified documentation and raw execution evidence contained within the repository.
 
-> **Repository status:** The thesis results, evidence, and analysis correspond to the `pipeline-v2-phase1` branch (tag `thesis-submission-v1.0`). Other branches (`test-js-09`, `feature/reproducible-platform`) are retained as historical development work and were not used to produce the experimental results reported in the thesis.
+> **Repository status:** The thesis results, evidence, and analysis correspond to the `pipeline-v2-phase1` branch. Two supplementary research branches were used to produce evidence now also copied into this branch for self-containment (§3.9a/§4.9/§4.11/§4.12 of the thesis, Section 5 below): `research/pipeline-v2-lockfile-controlled` (controlled lockfile-preservation validation) and `research/hint-removal-ablation` (no-hint ablation study, including its JS-08 extension); both remain on the remote for full CI-run-level provenance. All other branches (`research/js01-graph-reasoning`, `research/no-hint-search-grounding`, `test-js-09`, `feature/reproducible-platform`, and this fork's own `main`) are historical or exploratory development work, not part of the evaluated pipeline, and were not used to produce any result reported in the thesis; `research/js01-graph-reasoning` specifically is discussed in §5.9 of the thesis precisely because its results are excluded.
 
 ---
 
@@ -31,7 +31,11 @@ The aggregated results, statistical findings, and scientific discussion are loca
 The raw, tier-1 empirical evidence—including `build.log`, `test.log`, generated SBOMs, and the exact input/output of the LLM for every scenario—is located in:
 *   [results/execution_evidence/](results/execution_evidence/)
 
-This directory is the ultimate source of truth for the repository.
+This directory is the ultimate source of truth for the repository, and is the sole basis for the thesis's primary eighteen-scenario dataset and research-question conclusion.
+
+Supplementary evidence, explaining rather than replacing the primary dataset (see the thesis's §3.9a and §5.9a for what is, and is not, claimed from it):
+*   [results/execution_evidence_lockfile_preserved/](results/execution_evidence_lockfile_preserved/) — controlled lockfile-preservation validation
+*   [results/execution_evidence_no_hint/](results/execution_evidence_no_hint/) and [results/execution_evidence_no_hint_lockfile_preserved/](results/execution_evidence_no_hint_lockfile_preserved/) — no-hint ablation study and its JS-08 extension
 
 ## 6. Where is the pre-registration?
 The pre-registration documents locking the 18 specific vulnerability scenarios before the experiments commenced are located in:
