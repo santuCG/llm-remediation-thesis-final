@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"reasoning\": \"The target package Werkzeug (version 2.2.3) is vulnerable to GHSA-2g68-c3qc-8985, a high-severity vulnerability with a CVSS score of 7.5. The vulnerability is fixed in version 3.0.3. Since Werkzeug is explicitly pinned as a direct dependency in requirements.txt ('Werkzeug==2.2.3'), a direct upgrade of the constraint to '==3.0.3' is the simplest and safest strategy to remediate the vulnerability while ensuring deterministic dependency installation.\",\n  \"strategy\": \"direct_upgrade\",\n  \"remediation_type\": \"Direct Upgrade\",\n  \"recommended_package_version\": \"3.0.3\",\n  \"manifest_patch\": {\n    \"operation\": \"direct_upgrade\",\n    \"package\": \"Werkzeug\",\n    \"constraint\": \"==3.0.3\"\n  }\n}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1119,
+    "candidatesTokenCount": 210,
+    "totalTokenCount": 2463,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1119
+      }
+    ],
+    "thoughtsTokenCount": 1134,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "Sk1yau27C7KVjMcPzqzU-Ao"
+}

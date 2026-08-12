@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package express-jwt@0.1.3 relies transitively on a vulnerable version of jsonwebtoken (0.1.0), affected by GHSA-c7hr-j4mj-j2w6. Updating the direct dependency jsonwebtoken@0.4.0 in package.json will not resolve the nested vulnerable instance under express-jwt. A transitive override (npm overrides block) forcing jsonwebtoken to fixed version 4.2.2 is required to eliminate the vulnerability across the entire dependency graph without necessitating a major breaking replacement of express-jwt.\",\"strategy\":\"transitive_override\",\"remediation_type\":\"Transitive Override\",\"recommended_package_version\":\"4.2.2\",\"manifest_patch\":{\"operation\":\"add_override\",\"package\":\"jsonwebtoken\",\"constraint\":\"4.2.2\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1040,
+    "candidatesTokenCount": 171,
+    "totalTokenCount": 2059,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1040
+      }
+    ],
+    "thoughtsTokenCount": 848,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "02l6atHALteD-8YP-NCUsAY"
+}

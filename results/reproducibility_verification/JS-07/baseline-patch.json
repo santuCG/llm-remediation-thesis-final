@@ -1,0 +1,7 @@
+{
+  "package": "ws",
+  "original_version": null,
+  "new_version": "7.5.10",
+  "manifest_file": "package.json",
+  "application_method": "override_added"
+}

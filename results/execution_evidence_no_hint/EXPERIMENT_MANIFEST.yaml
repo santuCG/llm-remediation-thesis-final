@@ -1,0 +1,410 @@
+Experiment:
+  Name: Hint Removal Ablation
+  Branch: research/hint-removal-ablation
+  Workflow: Research - Hint Removal Ablation
+  Prompt Configuration: HintRemoval-v1.0
+  Base Commit: 3e1173860e0a9121a0d473f4c77f069cfee9adf5
+  Status: COMPLETE -- all four scenarios (JS-05, JS-09, JS-01, AF-01) run and verified.
+    JS-09's first dispatch was contaminated by a retry-path leak, see "Known Issue" below;
+    fixed and rerun clean.
+
+Independent Variable:
+  Fixed version hint: removed (scripts/remediation/llm_reasoner.py, "Fixed Versions" line deleted from user_prompt)
+
+Controls (unchanged from base pipeline):
+  Model: Gemini 3.6-flash, with documented fallback list
+  Temperature: 0.0
+  Schema: unchanged (recommended_package_version remains a required field)
+  Validator: unchanged (scripts/remediation/validator.py)
+  Retry: unchanged (one retry, build-error feedback)
+  Registry validation: unchanged
+
+Known Issue -- Fixed-Version Leak via Retry Path (found and fixed after JS-05, JS-09):
+  Cause: retry_remediation.py's _extract_rescan_summary() independently appended
+    "Scanner-known fixed versions: [...]" to the retry's failure-context block whenever
+    attempt 1's rescan ran and still detected the target CVE. This is a second,
+    separate prompt-construction path that llm_reasoner.py's hint removal never touched.
+  Trigger condition: only fires when attempt 1 gets far enough to run a rescan that still
+    detects the CVE (test installs but doesn't fix it) -- not when attempt 1 fails earlier
+    (e.g. at apply_fix, before rescan ever runs).
+  Scope, verified directly against each scenario's actual retry prompt text (not inferred):
+    JS-05: CLEAN. Attempt 1 failed at apply_fix, before rescan ever ran -- no rescan.json
+      entry existed for _extract_rescan_summary to find, confirmed by grepping the actual
+      llm-request.json retry prompt (no match).
+    JS-09: CONTAMINATED. Attempt 1 reached a rescan that still detected the CVE, so the
+      retry prompt received "Scanner-known fixed versions: ['2.1.1']" verbatim -- the same
+      fix version the base pipeline's hint would have given. JS-09's "Correct" final
+      outcome does not constitute evidence of unaided recovery and must be re-run before
+      being used in any analysis. Evidence retained under
+      results/execution_evidence_no_hint/JS-09/ for transparency, not deleted, but flagged
+      contaminated and excluded from findings until rerun.
+  Fix applied: retry_remediation.py's rescan-context message now reports only that the CVE
+    is still detected (package/version), with the fixed-versions clause removed. The
+    build-error-log retry path (_extract_build_errors) was not affected and needed no change.
+  Action: JS-09 queued for rerun under the fixed code before proceeding to JS-01/AF-01.
+
+Dependent Variables:
+  Recommended version
+  Strategy
+  Rationale length (word count of `reasoning`, objective proxy -- not a self-reported confidence score)
+  Reasoning category (manual coding, pending; starter taxonomy: cites external advisory (GHSA/NVD) /
+    cites semver "first patched version" heuristic / cites changelog or release notes /
+    generic-unspecified / hedged-uncertain)
+  Outcome decomposition (replaces a single flat outcome label -- separates reasoning quality from
+    pipeline/retry recovery, since these are two distinct mechanisms that a single "final outcome"
+    field confounds):
+    First attempt: Correct / Incorrect
+      (Incorrect = wrong dependency-type reasoning, wrong strategy, hallucinated version, or a
+      pipeline-level failure before reaching rescan -- read failure_stage/validation_stage_reached
+      on metrics-attempt1.json to distinguish these, don't infer from rescan_success alone since a
+      pipeline failure before rescan also reads rescan_success=false with no rescan having occurred)
+    Retry used: Yes / No
+    Final outcome: Correct / Incorrect
+    Version published: Yes / No (checked directly against the registry, not inferred from
+      dependency_verified alone)
+    Rescan passed: Yes / No
+    Manual review flag: Yes / No (tracked separately -- strategy == manual_review at either attempt;
+      not collapsible into Correct/Incorrect since refusal is not a version-correctness claim)
+  Reasoning materially different from hinted baseline (Y/N, qualitative)
+
+Pilot Protocol (JS-05 only, gate before running remaining scenarios):
+  Q1: Is recommended_package_version semantically meaningful (not just present -- schema requires
+      the field regardless of strategy, so presence alone is not informative)?
+  Q2: Does the version exist on the registry?
+  Q3: Does rescan_success confirm the CVE is resolved?
+  Q4: Is the reasoning materially different from the hinted-run baseline below?
+
+Hinted Baseline (JS-05, for Q4 comparison):
+  Source: results/execution_evidence/JS-05/llm-response.json
+  Strategy: direct_upgrade
+  Version: 4.2.2
+  Reasoning: >
+    jsonwebtoken is declared as a direct dependency in package.json at version 0.4.0, which is
+    affected by GHSA-c7hr-j4mj-j2w6. Upgrading jsonwebtoken directly to version 4.2.2 resolves the
+    vulnerability. Direct Upgrade is the optimal strategy because the package is directly defined
+    in package.json dependencies.
+
+Evidence:
+  Full rendered prompt: captured in llm-request.json per scenario (same convention as base pipeline;
+    verified sufficient, no separate prompt.txt needed)
+  Output path: results/execution_evidence_no_hint/<SCENARIO_ID>/
+
+Scenarios:
+  Pilot: JS-05
+  Dropped: JS-07 (excluded from this experiment by explicit decision)
+  Sequential order (one at a time, not parallel): JS-09 (done, clean rerun), JS-01, AF-01
+
+Pilot Result (JS-05):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31217244426
+  Job conclusion: failure (known job-level pattern -- Apply Fix & Verify fails on attempt 1,
+    Fallback Lockfile Regeneration + Retry Remediation Strategy succeed; matches the base
+    pipeline's own historical JS-05 job-level-failure/remediation-actually-succeeded pattern,
+    not a new anomaly)
+  Attempt 1: strategy=transitive_override, version=9.0.0, dependency_verified=false
+    (misdiagnosed jsonwebtoken as transitive via express-jwt@0.1.3; same misdiagnosis pattern
+    as the original hinted run's attempt 1, reproduced independently of the hint -- n=1, not
+    generalized)
+  Retry (final): strategy=direct_upgrade, version=9.0.2, dependency_verified=true,
+    rescan_success=true, retry_count=1
+  Rationale length: 83 words (attempt 1), 78 words (final) -- vs. 41 words for the hinted
+    baseline's equivalent reasoning
+  Q1 (semantically meaningful version?): Yes -- "9.0.2", well-formed, consistent with
+    strategy=direct_upgrade
+  Q2 (published on registry?): Yes -- verified directly against the npm registry
+    (registry.npmjs.org/jsonwebtoken/9.0.2), published 2023-08-29
+  Q3 (resolves the CVE?): Yes -- rescan_success=true
+  Q4 (reasoning materially different from hinted baseline?): Mixed. The strategy-selection
+    reasoning ("directly declared in package.json at version 0.4.0" -> direct_upgrade) is
+    nearly identical in form to the hinted baseline. The recommended version differs
+    substantially (9.0.2 vs. the hinted 4.2.2 -- five major versions apart), but neither the
+    hinted nor unhinted reasoning explains *how* the specific version number was derived --
+    both assert it rather than justify it. This is itself informative: removing the hint
+    changed the answer and lengthened the reasoning, but did not, on this one scenario,
+    produce an explicit justification for the version choice in either condition.
+  Outcome decomposition:
+    First attempt: Incorrect (failure_stage=apply_fix, validation_stage_reached=apply_fix --
+      failed before reaching rescan; wrong dependency-type reasoning and wrong strategy, not
+      merely a late-stage failure)
+    Retry used: Yes
+    Final outcome: Correct
+    Version published: Yes
+    Rescan passed: Yes
+    Manual review flag: No
+  Verdict: Pilot passes all four gate questions. The first-attempt/retry decomposition shows
+    the final "Correct" result depends on the retry mechanism, not on one-shot unaided recall --
+    this is now tracked explicitly per scenario going forward so hint-removal and retry-recovery
+    are not read as a single combined effect.
+
+Result (JS-09, clean rerun under fixed retry code):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31220408024
+  Attempt 1: strategy=manual_review, recommended_package_version=2.0.0-rc.1 (a pre-release),
+    manifest_patch bumped multer to ^2.0.0-rc.1 despite the manual_review strategy label.
+    npm resolved that range up to a real published 2.2.0, which broke the dependency tree
+    (npm error invalid: multer@2.2.0 / ELSPROBLEMS). dependency_verified=false,
+    rescan_success=false, failure_stage=build.
+  Retry (final): strategy=direct_upgrade, recommended_package_version=1.4.5-lts.1 (the same
+    range originally in package.json, ^1.4.5-lts.1). dependency_verified=true,
+    rescan_success=true (confirmed directly against rescan.json -- no match for
+    GHSA-5528-5vmv-3xc2/CVE-2026-3520, and no other multer match either).
+  Retry-context finding (resolves the question raised about whether retry has any memory of
+    attempt 1): the retry prompt does NOT explicitly state attempt 1's recommendation, but the
+    model correctly inferred what happened from the live re-fetched dependency context, which
+    contained "npm error invalid: multer@2.2.0" -- direct evidence of the broken state left by
+    attempt 1's constraint. The retry reasoning's claim ("an invalid/non-existent package
+    version (multer@2.2.0)... was attempted") is grounded in this, not confabulated -- verified
+    by locating "2.2.0" in the actual retry prompt text. Revises the concern raised earlier in
+    this experiment: the retry mechanism has indirect but real access to prior-attempt
+    consequences via live context re-fetch, even without an explicit "you recommended X" field.
+  Open observation, not resolved further (deprioritized per explicit instruction to proceed):
+    the final accepted version (^1.4.5-lts.1) differs from the original hinted thesis run's
+    converged fix (2.1.1) for this same CVE. rescan_success=true is independently verified
+    against rescan.json, so the divergence is not a validation error, but the reason two
+    different concrete versions both clear the scanner is not traced further here.
+  Outcome decomposition:
+    First attempt: Incorrect
+    Retry used: Yes
+    Final outcome: Correct
+    Version published: Yes (1.4.5-lts.1 is the range already declared pre-experiment; real)
+    Rescan passed: Yes
+    Manual review flag: Yes (attempt 1 only; final attempt did not use manual_review)
+
+Result (AF-01, single-attempt, no retry):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31224264897
+  Job conclusion: success (clean pip result, no job-level failure quirk -- unlike the npm
+    scenarios, which all show job conclusion "failure" for the known TS1005/EOVERRIDE reasons)
+  Attempt 1 (also final, no retry triggered): strategy=direct_upgrade,
+    recommended_package_version=2.1.2, dependency_verified=true, rescan_success=true,
+    build_success=true, test_success=true (pytest tests/core passed -- though redshift-connector
+    is not itself exercised by that suite, per the earlier finding on test_success scope)
+  Rationale length: 71 words
+  Q1 (semantically meaningful version?): Yes -- "2.1.2", well-formed, consistent with
+    strategy=direct_upgrade
+  Q2 (published on registry?): Yes -- verified directly against PyPI
+    (pypi.org/pypi/redshift-connector/2.1.2/json), released 2024-06-19
+  Q3 (resolves the CVE?): Yes -- rescan_success=true
+  Q4 (reasoning materially different from hinted baseline?): The recommended version (2.1.2)
+    differs from the original hinted thesis run's recommendation (2.1.14) -- a much smaller
+    version bump than the hinted run made. Both are published, real versions; this run's
+    reasoning explicitly frames 2.1.2 as "a safe non-breaking patch release," a specific
+    justification the hinted run's equivalent reasoning did not include. Not traced further
+    here (same open-question pattern as JS-09's version divergence) -- worth a closer look
+    across the full scenario set once all four are in, since two of three completed scenarios
+    now show hint removal changing the specific version recommended.
+  Outcome decomposition:
+    First attempt: Correct
+    Retry used: No
+    Final outcome: Correct
+    Version published: Yes
+    Rescan passed: Yes
+    Manual review flag: No
+
+Result (JS-01, final scenario in the set):
+  Run: https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/31224096838
+  Attempt 1: strategy=transitive_override, version=3.9.18, dependency_verified=false,
+    rescan_success=false, failure_stage=build. Dependency-type diagnosis was CORRECT (vm2
+    correctly identified as transitive via juicy-chat-bot, matching the hinted baseline's own
+    diagnosis) and strategy was correct -- this is a different sub-type of "Incorrect" than
+    JS-05's attempt 1, which had wrong dependency-type reasoning. Here the failure is
+    pipeline/environment-level (build stage), not a reasoning error.
+  Retry (final): strategy=transitive_override, version=3.9.19, dependency_verified=true,
+    rescan_success=true, retry_count=1. Retry reasoning explicitly references "previous
+    attempts failed because vm2 version 3.9.17 remained active or caused lockfile validation
+    errors" -- consistent with the JS-09 finding that the model can infer prior-attempt
+    consequences from live re-fetched context even without an explicit restatement.
+  Rationale length: ~57 words (attempt 1, truncated in source), 62 words (final)
+  Q1 (semantically meaningful version?): Yes -- "3.9.19", well-formed, consistent with
+    strategy=transitive_override
+  Q2 (published on registry?): Yes -- verified directly against the npm registry
+    (registry.npmjs.org/vm2/3.9.19). Side note, not chased further: the registry response
+    itself carries a maintainer deprecation notice that vm2 "contains critical security
+    issues and should not be used for production" and has been discontinued in favor of
+    isolated-vm -- unrelated to whether this specific CVE fix is valid, but worth knowing.
+  Q3 (resolves the CVE?): Yes -- rescan_success=true
+  Q4 (reasoning materially different from hinted baseline?): Strategy and dependency-type
+    diagnosis identical to the hinted run (transitive via juicy-chat-bot, transitive_override).
+    Version differs only slightly (3.9.19 vs. hinted 3.9.18 -- adjacent patch releases, not a
+    large divergence like JS-05/JS-09/AF-01). This is the smallest version divergence of the
+    four scenarios, and the only one where the strategy AND dependency-graph diagnosis were
+    both unhinted-and-still-correct on the first attempt (the failure that triggered retry was
+    pipeline-level, not reasoning-level).
+  Outcome decomposition:
+    First attempt: Incorrect (pipeline/build-stage failure, not a reasoning error --
+      strategy and dependency-type diagnosis were both correct)
+    Retry used: Yes
+    Final outcome: Correct
+    Version published: Yes
+    Rescan passed: Yes
+    Manual review flag: No
+
+Comparison Table -- Hinted (frozen thesis) vs. Unhinted (this experiment), all four scenarios:
+  JS-05 (jsonwebtoken, CVE-2015-9235): hinted direct_upgrade->4.2.2 (1 retry) vs. unhinted
+    direct_upgrade->9.0.2 (1 retry). Different version (5 major versions apart). Both verified.
+  JS-09 (multer, CVE-2026-3520): hinted direct_upgrade->2.1.1 (1 retry) vs. unhinted
+    direct_upgrade->1.4.5-lts.1 (1 retry). Different version (different release line entirely).
+    Both verified.
+  AF-01 (redshift-connector, CVE-2026-8838): hinted direct_upgrade->2.1.14 (no retry) vs.
+    unhinted direct_upgrade->2.1.2 (no retry). Different version (unhinted chose a smaller
+    bump, the immediate next patch above the vulnerable version). Both verified.
+  JS-01 (vm2, CVE-2023-32314): hinted transitive_override->3.9.18 (1 retry) vs. unhinted
+    transitive_override->3.9.19 (1 retry). Nearly identical version (adjacent patch releases).
+    Both verified.
+  Summary across all four: strategy selection matched the hinted baseline in every scenario
+    (4/4). Recommended version differed from the hinted baseline in every scenario (4/4),
+    ranging from a one-patch-release difference (JS-01) to a different release line entirely
+    (JS-09). Every unhinted version independently verified against its registry and against
+    rescan_success. Two scenarios (JS-05, JS-09) needed a retry to recover from a first-attempt
+    reasoning error (wrong dependency-type diagnosis and wrong strategy for JS-05; manual_review
+    plus a broken caret-range resolution for JS-09). Two scenarios (JS-01, AF-01) had correct
+    strategy/diagnosis on the first attempt (JS-01's first attempt still failed, but for a
+    pipeline/build reason, not a reasoning error; AF-01 succeeded outright with no retry).
+
+Status: COMPLETE. All four scenarios (JS-05, JS-09, JS-01, AF-01) run, verified, and recorded.
+
+Clarification -- "Both resolve CVE" refers to final, post-retry outcome, not attempt 1:
+  All three npm scenarios need exactly one retry in BOTH conditions (hinted and unhinted) --
+  verified directly: JS-05 hinted retry_count=1, JS-09 hinted retry_count=1, JS-01 hinted
+  retry_count=1 (AF-01/pip is the only one of the four that succeeds on attempt 1 in both
+  conditions). This is not introduced by hint removal -- it matches the base thesis's own
+  disclosed finding that "the eight npm scenarios that produced valid evidence each required
+  one retry" (THESIS_DRAFT_V3.md Sec 4.1). The comparison table's "both verified" column was
+  always the final, post-retry state, matching how the base thesis itself reports outcomes
+  (Table 4/5/6 report final fields, not attempt-1-only).
+  What actually differs between conditions is WHY attempt 1 fails, not WHETHER it fails:
+    Hinted: attempt 1 fails for mechanical/structural reasons (EOVERRIDE conflict, build
+      check) while already holding the correct target version.
+    Unhinted: JS-05 and JS-09's attempt-1 failures are reasoning errors (wrong dependency-type
+      diagnosis; a broken caret-range resolution), not just a mechanical retry of an
+      already-correct plan. JS-01 is the exception -- unhinted attempt 1 got diagnosis and
+      strategy right and still failed for the same kind of pipeline-level reason the hinted
+      runs fail for.
+
+Correction and mechanical finding -- why the CVE persists on npm attempt 1:
+  Initial hypothesis (validator.py crashed/never ran for JS-01 attempt 1, based on
+  validation_stage_reached="build" not "validator") was WRONG. Verified against the actual
+  raw CI log (gh run view --log), not just the metrics field: validator.py genuinely ran and
+  genuinely found the target CVE still present ("Remaining Vulnerabilities: 466",
+  "[VALIDATOR] FAILED: GHSA-whpj-8f3w-67p5 is still present."). vm2@3.9.18 was installed
+  (confirmed via npm's own deprecation warning naming that exact version), but the advisory
+  was still detected in the rescan.
+  Pipeline quirk discovered in the process, worth knowing for any future field-level analysis:
+  "failure_stage"/"validation_stage_reached" get unconditionally overwritten to "build" by a
+  separate downstream step ("Update Metrics on Build Failure") whenever the overall step
+  fails, REGARDLESS of which stage actually failed. validator.py itself correctly sets these
+  fields to "validator" on both its success and failure paths, but that gets stomped by the
+  generic handler immediately after. The field name is not reliable evidence of where a
+  failure occurred for any scenario where the rescan/validator is the actual failure point.
+  Per-scenario mechanical explanation for why attempt 1 leaves the CVE detected:
+    JS-05: wrong dependency-type diagnosis (transitive via express-jwt when actually direct)
+      -> override never applied (conflict at apply_fix, before rescan ever ran). Reasoning error.
+    JS-09: manual_review + a caret range npm resolved to an unintended 2.2.0, breaking the
+      dependency tree. Reasoning/resolution error.
+    JS-01: diagnosis and strategy both correct, override genuinely applied (3.9.18 installed),
+      but the rescan genuinely still detected the CVE among 466 remaining matches -- not a
+      reasoning error, an insufficient-fix case. Retry's one-patch-higher version (3.9.19)
+      resolved it.
+
+Grype-baseline vs. LLM-first-attempt comparison (requested framing):
+  The deterministic Grype baseline has no first-attempt/retry distinction -- it is single-shot
+  by design. Per the base thesis's own Sec 3.8, the baseline workflow for npm scenarios stops
+  immediately on build failure and never reaches a rescan at all. This means there is no
+  "Grype scan still shows the CVE" data point to compare against for JS-05, JS-09, or JS-01 --
+  the baseline never gets far enough to produce one.
+  AF-01 (pip) is the only one of the four scenarios where a genuine single-shot,
+  apples-to-apples comparison exists: Grype baseline succeeds first-attempt with 2.1.14; LLM
+  succeeds first-attempt (no retry) with 2.1.2. For the three npm scenarios, the meaningful
+  comparison is LLM-first-attempt vs. LLM-final (already recorded per-scenario above), not
+  LLM-vs-Grype at the first-attempt level, since Grype's own workflow design removes it from
+  contention before that point for npm.
+
+Further correction -- the real cause of JS-01 attempt 1's "still present" result:
+  Earlier entry framed this as "not a reasoning error, an insufficient-fix case" (3.9.18
+  genuinely didn't eradicate it, 3.9.19 did). That framing is WRONG. Checked the original
+  hinted run's own raw logs directly (run 30948623108, 2026-08-04) for comparison:
+    Hinted attempt 1: vm2@3.9.18 -> "Remaining Vulnerabilities: 464" -> VALIDATOR FAILED
+    Hinted retry: vm2@3.9.18 (the SAME version) -> VALIDATOR SUCCESS
+  The identical version fails then succeeds in the hinted run too. This rules out a
+  version-boundary explanation entirely -- if 3.9.18 were genuinely insufficient, it could not
+  succeed on retry with no version change.
+  Ruled out directly against evidence:
+    Manifest-replacement issue: package.json's override block ({"vm2": "3.9.18"}) is
+      identical and correctly written in both attempts, both conditions.
+    Multiple dependency-graph copies: npm_explain (pre-patch context) shows exactly one vm2
+      location (node_modules/vm2, via juicy-chat-bot only) -- not a JS-07-style multi-manifest
+      situation.
+  Actual cause: the retry path runs "Fallback Lockfile Regeneration"
+    (rm -f package-lock.json && rm -rf node_modules && npm install) -- a full clean reinstall
+    that attempt 1 never gets (attempt 1 just runs npm install against the existing, already-
+    committed package-lock.json). Adding a new `overrides` entry to package.json does not
+    guarantee npm fully re-resolves an EXISTING lockfile against it; a stale pinned resolution
+    for the vulnerable version can survive the first install despite a syntactically correct
+    override. Only the full lockfile wipe forces complete re-resolution.
+  Conclusion: this is a pure pipeline/tooling artifact, identical in both hinted and unhinted
+  conditions -- not a reasoning error, not a version-choice error, not a multi-instance
+  dependency issue. It happens to also explain why JS-01 is the one scenario where the
+  unhinted attempt 1 had fully correct diagnosis and strategy yet still failed: the failure
+  mode is orthogonal to what the LLM recommends, triggered by lockfile staleness alone.
+
+Precise mechanism correction -- which step actually performs the fixing lockfile wipe:
+  There are two separate, independently-triggered lockfile-wipe blocks in this pipeline, not
+  one:
+    "Fallback Lockfile Regeneration" (if: failure(), positioned right after "Apply Fix &
+      Verify"): only fires if the initial install itself hard-fails (exit 1). Carries an
+      explicit code comment -- "Native package manager resolution retained stale dependency
+      metadata or failed" -- confirming the pipeline's own authors anticipated this exact
+      npm behavior.
+    "Retry Remediation Strategy" (if: failure(), positioned after "Validate Remediation &
+      Rescan"): the "dispatch an entirely new LLM call and restart" step. It ALSO contains
+      its own unconditional lockfile wipe, bundled in as part of restarting.
+  For JS-01, "Apply Fix & Verify" succeeds (the override installs without error), so the
+  dedicated fallback never triggers -- there is no failure yet for its if:failure() condition
+  to react to. The staleness only becomes visible later, when validator.py's rescan still
+  finds the CVE. That failure is what triggers "Retry Remediation Strategy" -- so it is THAT
+  step's embedded wipe, not the dedicated fallback, that actually resolves it.
+  Assessment, phrased to the level the evidence actually supports: the current trigger
+  condition (install exit code) is sufficient for installation failures but not for stale
+  dependency-resolution failures that only become visible during validation -- a
+  stale-but-installable lockfile exits 0 fine, and the staleness surfaces only at rescan,
+  after the dedicated fallback's trigger point has already passed. This is a description of
+  the trigger condition's behavior, not a claim about design intent; it remains possible the
+  original design intentionally traded this off for fewer clean reinstalls, faster CI, or
+  other considerations not evaluated here. The mechanism that does eventually catch the
+  failure is coupled to dispatching a brand new LLM call, which costs one full extra API
+  round-trip and CI cycle beyond what the underlying mechanical issue requires. A scoped
+  alternative -- wipe the lockfile whenever a transitive_override/add_override operation is
+  applied, before ever reaching rescan -- would resolve this without an extra LLM call. Not
+  implemented here (out of scope for this ablation, which intentionally does not modify
+  pipeline mechanics beyond the hint removal and the retry-leak fix); recorded separately in
+  KNOWN_PIPELINE_LIMITATIONS.md as a candidate for future pipeline work, kept apart from
+  anything about LLM reasoning quality.
+
+Full hinted-vs-unhinted comparison table, with corrected timing semantics:
+  Metric scope note (verified against code, not assumed): `execution_time_seconds` is written
+  once by generic_remediation.py (Phase 1-5: discover, prioritize, build context, call the
+  LLM, apply the patch) and is NEVER updated by retry_remediation.py. Confirmed directly:
+  metrics-attempt1.json and the final metrics.json report the identical value for every
+  scenario that retried (JS-05, JS-09, JS-01). This column is attempt-1 orchestration time
+  only, dominated by the LLM API call itself -- it says nothing about the retry's own duration,
+  which is not captured anywhere in the recorded metrics.
+
+  | Scenario | Condition | Version | Strategy | Attempt-1 exec. time | Retries | Baseline matches | Post-remediation matches |
+  |---|---|---|---|---|---|---|---|
+  | JS-05 | Hinted   | 4.2.2       | direct_upgrade      | 16s | 1 | 450 | 254 |
+  | JS-05 | Unhinted | 9.0.2       | direct_upgrade      | 46s | 1 | 461 | 260 |
+  | JS-09 | Hinted   | 2.1.1       | direct_upgrade      | 31s | 1 | 459 | 259 |
+  | JS-09 | Unhinted | 1.4.5-lts.1 | direct_upgrade      | 40s | 1 | 461 | 260 |
+  | JS-01 | Hinted   | 3.9.18      | transitive_override | 48s | 1 | 459 | 259 |
+  | JS-01 | Unhinted | 3.9.19      | transitive_override | 10s | 1 | 461 | 260 |
+  | AF-01 | Hinted   | 2.1.14      | direct_upgrade      | 51s | 0 | 597 | 595 |
+  | AF-01 | Unhinted | 2.1.2       | direct_upgrade      | 55s | 0 | 600 | 598 |
+
+  Baseline-match-count drift within the same scenario (e.g. JS-05: 450 hinted vs. 461
+  unhinted) is expected, not a new finding -- hinted runs are from 2026-08-04, unhinted from
+  2026-08-07; Grype's vulnerability database is live and updates over time, matching the base
+  thesis's own already-disclosed reproducibility limitation. Not investigated further.
+
+  JS-01's attempt-1 timing (10s unhinted vs. 48s hinted) initially looked like an anomaly
+  running against the general direction (unhinted attempts otherwise took longer, consistent
+  with the model doing more reasoning work without the hint). Checked directly: unhinted
+  attempt 1's reasoning is 66 words vs. 105 for hinted attempt 1 -- shorter output, shorter
+  API response time. Resolves as ordinary generation-length variance, not a hint-removal
+  effect specific to JS-01.

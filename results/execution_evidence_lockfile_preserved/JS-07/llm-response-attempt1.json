@@ -1,0 +1,11 @@
+{
+  "reasoning": "The vulnerable package 'ws' (version 7.4.6) is brought in as a transitive dependency by 'socket.io' (via 'engine.io') and 'socket.io-client' (via 'engine.io-client'), both of which specify the version constraint '~7.4.2'. Because '~7.4.2' restricts updates to 7.4.x patch releases, standard dependency resolution ('npm update') cannot fetch the fix in version 7.5.10. Direct upgrade is not feasible as 'ws' is not directly listed in package.json. Replacement is unnecessary and risky for deep ecosystem dependencies like engine.io. Therefore, applying a transitive override to force 'ws' to '7.5.10' is the safest, most precise remediation.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "7.5.10",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "ws",
+    "constraint": "7.5.10"
+  }
+}

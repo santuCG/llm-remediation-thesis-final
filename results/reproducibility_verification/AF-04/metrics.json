@@ -1,0 +1,12 @@
+{
+  "scenario": "AF-04",
+  "selected_cve": "CVE-2026-44307",
+  "build_success": true,
+  "test_success": true,
+  "validation_success": true,
+  "vulnerability_removed": false,
+  "failure_stage": "none",
+  "validation_stage_reached": "validator",
+  "rescan_success": true,
+  "dependency_verified": true
+}

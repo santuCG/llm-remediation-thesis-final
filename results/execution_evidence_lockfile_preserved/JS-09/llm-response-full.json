@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The target package `multer` at version 1.4.5-lts.1 is affected by GHSA-5528-5vmv-3xc2, a high-severity vulnerability (CVSS 8.7). Context analysis reveals `multer` is declared directly in `package.json` under `dependencies`. The vulnerability is remediated in version 2.1.1. Upgrading the dependency directly in `package.json` to `^2.1.1` is the safest and most standard strategy for a direct dependency. Transitive overrides or manual reviews are rejected because `multer` is a top-level direct dependency and an officially fixed release is available.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"2.1.1\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"multer\",\"constraint\":\"^2.1.1\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 658,
+    "candidatesTokenCount": 197,
+    "totalTokenCount": 1928,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 658
+      }
+    ],
+    "thoughtsTokenCount": 1073,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "qXR6atCQAuamqtsPq_Gj8Q8"
+}

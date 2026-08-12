@@ -1,0 +1,11 @@
+{
+  "reasoning": "The vulnerable package form-data@2.3.3 is introduced transitively through request@2.88.2 and cypress -> @cypress/request@2.88.12. Both intermediate dependencies constrain form-data using specifier '~2.3.2', preventing default npm resolution from upgrading to fixed version 2.5.4. Because form-data is not a direct dependency of juice-shop, a direct upgrade cannot be performed. Performing a transitive override using package.json overrides pins form-data to 2.5.4 across all transitive dependency paths while remaining within the 2.x major version compatibility boundary.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "2.5.4",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "form-data",
+    "constraint": "2.5.4"
+  }
+}

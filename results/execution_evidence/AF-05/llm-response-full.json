@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The target package 'protobuf' is explicitly listed as a direct dependency in requirements.txt (version 4.25.3). Upgrading 'protobuf' directly to the safe version 5.29.6 addresses CVE GHSA-7gcm-g887-7qv7. Because 'protobuf' is declared directly in the requirements file, performing a Direct Upgrade is the cleanest and most reliable strategy, eliminating the vulnerability without requiring transitive overrides or package replacements.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"5.29.6\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"protobuf\",\"constraint\":\"==5.29.6\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2113,
+    "candidatesTokenCount": 153,
+    "totalTokenCount": 2947,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2113
+      }
+    ],
+    "thoughtsTokenCount": 681,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "115xauH5AdXh_uMP78G5-Q8"
+}

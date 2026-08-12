@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"Mako 1.3.5 is explicitly declared as a direct dependency in requirements.txt and is vulnerable to GHSA-2h4p-vjrc-8xpq (CVSS 8.7). Upgrading Mako to version 1.3.12 directly in requirements.txt resolves the security vulnerability. This direct upgrade is fully compatible with alembic 1.13.1 and MarkupSafe 2.1.5. Alternative strategies such as transitive overrides or package replacements are unnecessary because Mako is directly declared and a patch release is available.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"1.3.12\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"Mako\",\"constraint\":\"1.3.12\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 486,
+    "candidatesTokenCount": 175,
+    "totalTokenCount": 1171,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 486
+      }
+    ],
+    "thoughtsTokenCount": 510,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "LDhxaqi-I5qHz7IP-siI4QQ"
+}

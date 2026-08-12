@@ -1,0 +1,11 @@
+{
+  "reasoning": "The target package 'ws' is a transitive dependency introduced through multiple chains including 'jest' (via 'jsdom'), 'socket.io-client', 'socket.io', 'web3', and 'ethers'. The scanner detected vulnerable version 7.4.6 affected by CVE GHSA-3h5v-q93c-6h6q. A previous remediation attempt caused build breakages due to broad updates affecting unrelated packages like TypeScript type definitions. The safest strategy to eliminate the vulnerability while preserving 7.x API compatibility for engine.io and jsdom is a targeted transitive override forcing 'ws' to version 7.5.13 (which satisfies the fix threshold of >=7.5.10).",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "7.5.13",
+  "manifest_patch": {
+    "operation": "add_override",
+    "package": "ws",
+    "constraint": "7.5.13"
+  }
+}

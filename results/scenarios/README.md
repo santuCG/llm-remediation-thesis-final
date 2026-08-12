@@ -1,0 +1,9 @@
+# Scenario Definitions — Which File Is Authoritative
+
+This directory contains three representations of the 18 pre-registered scenarios. They exist for different purposes; this note states which one is authoritative for what.
+
+- **`final_18_scenarios.json`** — the authoritative scenario list used by the live pipeline. `.github/workflows/grype-baseline.yml` looks up a scenario from this file by CVE ID at dispatch time. Its contents were verified during this audit to match `preregistration/PRE_REGISTRATION_AMENDMENT.md`'s locked scenario tables exactly.
+- **`AF-01.json` … `JS-09.json`** — one file per scenario, carrying pre-registration metadata (registration timestamp, selection rationale). **File format, verified across all 18 (2026-08-02):** 13 of the 18 (`AF-01,02,03,04,05,06,09`, `JS-02,03,04,05,06`) carry an appended `=== EMPIRICAL EVIDENCE ===` plaintext trailer after the closing `}` of the JSON body — this is not a one-off defect in a single file, it is the format most of these files were written in. Consequently those 13 do **not** parse as valid JSON (`json.load` raises "Extra data" at the point the trailer begins). The remaining 6 (`AF-07`, `AF-08`, `JS-01`, `JS-07`, `JS-08`, `JS-09`) have no trailer and are valid, parseable JSON. Treat every file in this set as a historical/registration record to be read as text, not assumed to be machine-parseable JSON, regardless of which of the two forms a given scenario's file takes.
+- **`pre_registered/scenarios.json`** — an earlier-format snapshot of the scenario set, superseded by `final_18_scenarios.json` for pipeline purposes.
+
+If you need the scenario set programmatically, use `final_18_scenarios.json`. If you need the original pre-registration record for a specific scenario, use `preregistration/PRE_REGISTRATION_AMENDMENT.md`, not the per-scenario files in this directory.

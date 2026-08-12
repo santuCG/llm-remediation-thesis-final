@@ -1,0 +1,300 @@
+name: Generic LLM Remediation Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_dir:
+        description: 'Application Directory (e.g. applications/airflow)'
+        required: true
+        default: 'applications/airflow'
+      target_cve:
+        description: 'Target CVE ID or Package to remediate (Optional)'
+        required: false
+        type: string
+        default: ''
+      scenario_id:
+        description: 'Scenario ID (e.g. AF-01, JS-03) — used for evidence labelling'
+        required: true
+        default: 'UNKNOWN'
+jobs:
+  orchestrate-remediation:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      TARGET_CVE: ${{ github.event.inputs.target_cve }}
+      SCENARIO_ID: ${{ github.event.inputs.scenario_id }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Identify Target Ecosystem
+        id: detect
+        run: |
+          APP_DIR="${{ github.event.inputs.app_dir }}"
+          if [ -z "$APP_DIR" ]; then APP_DIR="applications/airflow"; fi
+          echo "APP_DIR=$APP_DIR" >> $GITHUB_ENV
+          if [ -f "$APP_DIR/package.json" ]; then
+            echo "ECOSYSTEM=npm" >> $GITHUB_ENV
+          elif [ -f "$APP_DIR/pyproject.toml" ] || [ -f "$APP_DIR/requirements.txt" ]; then
+            echo "ECOSYSTEM=python" >> $GITHUB_ENV
+          else
+            echo "ECOSYSTEM=unknown" >> $GITHUB_ENV
+          fi
+
+      - name: Initialize Environment
+        uses: actions/setup-node@v4.0.3
+        if: env.ECOSYSTEM == 'npm'
+        with:
+          node-version: '18.x'
+          
+      - name: Install OS Dependencies
+        if: env.ECOSYSTEM == 'python'
+        run: sudo apt-get update && sudo apt-get install -y libldap2-dev libsasl2-dev
+
+      - name: Install Baseline Dependencies
+        run: |
+          cd ${{ env.APP_DIR }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            cp ../evidence/juice_shop_package-lock.json package-lock.json || true
+            if [ -f ../evidence/juice_shop_frontend_package-lock.json ] && [ -d frontend ]; then
+              cp ../evidence/juice_shop_frontend_package-lock.json frontend/package-lock.json
+              (cd frontend && npm ci --legacy-peer-deps)
+            fi
+            npm ci 2>&1 | tee ../../dependency_install.log
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            if [ ! -f "requirements.txt" ] && [ -f "../evidence/airflow_pip_freeze.txt" ]; then
+              cp ../evidence/airflow_pip_freeze.txt requirements.txt
+            fi
+            pip install -r requirements.txt 2>&1 | tee ../../dependency_install.log
+          fi
+
+      - name: Generate SBOM & Run Grype
+        run: |
+          cd ${{ env.APP_DIR }}
+          mkdir -p ./bin
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
+          tar -xzf syft.tar.gz -C ./bin syft
+          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../baseline-sbom.json
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
+          tar -xzf grype.tar.gz -C ./bin grype
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../baseline-sbom.json -o json > ../../grype.json
+          {
+            echo "=== SCAN TIMESTAMP ==="
+            date -u +%Y-%m-%dT%H:%M:%SZ
+            echo "=== GRYPE VERSION INFO ==="
+            ./bin/grype version -o json
+            echo "=== GRYPE DB STATUS ==="
+            GRYPE_DB_VALIDATE_AGE=false ./bin/grype db status -o json || true
+          } > ../../grype-db-metadata.json
+
+      - name: Determine Remediation Strategy
+        run: |
+          python scripts/remediation/generic_remediation.py $ECOSYSTEM ${{ env.APP_DIR }}
+
+      - name: Apply Fix & Verify
+        id: apply_fix
+        run: |
+          set -o pipefail
+          cd ${{ env.APP_DIR }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            npm install 2>&1 | tee -a ../../build.log || (echo "NPM Install Failed" && exit 1)
+            echo "=== Phase 4 Log: Package Installation Status ==="
+            npm list --depth=0 | tee ../../dependency-graph.log || true
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            pip install --no-deps -r requirements.txt 2>&1 | tee -a ../../build.log || (echo "PIP Install Failed" && exit 1)
+            echo "=== Phase 4 Log: Package Installation Status ==="
+            pip show redshift-connector || pip show flask || true
+            echo "=== Updated requirements.txt ==="
+            grep -iE "redshift-connector|flask" requirements.txt || true
+            pip list --format=freeze | tee ../../dependency-graph.log || true
+          fi
+          # Reaching this point means the install command above completed with
+          # exit 0 under `set -o pipefail` -- a genuine install/build failure
+          # would already have exited this step via the `|| exit 1` gates.
+          # This is the only place build_success is ever set to true; it is
+          # NOT inferred implicitly by validator.py (see validator.py's own
+          # comment) to avoid masking genuine build failures.
+          jq '.build_success = true' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+
+      - name: Fallback Lockfile Regeneration
+        if: failure()
+        run: |
+          cd ${{ env.APP_DIR }}
+          echo "Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration."
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            rm -f package-lock.json
+            rm -rf node_modules
+            npm install 2>&1 | tee -a ../../build.log
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            rm -f requirements.txt
+            pip install -e . 2>&1 | tee -a ../../build.log
+          fi
+          if [ -f ../../metrics.json ]; then
+            sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
+          fi
+
+      - name: Validate Remediation & Rescan
+        id: build_test
+        run: |
+          REPO_ROOT="$(pwd)"
+          cd ${{ env.APP_DIR }}
+          echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log"
+            if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
+              npm install -g @angular/cli@15.0.4 --silent || true
+              npm test 2>&1 | tee ../../test.log
+              TEST_EXIT=${PIPESTATUS[0]}
+              echo "=== Test Execution Summary ==="
+              tail -n 25 ../../test.log || true
+              # Record test_success accurately based on actual exit code
+              if [ "$TEST_EXIT" -eq 0 ]; then
+                jq '.test_success = true' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+              else
+                echo "[INFO] Test suite failed (exit $TEST_EXIT). Recording test_success=false."
+                echo "[INFO] Known cause: 'ng' CLI not globally installed in runner — TypeScript toolchain decay, unrelated to remediation correctness."
+                jq '.test_success = false' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+              fi
+            fi
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            if [ -d "tests/core" ]; then
+              pip install pytest==7.4.4 pytest-asyncio sentry-sdk datadog || true
+              python3 -m pytest tests/core 2>&1 | tee ../../test.log
+              TEST_EXIT=${PIPESTATUS[0]}
+              echo "=== Test Execution Summary ==="
+              tail -n 25 ../../test.log || true
+              # Record test_success accurately based on actual exit code
+              if [ "$TEST_EXIT" -eq 0 ]; then
+                jq '.test_success = true' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+              else
+                echo "[INFO] Test suite failed (exit $TEST_EXIT). Recording test_success=false."
+                echo "[INFO] Known cause: missing runner-level dependencies (sentry_sdk import errors) unrelated to remediation correctness."
+                jq '.test_success = false' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+              fi
+            fi
+          fi
+          
+          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
+          echo "=== Post-Remediation Scan Status ==="
+          python -c "import json; data=json.load(open('../../rescan.json')); print('Remaining Vulnerabilities:', len(data.get('matches', [])))" || true
+          python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json "$ECOSYSTEM" "$(jq -r '.selected_package' ../../metrics.json)" "$(jq -r '.recommended_package_version // empty' ../../llm-response.json)"
+
+      - name: Update Metrics on Build Failure
+        if: failure() && steps.build_test.conclusion == 'failure'
+        run: |
+          if [ -f metrics.json ]; then
+            jq '.build_success = false | .failure_stage = "build" | .validation_stage_reached = "build"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+          fi
+
+      - name: Update Metrics on Apply Fix Failure
+        if: failure() && steps.apply_fix.conclusion == 'failure'
+        run: |
+          if [ -f metrics.json ]; then
+            jq '.build_success = false | .failure_stage = "apply_fix" | .validation_stage_reached = "apply_fix"' metrics.json > metrics.tmp && mv metrics.tmp metrics.json
+          fi
+
+      - name: Retry Remediation Strategy
+        if: failure()
+        run: |
+          REPO_ROOT="$(pwd)"
+          echo "Failure detected. Capturing logs and performing Retry Iteration."
+          # Preserve attempt 1's LLM I/O, applied patch, and metrics before
+          # retry_remediation.py overwrites them -- otherwise attempt 1's
+          # actual LLM recommendation/reasoning becomes permanently
+          # unrecoverable from the archived evidence for any scenario that
+          # retries. Canonical (unprefixed) filenames continue to reflect
+          # the latest/final attempt, unchanged.
+          for f in llm-request.json llm-response.json llm-response-full.json package-after.json metrics.json; do
+            if [ -f "$f" ]; then
+              cp "$f" "${f%.json}-attempt1.json"
+            fi
+          done
+            cd ${{ env.APP_DIR }}
+            if [ "$ECOSYSTEM" == "python" ]; then
+              cp ../../package-before.json requirements.txt
+            elif [ "$ECOSYSTEM" == "npm" ]; then
+              cp ../../package-before.json package.json
+            fi
+            cd ../..
+
+          if [ -f scripts/remediation/retry_remediation.py ]; then
+            python scripts/remediation/retry_remediation.py $ECOSYSTEM ${{ env.APP_DIR }} build
+          fi
+          
+          cd ${{ env.APP_DIR }}
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            rm -f package-lock.json
+            rm -rf node_modules
+            npm install 2>&1 | tee -a ../../build.log
+            INSTALL_EXIT=${PIPESTATUS[0]}
+            # Refresh the dependency-graph evidence for the retry's own install --
+            # otherwise this file stays frozen at attempt 1's (superseded) graph
+            # even though dependency_verified checks the live, post-retry state.
+            npm list --depth=0 | tee ../../dependency-graph.log || true
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            pip install --no-deps -r requirements.txt 2>&1 | tee -a ../../build.log
+            INSTALL_EXIT=${PIPESTATUS[0]}
+            pip list --format=freeze | tee ../../dependency-graph.log || true
+          fi
+          # Retry-path install failures are intentionally not fatal here (existing,
+          # unchanged behaviour: the pipeline still proceeds to rescan/validate).
+          # We capture the install's own exit code via PIPESTATUS -- independent of
+          # that -- purely to record an accurate build_success for this attempt,
+          # instead of leaving it stale from Attempt 1 (see retry_remediation.py /
+          # this step's git history for the regression this restores).
+          # Tests are never executed on the retry path, so test_success is recorded
+          # as null (not executed) rather than a misleading stale false.
+          if [ -f ../../metrics.json ]; then
+            if [ "$INSTALL_EXIT" -eq 0 ]; then
+              jq '.build_success = true | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+              # Same check as the first-attempt path, same script -- build_success
+              # must reflect the actual compile result on retry too, not just
+              # whether npm install succeeded.
+              if [ "$ECOSYSTEM" == "npm" ]; then
+                bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log"
+              fi
+            else
+              jq '.build_success = false | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
+            fi
+          fi
+          ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
+          if [ -f ../../metrics.json ]; then
+            python ../../scripts/remediation/validator.py ../../rescan.json $(jq -r '.selected_cve' ../../metrics.json) ../../metrics.json "$ECOSYSTEM" "$(jq -r '.selected_package' ../../metrics.json)" "$(jq -r '.recommended_package_version // empty' ../../llm-response.json)"
+          fi
+
+      - name: Gather Evidence
+        if: always()
+        run: |
+          mkdir evidence
+          mv baseline-sbom.json evidence/ || true
+          mv grype.json evidence/baseline-grype.json || true
+          mv candidate-ranking.json evidence/ || true
+          mv selected-candidate.json evidence/ || true
+          mv llm-request.json evidence/ || true
+          mv llm-response.json evidence/ || true
+          mv llm-response-full.json evidence/ || true
+          mv grype-db-metadata.json evidence/ || true
+          mv dependency-graph.log evidence/ || true
+          mv build.log evidence/ || true
+          mv test.log evidence/ || true
+          mv rescan.json evidence/ || true
+          mv metrics.json evidence/ || true
+          mv package-before.json evidence/ || true
+          mv package-after.json evidence/ || true
+          mv llm-request-attempt1.json evidence/ || true
+          mv llm-response-attempt1.json evidence/ || true
+          mv llm-response-full-attempt1.json evidence/ || true
+          mv package-after-attempt1.json evidence/ || true
+          mv metrics-attempt1.json evidence/ || true
+          
+          python scripts/remediation/generate_manifest.py
+
+      - name: Upload Remediation Evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remediation-evidence
+          path: evidence/

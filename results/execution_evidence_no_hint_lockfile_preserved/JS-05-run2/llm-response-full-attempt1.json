@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The target package jsonwebtoken version 0.1.0 is pulled in as a transitive dependency by express-jwt@0.1.3, which constrains jsonwebtoken to ~0.1.0. Even though jsonwebtoken 0.4.0 is declared as a direct dependency in package.json, npm nests jsonwebtoken 0.1.0 under node_modules/express-jwt/node_modules/jsonwebtoken. Upgrading the direct dependency alone will not remediate the transitive vulnerability. To enforce a secure version (9.0.0) across all transitive dependents without breaking package resolution or requiring a major rewrite of express-jwt, a transitive override must be declared in package.json.\",\"strategy\":\"transitive_override\",\"remediation_type\":\"Transitive Override\",\"recommended_package_version\":\"9.0.0\",\"manifest_patch\":{\"operation\":\"add_override\",\"package\":\"jsonwebtoken\",\"constraint\":\"9.0.0\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1031,
+    "candidatesTokenCount": 199,
+    "totalTokenCount": 2357,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1031
+      }
+    ],
+    "thoughtsTokenCount": 1127,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "S3Z6atOBBLGs1MkP8P3FoQE"
+}

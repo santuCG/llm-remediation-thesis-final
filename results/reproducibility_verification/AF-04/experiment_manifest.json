@@ -1,0 +1,12 @@
+{
+  "experiment": "baseline",
+  "baseline_type": "scanner_direct_upgrade",
+  "scenario": "AF-04",
+  "recommendation_source": "Grype",
+  "recommendation_origin": "grype.json",
+  "recommendation_version": "0.112.0",
+  "package": "mako",
+  "recommended_version": "1.3.12",
+  "workflow_commit": "cbdd1de1fd8b21e74741e036572c578e36f441f3",
+  "runner": "Linux X64"
+}

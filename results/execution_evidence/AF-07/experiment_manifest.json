@@ -1,0 +1,51 @@
+{
+  "schema_version": "2.0",
+  "scenario": "AF-07",
+  "repository_commit": "36cc51fd42f0b1fac018efc92f712b18dfb41a53",
+  "workflow_run_id": "30943518765",
+  "workflow_url": "https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30943518765",
+  "pipeline_version": "v2.0",
+  "runner": "ubuntu-24.04",
+  "python": "3.12.x",
+  "generated_at": "2026-08-04T19:34:24.162878+00:00",
+  "llm": {
+    "model": "gemini-3.6-flash",
+    "temperature": 0.0,
+    "seed": 42,
+    "topP": 1.0,
+    "topK": 1
+  },
+  "snapshots": {
+    "epss_snapshot": {
+      "file": "epss_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "b224c69bbbc4d0c02274f8992561d1e4335020410d10ed9e3ebcbed157abb2d9"
+    },
+    "kev_snapshot": {
+      "file": "kev_snapshot.json",
+      "date": "2026-08-04",
+      "sha256": "036c579ee00120ad6b77a9e391ef96c96bd7ba4ab060214df0d79ddda2e64ce6"
+    }
+  },
+  "tool_versions": {
+    "syft": "1.44.0",
+    "grype": "0.112.0"
+  },
+  "artifact_hashes": {
+    "baseline-grype.json": "2545bdc66ac27601a647aa1b4f6e1e4d95816e8c16f454cb64c3da76f9480da9",
+    "baseline-sbom.json": "220fa1603bdb04149f58b615d86ef2e382c70dac864d962bee3fd11dd68a8132",
+    "build.log": "584a74daf44597c4ac3d32b685c43ccb6e3f91d208318c268d994c916ac97550",
+    "candidate-ranking.json": "e93df1cc6ed1780d73b4abb59990f5be79c0dfbbadd4a8c1b7942b752b6f6624",
+    "dependency-graph.log": "fd71a29b105da47104cd32d0f78ed21200b5a51718703aa48120fe0f342e82bc",
+    "grype-db-metadata.json": "cff7968f46f15ea78b0bc344e48966d4a95a65472f6a5635700edb21143a6617",
+    "llm-request.json": "2e147094169bf00d592acff7e6c462a4dfe31a29f8aa7cbe1b12f6365d2f395c",
+    "llm-response-full.json": "536036dc5f05ba244c44d1520b3cec12f7c406570a3fd42f1a184fb91bd0918a",
+    "llm-response.json": "70cadd2b782b01dedd29e8bd1554b388c16c0aad9f71566a2ceff93e175cf885",
+    "metrics.json": "12ed5d689de3a666778e7b4aeb67e11639ccf37e8f5f9312e66a4b750201f1da",
+    "package-after.json": "63f53d5a29af5f9647598e6e26e513b99ed0ce67de3c0b0b7b3b1a3dc67a707b",
+    "package-before.json": "f69c979791202f08d171b72d1976377c5f24d0989ba6d5148e940a9fce9f7420",
+    "rescan.json": "6aefac35ae08081cf8049ff8548ff9929b40fa99dd0a26ae6d0b3a93f2773c7b",
+    "selected-candidate.json": "cfaedf3f587d696d51e79e9bfaecae553a0b6d36e7f7cf9e7654a3caf8b3acb5",
+    "test.log": "747f157c16ea6b2d1443704af199f561b3a76e0b32639c3868b4d7a065d49bd7"
+  }
+}

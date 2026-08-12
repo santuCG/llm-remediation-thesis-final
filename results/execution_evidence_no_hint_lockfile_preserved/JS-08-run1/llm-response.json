@@ -1,0 +1,11 @@
+{
+  "reasoning": "GHSA-qwcr-r2fm-qrc7 affects body-parser prior to version 1.20.3 due to denial of service vulnerabilities when handling requests. Since body-parser is declared as a direct dependency in package.json as '^1.20.2', upgrading the direct version constraint to '^1.20.3' enforces the installation of a non-vulnerable release while preserving semver compatibility.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "1.20.3",
+  "manifest_patch": {
+    "operation": "direct_upgrade",
+    "package": "body-parser",
+    "constraint": "^1.20.3"
+  }
+}

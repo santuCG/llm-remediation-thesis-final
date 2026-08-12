@@ -1,0 +1,151 @@
+npm warn deprecated vm2@3.9.18: The library contains critical security issues and should not be used for production! The maintenance of the project has been discontinued. Consider migrating your code to isolated-vm.
+
+> juice-shop@15.3.0 postinstall
+> cd frontend && npm install --legacy-peer-deps && cd .. && npm run build:frontend && (npm run --silent build:server || cd .)
+
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'sass@1.102.0',
+npm warn EBADENGINE   required: { node: '>=20.19.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'chokidar@5.0.0',
+npm warn EBADENGINE   required: { node: '>= 20.19.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'readdirp@5.0.0',
+npm warn EBADENGINE   required: { node: '>= 20.19.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+
+> frontend@15.3.0 postinstall
+> ngcc --tsconfig "./src/tsconfig.app.json"
+
+Processing legacy "View Engine" libraries:
+- @angular/http [fesm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http/testing [fesm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http [fesm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http [esm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http [esm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http [main/umd] (https://github.com/angular/angular.git)
+- @angular/http/testing [fesm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http/testing [esm2015/esm2015] (https://github.com/angular/angular.git)
+- @angular/http/testing [esm5/esm5] (https://github.com/angular/angular.git)
+- @angular/http/testing [main/umd] (https://github.com/angular/angular.git)
+Encourage the library authors to publish an Ivy distribution.
+
+removed 1 package, changed 21 packages, and audited 1509 packages in 11s
+
+309 packages are looking for funding
+  run `npm fund` for details
+
+85 vulnerabilities (16 low, 28 moderate, 35 high, 6 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+
+> juice-shop@15.3.0 build:frontend
+> cd frontend && node ./node_modules/@angular/cli/bin/ng build --aot --configuration production --output-hashing=none --vendor-chunk=true --source-map=false
+
+- Generating browser application bundles (phase: setup)...
+    TypeScript compiler options "target" and "useDefineForClassFields" are set to "ES2022" and "false" respectively by the Angular CLI. To control ECMA version and features use the Browerslist configuration. For more information, see https://angular.io/guide/build#configuring-browser-compatibility
+    NOTE: You can set the "target" to "ES2022" in the project's tsconfig to remove this warning.
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size
+vendor.js           | vendor                                |   1.36 MB |               306.31 kB
+styles.css          | styles                                | 614.90 kB |                32.22 kB
+main.js             | main                                  | 479.20 kB |                81.16 kB
+polyfills.js        | polyfills                             |  53.67 kB |                17.16 kB
+runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
+
+| Initial Total                         |   2.48 MB |               438.33 kB
+
+Lazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size
+399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB
+202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB
+112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB
+103.js              | confetti                              |  10.86 kB |                 3.92 kB
+67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB
+common.js           | common                                |   9.04 kB |               861 bytes
+535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB
+745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB
+613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB
+859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
+472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
+
+Build at: 2026-08-11T00:17:06.898Z - Hash: eec0da7fb4f70cee - Time: 46702ms
+
+changed 1 package, and audited 1984 packages in 1m
+
+186 packages are looking for funding
+  run `npm fund` for details
+
+120 vulnerabilities (11 low, 46 moderate, 46 high, 17 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+Validating application functionality...
+
+> juice-shop@15.3.0 build:frontend
+> cd frontend && node ./node_modules/@angular/cli/bin/ng build --aot --configuration production --output-hashing=none --vendor-chunk=true --source-map=false
+
+- Generating browser application bundles (phase: setup)...
+    TypeScript compiler options "target" and "useDefineForClassFields" are set to "ES2022" and "false" respectively by the Angular CLI. To control ECMA version and features use the Browerslist configuration. For more information, see https://angular.io/guide/build#configuring-browser-compatibility
+    NOTE: You can set the "target" to "ES2022" in the project's tsconfig to remove this warning.
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names                                 |  Raw Size | Estimated Transfer Size
+vendor.js           | vendor                                |   1.36 MB |               306.31 kB
+styles.css          | styles                                | 614.90 kB |                32.22 kB
+main.js             | main                                  | 479.20 kB |                81.16 kB
+polyfills.js        | polyfills                             |  53.67 kB |                17.16 kB
+runtime.js          | runtime                               |   3.22 kB |                 1.49 kB
+
+| Initial Total                         |   2.48 MB |               438.33 kB
+
+Lazy Chunk Files    | Names                                 |  Raw Size | Estimated Transfer Size
+399.js              | faucet-faucet-module                  | 455.07 kB |               126.87 kB
+202.js              | web3-sandbox-web3-sandbox-module      | 416.36 kB |                95.97 kB
+112.js              | highlight-js-lib-core                 |  20.25 kB |                 7.37 kB
+103.js              | confetti                              |  10.86 kB |                 3.92 kB
+67.js               | faucet-faucet-module                  |  10.68 kB |                 3.37 kB
+common.js           | common                                |   9.04 kB |               861 bytes
+535.js              | highlight-js-lib-languages-typescript |   7.59 kB |                 2.71 kB
+745.js              | wallet-web3-wallet-web3-module        |   6.59 kB |                 2.38 kB
+613.js              | highlight-js-lib-languages-javascript |   6.37 kB |                 2.31 kB
+859.js              | highlightjs-line-numbers-js           |   3.41 kB |                 1.37 kB
+472.js              | highlight-js-lib-languages-yaml       |   1.88 kB |               772 bytes
+
+Build at: 2026-08-11T00:18:02.174Z - Hash: eec0da7fb4f70cee - Time: 45863ms
+
+> juice-shop@15.3.0 build:server
+> tsc
+

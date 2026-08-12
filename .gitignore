@@ -1,0 +1,18 @@
+.env
+__pycache__/
+*.pyc
+*.zip
+.DS_Store
+
+# Local tools (large binaries; document versions in README instead)
+tools/**/bin/
+tools/**/*.exe
+
+# The thesis Markdown source is preserved locally as the frozen input for later
+# DOCX/PDF generation, but is intentionally not part of the delivered
+# reproducibility repository -- the university-submitted document is the
+# authoritative academic narrative; this repository is the evidence/implementation
+# artifact.
+THESIS_DRAFT_V3.md
+THESIS.md
+THESIS_DRAFT_V2.md

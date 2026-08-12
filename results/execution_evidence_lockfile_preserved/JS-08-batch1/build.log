@@ -1,0 +1,9 @@
+npm error code EOVERRIDE
+npm error Override for body-parser@^1.20.2 conflicts with direct dependency
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-08-11T00_16_30_299Z-debug-0.log
+npm error code EOVERRIDE
+npm error Override for body-parser@^1.20.2 conflicts with direct dependency
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-08-11T00_16_30_677Z-debug-0.log
+npm error code EOVERRIDE
+npm error Override for body-parser@^1.20.2 conflicts with direct dependency
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-08-11T00_16_41_600Z-debug-0.log

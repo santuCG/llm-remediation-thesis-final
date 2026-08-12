@@ -1,0 +1,11 @@
+{
+  "reasoning": "The vulnerable package `body-parser` version 1.20.1 is introduced as a transitive dependency pinned strictly (`1.20.1`) by `express@4.18.2`. Although the root project lists `body-parser` version `^1.20.2`, `express` forces its own nested copy of version 1.20.1 in `node_modules/express/node_modules/body-parser`. A direct upgrade of the root dependency does not eliminate the vulnerable nested copy. Using an `overrides` block in `package.json` forces npm to resolve all instances of `body-parser` across the graph to safe version `1.20.3` without requiring a major breaking change to Express.",
+  "strategy": "transitive_override",
+  "remediation_type": "Transitive Override",
+  "recommended_package_version": "1.20.3",
+  "manifest_patch": {
+    "operation": "transitive_override",
+    "package": "body-parser",
+    "constraint": "^1.20.3"
+  }
+}

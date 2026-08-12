@@ -1,0 +1,10 @@
+{
+  "scenario": "JS-05",
+  "selected_cve": "CVE-2015-9235",
+  "build_success": false,
+  "test_success": false,
+  "validation_success": false,
+  "vulnerability_removed": false,
+  "failure_stage": "build",
+  "validation_stage_reached": "build"
+}

@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The vulnerability GHSA-xwcq-pm8m-c4vf exists because pdfkit@0.11.0 depends transitively on vulnerable versions of crypto-js (^3.1.9-1), resolving to 3.3.0. Direct upgrade is not feasible as crypto-js is not a top-level dependency. A transitive override forcing crypto-js to version 4.2.0 in package.json overrides ensures npm resolves all instances of crypto-js to the secure 4.2.0 release across the dependency graph.\",\"strategy\":\"transitive_override\",\"remediation_type\":\"Transitive Override\",\"recommended_package_version\":\"4.2.0\",\"manifest_patch\":{\"operation\":\"transitive_override\",\"package\":\"crypto-js\",\"constraint\":\"4.2.0\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1617,
+    "candidatesTokenCount": 174,
+    "totalTokenCount": 2884,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1617
+      }
+    ],
+    "thoughtsTokenCount": 1093,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "bjpxapm6LYCwjrEPsb3LyQs"
+}
