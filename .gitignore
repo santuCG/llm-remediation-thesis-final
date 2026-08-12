@@ -8,6 +8,12 @@ __pycache__/
 tools/**/bin/
 tools/**/*.exe
 
+# Local Python virtual environments (not part of the reproducibility artifact;
+# dependencies are installed fresh from requirements.txt per docs/06-reproducibility.md)
+venv/
+*_venv/
+.venv/
+
 # The thesis Markdown source is preserved locally as the frozen input for later
 # DOCX/PDF generation, but is intentionally not part of the delivered
 # reproducibility repository -- the university-submitted document is the

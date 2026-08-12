@@ -33,6 +33,8 @@ The two evaluated GitHub Actions pipelines:
 * [.github/workflows/generic-remediation.yml](.github/workflows/generic-remediation.yml) — the LLM-assisted remediation pipeline
 * [.github/workflows/grype-baseline.yml](.github/workflows/grype-baseline.yml) — the deterministic baseline comparison pipeline
 
+Running `generic-remediation.yml` requires a `GEMINI_API_KEY` repository secret (Settings → Secrets and variables → Actions) for the Google Generative Language API; `grype-baseline.yml` requires no secrets.
+
 ## 5. Remediation logic and prompts
 
 * [scripts/remediation/llm_reasoner.py](scripts/remediation/llm_reasoner.py) — prompt construction, model call, generation configuration

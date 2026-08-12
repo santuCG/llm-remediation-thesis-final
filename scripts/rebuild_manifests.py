@@ -20,7 +20,7 @@ import os
 import hashlib
 import re
 
-BASE = r'C:\Users\HP\Downloads\llm-remediation-thesis-final'
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVIDENCE_DIR = os.path.join(BASE, 'results', 'execution_evidence')
 
 # Per-scenario provenance data (from experiment_manifest.json + pipeline logs)

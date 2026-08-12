@@ -1,6 +1,6 @@
 import json, os
 
-BASE = r'C:\Users\HP\Downloads\llm-remediation-thesis-final'
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCENARIOS_DIR = os.path.join(BASE, 'results', 'scenarios')
 EVIDENCE_DIR  = os.path.join(BASE, 'results', 'execution_evidence')
 

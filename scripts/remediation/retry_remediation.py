@@ -34,7 +34,7 @@ def _extract_rescan_summary(target_cve_id):
     rescan. build.log contains no information about rescan/validator outcomes
     at all -- a compile failure and 'the CVE is still detected' are two
     different failure modes needing different evidence, and rescan_success=false
-    (the dominant retry trigger observed for JS-01 across this session's
+    (the dominant retry trigger observed for JS-01 across this pipeline's
     verification runs) previously got no rescan-specific context at all.
     See scripts/remediation/prompts/PROMPT_CHANGELOG.md (v1.2)."""
     try:
@@ -89,7 +89,7 @@ def main():
     # (in practice always build.log, since the workflow's "Update Metrics on
     # Build Failure" step normalizes failure_stage to "build" regardless of
     # the true cause) -- so a rescan-caused retry (the dominant trigger
-    # observed for JS-01 across this session's verification runs) got no
+    # observed for JS-01 across this pipeline's verification runs) got no
     # rescan-specific context at all. See prompts/PROMPT_CHANGELOG.md (v1.2).
     failure_logs_parts = []
     if not metrics.get('build_success', True):

@@ -27,7 +27,7 @@ the field `prioritize.py` writes only after a successful, authoritative `TARGET_
 | AF-06 | CVE-2024-56326 | CVE-2024-56326 | ✅ | Clean success (see Fix #10 — this scenario is the one that originally drifted, prior to the fix) |
 | AF-07 | CVE-2024-21272 | CVE-2024-21272 | ✅ | Clean success |
 | AF-08 | CVE-2026-2473 | CVE-2026-2473 | ✅ | Clean success |
-| AF-09 | CVE-2024-34069 | CVE-2024-34069 | ✅ | Clean success (genuinely preregistered target — coincidentally shares AF-06's pre-fix wrong target, see `THESIS_DRAFT_V3.md` Table 1 footnote) |
+| AF-09 | CVE-2024-34069 | CVE-2024-34069 | ✅ | Clean success (genuinely preregistered target — coincidentally shares AF-06's pre-fix wrong target, see the disclosure note in `preregistration/PRE_REGISTRATION_AMENDMENT.md`) |
 | JS-01 | CVE-2023-32314 | CVE-2023-32314 | ✅ | Clean signals (job `failure` is the known unrelated `TS1005` build issue) |
 | JS-02 | CVE-2026-33937 | CVE-2026-33937 | ✅ | Clean signals (batch-1's original attempt hit a genuine LLM API failure and was redispatched — see `REGENERATION_LOG.md`) |
 | JS-03 | CVE-2025-7783 | CVE-2025-7783 | ✅ | Clean signals |

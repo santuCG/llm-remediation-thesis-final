@@ -44,12 +44,15 @@ def main():
     # -----------------------------------------------------------------------
     repo_commit = os.environ.get('GITHUB_SHA', 'unknown')
     workflow_run_id = os.environ.get('GITHUB_RUN_ID', 'unknown')
-    repo_slug = os.environ.get('GITHUB_REPOSITORY', 'santuCG/llm-remediation-thesis-final')
+    # No fallback string here: GITHUB_REPOSITORY is only meaningful inside a
+    # GitHub Actions run. Outside CI, repo_slug is None and workflow_url below
+    # is written as null rather than a manufactured or misleadingly-labeled URL.
+    repo_slug = os.environ.get('GITHUB_REPOSITORY')
 
     workflow_url = (
         f"https://github.com/{repo_slug}/actions/runs/{workflow_run_id}"
-        if workflow_run_id != 'unknown'
-        else 'unknown'
+        if repo_slug and workflow_run_id != 'unknown'
+        else None
     )
 
     # -----------------------------------------------------------------------

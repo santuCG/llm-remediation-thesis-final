@@ -1,8 +1,8 @@
 # Regeneration Log — Pipeline v2.0 / Prompt v1.2
 
 Unattended regeneration run of AF-02–AF-09 and JS-02–JS-09 (16 scenarios),
-dispatched 2 at a time (one AF + one JS per batch), on branch
-`pipeline-v2-phase1` under prompt v1.2. AF-01 and JS-01 were already
+dispatched 2 at a time (one AF + one JS per batch), under prompt v1.2.
+AF-01 and JS-01 were already
 smoke-tested clean in the prior engineering phase and are not repeated here.
 
 Each row is one scenario. `metrics` is the exact final `metrics.json`
@@ -159,7 +159,7 @@ and `PIPELINE_V2_RELEASE_NOTES.md`'s Fix #10 entry for the full root-cause write
 severity filter ran before `TARGET_CVE` matching, so a preregistered target with the "wrong" reported
 severity (AF-06) or absent from the SBOM entirely (JS-06) was invisible to the matching loop, and the
 code silently substituted `candidates[0]` — a different CVE — with no warning. Confirmed via historical
-`execution_evidence` that this substitution predates this session (present in the *original* dataset).
+`execution_evidence` that this substitution predates this engineering effort (present in the *original* dataset).
 
 Fixed in `prioritize.py` (commit `a7606850`, regression-fixed in `36cc51fd`): `TARGET_CVE` is now
 authoritative — matched against the full structurally-valid pool (severity filter bypassed for this
@@ -343,8 +343,7 @@ Run: [30948331316](https://github.com/santuCG/llm-remediation-thesis-final/actio
 ```
 Genuinely preregistered as `werkzeug`/`CVE-2024-34069` — not a substitution artifact; this is
 AF-09's real, original target, which happens to share the same CVE that AF-06 was wrongly
-executing before Fix #10 (already disclosed pre-session in `preregistration/PRE_REGISTRATION_AMENDMENT.md`
-and `THESIS_DRAFT_V3.md` Table 1's footnote).
+executing before Fix #10 (already disclosed in `preregistration/PRE_REGISTRATION_AMENDMENT.md`).
 
 ### JS-09 — CVE-2026-3520 (multer)
 Run: [30948325107](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948325107) — job `failure` (known unrelated `TS1005` issue), signals clean:
@@ -366,7 +365,7 @@ scenarios reflect identical pipeline code.
 Run: [30948616416](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948616416) — success, first attempt, no retry. Clean, matches historical outcome.
 
 ### JS-01 — CVE-2023-32314 (vm2)
-Run: [30948623108](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948623108) — job `failure` (known unrelated `TS1005` issue), signals clean (`dependency_verified`/`rescan_success` both `true`). **Notable difference from the historical run**: `strategy` is now `transitive_override`, not the original `manual_review` — a real behavioral difference between prompt v1.2 and the original prompt, not a data error. `dependency_type` is now correctly `transitive` (the historical evidence's `dependency_type: "direct"` was already known to be a defect before this session).
+Run: [30948623108](https://github.com/santuCG/llm-remediation-thesis-final/actions/runs/30948623108) — job `failure` (known unrelated `TS1005` issue), signals clean (`dependency_verified`/`rescan_success` both `true`). **Notable difference from the historical run**: `strategy` is now `transitive_override`, not the original `manual_review` — a real behavioral difference between prompt v1.2 and the original prompt, not a data error. `dependency_type` is now correctly `transitive` (the historical evidence's `dependency_type: "direct"` was already known to be a defect before this engineering effort).
 
 ## All 18 scenarios: final regeneration status
 

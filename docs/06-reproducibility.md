@@ -170,7 +170,7 @@ The repository layout is shown below.
 ├── results/
 │   ├── scenarios/                   # The 18 pre-registered scenario definitions
 │   ├── execution_evidence/          # Per-scenario raw evidence (SBOMs, Grype scans, LLM I/O, metrics, manifests)
-│   └── reproducibility_verification/# Post-fix deterministic-baseline re-run evidence (Phase 5 audit)
+│   └── reproducibility_verification/# Post-fix deterministic-baseline re-run evidence
 │
 ├── preregistration/                 # Locked scenario/methodology pre-registration + amendments
 │

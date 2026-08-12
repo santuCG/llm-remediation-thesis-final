@@ -12,7 +12,7 @@ produced this scenario's evidence, and what was the outcome."
 - **Run ID** — the GitHub Actions `workflow_run_id` that produced this evidence, linked to its run page.
 - **Commit SHA** — `repository_commit`, the repository state actually checked out for that run (short form; full SHA in each scenario's `experiment_manifest.json`).
 - **Evidence SHA** — the SHA-256 of that scenario's `metrics.json` (`artifact_hashes."metrics.json"`, truncated to 12 hex chars here), i.e. a content fingerprint of the canonical result file. `N/A` where no `metrics.json` was produced.
-- **Result** — `PASS (clean)` if `dependency_verified` and `rescan_success` are both `true`; otherwise the specific failure category from Table 4 of `THESIS_DRAFT_V3.md`.
+- **Result** — `PASS (clean)` if `dependency_verified` and `rescan_success` are both `true`; otherwise the specific failure category, as recorded in that scenario's Result cell below (root-cause analysis for the two categories is in `docs/FINDING_CVE_DETECTION_GAPS.md` and `PIPELINE_V2_RELEASE_NOTES.md`).
 
 ## Table
 
@@ -41,6 +41,6 @@ produced this scenario's evidence, and what was the outcome."
 
 - **All 18 rows share `pipeline_version: v2.0` and (where an LLM call occurred) `prompt_version: v1.2`** — this is the single, final, homogeneous pipeline state the dataset was generated under. No scenario in this table reflects an earlier pipeline or prompt version; scenarios that needed regeneration to reach this state (all 18, ultimately — see `REGENERATION_LOG.md`) were fully re-run, not patched in place.
 - **Commit SHA reflects the code actually checked out for that specific CI run**, not the commit the evidence was later filed under. Several scenarios share a commit (e.g. AF-06/AF-07/AF-08/JS-07 all show `36cc51fd`) because they were dispatched back-to-back against the same repository state before the next fix (`febf62e0`, the Fix #11 range-prefix follow-up) landed — this is expected, not a data error.
-- **16 of 18 scenarios are `PASS (clean)`.** The 9 npm `PASS` rows carry a job-level `failure` conclusion in GitHub Actions caused by a pre-existing, unrelated `TS1005` TypeScript compilation issue (§3.7 of `THESIS_DRAFT_V3.md`) — `dependency_verified`/`rescan_success` are unaffected and both `true` for all of them; this is noted per-row rather than silently normalized away.
+- **16 of 18 scenarios are `PASS (clean)`.** The 9 npm `PASS` rows carry a job-level `failure` conclusion in GitHub Actions caused by a pre-existing, unrelated `TS1005` TypeScript compilation issue — `dependency_verified`/`rescan_success` are unaffected and both `true` for all of them; this is noted per-row rather than silently normalized away.
 - **Full CVE-level cross-check** (preregistered vs. executed target, for every scenario including the two negative results) is in `docs/CVE_MATCH_VERIFICATION.md` — this manifest and that table are companions: this one answers "what produced this evidence and did it pass," that one answers "did it target the right vulnerability."
 - **Evidence SHA** is a fingerprint for integrity checking, not a substitute for reading `metrics.json` directly — it changes if the file changes even by one byte, so it can confirm two copies of a scenario's evidence are identical without a full diff.

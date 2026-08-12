@@ -15,7 +15,7 @@ prompt v1.2, two scenarios (AF-06, JS-06) silently selected a different CVE/pack
 the one pre-registered. Both were caught only because the resulting `metrics.json` was
 cross-checked against the pre-registered scenario data (`results/scenarios/final_18_scenarios.json`)
 and against NVD directly — the pipeline itself gave no warning or error in either case. A
-subsequent cross-check against the *original* (pre-this-session) `results/execution_evidence/`
+subsequent cross-check against the *original* (pre-Pipeline-v2.0) `results/execution_evidence/`
 confirmed the substitution is not new — see "Historical scope" below.
 
 This document investigates *why*, following a specific evidence checklist, before any
@@ -71,8 +71,8 @@ AF-09's own pre-registered target).
    pre-registered scenario recorded `"cvss_score": 7.8` paired with
    `"cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P"` — a
    v4.0 *vector string* attached to the v3.1 *numeric score*. The two don't belong together;
-   the v4.0 vector's actual score is 5.4, not 7.8. This mismatch predates this session's
-   engineering work and was not introduced by anything done here — it was present in the
+   the v4.0 vector's actual score is 5.4, not 7.8. This mismatch predates the Pipeline v2.0
+   engineering work and was not introduced by it — it was present in the
    original 2026-07-08 scenario snapshot.
 
 ### Interpretation
@@ -101,7 +101,7 @@ CVSS v4.0 score 8.9, fix version `3.4.2`, marked `"is_direct_dependency": true`.
 ### What the pipeline actually selected on regeneration
 `lodash`/`CVE-2021-23337` — again, a completely different package and CVE.
 
-### Investigation, following the requested checklist
+### Investigation, following a structured evidence checklist
 
 **1. Grype DB version.** From `grype-db-metadata.json` captured during the actual CI run:
 ```
@@ -137,7 +137,7 @@ it in the first place — the SBOM the pipeline generates does not list `flatted
 This is the actual root cause; everything downstream of this (Grype's DB, Grype's matching)
 is irrelevant to what actually happened.
 
-**4. Reproduced outside the CI pipeline**, per your request, using the *exact* pipeline
+**4. Reproduced outside the CI pipeline**, using the *exact* pipeline
 binary versions (Syft v1.44.0, Grype v0.112.0 — downloaded and version-verified to match
 `grype-db-metadata.json` byte-for-byte) against the real, locally-installed
 `applications/juice-shop/node_modules`:
@@ -201,7 +201,7 @@ preserved. (This dependency-type question turned out to be broader than just fla
 The initial conclusion — "Syft excludes dev dependencies by design" — was too strong given
 Syft's own SBOM contains dev-only packages that *are* present, which contradicts a clean
 "all `dev:true` packages are excluded" rule. This was tested directly rather than assumed
-away, following the requested methodology (compare present vs. omitted packages across the
+away, using a structured comparison methodology (compare present vs. omitted packages across the
 dependency graph, lockfile flags, and SBOM contents; do not stop at a plausible-sounding
 partial explanation).
 
@@ -253,10 +253,10 @@ mechanism by which Syft decided to omit this specific package (as opposed to the
 
 ---
 
-## Historical scope: this is not new to this session
+## Historical scope: not newly introduced by Pipeline v2.0
 
 Cross-checked all 18 scenarios' preregistered CVE (`results/scenarios/final_18_scenarios.json`)
-against the **original**, pre-this-session `results/execution_evidence/<ID>/metrics.json` for
+against the **original**, pre-Pipeline-v2.0 `results/execution_evidence/<ID>/metrics.json` for
 each scenario (i.e., the dataset as it existed before any Pipeline v2.0 engineering work
 began). 16 of 18 match exactly. AF-06 and JS-06 do not:
 
@@ -266,12 +266,8 @@ began). 16 of 18 match exactly. AF-06 and JS-06 do not:
   `lodash`/`CVE-2021-23337` — not flatted/`CVE-2026-33228`.
 
 This confirms the silent-substitution bug in `prioritize.py` has been present since the
-**original** dataset generation, not introduced by any change made this session. It also
-means the existing `THESIS_DRAFT_V3.md` was already written around the substituted data:
-its own References section cites `CVE-2021-23337` and `CVE-2024-34069` (not the
-preregistered CVEs), and its Table 4 JS-06 row matches lodash's actual metrics, not
-flatted's. This needs correcting as part of thesis-draft integration — see "Decisions
-needed."
+**original** dataset generation, not introduced by any change made during the Pipeline v2.0
+engineering effort.
 
 ## Related finding: `is_direct_dependency` mismatch is broader than JS-06
 
@@ -333,11 +329,10 @@ proceed" — the intended outcome given the underlying Syft gap remains unresolv
    **Decided yes, implemented** (Fix #10). Automatic-discovery behavior (no `TARGET_CVE`)
    is unchanged.
 3. AF-06 and JS-06 as *originally* regenerated (before Fix #10): superseded by the re-runs
-   above — the original wrong-CVE evidence for both should not be used. Per the agreed
-   disclosure language (see `PIPELINE_V2_RELEASE_NOTES.md`/thesis integration task), state explicitly
-   that both were found to have been silently substituted in the original dataset and were
-   regenerated against their intended preregistered targets after the pipeline was
-   corrected.
+   above — the original wrong-CVE evidence for both should not be used. Per the disclosure
+   language in `PIPELINE_V2_RELEASE_NOTES.md`, both were found to have been silently
+   substituted in the original dataset and were regenerated against their intended
+   preregistered targets after the pipeline was corrected.
 4. **Still open**: should the Syft invocation be changed to include dev dependencies for
    JS-06, and if so, does that change what "in scope" means for this thesis's 18 scenarios
    (development-toolchain vulnerabilities vs. only what Juice Shop/Airflow ship)? This is a
@@ -346,10 +341,11 @@ proceed" — the intended outcome given the underlying Syft gap remains unresolv
 5. **Still open**: the `is_direct_dependency` mismatch (6 of 9 JS scenarios — see "Related
    finding" above) needs a decision on how to correct or caveat the preregistered metadata
    before the thesis treats that field as reliable.
-6. **Still open**: integrate the corrected AF-06/JS-06 findings, the historical-scope
-   finding, and the disclosure statement into `THESIS_DRAFT_V3.md` (Methodology Limitations
-   / Findings chapters), including fixing its References section, which currently cites the
-   substituted CVEs (`CVE-2021-23337`, `CVE-2024-34069`) rather than the preregistered ones.
+6. **External documentation dependency**: any narrative account of this dataset (e.g. the
+   accompanying thesis, maintained separately from this repository) should reflect the
+   corrected AF-06/JS-06 targets and the disclosure record above, rather than the
+   originally-substituted CVEs (`CVE-2021-23337`, `CVE-2024-34069`) that appeared in early
+   historical evidence.
 
 Pipeline code has been changed as a result of this investigation — see `PIPELINE_V2_RELEASE_NOTES.md`
 Fix #10. No changes have been made to the Syft invocation, the severity/fix-state filter's
