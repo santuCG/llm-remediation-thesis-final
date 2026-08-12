@@ -17,7 +17,7 @@ remediation pipeline ever run. Full root-cause investigation, evidence, and cita
 **Why the pipeline didn't just pick a different vulnerability instead**: prior to this session,
 it silently did exactly that — substituting `lodash`/`CVE-2021-23337` with no warning. That defect
 (`prioritize.py`'s severity filter defeating an explicit `TARGET_CVE`, unrelated to this specific
-detection gap) is fixed; see `CHANGELOG_V2.md` Fix #10. The fix makes a missing `TARGET_CVE` fail
+detection gap) is fixed; see `PIPELINE_V2_RELEASE_NOTES.md` Fix #10. The fix makes a missing `TARGET_CVE` fail
 loudly instead of silently substituting, which is what produced this documented, evidence-backed
 negative result instead of a second silent substitution.
 

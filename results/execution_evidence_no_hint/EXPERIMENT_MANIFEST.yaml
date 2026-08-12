@@ -266,7 +266,7 @@ Clarification -- "Both resolve CVE" refers to final, post-retry outcome, not att
   retry_count=1 (AF-01/pip is the only one of the four that succeeds on attempt 1 in both
   conditions). This is not introduced by hint removal -- it matches the base thesis's own
   disclosed finding that "the eight npm scenarios that produced valid evidence each required
-  one retry" (THESIS_DRAFT_V3.md Sec 4.1). The comparison table's "both verified" column was
+  one retry" (see the accompanying thesis, §4.1). The comparison table's "both verified" column was
   always the final, post-retry state, matching how the base thesis itself reports outcomes
   (Table 4/5/6 report final fields, not attempt-1-only).
   What actually differs between conditions is WHY attempt 1 fails, not WHETHER it fails:
