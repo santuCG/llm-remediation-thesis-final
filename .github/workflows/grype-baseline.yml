@@ -53,6 +53,7 @@ jobs:
 
       - name: Phase 1 - Establish Baseline & Install Dependencies
         run: |
+          set -o pipefail
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             cp ../evidence/juice_shop_package-lock.json package-lock.json || true

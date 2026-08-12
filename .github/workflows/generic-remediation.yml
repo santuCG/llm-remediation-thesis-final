@@ -54,6 +54,7 @@ jobs:
 
       - name: Install Baseline Dependencies
         run: |
+          set -o pipefail
           cd ${{ env.APP_DIR }}
           if [ "$ECOSYSTEM" == "npm" ]; then
             cp ../evidence/juice_shop_package-lock.json package-lock.json || true

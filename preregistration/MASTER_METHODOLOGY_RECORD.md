@@ -55,6 +55,8 @@ Empirical execution on the remote GitHub Actions CI established a **0% Safe Reme
 1. **PyPI/Airflow (Constraint Collapse):** The constraint solver was fatally crashed (`ResolutionImpossible`) due to strict version boundaries.
 2. **NPM/Juice Shop (ERESOLVE Conflict):** The constraint solver fatally crashed (`ERESOLVE unable to resolve dependency tree`) due to strict peer dependencies.
 
+> **Reconciliation note.** This section is preserved unaltered as the historical preregistration record. A later verification pass, using this repository's own currently-implemented deterministic-baseline workflow, recorded different per-stage outcomes for part of this dataset. See `BASELINE_EVIDENCE_RECONCILIATION.md` for the current evidence, the exact discrepancy, and which record is authoritative for which purpose. This note does not amend the claim above; it points to where the current state is documented.
+
 ## Phase 3 LLM Success Criteria (The 4 Gates)
 
 Define the precise success criteria the LLM must meet to prove its superiority over the baseline:

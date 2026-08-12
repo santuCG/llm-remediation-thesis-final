@@ -6,6 +6,17 @@ quoted directly from that scenario's own `results/execution_evidence/<ID>/experi
 table instead of searching `REGENERATION_LOG.md` or CI logs when the question is simply "what
 produced this scenario's evidence, and what was the outcome."
 
+**Two distinct concepts, named separately.** This manifest's `Result` column is a
+**security-clean signal** (`dependency_verified` AND `rescan_success`), not the
+preregistered **remediation-success** definition. `preregistration/MASTER_METHODOLOGY_RECORD.md`
+defines remediation success as a four-gate outcome — dependency resolution/topological
+integrity, build success, test success, and vulnerability rescan — all four required. The
+`PASS (clean)` label in this table intentionally uses only two of those four gates and
+excludes `build_success`/`test_success`, which is why some `PASS (clean)` rows (e.g. the 9
+npm rows) carry a job-level GitHub Actions `failure` conclusion alongside their `PASS`
+label: the security-clean signal and the four-gate remediation-success definition are
+different constructs, and this table reports the former.
+
 **Column definitions.**
 - **Pipeline version** — `experiment_manifest.json.pipeline_version` (the orchestration code: `generic_remediation.py`, `prioritize.py`, `validator.py`, `retry_remediation.py`, `.github/workflows/generic-remediation.yml`).
 - **Prompt version** — `llm-request.json.prompt_version` (the LLM system/user prompt and response schema, `scripts/remediation/llm_reasoner.py`; independent of pipeline version — see `scripts/remediation/prompts/PROMPT_CHANGELOG.md`).
@@ -42,5 +53,6 @@ produced this scenario's evidence, and what was the outcome."
 - **All 18 rows share `pipeline_version: v2.0` and (where an LLM call occurred) `prompt_version: v1.2`** — this is the single, final, homogeneous pipeline state the dataset was generated under. No scenario in this table reflects an earlier pipeline or prompt version; scenarios that needed regeneration to reach this state (all 18, ultimately — see `REGENERATION_LOG.md`) were fully re-run, not patched in place.
 - **Commit SHA reflects the code actually checked out for that specific CI run**, not the commit the evidence was later filed under. Several scenarios share a commit (e.g. AF-06/AF-07/AF-08/JS-07 all show `36cc51fd`) because they were dispatched back-to-back against the same repository state before the next fix (`febf62e0`, the Fix #11 range-prefix follow-up) landed — this is expected, not a data error.
 - **16 of 18 scenarios are `PASS (clean)`.** The 9 npm `PASS` rows carry a job-level `failure` conclusion in GitHub Actions caused by a pre-existing, unrelated `TS1005` TypeScript compilation issue — `dependency_verified`/`rescan_success` are unaffected and both `true` for all of them; this is noted per-row rather than silently normalized away.
+- **Denominator treatment for the two non-`PASS` rows.** JS-06 is excluded from this "16 of 18" count's implicit denominator in any analysis of remediation outcomes — no candidate was ever selected and no LLM call occurred, so no treatment was administered; it is reported separately as a pipeline coverage/detection-stage limitation (Failure Category A), not a remediation failure. JS-07 is included — a treatment was administered and validated against — and its non-PASS result is a pipeline applicability limitation (Failure Category B: the vulnerable package copy sits outside `manifest_editor.py`'s reach), not evidence of incorrect LLM reasoning.
 - **Full CVE-level cross-check** (preregistered vs. executed target, for every scenario including the two negative results) is in `docs/CVE_MATCH_VERIFICATION.md` — this manifest and that table are companions: this one answers "what produced this evidence and did it pass," that one answers "did it target the right vulnerability."
 - **Evidence SHA** is a fingerprint for integrity checking, not a substitute for reading `metrics.json` directly — it changes if the file changes even by one byte, so it can confirm two copies of a scenario's evidence are identical without a full diff.
