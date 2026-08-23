@@ -1,0 +1,7 @@
+{
+  "package": "crypto-js",
+  "original_version": null,
+  "new_version": "4.2.0",
+  "manifest_file": "package.json",
+  "application_method": "override_added"
+}

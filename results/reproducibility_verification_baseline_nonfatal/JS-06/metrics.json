@@ -1,0 +1,12 @@
+{
+  "scenario": "JS-06",
+  "selected_cve": "CVE-2026-33228",
+  "build_success": false,
+  "test_success": true,
+  "validation_success": true,
+  "vulnerability_removed": false,
+  "failure_stage": "none",
+  "validation_stage_reached": "validator",
+  "rescan_success": true,
+  "dependency_verified": true
+}

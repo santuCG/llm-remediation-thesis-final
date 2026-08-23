@@ -1,0 +1,7 @@
+{
+  "package": "flatted",
+  "original_version": null,
+  "new_version": "3.4.2",
+  "manifest_file": "package.json",
+  "application_method": "override_added"
+}
