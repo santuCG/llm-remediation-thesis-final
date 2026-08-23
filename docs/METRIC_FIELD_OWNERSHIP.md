@@ -62,15 +62,15 @@ identically-named fields but is not covered by the table above. The "24 have a s
 unambiguous owner" conclusion below describes only the LLM-pipeline arm; it does not extend
 to the baseline. The baseline arm's field ownership is documented separately below.
 
-Traced directly against `grype-baseline.yml` (all versions from `30843e65`, the commit that
+Traced directly against `grype-baseline.yml` (all versions from `cbdd1de1`, the commit that
 produced the currently-archived baseline evidence, through the current `HEAD`) and
 `scripts/remediation/validator.py`'s 3-argument invocation path:
 
 | Field | Writer | Behavior |
 |---|---|---|
 | `build_success`, `test_success`, `validation_success` | `grype-baseline.yml` "Initialize Metrics" step | Set to `true` in the workflow's metrics-initialisation step; set to `false` only by the "Update Metrics on Build/Apply-Fix Failure" handlers. In the LLM-pipeline arm, `build_success` is initialised `false` in `generic_remediation.py` and set `true` only on an affirmative success step. Same field name, different initial value and different update condition in each workflow. |
-| `dependency_verified` (baseline, pip records only) | 3-argument `validator.py` invocation (`grype-baseline.yml:145` at commit `30843e65`) | Set in the same code branch as `rescan_success`. In the LLM-pipeline arm, `dependency_verified` is set by a separate function, `verify_dependency_installed()` (added in Fix #2), called with additional arguments not passed in the baseline arm's invocation. |
-| `vulnerability_removed` | `grype-baseline.yml` "Initialize Metrics" step | Set to `false` in the workflow's metrics-initialisation step. No subsequent assignment to this field occurs within the baseline workflow, at the commit that produced the archived baseline evidence (`30843e65`) or at the current commit (`grep -c vulnerability_removed scripts/remediation/validator.py` returns 0 at both). Every baseline record therefore has this field set to `false`. For the 9 pip records, `rescan_success` in the same file is `true`; target-CVE presence in `baseline-grype.json` vs. `rescan.json` was checked directly for these 9 records. |
+| `dependency_verified` (baseline, pip records only) | 3-argument `validator.py` invocation (`grype-baseline.yml:145` at commit `cbdd1de1`) | Set in the same code branch as `rescan_success`. In the LLM-pipeline arm, `dependency_verified` is set by a separate function, `verify_dependency_installed()` (added in Fix #2), called with additional arguments not passed in the baseline arm's invocation. |
+| `vulnerability_removed` | `grype-baseline.yml` "Initialize Metrics" step | Set to `false` in the workflow's metrics-initialisation step. No subsequent assignment to this field occurs within the baseline workflow, at the commit that produced the archived baseline evidence (`cbdd1de1`) or at the current commit (`grep -c vulnerability_removed scripts/remediation/validator.py` returns 0 at both). Every baseline record therefore has this field set to `false`. For the 9 pip records, `rescan_success` in the same file is `true`; target-CVE presence in `baseline-grype.json` vs. `rescan.json` was checked directly for these 9 records. |
 
 **No code has been changed as a result of this section.** This section documents the baseline
 workflow's existing field behaviour as observed; it does not report a code change.
