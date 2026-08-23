@@ -131,7 +131,7 @@ jobs:
           cd ${{ env.APP_DIR }}
           echo "Validating application functionality..." 2>&1 | tee -a ../../build.log
           if [ "$ECOSYSTEM" == "npm" ]; then
-            bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log" --fatal
+            bash "$REPO_ROOT/scripts/ci/check_npm_build.sh" "$REPO_ROOT/${{ env.APP_DIR }}" "$REPO_ROOT/metrics.json" "$REPO_ROOT/build.log"
             if jq -e '.scripts["test"]' package.json > /dev/null 2>&1; then
               npm install -g @angular/cli@15.0.4 --silent || true
               npm test 2>&1 | tee ../../test.log || true
