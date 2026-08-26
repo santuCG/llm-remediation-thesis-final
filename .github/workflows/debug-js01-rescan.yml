@@ -1,0 +1,143 @@
+name: Debug JS-01 vm2 Rescan Gap
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.20.8'
+
+      - name: Install Baseline Dependencies (matching pipeline's exact sequence)
+        working-directory: applications/juice-shop
+        run: |
+          cp ../evidence/juice_shop_package-lock.json package-lock.json
+          npm ci 2>&1 | tee ../../baseline_install.log | tail -40
+
+      - name: Debug - locate vm2 BEFORE override (baseline state)
+        working-directory: applications/juice-shop
+        run: |
+          echo "=== npm ls vm2 (baseline, pre-override) ==="
+          npm ls vm2 || true
+          find . -path "*/node_modules/vm2/package.json" -exec cat {} \; 2>/dev/null || echo "NONE FOUND"
+
+      - name: Apply vm2 override (matching JS-01's actual applied patch)
+        working-directory: applications/juice-shop
+        run: |
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            p.overrides = { vm2: '3.9.18' };
+            fs.writeFileSync('package.json', JSON.stringify(p, null, 2));
+          "
+          cat package.json | grep -A2 '"overrides"'
+
+      - name: npm install (second install, respecting .npmrc package-lock=false)
+        working-directory: applications/juice-shop
+        run: |
+          npm install 2>&1 | tee ../../remediation_install.log | tail -60
+
+      - name: Debug - locate vm2 on disk
+        working-directory: applications/juice-shop
+        run: |
+          echo "=== npm ls vm2 ==="
+          npm ls vm2 || true
+          echo "=== find vm2 package.json anywhere ==="
+          find . -path "*/node_modules/vm2/package.json" 2>/dev/null || echo "NONE FOUND"
+          echo "=== cat vm2 package.json if found ==="
+          find . -path "*/node_modules/vm2/package.json" -exec cat {} \; 2>/dev/null || true
+          echo "=== find juicy-chat-bot ==="
+          find . -path "*juicy-chat-bot*" -name "package.json" 2>/dev/null || echo "NONE FOUND"
+
+      - name: Simulate the REAL retry path (full wipe, override present from t=0)
+        working-directory: applications/juice-shop
+        run: |
+          rm -f package-lock.json
+          rm -rf node_modules
+          npm install 2>&1 | tee ../../retry_install.log | tail -60
+
+      - name: Debug - locate vm2 after RETRY-style install
+        working-directory: applications/juice-shop
+        run: |
+          echo "=== npm ls vm2 (after retry-style wipe+reinstall) ==="
+          npm ls vm2 || true
+          echo "=== does top-level package-lock.json exist? ==="
+          ls -la package-lock.json 2>&1 || echo "NO TOP-LEVEL LOCKFILE"
+          echo "=== does node_modules/.package-lock.json exist? ==="
+          ls -la node_modules/.package-lock.json 2>&1 || echo "NO HIDDEN LOCKFILE"
+          echo "=== hidden lockfile vm2 entry ==="
+          python3 -c "
+          import json
+          try:
+              d = json.load(open('node_modules/.package-lock.json'))
+              pkgs = d.get('packages', {})
+              vm2_keys = [k for k in pkgs if k.endswith('vm2') or k.endswith('/vm2')]
+              for k in vm2_keys:
+                  print(k, '->', pkgs[k])
+          except Exception as e:
+              print('ERROR:', e)
+          "
+          echo "=== physical node_modules/vm2/package.json ==="
+          cat node_modules/vm2/package.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin).get('version'))" 2>&1
+
+      - name: Install syft v1.44.0 and grype v0.112.0
+        run: |
+          mkdir -p bin
+          curl -sSfL -o syft.tar.gz https://github.com/anchore/syft/releases/download/v1.44.0/syft_1.44.0_linux_amd64.tar.gz
+          tar -xzf syft.tar.gz -C ./bin syft
+          curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
+          tar -xzf grype.tar.gz -C ./bin grype
+
+      - name: Generate post-remediation SBOM (matching pipeline exactly)
+        working-directory: applications/juice-shop
+        run: |
+          ../../bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
+
+      - name: Debug - does the SBOM contain vm2
+        run: |
+          echo "=== grep vm2 in post-sbom.json ==="
+          grep -c '"vm2"' post-sbom.json || echo "vm2 NOT in SBOM"
+          python3 -c "
+          import json
+          d = json.load(open('post-sbom.json'))
+          pkgs = d.get('packages', [])
+          print('total packages in SBOM:', len(pkgs))
+          vm2_pkgs = [p for p in pkgs if p.get('name') == 'vm2']
+          print('vm2 entries:', len(vm2_pkgs))
+          for p in vm2_pkgs:
+              print(json.dumps(p, indent=2))
+          "
+
+      - name: Rescan with grype (matching pipeline exactly)
+        run: |
+          GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:post-sbom.json -o json > rescan.json
+          echo "=== vm2 matches in rescan.json ==="
+          python3 -c "
+          import json
+          d = json.load(open('rescan.json'))
+          matches = [m for m in d['matches'] if m['artifact']['name'] == 'vm2']
+          print('vm2 matches:', len(matches))
+          for m in matches:
+              print(m['vulnerability']['id'], m['vulnerability']['severity'], m['artifact']['version'])
+          print('total matches (all packages):', len(d['matches']))
+          "
+
+      - name: Upload evidence artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: js01-rescan-debug
+          path: |
+            post-sbom.json
+            rescan.json
+            baseline_install.log
+            remediation_install.log
+            retry_install.log
+          retention-days: 14
