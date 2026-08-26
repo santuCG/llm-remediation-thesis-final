@@ -2,6 +2,9 @@ name: Debug JS-01 vm2 Rescan Gap
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - debug/js01-vm2-rescan-verify
 
 jobs:
   reproduce:
