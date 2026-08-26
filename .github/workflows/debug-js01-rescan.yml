@@ -95,6 +95,20 @@ jobs:
           curl -sSfL -o grype.tar.gz https://github.com/anchore/grype/releases/download/v0.112.0/grype_0.112.0_linux_amd64.tar.gz
           tar -xzf grype.tar.gz -C ./bin grype
 
+      - name: FIX - regenerate an accurate top-level lockfile before scanning
+        working-directory: applications/juice-shop
+        run: |
+          npm install --package-lock-only
+          echo "=== lockfile vm2 entry after fix ==="
+          python3 -c "
+          import json
+          d = json.load(open('package-lock.json'))
+          pkgs = d.get('packages', {})
+          vm2_keys = [k for k in pkgs if k.endswith('vm2') or k.endswith('/vm2')]
+          for k in vm2_keys:
+              print(k, '->', pkgs[k].get('version'))
+          "
+
       - name: Generate post-remediation SBOM (matching pipeline exactly)
         working-directory: applications/juice-shop
         run: |
