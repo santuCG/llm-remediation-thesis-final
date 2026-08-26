@@ -174,7 +174,18 @@ jobs:
               fi
             fi
           fi
-          
+
+          # Fix (2026-08-26): with .npmrc's package-lock=false, npm never
+          # regenerates package-lock.json after an overrides-based install,
+          # so Syft's npm cataloger -- which reads the top-level lockfile,
+          # not the live node_modules state -- can silently omit a package
+          # entirely (not just report a stale version) when no top-level
+          # lockfile exists. --package-lock-only writes an accurate lockfile
+          # matching what is already installed, without reinstalling
+          # anything, so the SBOM reflects the true post-remediation state.
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            npm install --package-lock-only || true
+          fi
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
           echo "=== Post-Remediation Scan Status ==="
@@ -258,6 +269,14 @@ jobs:
             else
               jq '.build_success = false | .test_success = null' ../../metrics.json > ../../metrics.tmp && mv ../../metrics.tmp ../../metrics.json
             fi
+          fi
+
+          # Fix (2026-08-26): see the matching comment in the first-attempt
+          # rescan step above -- same reasoning applies here, and matters
+          # more on the retry path, since the destructive lockfile wipe
+          # guarantees no top-level lockfile exists at this point at all.
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            npm install --package-lock-only || true
           fi
           ./bin/syft dir:. --exclude "**/bin" --exclude "**/build" --exclude "**/.eggs" --exclude "**/*.egg-info" --exclude "**/dist" --exclude "**/.pytest_cache" -o spdx-json > ../../post-sbom.json
           GRYPE_DB_VALIDATE_AGE=false ./bin/grype sbom:../../post-sbom.json -o json > ../../rescan.json
