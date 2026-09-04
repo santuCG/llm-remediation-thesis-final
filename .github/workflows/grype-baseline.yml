@@ -120,7 +120,7 @@ jobs:
           if [ "$ECOSYSTEM" == "npm" ]; then
             npm install 2>&1 | tee ../../build.log || (echo "NPM Install Failed" && exit 1)
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install --no-deps -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
+            pip install -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
           fi
           
       - name: Phase 5 - Build / Tests / Rescan
