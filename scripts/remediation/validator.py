@@ -113,7 +113,8 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None,
                 break
 
         if not found:
-            print(f"[VALIDATOR] SUCCESS: {target_cve_id} has been eradicated.")
+            print(f"[VALIDATOR] SCAN CLEAN: {target_cve_id} not detected in the post-remediation scan.")
+            dep_verified = True
             if metrics_path and os.path.exists(metrics_path):
                 with open(metrics_path, 'r') as f:
                     metrics = json.load(f)
@@ -121,9 +122,20 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None,
                 # dependency_verified is an independent check of the actual
                 # installed dependency graph (npm ls / pip show) against the
                 # expected package/version -- not inferred from rescan_success.
+                # This is deliberately independent because rescan_success can be
+                # a false positive: Syft's manifest-file cataloguing (e.g. pip's
+                # requirements.txt) reports whatever version is *declared*, even
+                # when the install that was supposed to apply it failed and the
+                # real environment never changed. Confirmed to happen in
+                # practice (pip full-resolution validation, 2026-09-08): a failed
+                # ResolutionImpossible install left the manifest edited but the
+                # real package un-upgraded, and rescan_success still read True.
                 dep_verified = verify_dependency_installed(ecosystem, package_name, expected_version)
                 metrics["dependency_verified"] = dep_verified
                 print(f"[VALIDATOR] Dependency verification (independent of rescan): {dep_verified}")
+                if not dep_verified:
+                    print(f"[VALIDATOR] SUCCESS OVERRULED: scan reads clean, but the real environment "
+                          f"does not have {package_name} at {expected_version} or later. Not eradicated.")
                 # NOTE: build_success is NOT set here. It must have been set by the
                 # workflow's build step before reaching this validator. Setting it
                 # implicitly here would mask genuine build failures.
@@ -133,7 +145,13 @@ def validate_remediation(grype_json_path, target_cve_id, metrics_path=None,
                 metrics["validation_stage_reached"] = "validator"
                 with open(metrics_path, 'w') as f:
                     json.dump(metrics, f, indent=2)
-            return True
+            if dep_verified:
+                print(f"[VALIDATOR] SUCCESS: {target_cve_id} has been eradicated.")
+            # A validated remediation requires both signals together, matching
+            # this study's own stated success criterion (thesis SS3.5.1): a scan
+            # that reads clean is not sufficient on its own if the independent
+            # check shows the real environment was never actually changed.
+            return dep_verified
         else:
             if metrics_path and os.path.exists(metrics_path):
                 with open(metrics_path, 'r') as f:
