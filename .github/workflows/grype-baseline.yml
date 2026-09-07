@@ -123,25 +123,18 @@ jobs:
             pip install -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
           fi
 
-      - name: Fallback Lockfile Regeneration
-        if: failure()
-        run: |
-          cd ${{ env.APP_DIR }}
-          echo "Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration."
-          if [ "$ECOSYSTEM" == "npm" ]; then
-            rm -f package-lock.json
-            rm -rf node_modules
-            npm install 2>&1 | tee -a ../../build.log
-          elif [ "$ECOSYSTEM" == "python" ]; then
-            rm -f requirements.txt
-            pip install -e . 2>&1 | tee -a ../../build.log
-          fi
-          if [ -f ../../metrics.json ]; then
-            sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
-          fi
-
       - name: Phase 5 - Build / Tests / Rescan
         id: build_test
+        # Always reach rescan/validation, even if Phase 3 & 4's install failed --
+        # a failed pip/npm install aborts without changing the environment, so
+        # scanning what's actually there (and what requirements.txt/package.json
+        # now declare) is exactly the same opportunity to reach rescan that the
+        # LLM pipeline's retry step always gives itself (its own install-then-
+        # rescan sequence is also unconditional on the install's own success;
+        # see generic-remediation.yml's "Retry Remediation Strategy" step).
+        # No LLM call and no retry loop are introduced here -- this only removes
+        # the implicit success()-gated skip on this one step.
+        if: always()
         run: |
           REPO_ROOT="$(pwd)"
           set -o pipefail
