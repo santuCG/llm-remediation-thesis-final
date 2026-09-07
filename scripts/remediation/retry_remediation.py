@@ -93,7 +93,14 @@ def main():
     # rescan-specific context at all. See prompts/PROMPT_CHANGELOG.md (v1.2).
     failure_logs_parts = []
     if not metrics.get('build_success', True):
-        log_file = f"{failure_stage}.log"
+        # Every install/build/apply_fix step in the workflow tees its output
+        # into the single accumulating build.log (there is no apply_fix.log,
+        # rescan.log, etc.) -- so the log to read is always build.log,
+        # regardless of which stage failure_stage names. Deriving the
+        # filename from failure_stage here only worked by coincidence for
+        # failure_stage == "build"; for "apply_fix" it looked up a file that
+        # was never created, silently dropping the pip/npm error text.
+        log_file = "build.log"
         if os.path.exists(log_file):
             with open(log_file, 'r') as f:
                 build_excerpt = _extract_build_errors(f.read())
@@ -107,7 +114,7 @@ def main():
         # Fallback: preserve v1.1 behavior for any failure mode not covered
         # by the two checks above, so this never surfaces strictly less
         # information than before.
-        log_file = f"{failure_stage}.log"
+        log_file = "build.log"
         if os.path.exists(log_file):
             with open(log_file, 'r') as f:
                 failure_logs_parts.append(f.read()[-2000:])
