@@ -122,7 +122,24 @@ jobs:
           elif [ "$ECOSYSTEM" == "python" ]; then
             pip install -r requirements.txt 2>&1 | tee ../../build.log || (echo "PIP Install Failed" && exit 1)
           fi
-          
+
+      - name: Fallback Lockfile Regeneration
+        if: failure()
+        run: |
+          cd ${{ env.APP_DIR }}
+          echo "Native package manager resolution retained stale dependency metadata or failed. Forcing a documented clean dependency graph regeneration."
+          if [ "$ECOSYSTEM" == "npm" ]; then
+            rm -f package-lock.json
+            rm -rf node_modules
+            npm install 2>&1 | tee -a ../../build.log
+          elif [ "$ECOSYSTEM" == "python" ]; then
+            rm -f requirements.txt
+            pip install -e . 2>&1 | tee -a ../../build.log
+          fi
+          if [ -f ../../metrics.json ]; then
+            sed -i 's/"lockfile_regenerated": false/"lockfile_regenerated": true/' ../../metrics.json
+          fi
+
       - name: Phase 5 - Build / Tests / Rescan
         id: build_test
         run: |
