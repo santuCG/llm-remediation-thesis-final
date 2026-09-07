@@ -130,9 +130,13 @@ Based on the vulnerability intelligence and context:
         "api_payload": api_payload
     }
 
-    # Fallback model list: primary → stable fallback → legacy fallback
-    # NOTE: Only real, existing Gemini model identifiers are listed here.
-    models = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    # Fallback model list: primary -> rolling alias -> pinned alternates.
+    # gemini-2.5-flash/gemini-2.0-flash/gemini-1.5-flash were confirmed dead
+    # (HTTP 404, deprecated) via a live ListModels + direct-probe check on
+    # 2026-09-07; gemini-flash-latest is Google's own rolling alias (resolved
+    # to gemini-3.8-flash at check time) so it should keep tracking whatever
+    # is current instead of going stale the way pinned versions did here.
+    models = ["gemini-3.6-flash", "gemini-flash-latest", "gemini-3.5-flash", "gemini-3.7-flash"]
     result = None
 
     print(f"[LLM] Requesting recommendation for {candidate['package_name']}...")
