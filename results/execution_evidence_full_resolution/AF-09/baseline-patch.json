@@ -1,0 +1,7 @@
+{
+  "package": "werkzeug",
+  "original_version": "2.2.3",
+  "new_version": "3.0.3",
+  "manifest_file": "requirements.txt",
+  "application_method": "direct_replacement"
+}
