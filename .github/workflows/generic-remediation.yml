@@ -103,7 +103,7 @@ jobs:
             echo "=== Phase 4 Log: Package Installation Status ==="
             npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install -r requirements.txt 2>&1 | tee -a ../../build.log || (echo "PIP Install Failed" && exit 1)
+            timeout 900 pip install -r requirements.txt 2>&1 | tee -a ../../build.log || (echo "PIP Install Failed" && exit 1)
             echo "=== Phase 4 Log: Package Installation Status ==="
             pip show redshift-connector || pip show flask || true
             echo "=== Updated requirements.txt ==="
@@ -235,7 +235,7 @@ jobs:
             # even though dependency_verified checks the live, post-retry state.
             npm list --depth=0 | tee ../../dependency-graph.log || true
           elif [ "$ECOSYSTEM" == "python" ]; then
-            pip install -r requirements.txt 2>&1 | tee -a ../../build.log
+            timeout 900 pip install -r requirements.txt 2>&1 | tee -a ../../build.log
             INSTALL_EXIT=${PIPESTATUS[0]}
             pip list --format=freeze | tee ../../dependency-graph.log || true
           fi
