@@ -1,0 +1,15 @@
+{
+  "cve_id": "GHSA-q2x7-8rv6-6q7h",
+  "scanner_cve_id": "GHSA-q2x7-8rv6-6q7h",
+  "api_cve_id": "CVE-2024-56326",
+  "package_name": "jinja2",
+  "vulnerable_version": "3.1.4",
+  "severity": "medium",
+  "cvss": 7.8,
+  "epss": 0.00521,
+  "epss_timestamp": "2026-09-12T12:39:00.476164+00:00",
+  "kev": false,
+  "fixed_versions": [
+    "3.1.5"
+  ]
+}

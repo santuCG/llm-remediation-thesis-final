@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The target package h11 version 0.14.0 is vulnerable to GHSA-vqfr-h8mv-ghfj (CVSS 9.1). The fixed version is 0.16.0. Since h11 is explicitly specified in requirements.txt alongside httpcore 0.16.3, a Direct Upgrade of h11 to version 0.16.0 is the safest and most effective remediation strategy.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"0.16.0\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"h11\",\"constraint\":\"0.16.0\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 513,
+    "candidatesTokenCount": 153,
+    "totalTokenCount": 1633,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 513
+      }
+    ],
+    "thoughtsTokenCount": 967,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "vpGeat_MPMLX-sAPkZzc-A4"
+}

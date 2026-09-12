@@ -216,7 +216,7 @@ incremental==22.10.0
 inflection==0.5.1
 isodate==0.6.1
 itsdangerous==2.2.0
-Jinja2==3.1.4
+Jinja2==3.1.5
 jmespath==0.10.0
 json-merge-patch==0.2
 jsonpatch==1.32
@@ -316,7 +316,7 @@ pyparsing==3.1.2
 pyparted==3.12.0
 pyrsistent==0.20.0
 pyserial==3.5
-python-apt==2.7.7+ubuntu5.2
+python-apt==2.7.7+ubuntu5.3
 python-daemon==3.0.1
 python-dateutil==2.9.0.post0
 python-debian==0.1.49+ubuntu2

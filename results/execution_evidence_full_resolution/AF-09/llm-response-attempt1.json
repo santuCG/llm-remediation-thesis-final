@@ -1,0 +1,11 @@
+{
+  "reasoning": "Werkzeug version 2.2.3 is vulnerable to CVE GHSA-2g68-c3qc-8985. Since Werkzeug is explicitly pinned in requirements.txt (`Werkzeug==2.2.3`), performing a direct upgrade to the fixed version 3.0.3 in the manifest file is the most straightforward and effective remediation strategy.",
+  "strategy": "direct_upgrade",
+  "remediation_type": "Direct Upgrade",
+  "recommended_package_version": "3.0.3",
+  "manifest_patch": {
+    "operation": "direct_upgrade",
+    "package": "Werkzeug",
+    "constraint": "3.0.3"
+  }
+}

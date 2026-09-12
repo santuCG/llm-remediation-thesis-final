@@ -257,7 +257,7 @@ msgraph-core==1.0.0
 msrest==0.7.1
 msrestazure==0.6.4.post1
 multidict==6.0.5
-mysql-connector-python==8.4.0
+mysql-connector-python==9.1.0
 mysqlclient==2.2.4
 netaddr==0.8.0
 netifaces==0.11.0
@@ -316,7 +316,7 @@ pyparsing==3.1.2
 pyparted==3.12.0
 pyrsistent==0.20.0
 pyserial==3.5
-python-apt==2.7.7+ubuntu5.2
+python-apt==2.7.7+ubuntu5.3
 python-daemon==3.0.1
 python-dateutil==2.9.0.post0
 python-debian==0.1.49+ubuntu2

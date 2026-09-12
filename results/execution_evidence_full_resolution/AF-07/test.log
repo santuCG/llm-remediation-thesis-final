@@ -326,4 +326,4 @@ SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system mar
 SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system marker. System tests are only run when --system flag with the right system (core) is passed to pytest. <Function test_dag_example[tutorial_dag]>
 SKIPPED [1] tests/conftest.py:470: The test is skipped because it has system marker. System tests are only run when --system flag with the right system (core) is passed to pytest. <Function test_dag_example[example_dag_decorator]>
 SKIPPED [5] tests/conftest.py:450: Test expected to run into Airflow Breeze container. Maybe because it is to dangerous to run it outside.
-=============== 285 passed, 9 skipped, 41923 warnings in 26.97s ================
+=============== 285 passed, 9 skipped, 41923 warnings in 38.24s ================

@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package redshift-connector is directly declared in requirements.txt at version 2.1.1, which is vulnerable to GHSA-29h4-r29x-hchv (CVSS 9.8). The safe fixed version is 2.1.14. Because redshift-connector is a direct dependency, a Direct Upgrade is the safest and most effective remediation strategy. Upgrading redshift-connector to 2.1.14 satisfies downstream dependencies such as apache-airflow-providers-amazon while resolving the vulnerability without breaking changes.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"2.1.14\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"redshift-connector\",\"constraint\":\"==2.1.14\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 777,
+    "candidatesTokenCount": 175,
+    "totalTokenCount": 1904,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 777
+      }
+    ],
+    "thoughtsTokenCount": 952,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "e5Seas6YDpmG-8YP09LtuQ0"
+}

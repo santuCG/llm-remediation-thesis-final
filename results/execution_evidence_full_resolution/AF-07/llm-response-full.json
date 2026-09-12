@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"reasoning\": \"The package mysql-connector-python version 8.4.0 contains vulnerability GHSA-hgjp-83m4-h4fj with a CVSS score of 7.5. Since mysql-connector-python is explicitly specified as a direct dependency in requirements.txt, performing a direct upgrade to fixed version 9.1.0 is the safest and most effective strategy to eradicate the vulnerability without introducing unnecessary dependency conflicts.\",\n  \"strategy\": \"direct_upgrade\",\n  \"remediation_type\": \"Direct Upgrade\",\n  \"recommended_package_version\": \"9.1.0\",\n  \"manifest_patch\": {\n    \"operation\": \"direct_upgrade\",\n    \"package\": \"mysql-connector-python\",\n    \"constraint\": \"9.1.0\"\n  }\n}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 491,
+    "candidatesTokenCount": 182,
+    "totalTokenCount": 1546,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 491
+      }
+    ],
+    "thoughtsTokenCount": 873,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "EUilatucC-rB39IP6urQqQ8"
+}

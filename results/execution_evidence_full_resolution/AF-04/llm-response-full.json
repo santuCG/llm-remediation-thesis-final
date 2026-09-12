@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"Mako is directly declared in requirements.txt at version 1.3.5. Upgrading Mako to 1.3.12 resolves vulnerability GHSA-2h4p-vjrc-8xpq directly while maintaining compatibility with alembic 1.13.1 and MarkupSafe 2.1.5.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"1.3.12\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"Mako\",\"constraint\":\"==1.3.12\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 484,
+    "candidatesTokenCount": 128,
+    "totalTokenCount": 1344,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 484
+      }
+    ],
+    "thoughtsTokenCount": 732,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "60elavehK5K5sOIP4OK58A4"
+}

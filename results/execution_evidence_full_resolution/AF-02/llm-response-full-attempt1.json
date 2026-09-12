@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"The package h11 at version 0.14.0 is affected by CVE GHSA-vqfr-h8mv-ghfj, a critical severity vulnerability with a CVSS score of 9.1. Since h11 is directly declared in requirements.txt, performing a direct upgrade to the fixed version 0.16.0 is the safest and most effective remediation strategy. Alternative strategies such as transitive overrides or package replacements are unnecessary because h11 is a top-level declared dependency in the manifest.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"0.16.0\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"h11\",\"constraint\":\"==0.16.0\"}}",
+            "thoughtSignature": "EssTCsgTARFNMg+HoSs2glIcPDxf8rXwoZ6cyzvgF6z0QL1g/G5lp+Ztm972TR+Z1a2yJZf34LOIlbriov75MG1rfOWn8jDIsKizYrgF+72Fh2dMpYPbWOI9LSzq9EJ43YilpmL3CR8WrBvKcI+D86hr+lpVK1I//dkEPV5/bjLUxBSUQkgikxQIqScrriBskYJjs2MgxAAOv6i1sVFsdvDgvhpz95E7Ab2n0vsjJw1IH5W0djTHtzl4xP9k9iy2WKZgwJRZGxyzyozZZ+hAYI60zAGMxJcyBc565f0nP+j2vPOeU3KOeQ0lklcaLBs/N/y3CMnq1oL9XMqwFpJQMR9TvGz9PtkWICCElN/EFflTGY5gypIC9zgwbiVujd6SVuNz1ntAOua7yiwXunyuZx0tA6bJgl5juOjhKzlGiOBkcvs4V1qc4LzgnM8gBk1n+01/p7v9w0xLD1axBzKnBRL0nsldKA7Ik1mCgL/DD5y6+Zgluvx9WwaWc6XJU2YJ+5TyWqP0ad5KcHYEoCija8gGBNK6/McoK8a8zDrpUZBHx4kDJcd6r6jA6IwkHiBWT4x1HIpowqw/zm9tyggjkvKgQi/5ntDuIn6A6m3FSAwpx0enmjonanDOW5gBpHtnGwRv0dYnKzmxRIcBzNIRZmA0Vao6YtNJSdLDa57oLVbS+8uav5v5RGkVWwdq8q0ydHtTk7NnTA7L2C5svmu9b9dmsS9bjHwPoJk0JElfkDAC/lSo7d9HWEyDkXLAr3L60d6IhHiYBGpfo5T6IwE4g6t1phS5ScfpLj9XcC+vbmdbKToe6RoWBwxAl67TrJn7ZTqINKnVKuA9uRtDcMvfWb6aGNMFWk9oQBJ0XFmzkCLInV/15eOnQG4PkuDNmMMx+jwAq6hfwPMO5hqXhyPicnVM7RCA4K4/s6Hg3vJK+SqUQiF2LWTLkKaOIRT1ggVlKGhAJJ+b8+rFnnDBCIUrdCMjaMrDbgUEIvIK8+MO07STduOQO6GD9+cSAFsAk7NxdbqQ89BJfAr2T2PsGuXIdLVRl5pqSujBtUZizZNq3v9ier+VxrVHtYtgnWqNlvzdLfgp6i9c4y2CbOYsSRGMuRctFmvSfBUjYYP0+rcXS8ridipBlPX6SQI2xaMdvqBQZc88t7JZTpLKXjQlrbjCjgPmh09j6LaDJgzqlLfdNuX3Mf5hQhQNnB0hftK2WOpzwstuaOMOYghdd+y/CaS53V25XmoRr1YEcE6PdaRoVKv8BZCwtW2tHqWRz2C7v0BAn07VLOVSFA/BpmTjk3nPUWL3kzKfm+8C2Dl2nmoWyIsyhXJO1vvnvJxuSEp1BEPIwq/DeLyswLoxH6MVUipD3Sw8uOO4HArEojwAhitXLhj9Mk30wqOjf51oP4S8w9rfF4sOeH52H4YsMhVMwXt6etnN2K3OL4xg11aYodqvuSfKoiPV8VtkcsfYbB6mQ0MqT24jQr+miL+g1GzG9E2ZhbxOTvie24Xi/V0Df+1uRFSCqyC/vUvRkV4JMYXZYvFbqswgTN6ugIpRSK1SLhUDJAU2zdfXfcAKzoQs5jpul3dgA+fgckGQTawF2s0HKco5fBxpUrHhGevDEkp2iMpsDjCjiguoMUD1ETbah9ViHhcaXTet7aUYuFboW5oHjl4saPjEOIfDYiiJuQtSdu3/b+ogzvNkSy+oZURZTfo4Zi5HzmnHRkrV7PpYlDldA8tV6xCkGuOfiQg47ChQdGKH1TooO1DX+bccAbzuL/4REZV9WSllYremJNE+oo8hW+95U2d+ncsKhLV9PCKOZwdWxyQaaum0zKXqs7l5VzL5GmTZdiuFbvc+kyjtT0oH4UxBd0fRUAU/L6yfy8Dfr4q+cwFgJuJ9eAwYG92/WVQLwZ+w+cLPG4An/Gjj90q84D/w1aM24X4k/BeOGV/c7f+T/Il1U8riSu58Dfzj6f5hHPcTE3ekkYRlYRBXu0r6NEjSKX+dY6ACWaGALtQxYvW2IlJpL0WY6ESu53Fid4Hr3BuJJqz71hB9WNXdfJrEBCA96HlnQuNwqXx7EvLNk8HVR8I7xDoUZIuS/RYMXLK6Aw3dtYIYJqtRu54Y+U/4a+0GLGtGjIOw5606B5rHwi7nwsfNxX03saiIWfELxD5EtKzxk9lSSUIZLVE74JHAfQWcxmpFMzl0WTNIfANsXD3ExznxqjltbY916NzyXODDntLghCEhlvVwieFwY/dqraHD64U8rqXdrsCP74ktEzhqU1EPnysWifHnlQCgMckFeY3tALW3Whh3fnE9civpmU+6RFftv1KT7FyHGA0/8BC9qNMsVOn1RwpMsvOnKVHU42etPD/TDgw/0Ed6F58Lt97UCPLUNy3ycMiUjXJI2PLDcCRmpBiT8E7TlFzF/UIm16uds4mQY259q6APvG4oZY9sREp3wSltMh20reJh+uDtRgiGog64aqRQUNxdJzplJtgdZ/KSbj3R3DylNhSrdvdfaEB3Y4OjSs5S4MtR6XdcpdzMPtFeaON3qU7bRuhsTuKSDF94bLPQfk0tJ6yy4gXBp7YMD32XcbKwjfoUFAW4LU9i003u5lkSg0fy4k92LvJbHP6IEJ7DtMY2NX8s3hI2aaA05ekdomm+oFQgQ8OjIZDyEKyYYZRuYEUfl9YvrquSxCso0UYpiT3CoVGRMQz+UXxXaiF2Oynv5rwKcwiHQZFgV4htEl00COJEnl+Inxm8GykhikisaGtt+3JJcYosnA5fI3MwMjoXmuBeza/VLgvnIptsYvl1IdpL0tBkrZe36/Y6gYvwfAQLr+7weECzY9EbSY8dgWtWNzk7dzXyVWXzaWJsv/1fo2jxt+vao8VdM+tUmPwY/kSruO01LimgIIJgmER8RRabT++S+MwMAV+M4B4pM4n0JB5nKZOGCcytLh0359Oq6lV5Qj8NPzaUvHSA7vg2jofeg8sS2Fk7pyV9UCJp30vwL2wTBsj+9ULMH2tlbmtKynT8zFD6I8+aQXeKrYTdjJZI5Z2jDZIlt09cE/qqV2p3psh7vLtqYjYyDRfb6dcNMll1XEwktiCCVDSjt4EoLHDYAOX9qeigl4SFePmWVDUXHq5UgxeILuV3k0VB9Go151OVtcZC1GIzUNQildMNPlou9PESx0mb7KkbfbP/Jn5A94fCNJB55+xJEXmndvYBnfmdycN9oK8Ki6UdYIBBqpSe/etplz/QgufeiAW64Bk1KlzyCn7FQ/4JiGS1YOcXj58N/v8IBeoQH7Ayt9YbwOWsBmG83EQI6DoinUOi/CRKl8QxHjvEYnu4N0jd4MyLeVWXKlFXLZ1tZ3UmZ97F9GZtILOwCZk="
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 477,
+    "candidatesTokenCount": 166,
+    "totalTokenCount": 1489,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 477
+      }
+    ],
+    "thoughtsTokenCount": 846,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "kZGeaqP2JsC9jrEPwame6QE"
+}

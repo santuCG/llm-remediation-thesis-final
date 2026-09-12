@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\"reasoning\":\"Werkzeug version 2.2.3 is vulnerable to CVE GHSA-2g68-c3qc-8985 (CVSS 7.5). The vulnerability is fixed in version 3.0.3. Since Werkzeug is explicitly listed as a direct dependency in requirements.txt (`Werkzeug==2.2.3`), executing a direct upgrade of the package to version 3.0.3 in the manifest remediates the vulnerability.\",\"strategy\":\"direct_upgrade\",\"remediation_type\":\"Direct Upgrade\",\"recommended_package_version\":\"3.0.3\",\"manifest_patch\":{\"operation\":\"direct_upgrade\",\"package\":\"Werkzeug\",\"constraint\":\"==3.0.3\"}}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1144,
+    "candidatesTokenCount": 152,
+    "totalTokenCount": 2099,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1144
+      }
+    ],
+    "thoughtsTokenCount": 803,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "pJGeavzdCKaf-8YPzryV6Qw"
+}

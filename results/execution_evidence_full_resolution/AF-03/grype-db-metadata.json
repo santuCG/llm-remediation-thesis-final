@@ -1,5 +1,5 @@
 === SCAN TIMESTAMP ===
-2026-09-04T15:44:34Z
+2026-09-07T10:08:40Z
 === GRYPE VERSION INFO ===
 {
  "application": "grype",
@@ -16,8 +16,8 @@
 === GRYPE DB STATUS ===
 {
  "schemaVersion": "v6.1.9",
- "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-04T00:30:56Z_1788503446.tar.zst?checksum=sha256%3Ad588f263d59606363b9e499aa5631c1c8a504cb447304797ca5c92cb7ff44a29",
- "built": "2026-09-04T06:30:46Z",
+ "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-07T00:35:55Z_1788763100.tar.zst?checksum=sha256%3A73fb33bdf73a355ff5d4e6d86cb3671ced44437d1579524d8d7874c93ba23a44",
+ "built": "2026-09-07T06:38:20Z",
  "path": "/home/runner/.cache/grype/db/6/vulnerability.db",
  "valid": true
 }

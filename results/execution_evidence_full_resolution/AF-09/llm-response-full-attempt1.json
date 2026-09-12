@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"reasoning\": \"Werkzeug version 2.2.3 is vulnerable to CVE GHSA-2g68-c3qc-8985. Since Werkzeug is explicitly pinned in requirements.txt (`Werkzeug==2.2.3`), performing a direct upgrade to the fixed version 3.0.3 in the manifest file is the most straightforward and effective remediation strategy.\",\n  \"strategy\": \"direct_upgrade\",\n  \"remediation_type\": \"Direct Upgrade\",\n  \"recommended_package_version\": \"3.0.3\",\n  \"manifest_patch\": {\n    \"operation\": \"direct_upgrade\",\n    \"package\": \"Werkzeug\",\n    \"constraint\": \"3.0.3\"\n  }\n}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1119,
+    "candidatesTokenCount": 167,
+    "totalTokenCount": 2237,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1119
+      }
+    ],
+    "thoughtsTokenCount": 951,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.6-flash",
+  "responseId": "i5GearbwJKmx_PUP3eWciAU"
+}
